@@ -10,6 +10,7 @@ import { CLIENT_ID } from "@/constants/constants";
 import Link from "next/link";
 import Head from "next/head";
 import styles from "@/styles/app.module.css";
+import '../src/styles/globals.css'; // ここで globals を読み込む
 import { useAsyncHandler } from "@/src/hooks/async-handler";
 import { useClient } from "@/internal/providers/client-provider";
 import { useModal } from "@/internal/providers/modal-provider";
