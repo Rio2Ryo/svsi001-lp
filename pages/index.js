@@ -145,7 +145,9 @@ export default function Home() {
         <title>Mother Vegetables Confidence MV-Si002 | 24時間崩れない陶器肌へ</title>
       </Head>
 
-      <main data-testid={testIds.COMMERCE_PAGE.CONTAINER}>
+      <main data-testid={testIds.COMMERCE_PAGE.CONTAINER}
+      className="relative min-h-screen"
+      >
          {/*<div>
           <h2>Choose Products:</h2>
           {isLoading ? (
