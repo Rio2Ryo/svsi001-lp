@@ -14,6 +14,14 @@ import { useAsyncHandler } from "@/src/hooks/async-handler";
 import { useClient } from "@/internal/providers/client-provider";
 import { useModal } from "@/internal/providers/modal-provider";
 import HeroSection from "../src/components/HeroSection";
+import ConceptSection from "../src/components/ConceptSection";
+import FeatureSection from "../src/components/FeatureSection";
+import TestimonialSection from "../src/components/TestimonialSection";
+import ProductSection from "../src/components/ProductSection";
+import GuaranteeSection from "../src/components/GuaranteeSection";
+import FAQSection from "../src/components/FAQSection";
+import Footer from "../src/components/Footer";
+
 
 const myWixClient = createClient({
   modules: { products, currentCart, redirects },
@@ -214,9 +222,14 @@ export default function Home() {
             </div>
           )}
         </div>*/}
-        <section className="hero-section">
          <HeroSection />
-        </section>
+         <ConceptSection />
+         <FeatureSection />
+         <TestimonialSection />
+         <ProductSection />
+         <GuaranteeSection />
+         <FAQSection />
+         <Footer />
       </main>
     </>
   );

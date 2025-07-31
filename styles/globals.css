@@ -197,7 +197,3 @@ ul {
     gap: 10px;
     width: 100%;
 }
-
-.hero-section {
-  @apply bg-black text-white relative min-h-screen overflow-hidden;
-}
