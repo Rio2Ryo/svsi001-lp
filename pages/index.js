@@ -13,7 +13,7 @@ import styles from "@/styles/app.module.css";
 import { useAsyncHandler } from "@/src/hooks/async-handler";
 import { useClient } from "@/internal/providers/client-provider";
 import { useModal } from "@/internal/providers/modal-provider";
-import HeroSection from "../../src/components/HeroSection";
+import HeroSection from "../src/components/HeroSection";
 
 const myWixClient = createClient({
   modules: { products, currentCart, redirects },
