@@ -13,6 +13,7 @@ import styles from "@/styles/app.module.css";
 import { useAsyncHandler } from "@/src/hooks/async-handler";
 import { useClient } from "@/internal/providers/client-provider";
 import { useModal } from "@/internal/providers/modal-provider";
+import HeroSection from "@/components/HeroSection";
 
 const myWixClient = createClient({
   modules: { products, currentCart, redirects },
@@ -141,11 +142,11 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Ecommerce Page</title>
+        <title>Mother Vegetables Confidence MV-Si002 | 24時間崩れない陶器肌へ</title>
       </Head>
 
       <main data-testid={testIds.COMMERCE_PAGE.CONTAINER}>
-        <div>
+         {/*<div>
           <h2>Choose Products:</h2>
           {isLoading ? (
             <p>Loading products...</p>
@@ -176,8 +177,8 @@ export default function Home() {
               </Link>
             </div>
           )}
-        </div>
-        <div>
+        </div>*/}
+         {/*<div>
           <h2>My Cart:</h2>
           {cart.lineItems?.length > 0 && (
             <div className={styles.column}>
@@ -210,7 +211,8 @@ export default function Home() {
               </button>
             </div>
           )}
-        </div>
+        </div>*/}
+        <HeroSection />
       </main>
     </>
   );
