@@ -10,7 +10,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-black">
+    <section className="relative min-h-screen overflow-hidden bg-black hero-section">
       {/* 背景画像レイヤー */}
       <div className="absolute inset-0">
         {/* ベース背景 */}

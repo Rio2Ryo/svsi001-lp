@@ -214,7 +214,9 @@ export default function Home() {
             </div>
           )}
         </div>*/}
-        <HeroSection />
+        <section className="hero-section">
+         <HeroSection />
+        </section>
       </main>
     </>
   );
