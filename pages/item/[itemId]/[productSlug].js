@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { myWixClient } from "../../../src/lib/wixClient";
 import Cookies from "js-cookie";
 
@@ -166,6 +167,11 @@ export default function ProductDetailPage() {
           <button onClick={clearCart}>Clear Cart</button>
         </div>
       )}
+
+      {/* 代理店ページに戻るボタン */}
+      <Link href={`/item/${query.itemId}`}>
+        <button style={{ marginTop: "32px" }}>← 代理店の商品一覧に戻る</button>
+      </Link>
     </div>
   );
 }
