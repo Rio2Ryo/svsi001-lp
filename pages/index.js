@@ -10,6 +10,7 @@ import { CLIENT_ID } from "@/constants/constants";
 import Link from "next/link";
 import Head from "next/head";
 import styles from "@/styles/app.module.css";
+import styles from "../src/styles/app.module.css";
 import { useAsyncHandler } from "@/src/hooks/async-handler";
 import { useClient } from "@/internal/providers/client-provider";
 import { useModal } from "@/internal/providers/modal-provider";
