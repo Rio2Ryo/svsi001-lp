@@ -97,7 +97,7 @@ export default function TestimonialSection() {
                           </div>
                           <div className="text-center">
                             <p className="text-sm md:text-base text-gray-700 mb-3 font-light leading-relaxed">
-                              "{testimonial.comment}"
+                              {testimonial.comment}
                             </p>
                             <p className="text-xs md:text-sm text-[#b8860b]">{testimonial.name}</p>
                           </div>
