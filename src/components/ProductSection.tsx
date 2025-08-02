@@ -93,10 +93,19 @@ export default function ProductSection() {
                 </div>
               )}
 
-              <div style={{ backgroundColor: "#f3f4f6", borderRadius: "1rem", padding: "4rem 0", marginBottom: "1.5rem" }}>
-                <p style={{ fontSize: "2rem", fontWeight: "300", color: "#b8860b" }}>{product.size}</p>
-                <p style={{ fontSize: "0.875rem", color: "#9ca3af" }}>Product Photo</p>
+              {/* 商品画像表示 */}
+              <div style={{ marginBottom: "1.5rem" }}>
+                {product.size === "1g" && (
+                  <img src="/item_pic1.jpg" alt="1g 商品画像" style={{ width: "100%", height: "auto", borderRadius: "1rem", backgroundColor: "#f3f4f6" }} />
+                )}
+                {product.size === "2g" && (
+                  <img src="/item_pic2.jpg" alt="2g 商品画像" style={{ width: "100%", height: "auto", borderRadius: "1rem", backgroundColor: "#f3f4f6" }} />
+                )}
+                {product.size === "5g" && (
+                  <img src="/item_pic3.jpg" alt="5g 商品画像" style={{ width: "100%", height: "auto", borderRadius: "1rem", backgroundColor: "#f3f4f6" }} />
+                )}
               </div>
+
               <h3 style={{ fontSize: "1.25rem", fontWeight: "300", color: "#1f2937", marginBottom: "0.5rem" }}>{product.title}</h3>
               <p style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1rem" }}>{product.description}</p>
               <div style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1.5rem" }}>
@@ -126,7 +135,7 @@ export default function ProductSection() {
           ))}
         </div>
 
-        {/* 以下、成分と効果セクションは前回記述済み部分が続く */}
+        {/* 以下、成分と効果セクションが続く場合はこちらに追加 */}
       </div>
     </section>
   );
