@@ -7,23 +7,17 @@ export default function TestimonialSection() {
     {
       id: 1,
       name: "東京都 A.K様 (42歳)",
-      comment: "朝のメイクが本当に楽になりました。毛穴が目立たなくなり、肌が陶器のように滑らかに。夕方になってもテカリや崩れがなく、朝の仕上がりがそのまま続きます。もう手放せません！",
-      beforeImage: "Before Photo 1",
-      afterImage: "After Photo 1"
+      comment: "朝のメイクが本当に楽になりました。毛穴が目立たなくなり、肌が陶器のように滑らかに。夕方になってもテカリや崩れがなく、朝の仕上がりがそのまま続きます。もう手放せません！"
     },
     {
       id: 2,
       name: "大阪府 M.S様 (38歳)",
-      comment: "初めて使った時の感動が忘れられません。本当に陶器のような滑らかな肌になりました。特に小鼻周りの毛穴が全く目立たなくなって、素肌に自信が持てるように。メイク直しの回数も激減しました。",
-      beforeImage: "Before Photo 2",
-      afterImage: "After Photo 2"
+      comment: "初めて使った時の感動が忘れられません。本当に陶器のような滑らかな肌になりました。特に小鼻周りの毛穴が全く目立たなくなって、素肌に自信が持てるように。メイク直しの回数も激減しました。"
     },
     {
       id: 3,
       name: "神奈川県 Y.T様 (35歳)",
-      comment: "仕事で一日中マスクをしていても化粧崩れしにくく、本当に快適です。肌への負担も感じず、むしろ使い続けるうちに肌の調子が良くなってきました。友人にも『肌がキレイになった』と褒められます。",
-      beforeImage: "Before Photo 3",
-      afterImage: "After Photo 3"
+      comment: "仕事で一日中マスクをしていても化粧崩れしにくく、本当に快適です。肌への負担も感じず、むしろ使い続けるうちに肌の調子が良くなってきました。友人にも『肌がキレイになった』と褒められます。"
     }
   ];
 
@@ -49,14 +43,34 @@ export default function TestimonialSection() {
               <div key={t.id} className="testimonial-card">
                 <h4 className="card-label">使用前</h4>
                 <div className="image-box" onClick={() => setModalImage(`before${t.id}`)}>
-                  <p className="image-text">{t.beforeImage}</p>
+                  <img
+                    src={`/before${t.id}.jpg`}
+                    alt={`Before Photo ${t.id}`}
+                    style={{
+                      width: "100%",
+                      aspectRatio: "1 / 1",
+                      objectFit: "cover",
+                      borderRadius: "1rem"
+                    }}
+                  />
                   <div className="badge">Before</div>
                 </div>
+
                 <h4 className="card-label">使用後</h4>
                 <div className="image-box after" onClick={() => setModalImage(`after${t.id}`)}>
-                  <p className="image-text">{t.afterImage}</p>
+                  <img
+                    src={`/after${t.id}.jpg`}
+                    alt={`After Photo ${t.id}`}
+                    style={{
+                      width: "100%",
+                      aspectRatio: "1 / 1",
+                      objectFit: "cover",
+                      borderRadius: "1rem"
+                    }}
+                  />
                   <div className="badge after">After</div>
                 </div>
+
                 <p className="comment">{t.comment}</p>
                 <p className="name">{t.name}</p>
               </div>
@@ -87,9 +101,11 @@ export default function TestimonialSection() {
         <div className="modal" onClick={() => setModalImage(null)}>
           <button className="modal-close">×</button>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <p className="modal-text">
-              {modalImage.startsWith("before") ? "Before" : "After"} Photo {modalImage.slice(-1)}
-            </p>
+            <img
+              src={`/${modalImage}.jpg`}
+              alt={`拡大画像 ${modalImage}`}
+              style={{ maxWidth: "90vw", maxHeight: "80vh", borderRadius: "1rem" }}
+            />
           </div>
         </div>
       )}
@@ -151,21 +167,17 @@ export default function TestimonialSection() {
         .image-box {
           background: #eee;
           border-radius: 1rem;
-          padding: 2rem;
+          padding: 0;
           margin-bottom: 1.5rem;
           position: relative;
           cursor: pointer;
-          transition: box-shadow 0.3s ease;
+          overflow: hidden;
         }
         .image-box:hover {
           box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         .image-box.after {
           background: linear-gradient(to bottom right, #f9f9f9, #f0f0f0);
-        }
-        .image-text {
-          color: #888;
-          font-size: 1rem;
         }
         .badge {
           position: absolute;
@@ -276,9 +288,10 @@ export default function TestimonialSection() {
           align-items: center;
           justify-content: center;
         }
-        .modal-text {
-          font-size: 2rem;
-          color: #666;
+        .modal-content img {
+          width: 100%;
+          height: auto;
+          border-radius: 1rem;
         }
       `}</style>
     </>
