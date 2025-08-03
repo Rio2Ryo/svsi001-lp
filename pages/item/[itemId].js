@@ -1,6 +1,16 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Link from "next/link"; // ← 追加：内部リンク用
+import HeroSection from "../../src/components/HeroSection";
+import ConceptSection from "../../src/components/ConceptSection";
+import FeatureSection from "../../src/components/FeatureSection";
+import TestimonialSection from "../../src/components/TestimonialSection";
+import ProductSection from "../../src/components/ProductSection";
+import NewProductSection from "../../src/components/NewProductSection";
+import Effects from "../../src/components/Effects";
+import GuaranteeSection from "../../src/components/GuaranteeSection";
+import FAQSection from "../../src/components/FAQSection";
+import Footer from "../../src/components/Footer";
 
 export default function AgentItemPage() {
   const { query } = useRouter();
@@ -32,7 +42,7 @@ export default function AgentItemPage() {
 
   return (
     <div>
-      <h1>代理店: {query.itemId}</h1>
+      {/*<h1>代理店: {query.itemId}</h1>
       {loading ? (
         <p>読み込み中...</p>
       ) : products.length > 0 ? (
@@ -47,7 +57,18 @@ export default function AgentItemPage() {
         </ul>
       ) : (
         <p>該当する商品がありません</p>
-      )}
+      )}*/}
+
+               <HeroSection />
+               <ConceptSection />
+               <FeatureSection />
+               <TestimonialSection />
+               <ProductSection />
+               <NewProductSection />
+               <Effects />
+               <GuaranteeSection />
+               <FAQSection />
+               <Footer />
     </div>
   );
 }
