@@ -96,13 +96,43 @@ export default function ProductSection() {
               {/* 商品画像表示 */}
               <div style={{ marginBottom: "1.5rem" }}>
                 {product.size === "1g" && (
-                  <img src="/item_pic1.jpg" alt="1g 商品画像" style={{ width: "100%", height: "auto", borderRadius: "1rem", backgroundColor: "#f3f4f6" }} />
+                  <img
+                    src="/item_pic1.jpg"
+                    alt="1g 商品画像"
+                    style={{
+                      width: "100%",
+                      aspectRatio: "1 / 1",
+                      objectFit: "cover",
+                      borderRadius: "1rem",
+                      backgroundColor: "#f3f4f6"
+                    }}
+                  />
                 )}
                 {product.size === "2g" && (
-                  <img src="/item_pic2.jpg" alt="2g 商品画像" style={{ width: "100%", height: "auto", borderRadius: "1rem", backgroundColor: "#f3f4f6" }} />
+                  <img
+                    src="/item_pic2.jpg"
+                    alt="2g 商品画像"
+                    style={{
+                      width: "100%",
+                      aspectRatio: "1 / 1",
+                      objectFit: "cover",
+                      borderRadius: "1rem",
+                      backgroundColor: "#f3f4f6"
+                    }}
+                  />
                 )}
                 {product.size === "5g" && (
-                  <img src="/item_pic3.jpg" alt="5g 商品画像" style={{ width: "100%", height: "auto", borderRadius: "1rem", backgroundColor: "#f3f4f6" }} />
+                  <img
+                    src="/item_pic3.jpg"
+                    alt="5g 商品画像"
+                    style={{
+                      width: "100%",
+                      aspectRatio: "1 / 1",
+                      objectFit: "cover",
+                      borderRadius: "1rem",
+                      backgroundColor: "#f3f4f6"
+                    }}
+                  />
                 )}
               </div>
 
