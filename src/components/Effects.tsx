@@ -91,7 +91,7 @@ export default function ProductSection() {
             backgroundColor: "#fff",
             borderRadius: "1.25rem",
             padding: "2rem",
-            maxWidth: "1024px",
+            maxWidth: "1224px",
             margin: "0 auto",
             boxShadow: "0 6px 16px rgba(0,0,0,0.08)"
           }}>

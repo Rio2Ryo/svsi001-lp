@@ -21,11 +21,12 @@ export default function NewProductSection() {
 
         const data = await res.json();
         const formatted = data.map((item) => ({
+          itemPic: item.ItemPic || "",
           size: item.size || "",
           title: item.name || "タイトル未設定",
           description: item.description || "",
           features: item.features || [],
-          originalPrice: item.originalPrice || "",
+          originalPrice: item.originalprice || item.originalPrice || "",
           price: item.price || "",
           popular: item.popular || false,
           slug: item.slug || "",
@@ -40,11 +41,10 @@ export default function NewProductSection() {
   }, [query.itemId]);
 
   return (
-    <section style={{ padding: "1rem 1rem 1rem 1rem", backgroundColor: "#f9fafb" }}>
+    <section style={{ padding: "0.5rem 1rem", backgroundColor: "#f9fafb" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 1rem" }}>
        
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem", marginBottom: "1rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem", marginBottom: "5rem" }}>
           {products.map((product, index) => (
             <div
               key={index}
@@ -78,7 +78,7 @@ export default function NewProductSection() {
 
               <div style={{ marginBottom: "1.5rem" }}>
                 <img
-                  src={`/item_pic${product.size.replace(/\D/g, "")}.jpg`}
+                  src={product.itemPic || "/default.jpg"}
                   alt={`${product.size} 商品画像`}
                   style={{
                     width: "100%",
@@ -90,8 +90,8 @@ export default function NewProductSection() {
                 />
               </div>
 
-              <h3 style={{ fontSize: "1.25rem", fontWeight: "300", color: "#1f2937", marginBottom: "0.5rem" }}>{product.title}</h3>
-              <p style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1rem" }}>{product.description}</p>
+              <h3 style={{ fontSize: "0.9rem", fontWeight: "300", color: "#1f2937", marginBottom: "0.5rem" }}>{product.title}</h3>
+              {/*<p style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1rem" }}>{product.description}</p>*/}
               <div style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1.5rem" }}>
                 {product.features.map((f, i) => (
                   <p key={i} style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
@@ -104,7 +104,7 @@ export default function NewProductSection() {
                 <p style={{ fontSize: "0.75rem", color: "#6b7280", textDecoration: "line-through", marginBottom: "0.25rem" }}>
                   通常価格 {product.originalPrice}
                 </p>
-                <p style={{ fontSize: "2rem", fontWeight: "300", marginBottom: "0.25rem", color: product.popular ? "#b8860b" : "#1f2937" }}>
+                <p style={{ fontSize: "1.3rem", fontWeight: "300", marginBottom: "0.25rem", color: product.popular ? "#b8860b" : "#1f2937" }}>
                   {product.price}
                 </p>
                 <p style={{ fontSize: "0.75rem", color: "#9ca3af" }}>(税込)</p>
