@@ -41,7 +41,9 @@ export default function AgentItemPage() {
   }, [query.itemId]);
 
   return (
+    
     <div>
+    
       {/*<h1>代理店: {query.itemId}</h1>
       {loading ? (
         <p>読み込み中...</p>
