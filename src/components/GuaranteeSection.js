@@ -147,7 +147,7 @@ export default function GuaranteeSection() {
           padding: 0.75rem 2rem;
           font-size: 1rem;
           border: none;
-          border-radius: 0.25rem;
+          border-radius: 0;
           cursor: pointer;
           letter-spacing: 0.05em;
           transition: background 0.3s ease;

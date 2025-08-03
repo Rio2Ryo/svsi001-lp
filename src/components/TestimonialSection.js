@@ -159,11 +159,12 @@ export default function TestimonialSection() {
           box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
           text-align: center;
         }
-        .card-label {
-          color: #b8860b;
-          margin-bottom: 0.5rem;
-          font-weight: 300;
-        }
+       .card-label {
+  color: #b8860b;
+  margin-bottom: 0.5rem;
+  font-weight: 300;
+  text-align: left; /* 👈 追加 */
+}
         .image-box {
           background: #eee;
           border-radius: 1rem;
