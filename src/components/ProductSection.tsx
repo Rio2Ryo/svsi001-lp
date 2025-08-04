@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function ProductSection() {
   const [selectedSize, setSelectedSize] = useState("2g");
@@ -8,58 +9,84 @@ export default function ProductSection() {
   const products = [
     {
       size: "1g",
+      slug: "trial-mvsi",
       title: "お試しサイズ",
       description: "1g - 約30日分",
       features: ["マザーベジタブル 1g配合", "約30日分", "携帯に便利なコンパクトケース"],
       originalPrice: "¥3,300",
       price: "¥2,200",
-      popular: false
+      popular: false,
     },
     {
       size: "2g",
+      slug: "standard-mvsi",
       title: "スタンダードサイズ",
       description: "2g - 約60日分",
       features: ["マザーベジタブル 2g配合", "約60日分", "携帯に便利なコンパクトケース"],
       originalPrice: "¥5,500",
       price: "¥3,300",
-      popular: true
+      popular: true,
     },
     {
       size: "5g",
+      slug: "large-mvsi",
       title: "お得な大容量",
       description: "5g - 約150日分",
       features: ["マザーベジタブル 5g配合", "約150日分", "特別な大容量ラグジュアリーケース"],
       originalPrice: "¥8,800",
       price: "¥5,500",
-      popular: false
-    }
-  ];
-
-  const ingredient = {
-    name: "マザーベジタブル",
-    description: "35億年前に誕生した地球最初の生命体",
-    details: "独自の吸着機能により、24時間美しさを保ちます。"
-  };
-
-  const effects = [
-    { title: "化粧崩れ防止効果", description: "汗やテカリをしっかり吸着し、崩れを防ぎます" },
-    { title: "透明感のある陶器肌", description: "細かい粒子が肌を整え、美しい陶器肌を再現" },
-    { title: "トーンアップ効果", description: "肌を明るく見せ、自然な輝きを与えます" },
-    { title: "スキンケア効果", description: "肌を保護しながら美しく整えます" }
+      popular: false,
+    },
   ];
 
   return (
-    <section id="product" style={{ padding: "5rem 0.01rem 1rem 0.01rem", backgroundColor: "#f9fafb" }}>
+    <section
+      id="product"
+      style={{ padding: "5rem 0.01rem 1rem 0.01rem", backgroundColor: "#f9fafb" }}
+    >
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 1rem" }}>
         <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-          <p style={{ fontSize: "0.875rem", color: "#b8860b", marginBottom: "1rem", letterSpacing: "0.1em" }}>商品ラインナップ</p>
-          <h2 style={{ fontSize: "2rem", fontWeight: "bold", color: "#2d2d2d", marginBottom: "2rem", lineHeight: "1.2" }}>
-            Mother Vegetables Confidence<br />MV-Si002 商品ラインナップ
+          <p
+            style={{
+              fontSize: "0.875rem",
+              color: "#b8860b",
+              marginBottom: "1rem",
+              letterSpacing: "0.1em",
+            }}
+          >
+            商品ラインナップ
+          </p>
+          <h2
+            style={{
+              fontSize: "2rem",
+              fontWeight: "bold",
+              color: "#2d2d2d",
+              marginBottom: "2rem",
+              lineHeight: "1.2",
+            }}
+          >
+            Mother Vegetables Confidence
+            <br />
+            MV-Si002 商品ラインナップ
           </h2>
-          <div style={{ width: "80px", height: "4px", backgroundColor: "#b8860b", margin: "0 auto" }} />
+          <div
+            style={{
+              width: "80px",
+              height: "4px",
+              backgroundColor: "#b8860b",
+              margin: "0 auto",
+            }}
+          />
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem", marginBottom: "5rem" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "2rem",
+            marginBottom: "5rem",
+          }}
+        >
           {products.map((product) => (
             <div
               key={product.size}
@@ -68,197 +95,159 @@ export default function ProductSection() {
                 backgroundColor: "#fff",
                 borderRadius: "1rem",
                 padding: "2rem",
-                border: selectedSize === product.size ? "3px solid #b8860b" : product.popular ? "2px solid #b8860b" : "2px solid #e5e7eb",
+                border:
+                  selectedSize === product.size
+                    ? "3px solid #b8860b"
+                    : product.popular
+                    ? "2px solid #b8860b"
+                    : "2px solid #e5e7eb",
                 boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
                 cursor: "pointer",
                 position: "relative",
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
               {product.popular && (
-                <div style={{
-                  position: "absolute",
-                  top: "1rem",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: "linear-gradient(to right, #b8860b, #d4c4b0)",
-                  padding: "0.5rem 1.5rem",
-                  borderRadius: "9999px",
-                  fontWeight: "bold",
-                  fontSize: "0.875rem",
-                  color: "#000",
-                  zIndex: 2
-                }}>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "1rem",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    background: "linear-gradient(to right, #b8860b, #d4c4b0)",
+                    padding: "0.5rem 1.5rem",
+                    borderRadius: "9999px",
+                    fontWeight: "bold",
+                    fontSize: "0.875rem",
+                    color: "#000",
+                    zIndex: 2,
+                  }}
+                >
                   人気No.1
                 </div>
               )}
 
-              {/* 商品画像表示 */}
               <div style={{ marginBottom: "1.5rem" }}>
-                {product.size === "1g" && (
-                  <img
-                    src="/item_pic1.jpg"
-                    alt="1g 商品画像"
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      objectFit: "cover",
-                      borderRadius: "1rem",
-                      backgroundColor: "#f3f4f6"
-                    }}
-                  />
-                )}
-                {product.size === "2g" && (
-                  <img
-                    src="/item_pic2.jpg"
-                    alt="2g 商品画像"
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      objectFit: "cover",
-                      borderRadius: "1rem",
-                      backgroundColor: "#f3f4f6"
-                    }}
-                  />
-                )}
-                {product.size === "5g" && (
-                  <img
-                    src="/item_pic3.jpg"
-                    alt="5g 商品画像"
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      objectFit: "cover",
-                      borderRadius: "1rem",
-                      backgroundColor: "#f3f4f6"
-                    }}
-                  />
-                )}
+                <img
+                  src={`/item_pic${product.size[0]}.jpg`}
+                  alt={`${product.size} 商品画像`}
+                  style={{
+                    width: "100%",
+                    aspectRatio: "1 / 1",
+                    objectFit: "cover",
+                    borderRadius: "1rem",
+                    backgroundColor: "#f3f4f6",
+                  }}
+                />
               </div>
 
-              <h3 style={{ fontSize: "1.25rem", fontWeight: "300", color: "#1f2937", marginBottom: "0.5rem" }}>{product.title}</h3>
-              <p style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1rem" }}>{product.description}</p>
-              <div style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1.5rem" }}>
+              <h3
+                style={{
+                  fontSize: "1.25rem",
+                  fontWeight: "300",
+                  color: "#1f2937",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                {product.title}
+              </h3>
+              <p
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#6b7280",
+                  marginBottom: "1rem",
+                }}
+              >
+                {product.description}
+              </p>
+              <div
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#6b7280",
+                  marginBottom: "1.5rem",
+                }}
+              >
                 {product.features.map((f, i) => (
-                  <p key={i} style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
-                    <span style={{ width: "6px", height: "6px", backgroundColor: "#b8860b", borderRadius: "50%" }}></span>
+                  <p
+                    key={i}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: "6px",
+                        height: "6px",
+                        backgroundColor: "#b8860b",
+                        borderRadius: "50%",
+                      }}
+                    ></span>
                     {f}
                   </p>
                 ))}
               </div>
               <div style={{ marginBottom: "1rem" }}>
-                <p style={{ fontSize: "0.75rem", color: "#6b7280", textDecoration: "line-through", marginBottom: "0.25rem" }}>通常価格 {product.originalPrice}</p>
-                <p className="price" style={{ fontSize: "2rem", fontWeight: "300", marginBottom: "0.25rem", color: product.popular ? "#b8860b" : "#1f2937" }}>{product.price}</p>
+                <p
+                  style={{
+                    fontSize: "0.75rem",
+                    color: "#6b7280",
+                    textDecoration: "line-through",
+                    marginBottom: "0.25rem",
+                  }}
+                >
+                  通常価格 {product.originalPrice}
+                </p>
+                <p
+                  className="price"
+                  style={{
+                    fontSize: "2rem",
+                    fontWeight: "300",
+                    marginBottom: "0.25rem",
+                    color: product.popular ? "#b8860b" : "#1f2937",
+                  }}
+                >
+                  {product.price}
+                </p>
                 <p style={{ fontSize: "0.75rem", color: "#9ca3af" }}>(税込)</p>
               </div>
-              <button style={{
-                width: "100%",
-                padding: "0.75rem 1.5rem",
-                background: product.popular ? "linear-gradient(to right, #b8860b, #d4c4b0)" : "#e5e7eb",
-                color: product.popular ? "#000" : "#1f2937",
-                border: "none",
-                borderRadius: "0",
-                fontSize: "0.875rem",
-                cursor: "pointer"
-              }}>購入する</button>
+
+              {/* ✅ 商品詳細ページへの遷移 */}
+              <Link href={`/item/mvsi/${product.slug}`} style={{ textDecoration: "none" }}>
+                <button
+                  style={{
+                    width: "100%",
+                    padding: "0.75rem 1.5rem",
+                    background: product.popular
+                      ? "linear-gradient(to right, #b8860b, #d4c4b0)"
+                      : "#e5e7eb",
+                    color: product.popular ? "#000" : "#1f2937",
+                    border: "none",
+                    borderRadius: "0",
+                    fontSize: "0.875rem",
+                    cursor: "pointer",
+                  }}
+                >
+                  購入する
+                </button>
+              </Link>
             </div>
           ))}
         </div>
-
-                {/* 以下、成分と効果セクションが続く場合はこちらに追加 
-        <div style={{ marginTop: "5rem" }}>
-          <h3 style={{ fontSize: "1.5rem", fontWeight: 300, marginBottom: "3rem", textAlign: "center", color: "#2d2d2d", letterSpacing: "0.05em" }}>成分・効果</h3>
-
-          <div style={{ maxWidth: "800px", margin: "0 auto 4rem" }}>
-            <div style={{
-              background: "linear-gradient(to bottom right, #ffffff, #f8f8f8)",
-              borderRadius: "1.5rem",
-              padding: "3rem",
-              border: "1px solid rgba(184, 134, 11, 0.3)",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.05)"
-            }}>
-              <div style={{ textAlign: "center" }}>
-                <div style={{
-                  width: "96px",
-                  height: "96px",
-                  borderRadius: "50%",
-                  background: "linear-gradient(to bottom right, rgba(184,134,11,0.2), rgba(212,196,176,0.2))",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  margin: "0 auto 1.5rem"
-                }}>
-                  <svg viewBox="0 0 24 24" style={{ width: "48px", height: "48px", color: "#b8860b" }}>
-                    <path fill="currentColor" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
-                  </svg>
-                </div>
-                <h4 style={{ fontSize: "1.75rem", fontWeight: 300, color: "#b8860b", marginBottom: "0.5rem" }}>主成分</h4>
-                <p style={{ fontSize: "1.5rem", fontWeight: 500, color: "#2d2d2d", marginBottom: "0.75rem" }}>{ingredient.name}</p>
-                <p style={{ fontSize: "1rem", color: "#555", marginBottom: "1rem" }}>{ingredient.description}</p>
-                <p style={{ fontSize: "0.875rem", color: "#777", lineHeight: "1.7", maxWidth: "640px", margin: "0 auto" }}>{ingredient.details}</p>
-              </div>
-            </div>
-          </div>
-
-          <div style={{
-            backgroundColor: "#fff",
-            borderRadius: "1.25rem",
-            padding: "2rem",
-            maxWidth: "1024px",
-            margin: "0 auto",
-            boxShadow: "0 6px 16px rgba(0,0,0,0.08)"
-          }}>
-            <h4 style={{ fontSize: "1.25rem", fontWeight: 300, color: "#2d2d2d", marginBottom: "2rem", textAlign: "center" }}>期待できる効果</h4>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "1.5rem"
-            }}>
-              {effects.map((effect, index) => (
-                <div key={index} style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  padding: "1rem",
-                  borderRadius: "1rem",
-                  transition: "background-color 0.3s ease"
-                }}>
-                  <span style={{
-                    width: "32px",
-                    height: "32px",
-                    background: "linear-gradient(to bottom right, rgba(184,134,11,0.2), rgba(212,196,176,0.2))",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginRight: "1rem"
-                  }}>
-                    <svg viewBox="0 0 24 24" style={{ width: "20px", height: "20px", color: "#b8860b" }}>
-                      <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                  </span>
-                  <div>
-                    <p style={{ fontSize: "1rem", fontWeight: 500, color: "#b8860b", marginBottom: "0.25rem" }}>{effect.title}</p>
-                    <p style={{ fontSize: "0.875rem", color: "#555" }}>{effect.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        */}
-
-        
       </div>
+
       <style jsx>{`
-  @media (max-width: 768px) {
-    h2 {
-      font-size: 1.45rem !important;
-    }
-      .price{
-      font-size: 1.4rem !important;
-      }
-  }
-`}</style>
+        @media (max-width: 768px) {
+          h2 {
+            font-size: 1.45rem !important;
+          }
+          .price {
+            font-size: 1.4rem !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
