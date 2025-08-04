@@ -6,17 +6,17 @@ export default function TestimonialSection() {
   const testimonials = [
     {
       id: 1,
-      name: "東京都 A.K様 (42歳)",
+      name: "50代女性",
       comment: "朝のメイクが本当に楽になりました。毛穴が目立たなくなり、肌が陶器のように滑らかに。夕方になってもテカリや崩れがなく、朝の仕上がりがそのまま続きます。もう手放せません！"
     },
     {
       id: 2,
-      name: "大阪府 M.S様 (38歳)",
+      name: "20代女性",
       comment: "初めて使った時の感動が忘れられません。本当に陶器のような滑らかな肌になりました。特に小鼻周りの毛穴が全く目立たなくなって、素肌に自信が持てるように。メイク直しの回数も激減しました。"
     },
     {
       id: 3,
-      name: "神奈川県 Y.T様 (35歳)",
+      name: "神80代女性",
       comment: "仕事で一日中マスクをしていても化粧崩れしにくく、本当に快適です。肌への負担も感じず、むしろ使い続けるうちに肌の調子が良くなってきました。友人にも『肌がキレイになった』と褒められます。"
     }
   ];
@@ -166,7 +166,7 @@ export default function TestimonialSection() {
   text-align: left; /* 👈 追加 */
 }
         .image-box {
-          background: #eee;
+          
           border-radius: 1rem;
           padding: 0;
           margin-bottom: 1.5rem;
@@ -174,12 +174,8 @@ export default function TestimonialSection() {
           cursor: pointer;
           overflow: hidden;
         }
-        .image-box:hover {
-          box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .image-box.after {
-          background: linear-gradient(to bottom right, #f9f9f9, #f0f0f0);
-        }
+        
+       
         .badge {
           position: absolute;
           bottom: 12px;
@@ -224,6 +220,12 @@ export default function TestimonialSection() {
           display: grid;
           grid-template-columns: 1fr;
           gap: 1.5rem;
+        }
+         @media (max-width: 768px) {
+          h2 {
+          font-size: 1.4rem !important;
+          line-height: 1.3 !important;
+           }
         }
         @media (min-width: 768px) {
           .survey-grid {

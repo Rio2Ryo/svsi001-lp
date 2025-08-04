@@ -33,7 +33,15 @@ export default function ConceptSection() {
           </div>
         </div>
       </div>
+      <style jsx>{`
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 1.5rem !important;
+    }
+  }
+`}</style>
     </section>
+    
   );
 }
 

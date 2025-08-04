@@ -29,9 +29,17 @@ export default function GuaranteeSection() {
               ))}
             </div>
 
-            <button className="guarantee-button">
-              安心して今すぐ試してみる
-            </button>
+            <button
+  className="guarantee-button"
+  onClick={() => {
+    const element = document.getElementById("product");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }}
+>
+  安心して今すぐ試してみる
+</button>
           </div>
         </div>
       </section>

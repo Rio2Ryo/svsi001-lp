@@ -155,6 +155,11 @@ function FeatureSection() {
           line-height: 1.6;
           text-align: center;
         }
+        @media (max-width: 768px) {
+          .title {
+            font-size:1.4rem!important;
+          }
+        }
       `}</style>
     </>
   );

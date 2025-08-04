@@ -49,18 +49,18 @@ export default function ProductSection() {
   ];
 
   return (
-    <section style={{ padding: "0.1rem 1rem 5rem 1rem", backgroundColor: "#f9fafb" }}>
+    <section style={{ padding: "0.01rem 0.1rem 5rem 0.01rem", backgroundColor: "#f9fafb" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 1rem" }}>
 
                 {/* 以下、成分と効果セクションが続く場合はこちらに追加 */}
-        <div style={{ marginTop: "5rem" }}>
+        <div style={{ marginTop: "2rem" }}>
           <h3 style={{ fontSize: "1.5rem", fontWeight: 300, marginBottom: "3rem", textAlign: "center", color: "#2d2d2d", letterSpacing: "0.05em" }}>成分・効果</h3>
 
           <div style={{ maxWidth: "800px", margin: "0 auto 4rem" }}>
             <div style={{
               background: "linear-gradient(to bottom right, #ffffff, #f8f8f8)",
               borderRadius: "1.5rem",
-              padding: "3rem",
+              padding: "2rem",
               border: "1px solid rgba(184, 134, 11, 0.3)",
               boxShadow: "0 10px 30px rgba(0,0,0,0.05)"
             }}>
@@ -79,8 +79,8 @@ export default function ProductSection() {
                     <path fill="currentColor" d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z"/>
                   </svg>
                 </div>
-                <h4 style={{ fontSize: "1.75rem", fontWeight: 300, color: "#b8860b", marginBottom: "0.5rem" }}>主成分</h4>
-                <p style={{ fontSize: "1.5rem", fontWeight: 500, color: "#2d2d2d", marginBottom: "0.75rem" }}>{ingredient.name}</p>
+                <h4 style={{ fontSize: "1.5rem", fontWeight: 300, color: "#b8860b", marginBottom: "0.3rem" }}>主成分</h4>
+                <p style={{ fontSize: "1.4rem", fontWeight: 500, color: "#2d2d2d", marginBottom: "0.5rem" }}>{ingredient.name}</p>
                 <p style={{ fontSize: "1rem", color: "#555", marginBottom: "1rem" }}>{ingredient.description}</p>
                 <p style={{ fontSize: "0.875rem", color: "#777", lineHeight: "1.7", maxWidth: "640px", margin: "0 auto" }}>{ingredient.details}</p>
               </div>
@@ -95,8 +95,8 @@ export default function ProductSection() {
             margin: "0 auto",
             boxShadow: "0 6px 16px rgba(0,0,0,0.08)"
           }}>
-            <h4 style={{ fontSize: "1.25rem", fontWeight: 300, color: "#2d2d2d", marginBottom: "2rem", textAlign: "center" }}>期待できる効果</h4>
-            <div style={{
+            <h4 style={{ fontSize: "1.2rem", fontWeight: 300, color: "#2d2d2d", marginBottom: "1.5rem", textAlign: "center" }}>期待できる効果</h4>
+            <div className="effects-grid" style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               gap: "1.5rem"
@@ -105,7 +105,7 @@ export default function ProductSection() {
                 <div key={index} style={{
                   display: "flex",
                   alignItems: "flex-start",
-                  padding: "1rem",
+                  padding: "0.3rem",
                   borderRadius: "1rem",
                   transition: "background-color 0.3s ease"
                 }}>
@@ -135,6 +135,16 @@ export default function ProductSection() {
 
         
       </div>
+      <style jsx>{`
+  @media (max-width: 768px) {
+    h3 {
+      font-size: 1.36rem !important;
+    }
+       div :global(.effects-grid) {
+      grid-template-columns: 1fr !important;
+    }
+  }
+`}</style>
     </section>
   );
 }

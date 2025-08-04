@@ -96,7 +96,7 @@ const styles = {
   text: {
     fontSize: "0.875rem",
     color: "#4b5563",
-    marginBottom: "0.25rem",
+    
   },
   email: {
     fontSize: "0.875rem",

@@ -10,7 +10,7 @@ export default function HeroSection() {
 
   return (
     <>
-      <div style={styles.limitedBadge}>限定販売中</div>
+      <div className="limitedBadge" style={styles.limitedBadge}>限定販売中</div>
       <section style={styles.section}>
         {/* 背景 */}
         <div style={styles.backgroundContainer}>
@@ -92,7 +92,7 @@ export default function HeroSection() {
                 <h2 style={styles.productName}>Mother Vegetables Confidence</h2>
                 <p style={styles.productCode}>MV-Si002</p>
               </div>
-              <div style={styles.ctaContainer}>
+              <div className="ctaContainer" style={styles.ctaContainer}>
                 <button
                   onClick={() =>
                     document.getElementById("product")?.scrollIntoView({ behavior: "smooth" })
@@ -160,6 +160,28 @@ export default function HeroSection() {
           @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(100%); }
+          }
+           /* ✅ モバイル用フォントサイズ調整 */
+          @media (max-width: 768px) {
+           h1 {
+          font-size: 2.2rem !important;
+          line-height: 1.3!important;
+            }
+             h2 {
+          font-size: 1.3rem !important;
+          line-height: 1.3!important;
+            }
+             :global(.limitedBadge) {
+      display: none !important;
+    }
+           :global(.ctaContainer) {
+      flex-direction: column !important;
+      gap: 0.5rem !important;
+    }
+
+    :global(.ctaContainer > button) {
+      width: 100% !important;
+    }
           }
         `}</style>
       </section>

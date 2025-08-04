@@ -68,7 +68,7 @@ const styles = {
     margin: "0 auto",
   },
   inner: {
-    maxWidth: "768px",
+    maxWidth: "900px",
     margin: "0 auto",
   },
   header: {

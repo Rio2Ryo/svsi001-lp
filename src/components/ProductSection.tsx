@@ -49,7 +49,7 @@ export default function ProductSection() {
   ];
 
   return (
-    <section style={{ padding: "5rem 1rem 1rem 1rem", backgroundColor: "#f9fafb" }}>
+    <section id="product" style={{ padding: "5rem 0.01rem 1rem 0.01rem", backgroundColor: "#f9fafb" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 1rem" }}>
         <div style={{ textAlign: "center", marginBottom: "4rem" }}>
           <p style={{ fontSize: "0.875rem", color: "#b8860b", marginBottom: "1rem", letterSpacing: "0.1em" }}>商品ラインナップ</p>
@@ -148,7 +148,7 @@ export default function ProductSection() {
               </div>
               <div style={{ marginBottom: "1rem" }}>
                 <p style={{ fontSize: "0.75rem", color: "#6b7280", textDecoration: "line-through", marginBottom: "0.25rem" }}>通常価格 {product.originalPrice}</p>
-                <p style={{ fontSize: "2rem", fontWeight: "300", marginBottom: "0.25rem", color: product.popular ? "#b8860b" : "#1f2937" }}>{product.price}</p>
+                <p className="price" style={{ fontSize: "2rem", fontWeight: "300", marginBottom: "0.25rem", color: product.popular ? "#b8860b" : "#1f2937" }}>{product.price}</p>
                 <p style={{ fontSize: "0.75rem", color: "#9ca3af" }}>(税込)</p>
               </div>
               <button style={{
@@ -249,6 +249,16 @@ export default function ProductSection() {
 
         
       </div>
+      <style jsx>{`
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 1.45rem !important;
+    }
+      .price{
+      font-size: 1.4rem !important;
+      }
+  }
+`}</style>
     </section>
   );
 }

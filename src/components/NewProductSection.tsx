@@ -41,7 +41,7 @@ export default function NewProductSection() {
   }, [query.itemId]);
 
   return (
-    <section style={{ padding: "0.5rem 1rem", backgroundColor: "#f9fafb" }}>
+    <section style={{ padding: "0.5rem 0.01rem", backgroundColor: "#f9fafb" }}>
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 1rem" }}>
        
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem", marginBottom: "5rem" }}>
