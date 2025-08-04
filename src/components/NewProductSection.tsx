@@ -10,35 +10,37 @@ export default function NewProductSection() {
   const { query } = useRouter();
 
   useEffect(() => {
-    if (!query.itemId) return;
+  if (!query.itemId) return;
 
-    async function fetchProducts() {
-      const agentId = query.itemId.toLowerCase();
+  async function fetchProducts() {
+    const agentId = query.itemId.toLowerCase();
 
-      try {
-        const res = await fetch(`/${agentId}_products.json`);
-        if (!res.ok) throw new Error("データ取得失敗");
+    try {
+      const res = await fetch(`/${agentId}_products.json`);
+      if (!res.ok) throw new Error("データ取得失敗");
 
-        const data = await res.json();
-        const formatted = data.map((item) => ({
-          itemPic: item.ItemPic || "",
-          size: item.size || "",
-          title: item.name || "タイトル未設定",
-          description: item.description || "",
-          features: item.features || [],
-          originalPrice: item.originalprice || item.originalPrice || "",
-          price: item.price || "",
-          popular: item.popular || false,
-          slug: item.slug || "",
-        }));
-        setProducts(formatted);
-      } catch (error) {
-        console.error("商品データの取得に失敗しました:", error);
-      }
+      const data = await res.json();
+      const formatted = data.map((item) => ({
+        itemPic: item.ItemPic || "",
+        size: item.size || "",
+        title: item.name || "タイトル未設定",
+        description: item.description || "",
+        features: item.features || [],
+        originalPrice: item.originalprice || item.originalPrice || "",
+        price: item.price || "",
+        popular: item.popular || false,
+        slug: item.slug || "",
+      }));
+
+      // ✅ 上位7商品だけ表示
+      setProducts(formatted.slice(0, 7));
+    } catch (error) {
+      console.error("商品データの取得に失敗しました:", error);
     }
+  }
 
-    fetchProducts();
-  }, [query.itemId]);
+  fetchProducts();
+}, [query.itemId]);
 
   return (
     <section style={{ padding: "0.5rem 0.01rem", backgroundColor: "#f9fafb" }}>
