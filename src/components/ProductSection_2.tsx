@@ -1,53 +1,108 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+type JsonProduct = {
+  name: string;
+  slug: string;                 // 例: "trial-1111"
+  description?: string;
+  originalprice?: string;       // JSONは小文字p
+  price?: string;               // 例: "2,000円"
+  ItemPic?: string;
+  wixProductId?: string;
+  url?: string;
+};
+
 export default function ProductSection() {
   const [selectedSize, setSelectedSize] = useState("2g");
+  const [jsonData, setJsonData] = useState<JsonProduct[] | null>(null);
+
   const router = useRouter();
-  const { itemId } = router.query;
+  const rawId = router.query?.itemId;
+  const itemId = Array.isArray(rawId) ? rawId[0] : rawId;
 
-  const allProducts  = [
-    {
-      size: "1g",
-      slugPrefix: "trial",
-      title: "お試しサイズ",
-      description: "500mg - 約30日分",
-      features: ["マザーベジタブル 500mg配合", "約30日分", "携帯に便利なコンパクトケース"],
-      originalPrice: "¥3,300",
-      price: "¥2,200",
-      popular: false
-    },
-    {
-      size: "2g",
-      slugPrefix: "standard",
-      title: "スタンダードサイズ",
-      description: "2g - 約60日分",
-      features: ["マザーベジタブル 2g配合", "約60日分", "携帯に便利なコンパクトケース"],
-      originalPrice: "¥6,600",
-      price: "¥4,400",
-      popular: true
-    },
-    {
-      size: "5g",
-      slugPrefix: "large",
-      title: "お得な大容量",
-      description: "5g - 約150日分",
-      features: ["マザーベジタブル 5g配合", "約150日分", "特別な大容量ラグジュアリーケース"],
-      originalPrice: "¥11,000",
-      price: "¥8,800",
-      popular: false
-    }
-  ];
+  // 既存カード定義（フォールバック値を保持）
+  const allProducts = useMemo(
+    () => [
+      {
+        size: "1g",
+        slugPrefix: "trial",
+        title: "お試しサイズ",
+        description: "500mg - 約30日分",
+        features: ["マザーベジタブル 500mg配合", "約30日分", "携帯に便利なコンパクトケース"],
+        originalPrice: "¥3,300",
+        price: "¥2,200",
+        popular: false,
+        fallbackImg: "/item_pic1.jpg",
+      },
+      {
+        size: "2g",
+        slugPrefix: "standard",
+        title: "スタンダードサイズ",
+        description: "2g - 約60日分",
+        features: ["マザーベジタブル 2g配合", "約60日分", "携帯に便利なコンパクトケース"],
+        originalPrice: "¥6,600",
+        price: "¥4,400",
+        popular: true,
+        fallbackImg: "/item_pic2.jpg",
+      },
+      {
+        size: "5g",
+        slugPrefix: "large",
+        title: "お得な大容量",
+        description: "5g - 約150日分",
+        features: ["マザーベジタブル 5g配合", "約150日分", "特別な大容量ラグジュアリーケース"],
+        originalPrice: "¥11,000",
+        price: "¥8,800",
+        popular: false,
+        fallbackImg: "/item_pic3.jpg",
+      },
+    ],
+    []
+  );
 
-  const products = itemId
-    ? allProducts.slice(-3).map((p) => ({
+  // itemIdに合わせて public/<itemId>_products.json を読み込む
+  useEffect(() => {
+    if (!itemId) return;
+    let ignore = false;
+
+    (async () => {
+      try {
+        const jsonPath = `/${itemId}_products.json`;
+        const res = await fetch(jsonPath, { cache: "no-store" });
+        if (!res.ok) throw new Error(`failed to load ${jsonPath}`);
+        const data: JsonProduct[] = await res.json();
+        if (!ignore) setJsonData(data);
+      } catch (e) {
+        console.error(e);
+        if (!ignore) setJsonData([]);
+      }
+    })();
+
+    return () => {
+      ignore = true;
+    };
+  }, [itemId]);
+
+  // JSONをマージして最終表示データを生成
+  const products = useMemo(() => {
+    if (!itemId) return [];
+    return allProducts.map((p) => {
+      const slug = `${p.slugPrefix}-${itemId}`;
+      const match = (jsonData || []).find((j) => j.slug === slug);
+      return {
         ...p,
-        slug: `${p.slugPrefix}-${itemId}`
-      }))
-    : [];
+        slug,
+        price: match?.price ?? p.price,
+        originalPrice: match?.originalprice ?? p.originalPrice,
+        itemPic: match?.ItemPic ?? p.fallbackImg,
+        wixProductId: match?.wixProductId,
+        externalUrl: match?.url,
+      };
+    });
+  }, [allProducts, jsonData, itemId]);
 
   return (
     <section id="product" style={{ padding: "5rem 0.01rem 1rem 0.01rem", backgroundColor: "#f9fafb" }}>
@@ -95,51 +150,23 @@ export default function ProductSection() {
               )}
 
               <div style={{ marginBottom: "1.5rem" }}>
-                {product.size === "1g" && (
-                  <img
-                    src="/item_pic1.jpg"
-                    alt="1g 商品画像"
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      objectFit: "cover",
-                      borderRadius: "1rem",
-                      backgroundColor: "#f3f4f6"
-                    }}
-                  />
-                )}
-                {product.size === "2g" && (
-                  <img
-                    src="/item_pic2.jpg"
-                    alt="2g 商品画像"
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      objectFit: "cover",
-                      borderRadius: "1rem",
-                      backgroundColor: "#f3f4f6"
-                    }}
-                  />
-                )}
-                {product.size === "5g" && (
-                  <img
-                    src="/item_pic3.jpg"
-                    alt="5g 商品画像"
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      objectFit: "cover",
-                      borderRadius: "1rem",
-                      backgroundColor: "#f3f4f6"
-                    }}
-                  />
-                )}
+                <img
+                  src={product.itemPic}
+                  alt={`${product.size} 商品画像`}
+                  style={{
+                    width: "100%",
+                    aspectRatio: "1 / 1",
+                    objectFit: "cover",
+                    borderRadius: "1rem",
+                    backgroundColor: "#f3f4f6"
+                  }}
+                />
               </div>
 
               <h3 style={{ fontSize: "1.25rem", fontWeight: "300", color: "#1f2937", marginBottom: "0.5rem" }}>{product.title}</h3>
               <p style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1rem" }}>{product.description}</p>
               <div style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1.5rem" }}>
-                {product.features.map((f, i) => (
+                {product.features.map((f: string, i: number) => (
                   <p key={i} style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
                     <span style={{ width: "6px", height: "6px", backgroundColor: "#b8860b", borderRadius: "50%" }}></span>
                     {f}
@@ -147,10 +174,15 @@ export default function ProductSection() {
                 ))}
               </div>
               <div style={{ marginBottom: "1rem" }}>
-                <p style={{ fontSize: "0.75rem", color: "#6b7280", textDecoration: "line-through", marginBottom: "0.25rem" }}>通常価格 {product.originalPrice}</p>
-                <p className="price" style={{ fontSize: "2rem", fontWeight: "300", marginBottom: "0.25rem", color: product.popular ? "#b8860b" : "#1f2937" }}>{product.price}</p>
+                <p style={{ fontSize: "0.75rem", color: "#6b7280", textDecoration: "line-through", marginBottom: "0.25rem" }}>
+                  通常価格 {product.originalPrice}
+                </p>
+                <p className="price" style={{ fontSize: "2rem", fontWeight: "300", marginBottom: "0.25rem", color: product.popular ? "#b8860b" : "#1f2937" }}>
+                  {product.price}
+                </p>
                 <p style={{ fontSize: "0.75rem", color: "#9ca3af" }}>(税込)</p>
               </div>
+
               <Link href={`/item/${itemId}/${product.slug}`} style={{ textDecoration: "none" }}>
                 <button style={{
                   width: "100%",
@@ -169,14 +201,11 @@ export default function ProductSection() {
           ))}
         </div>
       </div>
+
       <style jsx>{`
         @media (max-width: 768px) {
-          h2 {
-            font-size: 1.45rem !important;
-          }
-          .price {
-            font-size: 1.4rem !important;
-          }
+          h2 { font-size: 1.45rem !important; }
+          .price { font-size: 1.4rem !important; }
         }
       `}</style>
     </section>
