@@ -13,8 +13,8 @@ export default function ProductSection() {
       title: "お試しサイズ",
       description: "500mg - 約30日分",
       features: ["マザーベジタブル 500mg配合", "約30日分", "携帯に便利なコンパクトケース"],
-      originalPrice: "¥3,300",
-      price: "¥2,200",
+      originalPrice: "3,300円",
+      price: "2,200円",
       popular: false,
       externalUrl: "https://www.dotpb.jp/product-page/trial",     // ← 指定URL
     },
@@ -24,8 +24,8 @@ export default function ProductSection() {
       title: "スタンダードサイズ",
       description: "2g - 約60日分",
       features: ["マザーベジタブル 2g配合", "約60日分", "携帯に便利なコンパクトケース"],
-      originalPrice: "¥6,600",
-      price: "¥4,400",
+      originalPrice: "6,600円",
+      price: "4,400円",
       popular: true,
       externalUrl: "https://www.dotpb.jp/product-page/standard",  // ← 指定URL
     },
@@ -35,8 +35,8 @@ export default function ProductSection() {
       title: "お得な大容量",
       description: "5g - 約150日分",
       features: ["マザーベジタブル 5g配合", "約150日分", "特別な大容量ラグジュアリーケース"],
-      originalPrice: "¥11,000",
-      price: "¥8,800",
+      originalPrice: "11,000円",
+      price: "8,800円",
       popular: false,
       externalUrl: "https://www.dotpb.jp/product-page/large",     // ← ご指定
     },
