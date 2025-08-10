@@ -12,7 +12,7 @@ type JsonProduct = {
   price?: string;               // 例: "2,000円"
   ItemPic?: string;
   wixProductId?: string;
-  url?: string;
+  url?: string;                 // ← この外部URLへ遷移させる
 };
 
 export default function ProductSection() {
@@ -23,7 +23,6 @@ export default function ProductSection() {
   const rawId = router.query?.itemId;
   const itemId = Array.isArray(rawId) ? rawId[0] : rawId;
 
-  // 既存カード定義（フォールバック値を保持）
   const allProducts = useMemo(
     () => [
       {
@@ -63,11 +62,10 @@ export default function ProductSection() {
     []
   );
 
-  // itemIdに合わせて public/<itemId>_products.json を読み込む
+  // JSON読み込み（public/<itemId>_products.json）
   useEffect(() => {
     if (!itemId) return;
     let ignore = false;
-
     (async () => {
       try {
         const jsonPath = `/${itemId}_products.json`;
@@ -80,10 +78,7 @@ export default function ProductSection() {
         if (!ignore) setJsonData([]);
       }
     })();
-
-    return () => {
-      ignore = true;
-    };
+    return () => { ignore = true; };
   }, [itemId]);
 
   // JSONをマージして最終表示データを生成
@@ -99,10 +94,12 @@ export default function ProductSection() {
         originalPrice: match?.originalprice ?? p.originalPrice,
         itemPic: match?.ItemPic ?? p.fallbackImg,
         wixProductId: match?.wixProductId,
-        externalUrl: match?.url,
+        externalUrl: match?.url,                // ← ここにJSONのURL
       };
     });
   }, [allProducts, jsonData, itemId]);
+
+  const isExternal = (url: string) => /^https?:\/\//i.test(url);
 
   return (
     <section id="product" style={{ padding: "5rem 0.01rem 1rem 0.01rem", backgroundColor: "#f9fafb" }}>
@@ -116,89 +113,116 @@ export default function ProductSection() {
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem", marginBottom: "5rem" }}>
-          {products.map((product) => (
-            <div
-              key={product.size}
-              onClick={() => setSelectedSize(product.size)}
-              style={{
-                backgroundColor: "#fff",
-                borderRadius: "1rem",
-                padding: "2rem",
-                border: selectedSize === product.size ? "3px solid #b8860b" : product.popular ? "2px solid #b8860b" : "2px solid #e5e7eb",
-                boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
-                cursor: "pointer",
-                position: "relative",
-                textAlign: "center"
-              }}
-            >
-              {product.popular && (
-                <div style={{
-                  position: "absolute",
-                  top: "1rem",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: "linear-gradient(to right, #b8860b, #d4c4b0)",
-                  padding: "0.5rem 1.5rem",
-                  borderRadius: "9999px",
-                  fontWeight: "bold",
-                  fontSize: "0.875rem",
-                  color: "#000",
-                  zIndex: 2
-                }}>
-                  人気No.1
+          {products.map((product) => {
+            const internalHref = `/item/${itemId}/${product.slug}`;
+            const href = product.externalUrl || internalHref;
+
+            return (
+              <div
+                key={product.size}
+                onClick={() => setSelectedSize(product.size)}
+                style={{
+                  backgroundColor: "#fff",
+                  borderRadius: "1rem",
+                  padding: "2rem",
+                  border: selectedSize === product.size ? "3px solid #b8860b" : product.popular ? "2px solid #b8860b" : "2px solid #e5e7eb",
+                  boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+                  cursor: "pointer",
+                  position: "relative",
+                  textAlign: "center"
+                }}
+              >
+                {product.popular && (
+                  <div style={{
+                    position: "absolute",
+                    top: "1rem",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    background: "linear-gradient(to right, #b8860b, #d4c4b0)",
+                    padding: "0.5rem 1.5rem",
+                    borderRadius: "9999px",
+                    fontWeight: "bold",
+                    fontSize: "0.875rem",
+                    color: "#000",
+                    zIndex: 2
+                  }}>
+                    人気No.1
+                  </div>
+                )}
+
+                <div style={{ marginBottom: "1.5rem" }}>
+                  <img
+                    src={product.itemPic}
+                    alt={`${product.size} 商品画像`}
+                    style={{
+                      width: "100%",
+                      aspectRatio: "1 / 1",
+                      objectFit: "cover",
+                      borderRadius: "1rem",
+                      backgroundColor: "#f3f4f6"
+                    }}
+                  />
                 </div>
-              )}
 
-              <div style={{ marginBottom: "1.5rem" }}>
-                <img
-                  src={product.itemPic}
-                  alt={`${product.size} 商品画像`}
-                  style={{
-                    width: "100%",
-                    aspectRatio: "1 / 1",
-                    objectFit: "cover",
-                    borderRadius: "1rem",
-                    backgroundColor: "#f3f4f6"
-                  }}
-                />
-              </div>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: "300", color: "#1f2937", marginBottom: "0.5rem" }}>{product.title}</h3>
+                <p style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1rem" }}>{product.description}</p>
+                <div style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1.5rem" }}>
+                  {product.features.map((f: string, i: number) => (
+                    <p key={i} style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
+                      <span style={{ width: "6px", height: "6px", backgroundColor: "#b8860b", borderRadius: "50%" }}></span>
+                      {f}
+                    </p>
+                  ))}
+                </div>
 
-              <h3 style={{ fontSize: "1.25rem", fontWeight: "300", color: "#1f2937", marginBottom: "0.5rem" }}>{product.title}</h3>
-              <p style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1rem" }}>{product.description}</p>
-              <div style={{ fontSize: "0.875rem", color: "#6b7280", marginBottom: "1.5rem" }}>
-                {product.features.map((f: string, i: number) => (
-                  <p key={i} style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
-                    <span style={{ width: "6px", height: "6px", backgroundColor: "#b8860b", borderRadius: "50%" }}></span>
-                    {f}
+                <div style={{ marginBottom: "1rem" }}>
+                  <p style={{ fontSize: "0.75rem", color: "#6b7280", textDecoration: "line-through", marginBottom: "0.25rem" }}>
+                    通常価格 {product.originalPrice}
                   </p>
-                ))}
-              </div>
-              <div style={{ marginBottom: "1rem" }}>
-                <p style={{ fontSize: "0.75rem", color: "#6b7280", textDecoration: "line-through", marginBottom: "0.25rem" }}>
-                  通常価格 {product.originalPrice}
-                </p>
-                <p className="price" style={{ fontSize: "2rem", fontWeight: "300", marginBottom: "0.25rem", color: product.popular ? "#b8860b" : "#1f2937" }}>
-                  {product.price}
-                </p>
-                <p style={{ fontSize: "0.75rem", color: "#9ca3af" }}>(税込)</p>
-              </div>
+                  <p className="price" style={{ fontSize: "2rem", fontWeight: "300", marginBottom: "0.25rem", color: product.popular ? "#b8860b" : "#1f2937" }}>
+                    {product.price}
+                  </p>
+                  <p style={{ fontSize: "0.75rem", color: "#9ca3af" }}>(税込)</p>
+                </div>
 
-              <Link href={`/item/${itemId}/${product.slug}`} style={{ textDecoration: "none" }}>
-                <button style={{
-                  width: "100%",
-                  padding: "0.75rem 1.5rem",
-                  background: product.popular ? "linear-gradient(to right, #b8860b, #d4c4b0)" : "#e5e7eb",
-                  color: product.popular ? "#000" : "#1f2937",
-                  border: "none",
-                  borderRadius: "0",
-                  fontSize: "0.875rem",
-                  cursor: "pointer"
-                }}>
-                  購入する
-                </button>
-              </Link>
-            </div>
-          ))}
+                {/* 外部URLがあれば <a> で遷移。なければ内部Linkにフォールバック */}
+                {product.externalUrl && isExternal(href) ? (
+                  <a
+                    href={href}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <button style={{
+                      width: "100%",
+                      padding: "0.75rem 1.5rem",
+                      background: product.popular ? "linear-gradient(to right, #b8860b, #d4c4b0)" : "#e5e7eb",
+                      color: product.popular ? "#000" : "#1f2937",
+                      border: "none",
+                      borderRadius: "0",
+                      fontSize: "0.875rem",
+                      cursor: "pointer"
+                    }}>
+                      購入する
+                    </button>
+                  </a>
+                ) : (
+                  <Link href={internalHref} style={{ textDecoration: "none" }}>
+                    <button style={{
+                      width: "100%",
+                      padding: "0.75rem 1.5rem",
+                      background: product.popular ? "linear-gradient(to right, #b8860b, #d4c4b0)" : "#e5e7eb",
+                      color: product.popular ? "#000" : "#1f2937",
+                      border: "none",
+                      borderRadius: "0",
+                      fontSize: "0.875rem",
+                      cursor: "pointer"
+                    }}>
+                      購入する
+                    </button>
+                  </Link>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
 
