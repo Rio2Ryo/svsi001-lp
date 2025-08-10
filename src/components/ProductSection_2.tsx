@@ -14,8 +14,8 @@ export default function ProductSection() {
       size: "1g",
       slugPrefix: "trial",
       title: "お試しサイズ",
-      description: "1g - 約30日分",
-      features: ["マザーベジタブル 1g配合", "約30日分", "携帯に便利なコンパクトケース"],
+      description: "500mg - 約30日分",
+      features: ["マザーベジタブル 500mg配合", "約30日分", "携帯に便利なコンパクトケース"],
       originalPrice: "¥3,300",
       price: "¥2,200",
       popular: false
@@ -26,8 +26,8 @@ export default function ProductSection() {
       title: "スタンダードサイズ",
       description: "2g - 約60日分",
       features: ["マザーベジタブル 2g配合", "約60日分", "携帯に便利なコンパクトケース"],
-      originalPrice: "¥5,500",
-      price: "¥3,300",
+      originalPrice: "¥6,600",
+      price: "¥4,400",
       popular: true
     },
     {
@@ -36,8 +36,8 @@ export default function ProductSection() {
       title: "お得な大容量",
       description: "5g - 約150日分",
       features: ["マザーベジタブル 5g配合", "約150日分", "特別な大容量ラグジュアリーケース"],
-      originalPrice: "¥8,800",
-      price: "¥5,500",
+      originalPrice: "¥11,000",
+      price: "¥8,800",
       popular: false
     }
   ];
