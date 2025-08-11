@@ -3,7 +3,7 @@ import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { myWixClient } from "../../../src/lib/wixClient";
 import Cookies from "js-cookie";
-import Footer from "../../../components/Footer"; // ← Footer追加
+import Footer from "../../src/components/Footer"; // ← Footer追加
 
 export default function ProductDetailPage() {
   const router = useRouter();
