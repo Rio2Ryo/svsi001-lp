@@ -1,0 +1,122 @@
+[
+  {
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 0501",
+    "slug": "standard-0501",
+    "description": "2g - 約60日分",
+    "originalprice": "6,600円",
+    "price": "4,000円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "6510e7bc-7a56-497a-9fad-0c726a1a2b69",
+    "url": "https://www.dotpb.jp/product-page/standard-0501"
+  },
+  {
+    "name": "MV-Si002 お試しサイズ 500mg - 0501",
+    "slug": "trial-0501",
+    "description": "1g - 約30日分",
+    "originalprice": "3,300円",
+    "price": "2,000円",
+    "ItemPic": "/trial.png",
+    "wixProductId": "6416895f-a0d0-4df9-90ff-3a8262b89b18",
+    "url": "https://www.dotpb.jp/product-page/trial-0501"
+  },
+  {
+    "name": "MV-Si002 お得な大容量 5,000mg - 0501",
+    "slug": "large-0501",
+    "description": "35g - 約150日分",
+    "originalprice": "11,000円",
+    "price": "8,000円",
+    "ItemPic": "/large.png",
+    "wixProductId": "0986fa0b-cdd0-4b6c-ade3-35b4d4b3d3d8",
+    "url": "https://www.dotpb.jp/product-page/large-0501"
+  },
+  {
+    "name": "PBスキンパウダー：【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り） - 0501",
+    "slug": "double-e-0501",
+    "description": "ミックスパックです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/double-e.png",
+    "wixProductId": "495c4ba2-7547-41ae-923d-6871c9b0af08",
+    "url": "https://www.dotpb.jp/product-page/double-e-0501"
+  },
+  {
+    "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り） - 0501",
+    "slug": "case-e-0501",
+    "description": "薬用スライドケ－スです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/case-e.png",
+    "wixProductId": "718d665f-1540-44c1-920a-47d36dbff007",
+    "url": "https://www.dotpb.jp/product-page/case-e-0501"
+  },
+  {
+    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg - 0501",
+    "slug": "big-refill-0501",
+    "description": "30本セットです。",
+    "originalprice": "19,800円",
+    "price": "18,000円",
+    "ItemPic": "/big-refill.png",
+    "wixProductId": "a0d1869f-21cc-45f5-b12f-e7f283eef8f0",
+    "url": "https://www.dotpb.jp/product-page/big-refill-0501"
+  },
+  {
+    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg - 0501",
+    "slug": "double-0501",
+    "description": "ミックスパックです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/double.png",
+    "wixProductId": "44e1e8c1-4c03-4e62-84ba-bb1dc38230ac",
+    "url": "https://www.dotpb.jp/product-page/double-0501"
+  },
+  {
+    "name": "PBスキンパウダー：【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り） - 0501",
+    "slug": "double-e-0501",
+    "description": "ミックスパックです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/double-e.png",
+    "wixProductId": "495c4ba2-7547-41ae-923d-6871c9b0af08",
+    "url": "https://www.dotpb.jp/product-page/double-e-0501"
+  },
+  {
+    "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り） - 0501",
+    "slug": "case-e-0501",
+    "description": "薬用スライドケ－スです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/case-e.png",
+    "wixProductId": "718d665f-1540-44c1-920a-47d36dbff007",
+    "url": "https://www.dotpb.jp/product-page/case-e-0501"
+  },
+  {
+    "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 1,500mg - 0501",
+    "slug": "case-0501",
+    "description": "薬用スライドケ－スです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/case.png",
+    "wixProductId": "314f7aac-669e-4e82-b374-8aa09b344a60",
+    "url": "https://www.dotpb.jp/product-page/case-0501"
+  },
+  {
+    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り） - 0501",
+    "slug": "big-refill-e-0501",
+    "description": "30本セットです。",
+    "originalprice": "30,800円",
+    "price": "28,000円",
+    "ItemPic": "/big-refill-e.png",
+    "wixProductId": "52b7dd57-c440-4f6d-8712-63554195a42b",
+    "url": "https://www.dotpb.jp/product-page/big-refill-e-0501"
+  },
+  {
+    "name": "PBスキンパウダー：【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り） - 0501",
+    "slug": "refill-e-0501",
+    "description": "10本セットです。",
+    "originalprice": "12,100円",
+    "price": "11,000円",
+    "ItemPic": "/refill-e.png",
+    "wixProductId": "419fd994-b536-41f5-83c4-7dc8df33ae2e",
+    "url": "https://www.dotpb.jp/product-page/refill-e-0501"
+  }
+]
