@@ -17,7 +17,6 @@ export default function ProductDetailPage() {
 
   useEffect(() => {
     if (!isReady || !query.itemId || !query.productSlug) return;
-
     async function fetchData() {
       try {
         const agentId = String(query.itemId).toLowerCase();
@@ -25,7 +24,6 @@ export default function ProductDetailPage() {
 
         const res = await fetch(`/${agentId}_products.json`);
         if (!res.ok) throw new Error("商品JSON取得失敗");
-
         const data = await res.json();
         const found = data.find((item) => item.slug?.toLowerCase() === slug);
         setProduct(found || null);
@@ -58,14 +56,12 @@ export default function ProductDetailPage() {
         setLoading(false);
       }
     }
-
     fetchData();
   }, [isReady, query.itemId, query.productSlug]);
 
   const updateQuantity = async (newQty) => {
     if (!product || !product.wixProductId) return;
     if (newQty < 0) return;
-
     try {
       if (newQty === 0 && cartItemId) {
         await myWixClient.currentCart.removeLineItemFromCurrentCart(cartItemId);
@@ -75,7 +71,6 @@ export default function ProductDetailPage() {
         setCart(updatedCart);
         return;
       }
-
       if (cartItemId) {
         const { cart: updatedCart } =
           await myWixClient.currentCart.updateCurrentCartLineItemQuantity([
@@ -115,12 +110,10 @@ export default function ProductDetailPage() {
         await myWixClient.currentCart.createCheckoutFromCurrentCart({
           channelType: "WEB",
         });
-
-      const redirect = await myWixClient.redirects.createRedirectSession({
+    const redirect = await myWixClient.redirects.createRedirectSession({
         ecomCheckout: { checkoutId },
         callbacks: { postFlowUrl: window.location.href },
       });
-
       window.location = redirect.redirectSession.fullUrl;
     } catch (err) {
       console.error("チェックアウト失敗:", err);
@@ -147,16 +140,13 @@ export default function ProductDetailPage() {
     <>
       <div className="page">
         <div className="grid">
-          {/* 左：大きい商品画像 */}
           <div className="media">
             <img src={mainImg} alt={product.name} />
           </div>
 
-          {/* 右：情報パネル */}
           <div className="info">
             <h1 className="title">{product.name}</h1>
 
-            {/* テスト説明 */}
             <p className="lead">
               世界最古かつ最高品質とされる「マザーベジタブル」を贅沢に配合した、新発想のパフ型化粧品ケース。<br />
               軽量で持ち運びやすく、外出前のメイク直しやお出かけ後の肌ケア、就寝前のリラックスタイムなど、あらゆるシーンで手軽にご使用いただけます。<br />
@@ -164,7 +154,6 @@ export default function ProductDetailPage() {
               機能性とデザイン性を兼ね備えた、便利で高品質な新しい化粧品ケースです。
             </p>
 
-            {/* 価格ブロック */}
             <div className="priceBlock">
               {product.originalprice && (
                 <div className="original">{product.originalprice}</div>
@@ -172,7 +161,6 @@ export default function ProductDetailPage() {
               <div className="price">{product.price}</div>
             </div>
 
-            {/* 数量コントロール（見た目のみ刷新済み） */}
             <div className="qtyBlock">
               <div className="qtyLabel">数量</div>
               <div className="qtyBox" role="group" aria-label="数量を変更">
@@ -195,7 +183,6 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
-            {/* アクションボタン */}
             <div className="actions">
               <button
                 className="btn add"
@@ -206,18 +193,17 @@ export default function ProductDetailPage() {
               <button className="btn buy" onClick={checkout}>
                 今すぐ購入
               </button>
-              {/* ← 戻るボタンも同じUI（淡い水色） */}
-              <Link href={`/item/${query.itemId}`} className="btn back">
-                カートの状態を維持して商品一覧に戻る
+
+              {/* ← LinkにclassNameが効くように a タグに付与（pages ルーター） */}
+              <Link href={`/item/${query.itemId}`} legacyBehavior>
+                <a className="btn back">カートの状態を維持して商品一覧に戻る</a>
               </Link>
             </div>
 
-            {/* アコーディオン */}
             <details className="acc" open>
               <summary>商品情報</summary>
               <div className="accBody">
                 <div>商品名：{product.name}</div>
-                <div>価格：{product.price}</div>
               </div>
             </details>
 
@@ -254,7 +240,6 @@ export default function ProductDetailPage() {
           grid-template-columns: 1.1fr 0.9fr;
           gap: 32px;
         }
-        /* ▼ スマホだけ縦並び（1カラム）にする */
         @media (max-width: 640px) {
           .grid { grid-template-columns: 1fr; }
         }
@@ -267,7 +252,7 @@ export default function ProductDetailPage() {
         }
         .info { display: flex; flex-direction: column; gap: 14px; }
         .title { font-size: 28px; font-weight: 700; }
-        .lead, .desc { color: #374151; line-height: 1.9; font-size: 14px; }
+        .lead { color: #374151; line-height: 1.9; font-size: 14px; }
 
         .priceBlock {
           display: flex;
@@ -304,7 +289,7 @@ export default function ProductDetailPage() {
 
         .actions {
           display: flex;
-          flex-direction: column;   /* すでに縦並び */
+          flex-direction: column;
           gap: 12px;
           margin-top: 12px;
         }
@@ -318,11 +303,17 @@ export default function ProductDetailPage() {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          text-decoration: none;   /* Linkにも適用 */
+          text-decoration: none;
         }
         .btn.add { background: #e5e7eb; color: #111827; }
         .btn.buy { background: #000; color: #fff; }
-        .btn.back { background: #e8f3ff; color: #0f172a; } /* ← 淡い水色 */
+        .btn.back {
+          background: #e8f3ff;            /* 淡い水色 */
+          color: #0f172a;
+          border: 1px solid #cfe0ff;
+        }
+        /* visited でも色が変わらない＆下線なし */
+        .btn:visited, .btn.back:visited { color: inherit; text-decoration: none; }
 
         .acc { border-top: 1px solid #e5e7eb; padding-top: 12px; }
         .accBody { padding: 8px 0 2px; color: #374151; font-size: 14px; line-height: 1.9; }
