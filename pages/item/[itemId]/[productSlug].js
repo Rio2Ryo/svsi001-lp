@@ -345,7 +345,7 @@ export default function ProductDetailPage() {
       <style jsx>{`
         .page {
           max-width: 1200px;
-          margin: 80px auto 10px auto;
+          margin: 2.7rem auto 10px auto;
           padding: 24px 16px 64px;
         }
         .grid {
