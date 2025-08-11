@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { myWixClient } from "../../../src/lib/wixClient";
 import Cookies from "js-cookie";
-import Footer from "../../../src/components/Footer"; // ← Footer追加
+import Footer from "../../../src/components/Footer";
 
 export default function ProductDetailPage() {
   const router = useRouter();
@@ -158,18 +158,15 @@ export default function ProductDetailPage() {
 
             {/* テスト説明 */}
             <p className="lead">
-              テスト説明文：本製品の概要を示すダミーテキストです。<br />
-              肌にやさしい使用感と利便性を両立した設計になっています。<br />
-              毎日のケアから特別な日のメイクまで幅広く活躍します。<br />
-              携帯しやすいサイズで外出先でもさっと使えます。<br />
-              ご家族でもシェアしやすいスタンダードな仕様です。<br />
-              詳細な成分や使用方法は下部の商品情報をご確認ください。
+              世界最古かつ最高品質とされる「マザーベジタブル」を贅沢に配合した、新発想のパフ型化粧品ケース。<br />
+              軽量で持ち運びやすく、外出前のメイク直しやお出かけ後の肌ケア、就寝前のリラックスタイムなど、あらゆるシーンで手軽にご使用いただけます。<br />
+              肌にのせるだけで自然な仕上がりと多彩な美肌効果を実感でき、日常のスキンケアから特別な日のメイクまで幅広く活躍。<br />
+              機能性とデザイン性を兼ね備えた、便利で高品質な新しい化粧品ケースです。
             </p>
 
-            {/* 説明文と価格の位置を交換 → 説明文が上、価格が下 
-            {product.description && (
-              <p className="desc">{product.description}</p>
-            )}
+            {/* 説明文（必要なら復活可） */}
+            {/*
+            {product.description && <p className="desc">{product.description}</p>}
             */}
 
             {/* 価格ブロック */}
@@ -180,11 +177,27 @@ export default function ProductDetailPage() {
               <div className="price">{product.price}</div>
             </div>
 
-            {/* 数量コントロール */}
-            <div className="qtyRow">
-              <button className="stepBtn" onClick={() => updateQuantity(quantity - 1)}>-</button>
-              <span className="qty">{quantity}</span>
-              <button className="stepBtn" onClick={() => updateQuantity(quantity + 1)}>+</button>
+            {/* 数量コントロール（見た目のみ刷新） */}
+            <div className="qtyBlock">
+              <div className="qtyLabel">数量</div>
+              <div className="qtyBox" role="group" aria-label="数量を変更">
+                <button
+                  className="boxBtn minus"
+                  aria-label="減らす"
+                  onClick={() => updateQuantity(quantity - 1)}
+                  disabled={quantity <= 0}
+                >
+                  −
+                </button>
+                <div className="boxValue" aria-live="polite">{quantity}</div>
+                <button
+                  className="boxBtn plus"
+                  aria-label="増やす"
+                  onClick={() => updateQuantity(quantity + 1)}
+                >
+                  +
+                </button>
+              </div>
             </div>
 
             {/* アクションボタン */}
@@ -216,23 +229,23 @@ export default function ProductDetailPage() {
             <details className="acc">
               <summary>返品・返金ポリシー</summary>
               <div className="accBody">
-                商品到着後7日以内の未開封品のみ承ります。詳細はご利用規約をご確認ください。
+                返品期限：商品到着より7日以内<br />
+                返品時の送料負担：初期不良の場合は当店負担、お客様都合の場合はお客様にて送料をご負担ください。
               </div>
             </details>
 
             <details className="acc">
               <summary>商品の配送について</summary>
               <div className="accBody">
-                ご注文から2〜4営業日で発送いたします。送料・日時指定はチェックアウト時に選択できます。
+                配送料金：国内は基本送料無料（※沖縄への配送のみ1500円）<br />
+                ※海外は別途計算<br />
+                ご注文から翌日に発送致します。（土日祝日を除く）
               </div>
             </details>
-
-            
           </div>
         </div>
       </div>
 
-      {/* ページ最下層にFooter */}
       <Footer />
 
       <style jsx>{`
@@ -252,65 +265,66 @@ export default function ProductDetailPage() {
           object-fit: cover;
           background: #f6f6f6;
         }
-        .info {
-          display: flex;
-          flex-direction: column;
-          gap: 14px;
-        }
-        .title {
-          font-size: 28px;
-          font-weight: 700;
-        }
-        .lead {
-          color: #374151;
-          line-height: 1.9;
-          font-size: 14px;
-        }
-        .desc {
-          color: #374151;
-          line-height: 1.9;
-          font-size: 14px;
-        }
+        .info { display: flex; flex-direction: column; gap: 14px; }
+        .title { font-size: 28px; font-weight: 700; }
+        .lead, .desc { color: #374151; line-height: 1.9; font-size: 14px; }
+
+        /* 価格：横並び（同サイズ） */
         .priceBlock {
           display: flex;
           align-items: baseline;
           gap: 14px;
           margin-top: 6px;
         }
-        .price, .original {
-          font-size: 18px; /* 一回り小さく */
+        .price, .original { font-size: 18px; }
+        .original { text-decoration: line-through; color: #9ca3af; }
+        .price { font-weight: 800; }
+
+        /* ▼ 数量ブロック（画像の見た目に寄せる） */
+        .qtyBlock { margin-top: 10px; }
+        .qtyLabel {
+          font-weight: 700;
+          margin-bottom: 8px;
+          letter-spacing: .02em;
         }
-        .original {
-          text-decoration: line-through;
-          color: #9ca3af;
+        .qtyBox {
+          display: grid;
+          grid-template-columns: 48px 64px 48px;
+          align-items: center;
+          height: 44px;
+          border: 1px solid #111;         /* 黒めの枠 */
+          border-radius: 4px;              /* 角は控えめ */
+          overflow: hidden;                /* 角丸と一体化 */
+          background: #fff;
+          width: 160px;                    /* ボックス幅を固定 */
         }
-        .price {
-          font-weight: 800;
-        }
-        .qtyRow {
+        .boxBtn {
+          all: unset;                      /* 余計なデフォルトを解除 */
           display: flex;
           align-items: center;
-          gap: 12px;
-          margin-top: 8px;
-        }
-        .stepBtn {
-          width: 40px;
-          height: 40px;
-          border-radius: 12px;
-          border: 1px solid #d1d5db;
-          background: #fff;
-          font-size: 18px;
+          justify-content: center;
+          height: 100%;
+          width: 100%;
           cursor: pointer;
+          font-size: 20px;                 /* －／＋の大きさ */
+          user-select: none;
         }
-        .qty {
-          min-width: 28px;
+        .boxBtn:active { transform: translateY(0.5px); }
+        .boxBtn:disabled {
+          color: #cbd5e1;                  /* グレーで無効表示（画像の薄いマイナス風） */
+          cursor: not-allowed;
+        }
+        .boxValue {
           text-align: center;
+          font-size: 16px;
+          font-weight: 600;
         }
+
         .actions {
           display: flex;
           flex-direction: column;
           gap: 12px;
-          margin-top: 8px;
+          margin-top: 12px;
         }
         .btn {
           width: 100%;
@@ -320,21 +334,13 @@ export default function ProductDetailPage() {
           font-size: 14px;
           cursor: pointer;
         }
-        .btn.add {
-          background: #e5e7eb;
-        }
-        .btn.buy {
-          background: #000;
-          color: #fff;
-        }
-        .acc {
-          border-top: 1px solid #e5e7eb;
-          padding-top: 12px;
-        }
-        .backLink {
-          margin-top: 18px;
-          display: inline-block;
-        }
+        .btn.add { background: #e5e7eb; }
+        .btn.buy { background: #000; color: #fff; }
+
+        .acc { border-top: 1px solid #e5e7eb; padding-top: 12px; }
+        .accBody { padding: 8px 0 2px; color: #374151; font-size: 14px; line-height: 1.9; }
+
+        .backLink { margin-top: 18px; display: inline-block; }
       `}</style>
     </>
   );
