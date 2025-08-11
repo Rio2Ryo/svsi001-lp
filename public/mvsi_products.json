@@ -1,7 +1,7 @@
 [
   {
     "name": "MV-Si002 お試しサイズ 500mg",
-    "slug": "trial",
+    "slug": "trial-mvsi",
     "description": "500mg - 約30日分",
     "originalprice": "3,300円",
     "price": "2,200円",
@@ -11,7 +11,7 @@
   },
   {
     "name": "MV-Si002 スタンダードサイズ 2,000mg",
-    "slug": "standard",
+    "slug": "standard-mvsi",
     "description": "2,000mg - 約60日分",
     "originalprice": "6,600円",
     "price": "4,400円",
@@ -21,7 +21,7 @@
   },
   {
    "name": "MV-Si002 お得な大容量 5,000mg",
-    "slug": "large",
+    "slug": "large-mvsi",
     "description": "5,000mg - 約150日分",
     "originalprice": "11,000円",
     "price": "8,800円",

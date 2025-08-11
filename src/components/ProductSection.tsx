@@ -9,7 +9,7 @@ export default function ProductSection() {
   const products = [
     {
       size: "500mg",
-      slug: "trial", // ← 変更
+      slug: "trial-mvsi", // ← 変更
       title: "お試しサイズ",
       description: "500mg - 約30日分",
       features: ["マザーベジタブル 500mg配合", "約30日分", "携帯に便利なコンパクトケース"],
@@ -19,7 +19,7 @@ export default function ProductSection() {
     },
     {
       size: "2,000mg",
-      slug: "standard", // ← 変更
+      slug: "standard-mvsi", // ← 変更
       title: "スタンダードサイズ",
       description: "2,000mg - 約60日分",
       features: ["マザーベジタブル 2,000mg配合", "約60日分", "携帯に便利なコンパクトケース"],
@@ -29,7 +29,7 @@ export default function ProductSection() {
     },
     {
       size: "5,000mg",
-      slug: "large", // ← 変更
+      slug: "large-mvsi", // ← 変更
       title: "お得な大容量",
       description: "5,000mg - 約150日分",
       features: ["マザーベジタブル 5,000mg配合", "約150日分", "特別な大容量ラグジュアリーケース"],
