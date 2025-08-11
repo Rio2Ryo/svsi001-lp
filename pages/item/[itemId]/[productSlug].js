@@ -164,11 +164,6 @@ export default function ProductDetailPage() {
               機能性とデザイン性を兼ね備えた、便利で高品質な新しい化粧品ケースです。
             </p>
 
-            {/* 説明文（必要なら復活可） */}
-            {/*
-            {product.description && <p className="desc">{product.description}</p>}
-            */}
-
             {/* 価格ブロック */}
             <div className="priceBlock">
               {product.originalprice && (
@@ -177,7 +172,7 @@ export default function ProductDetailPage() {
               <div className="price">{product.price}</div>
             </div>
 
-            {/* 数量コントロール（見た目のみ刷新） */}
+            {/* 数量コントロール（見た目のみ刷新済み） */}
             <div className="qtyBlock">
               <div className="qtyLabel">数量</div>
               <div className="qtyBox" role="group" aria-label="数量を変更">
@@ -211,11 +206,11 @@ export default function ProductDetailPage() {
               <button className="btn buy" onClick={checkout}>
                 今すぐ購入
               </button>
+              {/* ← 戻るボタンも同じUI（淡い水色） */}
+              <Link href={`/item/${query.itemId}`} className="btn back">
+                カートの状態を維持して商品一覧に戻る
+              </Link>
             </div>
-
-            <Link href={`/item/${query.itemId}`} className="backLink">
-              カートの状態を維持して商品一覧に戻る
-            </Link>
 
             {/* アコーディオン */}
             <details className="acc" open>
@@ -259,6 +254,11 @@ export default function ProductDetailPage() {
           grid-template-columns: 1.1fr 0.9fr;
           gap: 32px;
         }
+        /* ▼ スマホだけ縦並び（1カラム）にする */
+        @media (max-width: 640px) {
+          .grid { grid-template-columns: 1fr; }
+        }
+
         .media img {
           width: 100%;
           border-radius: 12px;
@@ -269,7 +269,6 @@ export default function ProductDetailPage() {
         .title { font-size: 28px; font-weight: 700; }
         .lead, .desc { color: #374151; line-height: 1.9; font-size: 14px; }
 
-        /* 価格：横並び（同サイズ） */
         .priceBlock {
           display: flex;
           align-items: baseline;
@@ -280,49 +279,32 @@ export default function ProductDetailPage() {
         .original { text-decoration: line-through; color: #9ca3af; }
         .price { font-weight: 800; }
 
-        /* ▼ 数量ブロック（画像の見た目に寄せる） */
         .qtyBlock { margin-top: 10px; }
-        .qtyLabel {
-          font-weight: 700;
-          margin-bottom: 8px;
-          letter-spacing: .02em;
-        }
+        .qtyLabel { font-weight: 700; margin-bottom: 8px; letter-spacing: .02em; }
         .qtyBox {
           display: grid;
           grid-template-columns: 48px 64px 48px;
           align-items: center;
           height: 44px;
-          border: 1px solid #111;         /* 黒めの枠 */
-          border-radius: 4px;              /* 角は控えめ */
-          overflow: hidden;                /* 角丸と一体化 */
+          border: 1px solid #111;
+          border-radius: 4px;
+          overflow: hidden;
           background: #fff;
-          width: 160px;                    /* ボックス幅を固定 */
+          width: 160px;
         }
         .boxBtn {
-          all: unset;                      /* 余計なデフォルトを解除 */
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          height: 100%;
-          width: 100%;
-          cursor: pointer;
-          font-size: 20px;                 /* －／＋の大きさ */
-          user-select: none;
+          all: unset;
+          display: flex; align-items: center; justify-content: center;
+          height: 100%; width: 100%;
+          cursor: pointer; font-size: 20px; user-select: none;
         }
         .boxBtn:active { transform: translateY(0.5px); }
-        .boxBtn:disabled {
-          color: #cbd5e1;                  /* グレーで無効表示（画像の薄いマイナス風） */
-          cursor: not-allowed;
-        }
-        .boxValue {
-          text-align: center;
-          font-size: 16px;
-          font-weight: 600;
-        }
+        .boxBtn:disabled { color: #cbd5e1; cursor: not-allowed; }
+        .boxValue { text-align: center; font-size: 16px; font-weight: 600; }
 
         .actions {
           display: flex;
-          flex-direction: column;
+          flex-direction: column;   /* すでに縦並び */
           gap: 12px;
           margin-top: 12px;
         }
@@ -333,14 +315,17 @@ export default function ProductDetailPage() {
           border: none;
           font-size: 14px;
           cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;   /* Linkにも適用 */
         }
-        .btn.add { background: #e5e7eb; }
+        .btn.add { background: #e5e7eb; color: #111827; }
         .btn.buy { background: #000; color: #fff; }
+        .btn.back { background: #e8f3ff; color: #0f172a; } /* ← 淡い水色 */
 
         .acc { border-top: 1px solid #e5e7eb; padding-top: 12px; }
         .accBody { padding: 8px 0 2px; color: #374151; font-size: 14px; line-height: 1.9; }
-
-        .backLink { margin-top: 18px; display: inline-block; }
       `}</style>
     </>
   );
