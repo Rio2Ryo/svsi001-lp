@@ -12,17 +12,18 @@ type JsonProduct = {
   price?: string;               // 例: "2,000円"
   ItemPic?: string;
   wixProductId?: string;
-  url?: string;                 // ← この外部URLへ遷移させる
+  url?: string;                 // 取得はするが今回の遷移では未使用
 };
 
 export default function ProductSection() {
-  const [selectedSize, setSelectedSize] = useState("2g");
+  const [selectedSize, setSelectedSize] = useState("2,000mg"); // ← 表記に合わせて調整
   const [jsonData, setJsonData] = useState<JsonProduct[] | null>(null);
 
   const router = useRouter();
   const rawId = router.query?.itemId;
   const itemId = Array.isArray(rawId) ? rawId[0] : rawId;
 
+  // 既存のカード定義（フォールバック値）
   const allProducts = useMemo(
     () => [
       {
@@ -41,7 +42,7 @@ export default function ProductSection() {
         slugPrefix: "standard",
         title: "スタンダードサイズ",
         description: "2,000mg - 約60日分",
-        features: ["マザーベジタブル 2,000m配合", "約60日分", "携帯に便利なコンパクトケース"],
+        features: ["マザーベジタブル 2,000mg配合", "約60日分", "携帯に便利なコンパクトケース"],
         originalPrice: "¥6,600",
         price: "¥4,400",
         popular: true,
@@ -93,13 +94,9 @@ export default function ProductSection() {
         price: match?.price ?? p.price,
         originalPrice: match?.originalprice ?? p.originalPrice,
         itemPic: match?.ItemPic ?? p.fallbackImg,
-        wixProductId: match?.wixProductId,
-        externalUrl: match?.url,                // ← ここにJSONのURL
       };
     });
   }, [allProducts, jsonData, itemId]);
-
-  const isExternal = (url: string) => /^https?:\/\//i.test(url);
 
   return (
     <section id="product" style={{ padding: "5rem 0.01rem 1rem 0.01rem", backgroundColor: "#f9fafb" }}>
@@ -114,8 +111,8 @@ export default function ProductSection() {
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem", marginBottom: "5rem" }}>
           {products.map((product) => {
+            // ← ここを常に内部の動的ページに戻しました
             const internalHref = `/item/${itemId}/${product.slug}`;
-            const href = product.externalUrl || internalHref;
 
             return (
               <div
@@ -185,41 +182,21 @@ export default function ProductSection() {
                   <p style={{ fontSize: "0.75rem", color: "#9ca3af" }}>(税込)</p>
                 </div>
 
-                {/* 外部URLがあれば <a> で遷移。なければ内部Linkにフォールバック */}
-                {product.externalUrl && isExternal(href) ? (
-                  <a
-                    href={href}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <button style={{
-                      width: "100%",
-                      padding: "0.75rem 1.5rem",
-                      background: product.popular ? "linear-gradient(to right, #b8860b, #d4c4b0)" : "#e5e7eb",
-                      color: product.popular ? "#000" : "#1f2937",
-                      border: "none",
-                      borderRadius: "0",
-                      fontSize: "0.875rem",
-                      cursor: "pointer"
-                    }}>
-                      購入する
-                    </button>
-                  </a>
-                ) : (
-                  <Link href={internalHref} style={{ textDecoration: "none" }}>
-                    <button style={{
-                      width: "100%",
-                      padding: "0.75rem 1.5rem",
-                      background: product.popular ? "linear-gradient(to right, #b8860b, #d4c4b0)" : "#e5e7eb",
-                      color: product.popular ? "#000" : "#1f2937",
-                      border: "none",
-                      borderRadius: "0",
-                      fontSize: "0.875rem",
-                      cursor: "pointer"
-                    }}>
-                      購入する
-                    </button>
-                  </Link>
-                )}
+                {/* ✅ 常に内部の動的ページに遷移 */}
+                <Link href={internalHref} style={{ textDecoration: "none" }}>
+                  <button style={{
+                    width: "100%",
+                    padding: "0.75rem 1.5rem",
+                    background: product.popular ? "linear-gradient(to right, #b8860b, #d4c4b0)" : "#e5e7eb",
+                    color: product.popular ? "#000" : "#1f2937",
+                    border: "none",
+                    borderRadius: "0",
+                    fontSize: "0.875rem",
+                    cursor: "pointer"
+                  }}>
+                    購入する
+                  </button>
+                </Link>
               </div>
             );
           })}
