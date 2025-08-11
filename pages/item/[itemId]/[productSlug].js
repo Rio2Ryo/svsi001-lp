@@ -323,11 +323,7 @@ export default function ProductDetailPage() {
                     className="miniBtn"
                     onClick={() => changeLineItemQty(li._id, li.quantity + 1)}
                   >＋</button>
-                  <button
-                    className="removeBtn"
-                    onClick={() => changeLineItemQty(li._id, 0)}
-                    aria-label="削除"
-                  >削除</button>
+                 
                 </div>
               </div>
             </div>
