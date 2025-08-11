@@ -1,9 +1,9 @@
-// pages/item/[itemId]/[productSlug].js
 import { useRouter } from "next/router";
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { myWixClient } from "../../../src/lib/wixClient";
 import Cookies from "js-cookie";
+import Footer from "../../../components/Footer"; // ← Footer追加
 
 export default function ProductDetailPage() {
   const router = useRouter();
@@ -130,7 +130,7 @@ export default function ProductDetailPage() {
   const clearCart = async () => {
     try {
       await myWixClient.currentCart.deleteCurrentCart();
-    setCart({});
+      setCart({});
       setCartItemId(null);
       setQuantity(0);
     } catch (err) {
@@ -144,104 +144,99 @@ export default function ProductDetailPage() {
   if (!product) return <p className="notFound">商品が見つかりません</p>;
 
   return (
-    <div className="page">
-      <div className="grid">
-        {/* 左：大きい商品画像 */}
-        <div className="media">
-          <img src={mainImg} alt={product.name} />
-        </div>
+    <>
+      <div className="page">
+        <div className="grid">
+          {/* 左：大きい商品画像 */}
+          <div className="media">
+            <img src={mainImg} alt={product.name} />
+          </div>
 
-        {/* 右：情報パネル */}
-        <div className="info">
-          <h1 className="title">{product.name}</h1>
+          {/* 右：情報パネル */}
+          <div className="info">
+            <h1 className="title">{product.name}</h1>
 
-          {/* テスト説明（6行） */}
-          <p className="lead">
-            テスト説明文：本製品の概要を示すダミーテキストです。<br />
-            肌にやさしい使用感と利便性を両立した設計になっています。<br />
-            毎日のケアから特別な日のメイクまで幅広く活躍します。<br />
-            携帯しやすいサイズで外出先でもさっと使えます。<br />
-            ご家族でもシェアしやすいスタンダードな仕様です。<br />
-            詳細な成分や使用方法は下部の商品情報をご確認ください。
-          </p>
+            {/* テスト説明 */}
+            <p className="lead">
+              テスト説明文：本製品の概要を示すダミーテキストです。<br />
+              肌にやさしい使用感と利便性を両立した設計になっています。<br />
+              毎日のケアから特別な日のメイクまで幅広く活躍します。<br />
+              携帯しやすいサイズで外出先でもさっと使えます。<br />
+              ご家族でもシェアしやすいスタンダードな仕様です。<br />
+              詳細な成分や使用方法は下部の商品情報をご確認ください。
+            </p>
 
-          {/* 価格：横並び・同サイズ */}
-          <div className="priceBlock">
-            {product.originalprice && (
-              <div className="original">{product.originalprice}</div>
+            {/* 説明文と価格の位置を交換 → 説明文が上、価格が下 */}
+            {product.description && (
+              <p className="desc">{product.description}</p>
             )}
-            <div className="price">{product.price}</div>
-          </div>
 
-          {/* 補足説明（JSONのdescription） */}
-          {product.description && (
-            <p className="desc">{product.description}</p>
-          )}
-
-          {/* 数量コントロール */}
-          <div className="qtyRow">
-            <button className="stepBtn" onClick={() => updateQuantity(quantity - 1)}>-</button>
-            <span className="qty">{quantity}</span>
-            <button className="stepBtn" onClick={() => updateQuantity(quantity + 1)}>+</button>
-          </div>
-
-          {/* アクションボタン：縦並び・ピル型 */}
-          <div className="actions">
-            <button
-              className="btn add"
-              onClick={() => updateQuantity(quantity > 0 ? quantity : 1)}
-            >
-              カートに追加する
-            </button>
-            <button className="btn buy" onClick={checkout}>
-              今すぐ購入
-            </button>
-          </div>
-
-          {/* アコーディオン（SKUは削除） */}
-          <details className="acc" open>
-            <summary>商品情報</summary>
-            <div className="accBody">
-              <div>商品名：{product.name}</div>
-              <div>価格：{product.price}</div>
+            {/* 価格ブロック */}
+            <div className="priceBlock">
+              {product.originalprice && (
+                <div className="original">{product.originalprice}</div>
+              )}
+              <div className="price">{product.price}</div>
             </div>
-          </details>
 
-          <details className="acc">
-            <summary>返品・返金ポリシー</summary>
-            <div className="accBody">
-              商品到着後7日以内の未開封品のみ承ります。詳細はご利用規約をご確認ください。
+            {/* 数量コントロール */}
+            <div className="qtyRow">
+              <button className="stepBtn" onClick={() => updateQuantity(quantity - 1)}>-</button>
+              <span className="qty">{quantity}</span>
+              <button className="stepBtn" onClick={() => updateQuantity(quantity + 1)}>+</button>
             </div>
-          </details>
 
-          <details className="acc">
-            <summary>商品の配送について</summary>
-            <div className="accBody">
-              ご注文から2〜4営業日で発送いたします。送料・日時指定はチェックアウト時に選択できます。
+            {/* アクションボタン */}
+            <div className="actions">
+              <button
+                className="btn add"
+                onClick={() => updateQuantity(quantity > 0 ? quantity : 1)}
+              >
+                カートに追加する
+              </button>
+              <button className="btn buy" onClick={checkout}>
+                今すぐ購入
+              </button>
             </div>
-          </details>
 
-          <Link href={`/item/${query.itemId}`} className="backLink">
-            ← 代理店の商品一覧に戻る
-          </Link>
+            {/* アコーディオン */}
+            <details className="acc" open>
+              <summary>商品情報</summary>
+              <div className="accBody">
+                <div>商品名：{product.name}</div>
+                <div>価格：{product.price}</div>
+              </div>
+            </details>
 
-          {/* 開発中ユーティリティ（必要なければ隠してOK） */}
-          {false && (
-            <button className="btn ghost" onClick={clearCart}>カートを空にする</button>
-          )}
+            <details className="acc">
+              <summary>返品・返金ポリシー</summary>
+              <div className="accBody">
+                商品到着後7日以内の未開封品のみ承ります。詳細はご利用規約をご確認ください。
+              </div>
+            </details>
+
+            <details className="acc">
+              <summary>商品の配送について</summary>
+              <div className="accBody">
+                ご注文から2〜4営業日で発送いたします。送料・日時指定はチェックアウト時に選択できます。
+              </div>
+            </details>
+
+            <Link href={`/item/${query.itemId}`} className="backLink">
+              ← 代理店の商品一覧に戻る
+            </Link>
+          </div>
         </div>
       </div>
 
-      <style jsx>{`
-        /* 常時縦スクロールバーを表示して横ズレ防止 */
-        :global(html), :global(body) { overflow-y: scroll; }
-        :global(body) { scrollbar-gutter: stable; }
+      {/* ページ最下層にFooter */}
+      <Footer />
 
+      <style jsx>{`
         .page {
           max-width: 1200px;
-          margin: 90px auto 0 auto;
+          margin: 0 auto;
           padding: 24px 16px 64px;
-          min-height: calc(100vh + 80px);
         }
         .grid {
           display: grid;
@@ -250,79 +245,94 @@ export default function ProductDetailPage() {
         }
         .media img {
           width: 100%;
-          height: auto;
           border-radius: 12px;
           object-fit: cover;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.08);
           background: #f6f6f6;
         }
-        .info { display: flex; flex-direction: column; gap: 14px; }
-        .title { font-size: 28px; font-weight: 700; letter-spacing: 0.02em; }
-        .lead { color: #374151; line-height: 1.9; font-size: 14px; margin-top: -2px; }
-
-        /* 価格：横並び・同サイズ */
+        .info {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+        .title {
+          font-size: 28px;
+          font-weight: 700;
+        }
+        .lead {
+          color: #374151;
+          line-height: 1.9;
+          font-size: 14px;
+        }
+        .desc {
+          color: #374151;
+          line-height: 1.9;
+          font-size: 14px;
+        }
         .priceBlock {
-          display: inline-flex;
+          display: flex;
           align-items: baseline;
           gap: 14px;
           margin-top: 6px;
         }
         .price, .original {
-          font-size: 28px;              /* 同じサイズに統一 */
-          line-height: 1;
+          font-size: 24px; /* 一回り小さく */
         }
         .original {
           text-decoration: line-through;
           color: #9ca3af;
-          font-weight: 500;
         }
-        .price { font-weight: 800; }
-
-        .desc { color: #374151; line-height: 1.9; font-size: 14px; white-space: pre-wrap; }
-
-        .qtyRow { display: inline-flex; align-items: center; gap: 12px; margin-top: 8px; }
+        .price {
+          font-weight: 800;
+        }
+        .qtyRow {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-top: 8px;
+        }
         .stepBtn {
-          width: 40px; height: 40px;
+          width: 40px;
+          height: 40px;
           border-radius: 12px;
           border: 1px solid #d1d5db;
           background: #fff;
           font-size: 18px;
           cursor: pointer;
         }
-        .qty { min-width: 28px; text-align: center; font-weight: 600; }
-
-        /* ボタンを縦並び＆ピル型に */
-        .actions { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+        .qty {
+          min-width: 28px;
+          text-align: center;
+        }
+        .actions {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: 8px;
+        }
         .btn {
           width: 100%;
           height: 48px;
-          border-radius: 9999px;       /* もっと丸い角 */
+          border-radius: 9999px;
           border: none;
-          cursor: pointer;
           font-size: 14px;
+          cursor: pointer;
         }
-        .btn.add { background: #e5e7eb; color: #111827; }
-        .btn.buy { background: #000; color: #fff; }
-        .btn.ghost { background: transparent; border: 1px solid #e5e7eb; color: #111827; }
-
-        .acc { border-top: 1px solid #e5e7eb; padding-top: 12px; }
-        .acc + .acc { margin-top: 10px; }
-        .acc > summary { cursor: pointer; list-style: none; font-weight: 600; }
-        .acc > summary::-webkit-details-marker { display: none; }
-        .accBody { padding: 8px 0 2px; color: #374151; font-size: 14px; line-height: 1.9; }
-
+        .btn.add {
+          background: #e5e7eb;
+        }
+        .btn.buy {
+          background: #000;
+          color: #fff;
+        }
+        .acc {
+          border-top: 1px solid #e5e7eb;
+          padding-top: 12px;
+        }
         .backLink {
-          display: inline-block; margin-top: 18px;
-          color: #374151; text-decoration: none; border-bottom: 1px solid transparent;
+          margin-top: 18px;
+          display: inline-block;
         }
-        .backLink:hover { border-bottom-color: #374151; }
-
-        @media (max-width: 900px) {
-          .grid { grid-template-columns: 1fr; }
-          .media img { max-height: 420px; }
-        }
-        .pageLoading, .notFound { padding: 48px 16px; }
       `}</style>
-    </div>
+    </>
   );
 }
