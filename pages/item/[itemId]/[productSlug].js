@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react"; // ← useMemo追加
 import Link from "next/link";
 import { myWixClient } from "../../../src/lib/wixClient";
 import Cookies from "js-cookie";
@@ -16,23 +16,22 @@ export default function ProductDetailPage() {
   const [loading, setLoading] = useState(true);
   const [isSideCartOpen, setSideCartOpen] = useState(false);
 
-  // 合計数量（ヘッダー表示用）
+  // 合計数量（ヘッダー表示／空判定用）
   const totalQty = useMemo(
-    () => (cart?.lineItems || []).reduce((sum, li) => sum + (li.quantity || 0), 0),
+    () => (cart?.lineItems || []).reduce((s, li) => s + (li.quantity || 0), 0),
     [cart]
   );
 
   useEffect(() => {
     if (!isReady || !query.itemId || !query.productSlug) return;
 
-    async function fetchData() {
+    (async () => {
       try {
         const agentId = String(query.itemId).toLowerCase();
         const slug = String(query.productSlug).toLowerCase();
 
         const res = await fetch(`/${agentId}_products.json`);
         if (!res.ok) throw new Error("商品JSON取得失敗");
-
         const data = await res.json();
         const found = data.find((item) => item.slug?.toLowerCase() === slug);
         setProduct(found || null);
@@ -45,7 +44,8 @@ export default function ProductDetailPage() {
 
           if (found) {
             const foundItem = cartData.lineItems?.find(
-              (item) => item.catalogReference.catalogItemId === found.wixProductId
+              (item) =>
+                item.catalogReference.catalogItemId === found.wixProductId
             );
             if (foundItem) {
               setQuantity(foundItem.quantity);
@@ -56,19 +56,16 @@ export default function ProductDetailPage() {
           console.warn("⚠ カート取得に失敗（未ログインの可能性）:", err);
           setCart({ lineItems: [] });
         }
-      } catch (error) {
-        console.error("データ取得エラー:", error);
+      } catch (e) {
+        console.error(e);
         setProduct(null);
         setCart({});
       } finally {
         setLoading(false);
       }
-    }
-
-    fetchData();
+    })();
   }, [isReady, query.itemId, query.productSlug]);
 
-  // サイドカート表示中は背景スクロール禁止
   useEffect(() => {
     document.body.style.overflow = isSideCartOpen ? "hidden" : "";
     return () => (document.body.style.overflow = "");
@@ -80,23 +77,25 @@ export default function ProductDetailPage() {
 
     try {
       if (newQty === 0 && cartItemId) {
-        await myWixClient.currentCart.removeLineItemFromCurrentCart(cartItemId);
-        const updatedCart = await myWixClient.currentCart.getCurrentCart();
-        setCart(updatedCart);
+        await myWixClient.currentCart.removeLineItemFromCurrentCart(
+          String(cartItemId)
+        );
+        const updated = await myWixClient.currentCart.getCurrentCart();
+        setCart(updated);
         setQuantity(0);
         setCartItemId(null);
         return;
       }
 
       if (cartItemId) {
-        const { cart: updatedCart } =
+        const { cart: updated } =
           await myWixClient.currentCart.updateCurrentCartLineItemQuantity([
-            { _id: cartItemId, quantity: newQty },
+            { _id: String(cartItemId), quantity: newQty },
           ]);
+        setCart(updated);
         setQuantity(newQty);
-        setCart(updatedCart);
       } else {
-        const { cart: updatedCart } =
+        const { cart: updated } =
           await myWixClient.currentCart.addToCurrentCart({
             lineItems: [
               {
@@ -108,19 +107,18 @@ export default function ProductDetailPage() {
               },
             ],
           });
-        const addedItem = updatedCart.lineItems.find(
-          (item) => item.catalogReference.catalogItemId === product.wixProductId
+        const added = updated.lineItems.find(
+          (li) => li.catalogReference.catalogItemId === product.wixProductId
         );
-        setCart(updatedCart);
+        setCart(updated);
         setQuantity(1);
-        setCartItemId(addedItem?._id || null);
+        setCartItemId(added?._id || null);
       }
     } catch (err) {
       console.error("数量変更失敗:", err);
     }
   };
 
-  // 追加後にサイドカートを開く
   const handleAddToCart = async () => {
     await updateQuantity(quantity > 0 ? quantity : 1);
     setSideCartOpen(true);
@@ -132,12 +130,10 @@ export default function ProductDetailPage() {
         await myWixClient.currentCart.createCheckoutFromCurrentCart({
           channelType: "WEB",
         });
-
       const redirect = await myWixClient.redirects.createRedirectSession({
         ecomCheckout: { checkoutId },
         callbacks: { postFlowUrl: window.location.href },
       });
-
       window.location = redirect.redirectSession.fullUrl;
     } catch (err) {
       console.error("チェックアウト失敗:", err);
@@ -147,37 +143,62 @@ export default function ProductDetailPage() {
   const clearCart = async () => {
     try {
       await myWixClient.currentCart.deleteCurrentCart();
+    } finally {
       setCart({});
       setCartItemId(null);
       setQuantity(0);
-    } catch (err) {
-      console.error("カートクリア失敗:", err);
     }
   };
 
-  // サイドカート内：数量変更／削除（0 で削除）
+  // ▼ サイドカート内：安全で確実な削除／数量変更
   const changeLineItemQty = async (lineItemId, newQty) => {
+    const idStr = String(lineItemId);
+
+    // 楽観更新：まずUIから即時反映
+    setCart((prev) => {
+      const prevItems = prev?.lineItems || [];
+      let nextItems;
+      if (newQty <= 0) {
+        nextItems = prevItems.filter((li) => li._id !== idStr);
+      } else {
+        nextItems = prevItems.map((li) =>
+          li._id === idStr ? { ...li, quantity: newQty } : li
+        );
+      }
+      return { ...prev, lineItems: nextItems };
+    });
+    if (idStr === cartItemId && newQty <= 0) {
+      setCartItemId(null);
+      setQuantity(0);
+    } else if (idStr === cartItemId && newQty > 0) {
+      setQuantity(newQty);
+    }
+
     try {
       if (newQty <= 0) {
-        await myWixClient.currentCart.removeLineItemFromCurrentCart(lineItemId);
+        await myWixClient.currentCart.removeLineItemFromCurrentCart(idStr);
       } else {
         await myWixClient.currentCart.updateCurrentCartLineItemQuantity([
-          { _id: lineItemId, quantity: newQty },
+          { _id: idStr, quantity: newQty },
         ]);
       }
-      const updated = await myWixClient.currentCart.getCurrentCart();
-      setCart(updated);
+      // サーバーの正確な状態で再同期
+      const refreshed = await myWixClient.currentCart.getCurrentCart();
+      setCart(refreshed);
 
-      // 本商品の行が無くなったら数量表示も0へ
-      const stillHere = updated.lineItems?.find((li) => li._id === lineItemId);
-      if (!stillHere && lineItemId === cartItemId) {
-        setCartItemId(null);
-        setQuantity(0);
-      } else if (stillHere && lineItemId === cartItemId) {
-        setQuantity(stillHere.quantity);
+      // 本商品が無ければ数量も0に
+      if (idStr === cartItemId) {
+        const still = refreshed.lineItems?.find((li) => li._id === idStr);
+        setQuantity(still ? still.quantity : 0);
+        if (!still) setCartItemId(null);
       }
     } catch (err) {
-      console.error("サイドカート数量変更失敗:", err);
+      console.error("サイドカート更新失敗:", err);
+      // 失敗時はサーバー状態を正とする
+      try {
+        const refreshed = await myWixClient.currentCart.getCurrentCart();
+        setCart(refreshed);
+      } catch {}
     }
   };
 
@@ -214,6 +235,7 @@ export default function ProductDetailPage() {
               <div className="qtyLabel">数量</div>
               <div className="qtyBox" role="group" aria-label="数量を変更">
                 <button
+                  type="button"
                   className="boxBtn minus"
                   aria-label="減らす"
                   onClick={() => updateQuantity(quantity - 1)}
@@ -223,6 +245,7 @@ export default function ProductDetailPage() {
                 </button>
                 <div className="boxValue" aria-live="polite">{quantity}</div>
                 <button
+                  type="button"
                   className="boxBtn plus"
                   aria-label="増やす"
                   onClick={() => updateQuantity(quantity + 1)}
@@ -284,7 +307,7 @@ export default function ProductDetailPage() {
       >
         <header className="sideCartHeader">
           <div>カート（{totalQty}点のアイテム）</div>
-          <button className="closeBtn" onClick={() => setSideCartOpen(false)}>×</button>
+          <button type="button" className="closeBtn" onClick={() => setSideCartOpen(false)}>×</button>
         </header>
 
         <div className="sideCartBody">
@@ -305,16 +328,19 @@ export default function ProductDetailPage() {
                   <div className="liPrice">{li.price?.formattedAmount || ""}</div>
                   <div className="liQty">
                     <button
+                      type="button"
                       className="miniBtn"
                       onClick={() => changeLineItemQty(li._id, li.quantity - 1)}
                       disabled={li.quantity <= 1}
                     >−</button>
                     <span className="liQtyVal">{li.quantity}</span>
                     <button
+                      type="button"
                       className="miniBtn"
                       onClick={() => changeLineItemQty(li._id, li.quantity + 1)}
                     >＋</button>
                     <button
+                      type="button"
                       className="removeBtn"
                       onClick={() => changeLineItemQty(li._id, 0)}
                       aria-label="削除"
@@ -327,9 +353,7 @@ export default function ProductDetailPage() {
         </div>
 
         <footer className="sideCartFooter">
-          <div className="subtotal">
-            小計：{cart?.subtotal?.formattedAmount || "¥0"}
-          </div>
+          <div className="subtotal">小計：{cart?.subtotal?.formattedAmount || "¥0"}</div>
           <button className="btn checkoutBtn" onClick={checkout} disabled={totalQty === 0}>
             ご購入手続きへ
           </button>
@@ -338,27 +362,15 @@ export default function ProductDetailPage() {
               お買い物を続ける
             </button>
           )}
-          {/* 開発用：カートクリア（必要なら表示） */}
-          {false && (
-            <button className="btn ghost" onClick={clearCart}>カートを空にする</button>
-          )}
         </footer>
       </aside>
 
       <Footer />
 
       <style jsx>{`
-        .page {
-          max-width: 1200px;
-          margin: 80px auto 10px auto;
-          padding: 24px 16px 64px;
-        }
-        .grid {
-          display: grid;
-          grid-template-columns: 1.1fr 0.9fr;
-          gap: 32px;
-        }
-        @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+        .page { max-width: 1200px; margin: 80px auto 10px; padding: 24px 16px 64px; }
+        .grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 32px; }
+        @media (max-width: 640px){ .grid { grid-template-columns: 1fr; } }
 
         .media img { width: 100%; border-radius: 12px; object-fit: cover; background: #f6f6f6; }
         .info { display: flex; flex-direction: column; gap: 14px; }
@@ -372,18 +384,18 @@ export default function ProductDetailPage() {
 
         .qtyBlock { margin-top: 10px; }
         .qtyLabel { font-weight: 700; margin-bottom: 8px; letter-spacing: .02em; }
-        .qtyBox {
-          display: grid; grid-template-columns: 48px 64px 48px; align-items: center;
-          height: 44px; border: 1px solid #111; border-radius: 4px; overflow: hidden; background: #fff; width: 160px;
-        }
-        .boxBtn { all: unset; display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; cursor: pointer; font-size: 20px; user-select: none; }
+        .qtyBox { display: grid; grid-template-columns: 48px 64px 48px; align-items: center;
+                  height: 44px; border: 1px solid #111; border-radius: 4px; overflow: hidden;
+                  background: #fff; width: 160px; }
+        .boxBtn { all: unset; display: flex; align-items: center; justify-content: center;
+                  height: 100%; width: 100%; cursor: pointer; font-size: 20px; user-select: none; }
         .boxBtn:active { transform: translateY(0.5px); }
         .boxBtn:disabled { color: #cbd5e1; cursor: not-allowed; }
         .boxValue { text-align: center; font-size: 16px; font-weight: 600; }
 
         .actions { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
-        .btn { width: 100%; height: 48px; border-radius: 9999px; border: none; font-size: 14px; cursor: pointer;
-               display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+        .btn { width: 100%; height: 48px; border-radius: 9999px; border: none; font-size: 14px;
+               cursor: pointer; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
         .btn.add { background: #e5e7eb; color: #111827; }
         .btn.buy { background: #000; color: #fff; }
         .btn.back { background: #e8f3ff; color: #0f172a; border: 1px solid #cfe0ff; }
@@ -392,39 +404,31 @@ export default function ProductDetailPage() {
         .acc { border-top: 1px solid #e5e7eb; padding-top: 12px; }
         .accBody { padding: 8px 0 2px; color: #374151; font-size: 14px; line-height: 1.9; }
 
-        /* === side cart === */
-        .sideCartBackdrop {
-          position: fixed; inset: 0; background: rgba(0,0,0,.45);
-          opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 1000;
-        }
+        /* side cart */
+        .sideCartBackdrop { position: fixed; inset: 0; background: rgba(0,0,0,.45);
+          opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 1000; }
         .sideCartBackdrop.open { opacity: 1; pointer-events: auto; }
-
-        .sideCart {
-          position: fixed; top: 0; right: 0; width: 380px; max-width: 90vw; height: 100vh; background: #fff;
+        .sideCart { position: fixed; top: 0; right: 0; width: 380px; max-width: 90vw; height: 100vh; background: #fff;
           box-shadow: -8px 0 24px rgba(0,0,0,.1); transform: translateX(100%); transition: transform .25s ease;
-          z-index: 1001; display: flex; flex-direction: column;
-        }
+          z-index: 1001; display: flex; flex-direction: column; }
         .sideCart.open { transform: translateX(0); }
 
-        .sideCartHeader {
-          display: flex; justify-content: space-between; align-items: center;
-          padding: 16px; font-weight: 700; border-bottom: 1px solid #eee;
-        }
+        .sideCartHeader { display: flex; justify-content: space-between; align-items: center;
+          padding: 16px; font-weight: 700; border-bottom: 1px solid #eee; }
         .closeBtn { background: transparent; border: none; font-size: 24px; cursor: pointer; line-height: 1; }
 
         .sideCartBody { padding: 8px 16px; overflow-y: auto; flex: 1; }
         .empty { color: #6b7280; text-align: center; padding: 40px 0; }
 
-        .lineItem {
-          display: grid; grid-template-columns: 72px 1fr; gap: 12px; align-items: center;
-          padding: 12px 0; border-bottom: 1px solid #f1f5f9;
-        }
+        .lineItem { display: grid; grid-template-columns: 72px 1fr; gap: 12px; align-items: center;
+          padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
         .thumb img, .ph { width: 72px; height: 72px; border-radius: 8px; object-fit: cover; background: #f3f4f6; }
         .liInfo { display: flex; flex-direction: column; gap: 6px; }
         .liName { font-size: 14px; font-weight: 600; }
         .liPrice { font-size: 13px; color: #374151; }
         .liQty { display: flex; align-items: center; gap: 8px; }
-        .miniBtn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-size: 16px; }
+        .miniBtn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff;
+          cursor: pointer; font-size: 16px; }
         .miniBtn:disabled { opacity: .4; cursor: not-allowed; }
         .liQtyVal { min-width: 20px; text-align: center; font-weight: 700; }
         .removeBtn { margin-left: auto; background: transparent; border: none; color: #6b7280; cursor: pointer; font-size: 12px; }
