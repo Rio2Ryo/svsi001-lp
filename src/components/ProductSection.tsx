@@ -9,33 +9,36 @@ export default function ProductSection() {
   const products = [
     {
       size: "500mg",
-      slug: "trial-mvsi", // ← 変更
+      slug: "trial-mvsi", // ← そのまま
       title: "お試しサイズ",
       description: "500mg - 約30日分",
       features: ["マザーベジタブル 500mg配合", "約30日分", "携帯に便利なコンパクトケース"],
       originalPrice: "3,300円",
       price: "2,200円",
       popular: false,
+      image: "/item_pic1.jpg", // ← 画像を明示
     },
     {
       size: "2,000mg",
-      slug: "standard-mvsi", // ← 変更
+      slug: "standard-mvsi",
       title: "スタンダードサイズ",
       description: "2,000mg - 約60日分",
       features: ["マザーベジタブル 2,000mg配合", "約60日分", "携帯に便利なコンパクトケース"],
       originalPrice: "6,600円",
       price: "4,400円",
       popular: true,
+      image: "/item_pic2.jpg", // ← 明示
     },
     {
       size: "5,000mg",
-      slug: "large-mvsi", // ← 変更
+      slug: "large-mvsi",
       title: "お得な大容量",
       description: "5,000mg - 約150日分",
       features: ["マザーベジタブル 5,000mg配合", "約150日分", "特別な大容量ラグジュアリーケース"],
       originalPrice: "11,000円",
       price: "8,800円",
       popular: false,
+      image: "/item_pic3.jpg", // ← 明示
     },
   ] as const;
 
@@ -99,7 +102,7 @@ export default function ProductSection() {
 
                 <div style={{ marginBottom: "1.5rem" }}>
                   <img
-                    src={`/item_pic${product.size[0]}.jpg`}
+                    src={product.image} // ← ここを固定パスに
                     alt={`${product.size} 商品画像`}
                     style={{ width: "100%", aspectRatio: "1 / 1", objectFit: "cover", borderRadius: "1rem", backgroundColor: "#f3f4f6" }}
                   />
