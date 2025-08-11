@@ -15,7 +15,6 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // ---------- 既存ロジック：取得 ----------
   useEffect(() => {
     if (!isReady || !query.itemId || !query.productSlug) return;
 
@@ -63,7 +62,6 @@ export default function ProductDetailPage() {
     fetchData();
   }, [isReady, query.itemId, query.productSlug]);
 
-  // ---------- 既存ロジック：数量操作 ----------
   const updateQuantity = async (newQty) => {
     if (!product || !product.wixProductId) return;
     if (newQty < 0) return;
@@ -111,7 +109,6 @@ export default function ProductDetailPage() {
     }
   };
 
-  // ---------- 既存ロジック：チェックアウト ----------
   const checkout = async () => {
     try {
       const { checkoutId } =
@@ -130,11 +127,10 @@ export default function ProductDetailPage() {
     }
   };
 
-  // ---------- 既存ロジック：カートクリア ----------
   const clearCart = async () => {
     try {
       await myWixClient.currentCart.deleteCurrentCart();
-      setCart({});
+    setCart({});
       setCartItemId(null);
       setQuantity(0);
     } catch (err) {
@@ -142,8 +138,6 @@ export default function ProductDetailPage() {
     }
   };
 
-  // ---------- 表示用 ----------
-  const sku = useMemo(() => (product?.slug || "").toUpperCase(), [product]);
   const mainImg = product?.ItemPic || "/item_pic3.jpg";
 
   if (loading) return <p className="pageLoading">読み込み中...</p>;
@@ -161,7 +155,7 @@ export default function ProductDetailPage() {
         <div className="info">
           <h1 className="title">{product.name}</h1>
 
-          {/* ★ 商品名直下にテスト説明（6行） */}
+          {/* テスト説明（6行） */}
           <p className="lead">
             テスト説明文：本製品の概要を示すダミーテキストです。<br />
             肌にやさしい使用感と利便性を両立した設計になっています。<br />
@@ -171,8 +165,7 @@ export default function ProductDetailPage() {
             詳細な成分や使用方法は下部の商品情報をご確認ください。
           </p>
 
-          <div className="sku">SKU：{sku}</div>
-
+          {/* 価格：横並び・同サイズ */}
           <div className="priceBlock">
             {product.originalprice && (
               <div className="original">{product.originalprice}</div>
@@ -180,7 +173,7 @@ export default function ProductDetailPage() {
             <div className="price">{product.price}</div>
           </div>
 
-          {/* 例画像のサブテキスト相当（JSONの説明） */}
+          {/* 補足説明（JSONのdescription） */}
           {product.description && (
             <p className="desc">{product.description}</p>
           )}
@@ -192,7 +185,7 @@ export default function ProductDetailPage() {
             <button className="stepBtn" onClick={() => updateQuantity(quantity + 1)}>+</button>
           </div>
 
-          {/* アクションボタン */}
+          {/* アクションボタン：縦並び・ピル型 */}
           <div className="actions">
             <button
               className="btn add"
@@ -205,12 +198,11 @@ export default function ProductDetailPage() {
             </button>
           </div>
 
-          {/* アコーディオン */}
+          {/* アコーディオン（SKUは削除） */}
           <details className="acc" open>
             <summary>商品情報</summary>
             <div className="accBody">
               <div>商品名：{product.name}</div>
-              <div>SKU：{sku}</div>
               <div>価格：{product.price}</div>
             </div>
           </details>
@@ -229,27 +221,26 @@ export default function ProductDetailPage() {
             </div>
           </details>
 
-          {/* 一覧へ戻る */}
           <Link href={`/item/${query.itemId}`} className="backLink">
             ← 代理店の商品一覧に戻る
           </Link>
+
+          {/* 開発中ユーティリティ（必要なければ隠してOK） */}
+          {false && (
+            <button className="btn ghost" onClick={clearCart}>カートを空にする</button>
+          )}
         </div>
       </div>
 
       <style jsx>{`
-        /* ★ ページ全体でスクロールバーの幅を常に確保（横ズレ防止） */
-        :global(html), :global(body) {
-          overflow-y: scroll;
-        }
-        :global(body) {
-          scrollbar-gutter: stable; /* 対応ブラウザではより安定 */
-        }
+        /* 常時縦スクロールバーを表示して横ズレ防止 */
+        :global(html), :global(body) { overflow-y: scroll; }
+        :global(body) { scrollbar-gutter: stable; }
 
         .page {
           max-width: 1200px;
-          margin: 0 auto;
+          margin: 90px auto 0 auto;
           padding: 24px 16px 64px;
-          /* ★ 多少背を高くして、常に余白が出るように */
           min-height: calc(100vh + 80px);
         }
         .grid {
@@ -265,113 +256,67 @@ export default function ProductDetailPage() {
           box-shadow: 0 8px 24px rgba(0,0,0,0.08);
           background: #f6f6f6;
         }
-        .info {
-          display: flex;
-          flex-direction: column;
+        .info { display: flex; flex-direction: column; gap: 14px; }
+        .title { font-size: 28px; font-weight: 700; letter-spacing: 0.02em; }
+        .lead { color: #374151; line-height: 1.9; font-size: 14px; margin-top: -2px; }
+
+        /* 価格：横並び・同サイズ */
+        .priceBlock {
+          display: inline-flex;
+          align-items: baseline;
           gap: 14px;
+          margin-top: 6px;
         }
-        .title {
-          font-size: 28px;
-          font-weight: 700;
-          letter-spacing: 0.02em;
+        .price, .original {
+          font-size: 28px;              /* 同じサイズに統一 */
+          line-height: 1;
         }
-        .lead {
-          color: #374151;
-          line-height: 1.9;
-          font-size: 14px;
-          margin-top: -2px;
-        }
-        .sku {
-          font-size: 12px;
-          letter-spacing: .08em;
-          color: #6b7280;
-          margin-top: -2px;
-        }
-        .priceBlock { margin-top: 6px; }
         .original {
           text-decoration: line-through;
           color: #9ca3af;
-          font-size: 14px;
-          margin-bottom: 2px;
+          font-weight: 500;
         }
-        .price {
-          font-size: 28px;
-          font-weight: 800;
-        }
-        .desc {
-          color: #374151;
-          line-height: 1.9;
-          font-size: 14px;
-          white-space: pre-wrap;
-        }
-        .qtyRow {
-          display: inline-flex;
-          align-items: center;
-          gap: 12px;
-          margin-top: 8px;
-        }
+        .price { font-weight: 800; }
+
+        .desc { color: #374151; line-height: 1.9; font-size: 14px; white-space: pre-wrap; }
+
+        .qtyRow { display: inline-flex; align-items: center; gap: 12px; margin-top: 8px; }
         .stepBtn {
-          width: 36px;
-          height: 36px;
-          border-radius: 8px;
+          width: 40px; height: 40px;
+          border-radius: 12px;
           border: 1px solid #d1d5db;
           background: #fff;
           font-size: 18px;
           cursor: pointer;
         }
-        .qty {
-          min-width: 28px;
-          text-align: center;
-          font-weight: 600;
-        }
-        .actions {
-          display: flex;
-          gap: 12px;
-          margin-top: 8px;
-        }
+        .qty { min-width: 28px; text-align: center; font-weight: 600; }
+
+        /* ボタンを縦並び＆ピル型に */
+        .actions { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
         .btn {
-          flex: 1;
-          height: 44px;
-          border-radius: 10px;
+          width: 100%;
+          height: 48px;
+          border-radius: 9999px;       /* もっと丸い角 */
           border: none;
           cursor: pointer;
           font-size: 14px;
         }
-        .btn.add {
-          background: #e5e7eb;
-          color: #111827;
-        }
-        .btn.buy {
-          background: #000;
-          color: #fff;
-        }
-        .acc {
-          border-top: 1px solid #e5e7eb;
-          padding-top: 12px;
-        }
+        .btn.add { background: #e5e7eb; color: #111827; }
+        .btn.buy { background: #000; color: #fff; }
+        .btn.ghost { background: transparent; border: 1px solid #e5e7eb; color: #111827; }
+
+        .acc { border-top: 1px solid #e5e7eb; padding-top: 12px; }
         .acc + .acc { margin-top: 10px; }
-        .acc > summary {
-          cursor: pointer;
-          list-style: none;
-          font-weight: 600;
-        }
+        .acc > summary { cursor: pointer; list-style: none; font-weight: 600; }
         .acc > summary::-webkit-details-marker { display: none; }
-        .accBody {
-          padding: 8px 0 2px;
-          color: #374151;
-          font-size: 14px;
-          line-height: 1.9;
-        }
+        .accBody { padding: 8px 0 2px; color: #374151; font-size: 14px; line-height: 1.9; }
+
         .backLink {
-          display: inline-block;
-          margin-top: 18px;
-          color: #374151;
-          text-decoration: none;
-          border-bottom: 1px solid transparent;
+          display: inline-block; margin-top: 18px;
+          color: #374151; text-decoration: none; border-bottom: 1px solid transparent;
         }
         .backLink:hover { border-bottom-color: #374151; }
 
-        /* レスポンシブ */
         @media (max-width: 900px) {
           .grid { grid-template-columns: 1fr; }
           .media img { max-height: 420px; }
