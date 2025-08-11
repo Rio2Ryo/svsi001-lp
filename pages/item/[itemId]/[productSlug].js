@@ -166,10 +166,11 @@ export default function ProductDetailPage() {
               詳細な成分や使用方法は下部の商品情報をご確認ください。
             </p>
 
-            {/* 説明文と価格の位置を交換 → 説明文が上、価格が下 */}
+            {/* 説明文と価格の位置を交換 → 説明文が上、価格が下 
             {product.description && (
               <p className="desc">{product.description}</p>
             )}
+            */}
 
             {/* 価格ブロック */}
             <div className="priceBlock">
@@ -199,6 +200,10 @@ export default function ProductDetailPage() {
               </button>
             </div>
 
+            <Link href={`/item/${query.itemId}`} className="backLink">
+              カートの状態を維持して商品一覧に戻る
+            </Link>
+
             {/* アコーディオン */}
             <details className="acc" open>
               <summary>商品情報</summary>
@@ -222,9 +227,7 @@ export default function ProductDetailPage() {
               </div>
             </details>
 
-            <Link href={`/item/${query.itemId}`} className="backLink">
-              ← 代理店の商品一覧に戻る
-            </Link>
+            
           </div>
         </div>
       </div>
@@ -235,7 +238,7 @@ export default function ProductDetailPage() {
       <style jsx>{`
         .page {
           max-width: 1200px;
-          margin: 0 auto;
+          margin: 80px auto 10px auto;
           padding: 24px 16px 64px;
         }
         .grid {
@@ -275,7 +278,7 @@ export default function ProductDetailPage() {
           margin-top: 6px;
         }
         .price, .original {
-          font-size: 24px; /* 一回り小さく */
+          font-size: 18px; /* 一回り小さく */
         }
         .original {
           text-decoration: line-through;
