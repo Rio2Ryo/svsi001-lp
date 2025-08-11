@@ -15,8 +15,12 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(0);
   const [loading, setLoading] = useState(true);
 
+  // ★ サイドカートの表示制御
+  const [isSideCartOpen, setSideCartOpen] = useState(false);
+
   useEffect(() => {
     if (!isReady || !query.itemId || !query.productSlug) return;
+
     async function fetchData() {
       try {
         const agentId = String(query.itemId).toLowerCase();
@@ -24,6 +28,7 @@ export default function ProductDetailPage() {
 
         const res = await fetch(`/${agentId}_products.json`);
         if (!res.ok) throw new Error("商品JSON取得失敗");
+
         const data = await res.json();
         const found = data.find((item) => item.slug?.toLowerCase() === slug);
         setProduct(found || null);
@@ -56,12 +61,24 @@ export default function ProductDetailPage() {
         setLoading(false);
       }
     }
+
     fetchData();
   }, [isReady, query.itemId, query.productSlug]);
+
+  // サイドカート中は背景スクロールを止める
+  useEffect(() => {
+    if (isSideCartOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [isSideCartOpen]);
 
   const updateQuantity = async (newQty) => {
     if (!product || !product.wixProductId) return;
     if (newQty < 0) return;
+
     try {
       if (newQty === 0 && cartItemId) {
         await myWixClient.currentCart.removeLineItemFromCurrentCart(cartItemId);
@@ -71,6 +88,7 @@ export default function ProductDetailPage() {
         setCart(updatedCart);
         return;
       }
+
       if (cartItemId) {
         const { cart: updatedCart } =
           await myWixClient.currentCart.updateCurrentCartLineItemQuantity([
@@ -87,7 +105,7 @@ export default function ProductDetailPage() {
                   appId: "1380b703-ce81-ff05-f115-39571d94dfcd",
                   catalogItemId: product.wixProductId,
                 },
-                quantity: 1,
+                quantity: 1, // 初回は1個追加（既存仕様のまま）
               },
             ],
           });
@@ -104,16 +122,24 @@ export default function ProductDetailPage() {
     }
   };
 
+  // ★ 「カートに追加」→ 追加後にサイドカートを開く
+  const handleAddToCart = async () => {
+    await updateQuantity(quantity > 0 ? quantity : 1);
+    setSideCartOpen(true);
+  };
+
   const checkout = async () => {
     try {
       const { checkoutId } =
         await myWixClient.currentCart.createCheckoutFromCurrentCart({
           channelType: "WEB",
         });
-    const redirect = await myWixClient.redirects.createRedirectSession({
+
+      const redirect = await myWixClient.redirects.createRedirectSession({
         ecomCheckout: { checkoutId },
         callbacks: { postFlowUrl: window.location.href },
       });
+
       window.location = redirect.redirectSession.fullUrl;
     } catch (err) {
       console.error("チェックアウト失敗:", err);
@@ -131,6 +157,30 @@ export default function ProductDetailPage() {
     }
   };
 
+  // ★ サイドカート内の数量変更＆削除
+  const changeLineItemQty = async (lineItemId, newQty) => {
+    try {
+      if (newQty <= 0) {
+        await myWixClient.currentCart.removeLineItemFromCurrentCart(lineItemId);
+        const updated = await myWixClient.currentCart.getCurrentCart();
+        setCart(updated);
+        if (lineItemId === cartItemId) {
+          setCartItemId(null);
+          setQuantity(0);
+        }
+      } else {
+        const { cart: updatedCart } =
+          await myWixClient.currentCart.updateCurrentCartLineItemQuantity([
+            { _id: lineItemId, quantity: newQty },
+          ]);
+        setCart(updatedCart);
+        if (lineItemId === cartItemId) setQuantity(newQty);
+      }
+    } catch (err) {
+      console.error("サイドカート数量変更失敗:", err);
+    }
+  };
+
   const mainImg = product?.ItemPic || "/item_pic3.jpg";
 
   if (loading) return <p className="pageLoading">読み込み中...</p>;
@@ -140,10 +190,12 @@ export default function ProductDetailPage() {
     <>
       <div className="page">
         <div className="grid">
+          {/* 左：大きい商品画像 */}
           <div className="media">
             <img src={mainImg} alt={product.name} />
           </div>
 
+          {/* 右：情報パネル */}
           <div className="info">
             <h1 className="title">{product.name}</h1>
 
@@ -154,6 +206,7 @@ export default function ProductDetailPage() {
               機能性とデザイン性を兼ね備えた、便利で高品質な新しい化粧品ケースです。
             </p>
 
+            {/* 価格 */}
             <div className="priceBlock">
               {product.originalprice && (
                 <div className="original">{product.originalprice}</div>
@@ -161,6 +214,7 @@ export default function ProductDetailPage() {
               <div className="price">{product.price}</div>
             </div>
 
+            {/* 数量コントロール */}
             <div className="qtyBlock">
               <div className="qtyLabel">数量</div>
               <div className="qtyBox" role="group" aria-label="数量を変更">
@@ -183,23 +237,21 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
+            {/* アクションボタン */}
             <div className="actions">
-              <button
-                className="btn add"
-                onClick={() => updateQuantity(quantity > 0 ? quantity : 1)}
-              >
+              <button className="btn add" onClick={handleAddToCart}>
                 カートに追加する
               </button>
               <button className="btn buy" onClick={checkout}>
                 今すぐ購入
               </button>
 
-              {/* ← LinkにclassNameが効くように a タグに付与（pages ルーター） */}
               <Link href={`/item/${query.itemId}`} legacyBehavior>
                 <a className="btn back">カートの状態を維持して商品一覧に戻る</a>
               </Link>
             </div>
 
+            {/* アコーディオン */}
             <details className="acc" open>
               <summary>商品情報</summary>
               <div className="accBody">
@@ -226,6 +278,71 @@ export default function ProductDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* ★ サイドカート（右ドロワー） */}
+      <div
+        className={`sideCartBackdrop ${isSideCartOpen ? "open" : ""}`}
+        onClick={() => setSideCartOpen(false)}
+      />
+      <aside
+        className={`sideCart ${isSideCartOpen ? "open" : ""}`}
+        role="dialog"
+        aria-modal="true"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <header className="sideCartHeader">
+          <div>カート（{cart?.lineItems?.length || 0}点のアイテム）</div>
+          <button className="closeBtn" onClick={() => setSideCartOpen(false)}>×</button>
+        </header>
+
+        <div className="sideCartBody">
+          {(cart?.lineItems || []).length === 0 && (
+            <div className="empty">カートは空です</div>
+          )}
+
+          {(cart?.lineItems || []).map((li) => (
+            <div className="lineItem" key={li._id}>
+              <div className="thumb">
+                {li.image?.url ? (
+                  <img src={li.image.url} alt={li.productName?.original || "item"} />
+                ) : (
+                  <div className="ph" />
+                )}
+              </div>
+              <div className="liInfo">
+                <div className="liName">{li.productName?.original}</div>
+                <div className="liPrice">{li.price?.formattedAmount || ""}</div>
+                <div className="liQty">
+                  <button
+                    className="miniBtn"
+                    onClick={() => changeLineItemQty(li._id, li.quantity - 1)}
+                    disabled={li.quantity <= 1}
+                  >−</button>
+                  <span className="liQtyVal">{li.quantity}</span>
+                  <button
+                    className="miniBtn"
+                    onClick={() => changeLineItemQty(li._id, li.quantity + 1)}
+                  >＋</button>
+                  <button
+                    className="removeBtn"
+                    onClick={() => changeLineItemQty(li._id, 0)}
+                    aria-label="削除"
+                  >削除</button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <footer className="sideCartFooter">
+          <div className="subtotal">
+            小計：{cart?.subtotal?.formattedAmount || ""}
+          </div>
+          <button className="btn checkoutBtn" onClick={checkout}>
+            ご購入手続きへ
+          </button>
+        </footer>
+      </aside>
 
       <Footer />
 
@@ -307,16 +424,95 @@ export default function ProductDetailPage() {
         }
         .btn.add { background: #e5e7eb; color: #111827; }
         .btn.buy { background: #000; color: #fff; }
-        .btn.back {
-          background: #e8f3ff;            /* 淡い水色 */
-          color: #0f172a;
-          border: 1px solid #cfe0ff;
-        }
-        /* visited でも色が変わらない＆下線なし */
+        .btn.back { background: #e8f3ff; color: #0f172a; border: 1px solid #cfe0ff; }
         .btn:visited, .btn.back:visited { color: inherit; text-decoration: none; }
 
         .acc { border-top: 1px solid #e5e7eb; padding-top: 12px; }
         .accBody { padding: 8px 0 2px; color: #374151; font-size: 14px; line-height: 1.9; }
+
+        /* ===== サイドカート ===== */
+        .sideCartBackdrop {
+          position: fixed;
+          inset: 0;
+          background: rgba(0,0,0,.45);
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity .25s ease;
+          z-index: 1000;
+        }
+        .sideCartBackdrop.open {
+          opacity: 1;
+          pointer-events: auto;
+        }
+        .sideCart {
+          position: fixed;
+          top: 0;
+          right: 0;
+          width: 380px;
+          max-width: 90vw;
+          height: 100vh;
+          background: #fff;
+          box-shadow: -8px 0 24px rgba(0,0,0,.1);
+          transform: translateX(100%);
+          transition: transform .25s ease;
+          z-index: 1001;
+          display: flex;
+          flex-direction: column;
+        }
+        .sideCart.open {
+          transform: translateX(0);
+        }
+        .sideCartHeader {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 16px;
+          font-weight: 700;
+          border-bottom: 1px solid #eee;
+        }
+        .closeBtn {
+          background: transparent; border: none; font-size: 24px; cursor: pointer;
+          line-height: 1;
+        }
+        .sideCartBody {
+          padding: 8px 16px;
+          overflow-y: auto;
+          flex: 1;
+        }
+        .empty { color: #6b7280; padding: 16px 0; }
+
+        .lineItem {
+          display: grid;
+          grid-template-columns: 72px 1fr;
+          gap: 12px;
+          align-items: center;
+          padding: 12px 0;
+          border-bottom: 1px solid #f1f5f9;
+        }
+        .thumb img, .ph {
+          width: 72px; height: 72px; border-radius: 8px; object-fit: cover; background: #f3f4f6;
+        }
+        .liInfo { display: flex; flex-direction: column; gap: 6px; }
+        .liName { font-size: 14px; font-weight: 600; }
+        .liPrice { font-size: 13px; color: #374151; }
+        .liQty { display: flex; align-items: center; gap: 8px; }
+        .miniBtn {
+          width: 28px; height: 28px; border-radius: 6px; border: 1px solid #d1d5db;
+          background: #fff; cursor: pointer; font-size: 16px;
+        }
+        .miniBtn:disabled { opacity: .4; cursor: not-allowed; }
+        .liQtyVal { min-width: 20px; text-align: center; font-weight: 700; }
+        .removeBtn {
+          margin-left: auto;
+          background: transparent; border: none; color: #6b7280; cursor: pointer; font-size: 12px;
+        }
+
+        .sideCartFooter {
+          border-top: 1px solid #eee;
+          padding: 12px 16px 16px;
+        }
+        .subtotal { font-weight: 700; margin-bottom: 10px; }
+        .checkoutBtn { background: #000; color: #fff; }
       `}</style>
     </>
   );
