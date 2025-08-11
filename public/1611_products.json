@@ -1,5 +1,15 @@
 [
   {
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 1611",
+    "slug": "standard-1611",
+    "description": "2g - 約60日分",
+    "originalprice": "6,600円",
+    "price": "4,000円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "73c15616-22f3-40be-887d-2018cd63be53",
+    "url": "https://www.dotpb.jp/product-page/standard-1611"
+  },
+  {
     "name": "MV-Si002 お得な大容量 5,000mg - 1611",
     "slug": "large-1611",
     "description": "35g - 約150日分",
