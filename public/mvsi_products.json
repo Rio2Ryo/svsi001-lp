@@ -1,7 +1,7 @@
 [
   {
     "name": "お試しサイズ",
-    "slug": "trial-mvsi",
+    "slug": "trial",
     "description": "1g - 約30日分",
     "originalprice": "3,300円",
     "price": "2,200円",
@@ -11,7 +11,7 @@
   },
   {
     "name": "スタンダードサイズ",
-    "slug": "standard-mvsi",
+    "slug": "standard",
     "description": "2g - 約60日分",
     "originalprice": "5,500円",
     "price": "3,300円",
@@ -21,7 +21,7 @@
   },
   {
    "name": "お得な大容量",
-    "slug": "large-mvsi",
+    "slug": "large",
     "description": "35g - 約150日分",
     "originalprice": "8,800円",
     "price": "5,500円",
