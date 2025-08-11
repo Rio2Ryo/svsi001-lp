@@ -15,8 +15,11 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // ★ サイドカートの表示制御
+  // ★ サイドカート表示
   const [isSideCartOpen, setSideCartOpen] = useState(false);
+
+  // ★ 代理店JSONを保持（ItemPic 参照用）
+  const [agentProducts, setAgentProducts] = useState([]);
 
   useEffect(() => {
     if (!isReady || !query.itemId || !query.productSlug) return;
@@ -30,6 +33,7 @@ export default function ProductDetailPage() {
         if (!res.ok) throw new Error("商品JSON取得失敗");
 
         const data = await res.json();
+        setAgentProducts(data); // ← ここで全件保持
         const found = data.find((item) => item.slug?.toLowerCase() === slug);
         setProduct(found || null);
 
@@ -67,11 +71,7 @@ export default function ProductDetailPage() {
 
   // サイドカート中は背景スクロールを止める
   useEffect(() => {
-    if (isSideCartOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = isSideCartOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [isSideCartOpen]);
 
@@ -105,7 +105,7 @@ export default function ProductDetailPage() {
                   appId: "1380b703-ce81-ff05-f115-39571d94dfcd",
                   catalogItemId: product.wixProductId,
                 },
-                quantity: 1, // 初回は1個追加（既存仕様のまま）
+                quantity: 1, // 初回は1個追加
               },
             ],
           });
@@ -122,7 +122,7 @@ export default function ProductDetailPage() {
     }
   };
 
-  // ★ 「カートに追加」→ 追加後にサイドカートを開く
+  // 「カートに追加」→ 追加後にサイドカートを開く
   const handleAddToCart = async () => {
     await updateQuantity(quantity > 0 ? quantity : 1);
     setSideCartOpen(true);
@@ -157,7 +157,7 @@ export default function ProductDetailPage() {
     }
   };
 
-  // ★ サイドカート内の数量変更＆削除
+  // ★ サイドカート：数量変更
   const changeLineItemQty = async (lineItemId, newQty) => {
     try {
       if (newQty <= 0) {
@@ -179,6 +179,13 @@ export default function ProductDetailPage() {
     } catch (err) {
       console.error("サイドカート数量変更失敗:", err);
     }
+  };
+
+  // ★ lineItem → ItemPic を優先してサムネ決定（なければ Wix の画像、それも無ければプレースホルダー）
+  const getThumbSrc = (li) => {
+    const wixId = li?.catalogReference?.catalogItemId;
+    const match = (agentProducts || []).find((p) => p.wixProductId === wixId);
+    return match?.ItemPic || li?.image?.url || null;
   };
 
   const mainImg = product?.ItemPic || "/item_pic3.jpg";
@@ -300,40 +307,51 @@ export default function ProductDetailPage() {
             <div className="empty">カートは空です</div>
           )}
 
-          {(cart?.lineItems || []).map((li) => (
-            <div className="lineItem" key={li._id}>
-              <div className="thumb">
-                {li.image?.url ? (
-                  <img src={li.image.url} alt={li.productName?.original || "item"} />
-                ) : (
-                  <div className="ph" />
-                )}
-              </div>
-              <div className="liInfo">
-                <div className="liName">{li.productName?.original}</div>
-                <div className="liPrice">{li.price?.formattedAmount || ""}</div>
-                <div className="liQty">
-                  <button
-                    className="miniBtn"
-                    onClick={() => changeLineItemQty(li._id, li.quantity - 1)}
-                    disabled={li.quantity <= 1}
-                  >−</button>
-                  <span className="liQtyVal">{li.quantity}</span>
-                  <button
-                    className="miniBtn"
-                    onClick={() => changeLineItemQty(li._id, li.quantity + 1)}
-                  >＋</button>
-                 
+          {(cart?.lineItems || []).map((li) => {
+            const thumb = getThumbSrc(li); // ← ItemPic 優先
+            return (
+              <div className="lineItem" key={li._id}>
+                <div className="thumb">
+                  {thumb ? (
+                    <img src={thumb} alt={li.productName?.original || "item"} />
+                  ) : (
+                    <div className="ph" />
+                  )}
+                </div>
+                <div className="liInfo">
+                  <div className="liName">{li.productName?.original}</div>
+                  {/* 価格（片側に寄せたい場合はこの行を liRow に分けてください） */}
+                  <div className="liPrice">{li.price?.formattedAmount || ""}</div>
+
+                  {/* ▼ 数量UIを画像②の見た目に合わせて刷新 */}
+                  <div className="liQty">
+                    <div className="liQtyBox" role="group" aria-label="数量を変更">
+                      <button
+                        className="liBtn"
+                        aria-label="減らす"
+                        onClick={() => changeLineItemQty(li._id, li.quantity - 1)}
+                        disabled={li.quantity <= 1}
+                      >
+                        −
+                      </button>
+                      <div className="liQtyNum" aria-live="polite">{li.quantity}</div>
+                      <button
+                        className="liBtn"
+                        aria-label="増やす"
+                        onClick={() => changeLineItemQty(li._id, li.quantity + 1)}
+                      >
+                        ＋
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <footer className="sideCartFooter">
-          <div className="subtotal">
-            小計：{cart?.subtotal?.formattedAmount || ""}
-          </div>
+          <div className="subtotal">小計：{cart?.subtotal?.formattedAmount || ""}</div>
           <button className="btn checkoutBtn" onClick={checkout}>
             ご購入手続きへ
           </button>
@@ -357,22 +375,12 @@ export default function ProductDetailPage() {
           .grid { grid-template-columns: 1fr; }
         }
 
-        .media img {
-          width: 100%;
-          border-radius: 12px;
-          object-fit: cover;
-          background: #f6f6f6;
-        }
+        .media img { width: 100%; border-radius: 12px; object-fit: cover; background: #f6f6f6; }
         .info { display: flex; flex-direction: column; gap: 14px; }
         .title { font-size: 28px; font-weight: 700; }
         .lead { color: #374151; line-height: 1.9; font-size: 14px; }
 
-        .priceBlock {
-          display: flex;
-          align-items: baseline;
-          gap: 14px;
-          margin-top: 6px;
-        }
+        .priceBlock { display: flex; align-items: baseline; gap: 14px; margin-top: 6px; }
         .price, .original { font-size: 18px; }
         .original { text-decoration: line-through; color: #9ca3af; }
         .price { font-weight: 800; }
@@ -400,113 +408,71 @@ export default function ProductDetailPage() {
         .boxBtn:disabled { color: #cbd5e1; cursor: not-allowed; }
         .boxValue { text-align: center; font-size: 16px; font-weight: 600; }
 
-        .actions {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          margin-top: 12px;
-        }
-        .btn {
-          width: 100%;
-          height: 48px;
-          border-radius: 9999px;
-          border: none;
-          font-size: 14px;
-          cursor: pointer;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          text-decoration: none;
-        }
+        .actions { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+        .btn { width: 100%; height: 48px; border-radius: 9999px; border: none; font-size: 14px; cursor: pointer;
+               display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
         .btn.add { background: #e5e7eb; color: #111827; }
         .btn.buy { background: #000; color: #fff; }
         .btn.back { background: #e8f3ff; color: #0f172a; border: 1px solid #cfe0ff; }
-        .btn:visited, .btn.back:visited { color: inherit; text-decoration: none; }
-
         .acc { border-top: 1px solid #e5e7eb; padding-top: 12px; }
         .accBody { padding: 8px 0 2px; color: #374151; font-size: 14px; line-height: 1.9; }
 
         /* ===== サイドカート ===== */
         .sideCartBackdrop {
-          position: fixed;
-          inset: 0;
-          background: rgba(0,0,0,.45);
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity .25s ease;
-          z-index: 1000;
+          position: fixed; inset: 0; background: rgba(0,0,0,.45);
+          opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 1000;
         }
-        .sideCartBackdrop.open {
-          opacity: 1;
-          pointer-events: auto;
-        }
+        .sideCartBackdrop.open { opacity: 1; pointer-events: auto; }
         .sideCart {
-          position: fixed;
-          top: 0;
-          right: 0;
-          width: 380px;
-          max-width: 90vw;
-          height: 100vh;
-          background: #fff;
-          box-shadow: -8px 0 24px rgba(0,0,0,.1);
-          transform: translateX(100%);
-          transition: transform .25s ease;
-          z-index: 1001;
-          display: flex;
-          flex-direction: column;
+          position: fixed; top: 0; right: 0; width: 380px; max-width: 90vw; height: 100vh; background: #fff;
+          box-shadow: -8px 0 24px rgba(0,0,0,.1); transform: translateX(100%); transition: transform .25s ease;
+          z-index: 1001; display: flex; flex-direction: column;
         }
-        .sideCart.open {
-          transform: translateX(0);
-        }
+        .sideCart.open { transform: translateX(0); }
+
         .sideCartHeader {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 16px;
-          font-weight: 700;
-          border-bottom: 1px solid #eee;
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 16px; font-weight: 700; border-bottom: 1px solid #eee;
         }
-        .closeBtn {
-          background: transparent; border: none; font-size: 24px; cursor: pointer;
-          line-height: 1;
-        }
-        .sideCartBody {
-          padding: 8px 16px;
-          overflow-y: auto;
-          flex: 1;
-        }
+        .closeBtn { background: transparent; border: none; font-size: 24px; cursor: pointer; line-height: 1; }
+
+        .sideCartBody { padding: 8px 16px; overflow-y: auto; flex: 1; }
         .empty { color: #6b7280; padding: 16px 0; }
 
         .lineItem {
-          display: grid;
-          grid-template-columns: 72px 1fr;
-          gap: 12px;
-          align-items: center;
-          padding: 12px 0;
-          border-bottom: 1px solid #f1f5f9;
+          display: grid; grid-template-columns: 72px 1fr; gap: 12px; align-items: center;
+          padding: 12px 0; border-bottom: 1px solid #f1f5f9;
         }
         .thumb img, .ph {
           width: 72px; height: 72px; border-radius: 8px; object-fit: cover; background: #f3f4f6;
         }
-        .liInfo { display: flex; flex-direction: column; gap: 6px; }
+        .liInfo { display: flex; flex-direction: column; gap: 8px; }
         .liName { font-size: 14px; font-weight: 600; }
         .liPrice { font-size: 13px; color: #374151; }
-        .liQty { display: flex; align-items: center; gap: 8px; }
-        .miniBtn {
-          width: 28px; height: 28px; border-radius: 6px; border: 1px solid #d1d5db;
-          background: #fff; cursor: pointer; font-size: 16px;
-        }
-        .miniBtn:disabled { opacity: .4; cursor: not-allowed; }
-        .liQtyVal { min-width: 20px; text-align: center; font-weight: 700; }
-        .removeBtn {
-          margin-left: auto;
-          background: transparent; border: none; color: #6b7280; cursor: pointer; font-size: 12px;
-        }
 
-        .sideCartFooter {
-          border-top: 1px solid #eee;
-          padding: 12px 16px 16px;
+        /* ▼ 数量UI（画像②の見た目） */
+        .liQty { margin-top: 2px; }
+        .liQtyBox {
+          display: grid;
+          grid-template-columns: 40px 56px 40px;
+          align-items: center;
+          height: 36px;
+          border: 1px solid #d1d5db;
+          border-radius: 6px;
+          background: #fff;
+          overflow: hidden;
+          width: 136px;
         }
+        .liBtn {
+          all: unset;
+          height: 100%;
+          display: flex; align-items: center; justify-content: center;
+          cursor: pointer; font-size: 18px; color: #111827;
+        }
+        .liBtn:disabled { color: #cbd5e1; cursor: not-allowed; }
+        .liQtyNum { text-align: center; font-weight: 700; }
+
+        .sideCartFooter { border-top: 1px solid #eee; padding: 12px 16px 16px; }
         .subtotal { font-weight: 700; margin-bottom: 10px; }
         .checkoutBtn { background: #000; color: #fff; }
       `}</style>
