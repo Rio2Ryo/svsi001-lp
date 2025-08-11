@@ -26,7 +26,7 @@ export default function ProductSection() {
   const allProducts = useMemo(
     () => [
       {
-        size: "1g",
+        size: "500mg",
         slugPrefix: "trial",
         title: "お試しサイズ",
         description: "500mg - 約30日分",
@@ -37,10 +37,10 @@ export default function ProductSection() {
         fallbackImg: "/item_pic1.jpg",
       },
       {
-        size: "2g",
+        size: "2,000mg",
         slugPrefix: "standard",
         title: "スタンダードサイズ",
-        description: "2g - 約60日分",
+        description: "2,000mg - 約60日分",
         features: ["マザーベジタブル 2g配合", "約60日分", "携帯に便利なコンパクトケース"],
         originalPrice: "¥6,600",
         price: "¥4,400",
@@ -48,10 +48,10 @@ export default function ProductSection() {
         fallbackImg: "/item_pic2.jpg",
       },
       {
-        size: "5g",
+        size: "5,000mg",
         slugPrefix: "large",
         title: "お得な大容量",
-        description: "5g - 約150日分",
+        description: "5,000mg - 約150日分",
         features: ["マザーベジタブル 5g配合", "約150日分", "特別な大容量ラグジュアリーケース"],
         originalPrice: "¥11,000",
         price: "¥8,800",

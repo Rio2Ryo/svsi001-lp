@@ -19,22 +19,22 @@ export default function ProductSection() {
       externalUrl: "https://www.dotpb.jp/product-page/trial",     // ← 指定URL
     },
     {
-      size: "2g",
+      size: "2,000mg",
       slug: "standard-mvsi",
       title: "スタンダードサイズ",
-      description: "2g - 約60日分",
-      features: ["マザーベジタブル 2g配合", "約60日分", "携帯に便利なコンパクトケース"],
+      description: "2,000mg - 約60日分",
+      features: ["マザーベジタブル 2,000mg配合", "約60日分", "携帯に便利なコンパクトケース"],
       originalPrice: "6,600円",
       price: "4,400円",
       popular: true,
       externalUrl: "https://www.dotpb.jp/product-page/standard",  // ← 指定URL
     },
     {
-      size: "5g",
+      size: "5,000mg",
       slug: "large-mvsi",
       title: "お得な大容量",
-      description: "5g - 約150日分",
-      features: ["マザーベジタブル 5g配合", "約150日分", "特別な大容量ラグジュアリーケース"],
+      description: "5,000mg - 約150日分",
+      features: ["マザーベジタブル 5,000mg配合", "約150日分", "特別な大容量ラグジュアリーケース"],
       originalPrice: "11,000円",
       price: "8,800円",
       popular: false,
