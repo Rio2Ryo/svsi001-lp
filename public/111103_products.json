@@ -50,26 +50,6 @@
     "url": "https://www.dotpb.jp/product-page/case-e-111103"
   },
   {
-    "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 1,500mg -111103",
-    "slug": "case-111103",
-    "description": "薬用スライドケ－スです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/case.png",
-    "wixProductId": "874628fe-925f-40bd-ac99-da9cfc89acdd",
-    "url": "https://www.dotpb.jp/product-page/case-111103"
-  },
-  {
-    "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り） -111103",
-    "slug": "case-e-111103",
-    "description": "薬用スライドケ－スです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/case-e.png",
-    "wixProductId": "b90229c9-ab1d-45f6-944c-6f64ddcd681f",
-    "url": "https://www.dotpb.jp/product-page/case-e-111103"
-  },
-  {
     "name": "PBスキンパウダー：【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り） -111103",
     "slug": "refill-e-111103",
     "description": "10本セットです。",
@@ -98,5 +78,25 @@
     "ItemPic": "/big-refill-e.png",
     "wixProductId": "c7784bd9-39fe-44f6-88a6-0a9e70d44789",
     "url": "https://www.dotpb.jp/product-page/big-refill-e-111103"
+  },
+  {
+    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -111103",
+    "slug": "double-111103",
+    "description": "ミックスパックです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/double.png",
+    "wixProductId": "f9d538ae-2436-4fe5-ad2f-d3e4f091b3be",
+    "url": "https://www.dotpb.jp/product-page/double-111103"
+  },
+  {
+    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -111103",
+    "slug": "big-refill-111103",
+    "description": "30本セットです。",
+    "originalprice": "19,800円",
+    "price": "18,000円",
+    "ItemPic": "/big-refill.png",
+    "wixProductId": "06be10fe-00fa-407a-a88a-08e7e53a5f57",
+    "url": "https://www.dotpb.jp/product-page/big-refill-111103"
   }
 ]

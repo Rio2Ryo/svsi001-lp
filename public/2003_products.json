@@ -10,6 +10,16 @@
     "url": "https://www.dotpb.jp/product-page/large-2003"
   },
   {
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 2003",
+    "slug": "standard-2003",
+    "description": "2g - 約60日分",
+    "originalprice": "6,600円",
+    "price": "4,000円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "4572eee1-ffa6-4361-bc62-08ae1b27452f",
+    "url": "https://www.dotpb.jp/product-page/standard-2003"
+  },
+  {
     "name": "MV-Si002 お試しサイズ 500mg - 2003",
     "slug": "trial-2003",
     "description": "1g - 約30日分",

@@ -30,14 +30,24 @@
     "url": "https://www.dotpb.jp/product-page/large-151103"
   },
   {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg - 151103",
-    "slug": "standard-151103",
-    "description": "2g - 約60日分",
-    "originalprice": "6,600円",
-    "price": "4,000円",
-    "ItemPic": "/standard.png",
-    "wixProductId": "f7d3bee5-ddb9-4f86-a63a-252f8bda9d83",
-    "url": "https://www.dotpb.jp/product-page/standard-151103"
+    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -151103",
+    "slug": "big-refill-151103",
+    "description": "30本セットです。",
+    "originalprice": "19,800円",
+    "price": "18,000円",
+    "ItemPic": "/big-refill.png",
+    "wixProductId": "873802ac-abdd-48ea-88e7-7f1d0c424c7a",
+    "url": "https://www.dotpb.jp/product-page/big-refill-151103"
+  },
+  {
+    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -151103",
+    "slug": "double-151103",
+    "description": "ミックスパックです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/double.png",
+    "wixProductId": "67631166-efb2-4e55-aec3-31493c727719",
+    "url": "https://www.dotpb.jp/product-page/double-151103"
   },
   {
     "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 1,500mg -151103",
@@ -88,25 +98,5 @@
     "ItemPic": "/case-e.png",
     "wixProductId": "9b94e3d7-914d-4193-a09f-9965876dd7c9",
     "url": "https://www.dotpb.jp/product-page/case-e-151103"
-  },
-  {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -151103",
-    "slug": "big-refill-151103",
-    "description": "30本セットです。",
-    "originalprice": "19,800円",
-    "price": "18,000円",
-    "ItemPic": "/big-refill.png",
-    "wixProductId": "873802ac-abdd-48ea-88e7-7f1d0c424c7a",
-    "url": "https://www.dotpb.jp/product-page/big-refill-151103"
-  },
-  {
-    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -151103",
-    "slug": "double-151103",
-    "description": "ミックスパックです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/double.png",
-    "wixProductId": "67631166-efb2-4e55-aec3-31493c727719",
-    "url": "https://www.dotpb.jp/product-page/double-151103"
   }
 ]

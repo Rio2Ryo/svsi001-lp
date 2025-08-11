@@ -1,5 +1,15 @@
 [
   {
+    "name": "MV-Si002 お試しサイズ 500mg - 252001",
+    "slug": "trial-252001",
+    "description": "1g - 約30日分",
+    "originalprice": "3,300円",
+    "price": "2,000円",
+    "ItemPic": "/trial.png",
+    "wixProductId": "d46ff518-5ede-4c69-a11c-e6d7de24c4cf",
+    "url": "https://www.dotpb.jp/product-page/trial-252001"
+  },
+  {
     "name": "MV-Si002 お得な大容量 5,000mg - 252001",
     "slug": "large-252001",
     "description": "35g - 約150日分",

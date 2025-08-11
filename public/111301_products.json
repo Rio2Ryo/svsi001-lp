@@ -1,5 +1,15 @@
 [
   {
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 111301",
+    "slug": "standard-111301",
+    "description": "2g - 約60日分",
+    "originalprice": "6,600円",
+    "price": "4,000円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "69dcdc16-4f25-49ff-b387-3a0887867a23",
+    "url": "https://www.dotpb.jp/product-page/standard-111301"
+  },
+  {
     "name": "MV-Si002 お得な大容量 5,000mg - 111301",
     "slug": "large-111301",
     "description": "35g - 約150日分",
@@ -28,26 +38,6 @@
     "ItemPic": "/standard.png",
     "wixProductId": "69dcdc16-4f25-49ff-b387-3a0887867a23",
     "url": "https://www.dotpb.jp/product-page/standard-111301"
-  },
-  {
-    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -111301",
-    "slug": "double-111301",
-    "description": "ミックスパックです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/double.png",
-    "wixProductId": "4b81c990-7b3d-403a-8042-cc4a35697206",
-    "url": "https://www.dotpb.jp/product-page/double-111301"
-  },
-  {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -111301",
-    "slug": "big-refill-111301",
-    "description": "30本セットです。",
-    "originalprice": "19,800円",
-    "price": "18,000円",
-    "ItemPic": "/big-refill.png",
-    "wixProductId": "5386b1c9-09a2-4677-ba3e-16199ff65782",
-    "url": "https://www.dotpb.jp/product-page/big-refill-111301"
   },
   {
     "name": "PBスキンパウダー：【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り） -111301",
@@ -98,5 +88,25 @@
     "ItemPic": "/case-e.png",
     "wixProductId": "75882d79-52b5-49a4-a0c5-8c601e2f0569",
     "url": "https://www.dotpb.jp/product-page/case-e-111301"
+  },
+  {
+    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -111301",
+    "slug": "big-refill-111301",
+    "description": "30本セットです。",
+    "originalprice": "19,800円",
+    "price": "18,000円",
+    "ItemPic": "/big-refill.png",
+    "wixProductId": "5386b1c9-09a2-4677-ba3e-16199ff65782",
+    "url": "https://www.dotpb.jp/product-page/big-refill-111301"
+  },
+  {
+    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -111301",
+    "slug": "double-111301",
+    "description": "ミックスパックです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/double.png",
+    "wixProductId": "4b81c990-7b3d-403a-8042-cc4a35697206",
+    "url": "https://www.dotpb.jp/product-page/double-111301"
   }
 ]

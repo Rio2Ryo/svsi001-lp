@@ -30,36 +30,6 @@
     "url": "https://www.dotpb.jp/product-page/large-112503"
   },
   {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -112503",
-    "slug": "big-refill-112503",
-    "description": "30本セットです。",
-    "originalprice": "19,800円",
-    "price": "18,000円",
-    "ItemPic": "/big-refill.png",
-    "wixProductId": "082c0b25-e5be-4714-87f7-0c4ceb869142",
-    "url": "https://www.dotpb.jp/product-page/big-refill-112503"
-  },
-  {
-    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -112503",
-    "slug": "double-112503",
-    "description": "ミックスパックです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/double.png",
-    "wixProductId": "011ad65e-9535-407a-a910-b05c4a2b27f3",
-    "url": "https://www.dotpb.jp/product-page/double-112503"
-  },
-  {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り） -112503",
-    "slug": "big-refill-e-112503",
-    "description": "30本セットです。",
-    "originalprice": "30,800円",
-    "price": "28,000円",
-    "ItemPic": "/big-refill-e.png",
-    "wixProductId": "df14124f-500c-461f-aea4-3ea0f2a94202",
-    "url": "https://www.dotpb.jp/product-page/big-refill-e-112503"
-  },
-  {
     "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 1,500mg -112503",
     "slug": "case-112503",
     "description": "薬用スライドケ－スです。",
@@ -98,5 +68,25 @@
     "ItemPic": "/refill-e.png",
     "wixProductId": "525d5b5d-64ca-4559-bc38-6845f864d0ef",
     "url": "https://www.dotpb.jp/product-page/refill-e-112503"
+  },
+  {
+    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -112503",
+    "slug": "big-refill-112503",
+    "description": "30本セットです。",
+    "originalprice": "19,800円",
+    "price": "18,000円",
+    "ItemPic": "/big-refill.png",
+    "wixProductId": "082c0b25-e5be-4714-87f7-0c4ceb869142",
+    "url": "https://www.dotpb.jp/product-page/big-refill-112503"
+  },
+  {
+    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -112503",
+    "slug": "double-112503",
+    "description": "ミックスパックです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/double.png",
+    "wixProductId": "011ad65e-9535-407a-a910-b05c4a2b27f3",
+    "url": "https://www.dotpb.jp/product-page/double-112503"
   }
 ]

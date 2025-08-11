@@ -1,5 +1,45 @@
 [
   {
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 2025",
+    "slug": "standard-2025",
+    "description": "2g - 約60日分",
+    "originalprice": "6,600円",
+    "price": "4,000円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "48546550-0a44-4bdc-9016-b234a52c327e",
+    "url": "https://www.dotpb.jp/product-page/standard-2025"
+  },
+  {
+    "name": "MV-Si002 お得な大容量 5,000mg - 2025",
+    "slug": "large-2025",
+    "description": "35g - 約150日分",
+    "originalprice": "11,000円",
+    "price": "8,000円",
+    "ItemPic": "/large.png",
+    "wixProductId": "81a00110-44c2-4417-ba5e-0726c7be27e3",
+    "url": "https://www.dotpb.jp/product-page/large-2025"
+  },
+  {
+    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -2025",
+    "slug": "double-2025",
+    "description": "ミックスパックです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/double.png",
+    "wixProductId": "b5d060bc-b713-4e2a-bceb-51eea31801a2",
+    "url": "https://www.dotpb.jp/product-page/double-2025"
+  },
+  {
+    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -2025",
+    "slug": "big-refill-2025",
+    "description": "30本セットです。",
+    "originalprice": "19,800円",
+    "price": "18,000円",
+    "ItemPic": "/big-refill.png",
+    "wixProductId": "ecc55482-3e04-4e9d-86da-cdc6619d29be",
+    "url": "https://www.dotpb.jp/product-page/big-refill-2025"
+  },
+  {
     "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り） -2025",
     "slug": "big-refill-e-2025",
     "description": "30本セットです。",
@@ -48,25 +88,5 @@
     "ItemPic": "/case.png",
     "wixProductId": "8577ff4d-e0a3-413a-834e-32c691d05dc3",
     "url": "https://www.dotpb.jp/product-page/case-2025"
-  },
-  {
-    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -2025",
-    "slug": "double-2025",
-    "description": "ミックスパックです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/double.png",
-    "wixProductId": "b5d060bc-b713-4e2a-bceb-51eea31801a2",
-    "url": "https://www.dotpb.jp/product-page/double-2025"
-  },
-  {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -2025",
-    "slug": "big-refill-2025",
-    "description": "30本セットです。",
-    "originalprice": "19,800円",
-    "price": "18,000円",
-    "ItemPic": "/big-refill.png",
-    "wixProductId": "ecc55482-3e04-4e9d-86da-cdc6619d29be",
-    "url": "https://www.dotpb.jp/product-page/big-refill-2025"
   }
 ]

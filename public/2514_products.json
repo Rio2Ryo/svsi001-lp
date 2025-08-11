@@ -20,6 +20,26 @@
     "url": "https://www.dotpb.jp/product-page/standard-2514"
   },
   {
+    "name": "MV-Si002 お試しサイズ 500mg - 2514",
+    "slug": "trial-2514",
+    "description": "1g - 約30日分",
+    "originalprice": "3,300円",
+    "price": "2,000円",
+    "ItemPic": "/trial.png",
+    "wixProductId": "74fa731d-4a7d-4443-8018-77391b9ef7c8",
+    "url": "https://www.dotpb.jp/product-page/trial-2514"
+  },
+  {
+    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -2514",
+    "slug": "double-2514",
+    "description": "ミックスパックです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/double.png",
+    "wixProductId": "1dbe2ca6-1ed2-4d0f-b189-c0c9f4139397",
+    "url": "https://www.dotpb.jp/product-page/double-2514"
+  },
+  {
     "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -2514",
     "slug": "big-refill-2514",
     "description": "30本セットです。",

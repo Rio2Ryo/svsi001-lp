@@ -1,5 +1,15 @@
 [
   {
+    "name": "MV-Si002 お試しサイズ 500mg - 1414",
+    "slug": "trial-1414",
+    "description": "1g - 約30日分",
+    "originalprice": "3,300円",
+    "price": "2,000円",
+    "ItemPic": "/trial.png",
+    "wixProductId": "b353ae15-5a70-4250-be08-923a13b4d361",
+    "url": "https://www.dotpb.jp/product-page/trial-1414"
+  },
+  {
     "name": "MV-Si002 スタンダードサイズ 2,000mg - 1414",
     "slug": "standard-1414",
     "description": "2g - 約60日分",
@@ -20,16 +30,6 @@
     "url": "https://www.dotpb.jp/product-page/large-1414"
   },
   {
-    "name": "MV-Si002 お試しサイズ 500mg - 1414",
-    "slug": "trial-1414",
-    "description": "1g - 約30日分",
-    "originalprice": "3,300円",
-    "price": "2,000円",
-    "ItemPic": "/trial.png",
-    "wixProductId": "b353ae15-5a70-4250-be08-923a13b4d361",
-    "url": "https://www.dotpb.jp/product-page/trial-1414"
-  },
-  {
     "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -1414",
     "slug": "big-refill-1414",
     "description": "30本セットです。",
@@ -38,6 +38,16 @@
     "ItemPic": "/big-refill.png",
     "wixProductId": "caa5a69a-1b70-466d-8e14-04a528ecd869",
     "url": "https://www.dotpb.jp/product-page/big-refill-1414"
+  },
+  {
+    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -1414",
+    "slug": "double-1414",
+    "description": "ミックスパックです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/double.png",
+    "wixProductId": "4fa83eab-2ee7-48fd-b208-cb62ca5013da",
+    "url": "https://www.dotpb.jp/product-page/double-1414"
   },
   {
     "name": "PBスキンパウダー：【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り） -1414",
@@ -88,15 +98,5 @@
     "ItemPic": "/case-e.png",
     "wixProductId": "d3ea8e2a-e4cc-46bb-b493-88f9a7b4baad",
     "url": "https://www.dotpb.jp/product-page/case-e-1414"
-  },
-  {
-    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -1414",
-    "slug": "double-1414",
-    "description": "ミックスパックです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/double.png",
-    "wixProductId": "4fa83eab-2ee7-48fd-b208-cb62ca5013da",
-    "url": "https://www.dotpb.jp/product-page/double-1414"
   }
 ]

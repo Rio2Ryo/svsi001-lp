@@ -30,26 +30,6 @@
     "url": "https://www.dotpb.jp/product-page/trial-130301"
   },
   {
-    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -130301",
-    "slug": "double-130301",
-    "description": "ミックスパックです。",
-    "originalprice": "3,630円",
-    "price": "3,300円",
-    "ItemPic": "/double.png",
-    "wixProductId": "040e3a6d-a407-45a1-8a8b-c9851b0a4e6d",
-    "url": "https://www.dotpb.jp/product-page/double-130301"
-  },
-  {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -130301",
-    "slug": "big-refill-130301",
-    "description": "30本セットです。",
-    "originalprice": "21,780円",
-    "price": "19,800円",
-    "ItemPic": "/big-refill.png",
-    "wixProductId": "a55e9fdc-32e2-4e0b-b4dc-83e5a0fb4cfa",
-    "url": "https://www.dotpb.jp/product-page/big-refill-130301"
-  },
-  {
     "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り） -130301",
     "slug": "case-e-130301",
     "description": "薬用スライドケ－スです。",
@@ -100,13 +80,23 @@
     "url": "https://www.dotpb.jp/product-page/big-refill-e-130301"
   },
   {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -130301",
-    "slug": "big-refill-130301",
+    "name": "PBスキンパウダー：【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り） -130301",
+    "slug": "refill-e-130301",
+    "description": "10本セットです。",
+    "originalprice": "13,200円",
+    "price": "12,000円",
+    "ItemPic": "/refill-e.png",
+    "wixProductId": "975c2647-3750-4b86-88e6-4a363ea290cb",
+    "url": "https://www.dotpb.jp/product-page/refill-e-130301"
+  },
+  {
+    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り） -130301",
+    "slug": "big-refill-e-130301",
     "description": "30本セットです。",
-    "originalprice": "21,780円",
-    "price": "19,800円",
-    "ItemPic": "/big-refill.png",
-    "wixProductId": "a55e9fdc-32e2-4e0b-b4dc-83e5a0fb4cfa",
-    "url": "https://www.dotpb.jp/product-page/big-refill-130301"
+    "originalprice": "33,000円",
+    "price": "30,000円",
+    "ItemPic": "/big-refill-e.png",
+    "wixProductId": "4208744b-7bbc-4ec1-bde1-7666787e9f30",
+    "url": "https://www.dotpb.jp/product-page/big-refill-e-130301"
   }
 ]

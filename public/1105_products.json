@@ -88,5 +88,15 @@
     "ItemPic": "/case.png",
     "wixProductId": "54b58bc8-4d2d-418f-a79e-50fd52722a0b",
     "url": "https://www.dotpb.jp/product-page/case-1105"
+  },
+  {
+    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -1105",
+    "slug": "double-1105",
+    "description": "ミックスパックです。",
+    "originalprice": "3,630円",
+    "price": "3,300円",
+    "ItemPic": "/double.png",
+    "wixProductId": "5e96579b-d26a-4291-aed6-9b69470ba560",
+    "url": "https://www.dotpb.jp/product-page/double-1105"
   }
 ]

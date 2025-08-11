@@ -10,6 +10,16 @@
     "url": "https://www.dotpb.jp/product-page/standard-092001"
   },
   {
+    "name": "MV-Si002 お得な大容量 5,000mg - 092001",
+    "slug": "large-092001",
+    "description": "35g - 約150日分",
+    "originalprice": "11,000円",
+    "price": "8,000円",
+    "ItemPic": "/large.png",
+    "wixProductId": "56602843-27ed-4153-b47b-160d93d92f12",
+    "url": "https://www.dotpb.jp/product-page/large-092001"
+  },
+  {
     "name": "MV-Si002 お試しサイズ 500mg - 092001",
     "slug": "trial-092001",
     "description": "1g - 約30日分",
@@ -28,6 +38,16 @@
     "ItemPic": "/large.png",
     "wixProductId": "56602843-27ed-4153-b47b-160d93d92f12",
     "url": "https://www.dotpb.jp/product-page/large-092001"
+  },
+  {
+    "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り） -092001",
+    "slug": "case-e-092001",
+    "description": "薬用スライドケ－スです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/case-e.png",
+    "wixProductId": "d89808d6-f771-4448-ac00-dbf7bf69108b",
+    "url": "https://www.dotpb.jp/product-page/case-e-092001"
   },
   {
     "name": "PBスキンパウダー：【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り） -092001",

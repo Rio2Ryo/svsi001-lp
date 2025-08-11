@@ -10,16 +10,6 @@
     "url": "https://www.dotpb.jp/product-page/large-1611"
   },
   {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg - 1611",
-    "slug": "standard-1611",
-    "description": "2g - 約60日分",
-    "originalprice": "6,600円",
-    "price": "4,000円",
-    "ItemPic": "/standard.png",
-    "wixProductId": "73c15616-22f3-40be-887d-2018cd63be53",
-    "url": "https://www.dotpb.jp/product-page/standard-1611"
-  },
-  {
     "name": "MV-Si002 お試しサイズ 500mg - 1611",
     "slug": "trial-1611",
     "description": "1g - 約30日分",
@@ -28,6 +18,26 @@
     "ItemPic": "/trial.png",
     "wixProductId": "d9228894-543d-47ed-bca0-245a1cbb3ffb",
     "url": "https://www.dotpb.jp/product-page/trial-1611"
+  },
+  {
+    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -1611",
+    "slug": "big-refill-1611",
+    "description": "30本セットです。",
+    "originalprice": "19,800円",
+    "price": "18,000円",
+    "ItemPic": "/big-refill.png",
+    "wixProductId": "c1003d3a-c8a2-4968-ba17-24d586871455",
+    "url": "https://www.dotpb.jp/product-page/big-refill-1611"
+  },
+  {
+    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -1611",
+    "slug": "double-1611",
+    "description": "ミックスパックです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/double.png",
+    "wixProductId": "6cc5012c-091a-49bf-93ba-b8f174bff725",
+    "url": "https://www.dotpb.jp/product-page/double-1611"
   },
   {
     "name": "PBスキンパウダー：【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り） -1611",
@@ -80,13 +90,13 @@
     "url": "https://www.dotpb.jp/product-page/refill-e-1611"
   },
   {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -1611",
-    "slug": "big-refill-1611",
-    "description": "30本セットです。",
-    "originalprice": "19,800円",
-    "price": "18,000円",
-    "ItemPic": "/big-refill.png",
-    "wixProductId": "c1003d3a-c8a2-4968-ba17-24d586871455",
-    "url": "https://www.dotpb.jp/product-page/big-refill-1611"
+    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -1611",
+    "slug": "double-1611",
+    "description": "ミックスパックです。",
+    "originalprice": "3,410円",
+    "price": "3,100円",
+    "ItemPic": "/double.png",
+    "wixProductId": "6cc5012c-091a-49bf-93ba-b8f174bff725",
+    "url": "https://www.dotpb.jp/product-page/double-1611"
   }
 ]

@@ -1,33 +1,33 @@
 [
   {
     "name": "MV-Si002 お試しサイズ 500mg - 2014",
-    "slug": "mv-si002-お試しサイズ-5-000mg-2014",
+    "slug": "trial-2014",
     "description": "1g - 約30日分",
     "originalprice": "3,300円",
     "price": "2,200円",
-    "ItemPic": "/mv-si002-お試しサイズ-5-000mg.png",
+    "ItemPic": "/trial.png",
     "wixProductId": "d4d053c1-1732-4f1f-a05b-064b9ea87e01",
-    "url": "https://www.dotpb.jp/product-page/mv-si002-お試しサイズ-5-000mg-2014"
+    "url": "https://www.dotpb.jp/product-page/trial-2014"
   },
   {
     "name": "MV-Si002 スタンダードサイズ 2,000mg - 2014",
-    "slug": "mv-si002-スタンダードサイズ-2-000mg-2014",
+    "slug": "standard-2014",
     "description": "2g - 約60日分",
     "originalprice": "6,600円",
     "price": "4,400円",
-    "ItemPic": "/mv-si002-スタンダードサイズ-2-000mg.png",
+    "ItemPic": "/standard.png",
     "wixProductId": "25966979-767c-4334-a23a-f4aba403a00b",
-    "url": "https://www.dotpb.jp/product-page/mv-si002-スタンダードサイズ-2-000mg-2014"
+    "url": "https://www.dotpb.jp/product-page/standard-2014"
   },
   {
     "name": "MV-Si002 お得な大容量 5,000mg - 2014",
-    "slug": "mv-si002-お得な大容量-500mg-2014",
+    "slug": "large-2014",
     "description": "35g - 約150日分",
     "originalprice": "11,000円",
     "price": "8,800円",
-    "ItemPic": "/mv-si002-お得な大容量-500mg.png",
+    "ItemPic": "/large.png",
     "wixProductId": "a7efc18d-3cfa-4604-b370-3bff9614993a",
-    "url": "https://www.dotpb.jp/product-page/mv-si002-お得な大容量-500mg-2014"
+    "url": "https://www.dotpb.jp/product-page/large-2014"
   },
   {
     "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り） -2014",
