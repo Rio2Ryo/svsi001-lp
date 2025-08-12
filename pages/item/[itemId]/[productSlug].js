@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -190,11 +191,32 @@ export default function ProductDetailPage() {
 
   const mainImg = product?.ItemPic || "/item_pic3.jpg";
 
-  if (loading) return <p className="pageLoading">読み込み中...</p>;
-  if (!product) return <p className="notFound">商品が見つかりません</p>;
+  if (loading)
+    return (
+      <>
+        <Head>
+          <title>Mother Vegetables Confidence MV-Si002</title>
+        </Head>
+        <p className="pageLoading">読み込み中...</p>
+      </>
+    );
+
+  if (!product)
+    return (
+      <>
+        <Head>
+          <title>Mother Vegetables Confidence MV-Si002</title>
+        </Head>
+        <p className="notFound">商品が見つかりません</p>
+      </>
+    );
 
   return (
     <>
+      <Head>
+        <title>{`${product.name} | Mother Vegetables Confidence MV-Si002`}</title>
+      </Head>
+
       <div className="page">
         <div className="grid">
           {/* 左：大きい商品画像 */}
@@ -323,7 +345,7 @@ export default function ProductDetailPage() {
                   {/* 価格（片側に寄せたい場合はこの行を liRow に分けてください） */}
                   <div className="liPrice">{li.price?.formattedAmount || ""}</div>
 
-                  {/* ▼ 数量UIを画像②の見た目に合わせて刷新 */}
+                  {/* ▼ 数量UI */}
                   <div className="liQty">
                     <div className="liQtyBox" role="group" aria-label="数量を変更">
                       <button
