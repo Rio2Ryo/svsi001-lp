@@ -12,7 +12,7 @@ export default function FAQSection() {
     },
     {
       question: "どのくらい持ちますか？",
-      answer: "1日1回の使用で、1gは約30日、2gは約60日、5gは約150日ご使用いただけます。",
+      answer: "1日1回の使用で、500mgは約30日、2,000mgは約60日、5,000mgは約150日ご使用いただけます。",
     }
   ];
 
