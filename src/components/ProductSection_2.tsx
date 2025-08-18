@@ -26,17 +26,17 @@ export default function ProductSection() {
   // 既存のカード定義（フォールバック値）
   const allProducts = useMemo(
     () => [
-      {
-        size: "500mg",
-        slugPrefix: "trial",
-        title: "お試しサイズ",
-        description: "500mg - 約30日分",
-        features: ["マザーベジタブル 500mg配合", "約30日分", "携帯に便利なコンパクトケース"],
-        originalPrice: "¥3,300",
-        price: "¥2,200",
-        popular: false,
-        fallbackImg: "/item_pic1.jpg",
-      },
+      //{
+      //  size: "500mg",
+      //  slugPrefix: "trial",
+      //  title: "お試しサイズ",
+      //  description: "500mg - 約30日分",
+      //  features: ["マザーベジタブル 500mg配合", "約30日分", "携帯に便利なコンパクトケース"],
+      //  originalPrice: "¥3,300",
+      //  price: "¥2,200",
+      //  popular: false,
+      //  fallbackImg: "/item_pic1.jpg",
+      //},
       {
         size: "2,000mg",
         slugPrefix: "standard",
@@ -100,7 +100,7 @@ export default function ProductSection() {
 
   return (
     <section id="product" style={{ padding: "5rem 0.01rem 1rem 0.01rem", backgroundColor: "#f9fafb" }}>
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 1rem" }}>
+      <div style={{ maxWidth: "880px", margin: "0 auto", padding: "0 1rem" }}>
         <div style={{ textAlign: "center", marginBottom: "4rem" }}>
           <p style={{ fontSize: "0.875rem", color: "#b8860b", marginBottom: "1rem", letterSpacing: "0.1em" }}>商品ラインナップ</p>
           <h2 style={{ fontSize: "2rem", fontWeight: "bold", color: "#2d2d2d", marginBottom: "2rem", lineHeight: "1.2" }}>
