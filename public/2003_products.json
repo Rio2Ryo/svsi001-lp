@@ -1,23 +1,13 @@
 [
   {
-    "name": "MV-Si002 お得な大容量 5,000mg - 2003",
-    "slug": "large-2003",
-    "description": "35g - 約150日分",
-    "originalprice": "11,000円",
-    "price": "8,000円",
-    "ItemPic": "/large.png",
-    "wixProductId": "099ff1ff-cc2b-4545-a8bc-e4f391cddb83",
-    "url": "https://www.dotpb.jp/product-page/large-2003"
-  },
-  {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg - 2003",
-    "slug": "standard-2003",
-    "description": "2g - 約60日分",
-    "originalprice": "6,600円",
-    "price": "4,000円",
-    "ItemPic": "/standard.png",
-    "wixProductId": "4572eee1-ffa6-4361-bc62-08ae1b27452f",
-    "url": "https://www.dotpb.jp/product-page/standard-2003"
+    "name": "MV-Si002 お試しサイズ 500mg - 2003",
+    "slug": "trial-2003",
+    "description": "1g - 約30日分",
+    "originalprice": "3,300円",
+    "price": "2,000円",
+    "ItemPic": "/trial.png",
+    "wixProductId": "76b5de97-8aae-4095-8ee8-948f80cea3ff",
+    "url": "https://www.dotpb.jp/product-page/trial-2003"
   },
   {
     "name": "MV-Si002 お試しサイズ 500mg - 2003",
@@ -34,79 +24,19 @@
     "slug": "standard-2003",
     "description": "2g - 約60日分",
     "originalprice": "6,600円",
-    "price": "4,000円",
+    "price": "3,200円",
     "ItemPic": "/standard.png",
     "wixProductId": "4572eee1-ffa6-4361-bc62-08ae1b27452f",
     "url": "https://www.dotpb.jp/product-page/standard-2003"
   },
   {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -2003",
-    "slug": "big-refill-2003",
-    "description": "30本セットです。",
-    "originalprice": "19,800円",
-    "price": "18,000円",
-    "ItemPic": "/big-refill.png",
-    "wixProductId": "ee6f288a-3b86-4cfb-b3aa-f43ea7102ee2",
-    "url": "https://www.dotpb.jp/product-page/big-refill-2003"
-  },
-  {
-    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -2003",
-    "slug": "double-2003",
-    "description": "ミックスパックです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/double.png",
-    "wixProductId": "2e99bde0-ccb3-4c95-a48b-9afc6c221824",
-    "url": "https://www.dotpb.jp/product-page/double-2003"
-  },
-  {
-    "name": "PBスキンパウダー：【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り） -2003",
-    "slug": "double-e-2003",
-    "description": "ミックスパックです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/double-e.png",
-    "wixProductId": "e64cfa67-1ceb-4fb4-af4d-4536b8f4f805",
-    "url": "https://www.dotpb.jp/product-page/double-e-2003"
-  },
-  {
-    "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り） -2003",
-    "slug": "case-e-2003",
-    "description": "薬用スライドケ－スです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/case-e.png",
-    "wixProductId": "e324d105-8771-4bbb-98ff-182556034f38",
-    "url": "https://www.dotpb.jp/product-page/case-e-2003"
-  },
-  {
-    "name": "PBスキンパウダー：【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り） -2003",
-    "slug": "refill-e-2003",
-    "description": "10本セットです。",
-    "originalprice": "12,100円",
-    "price": "11,000円",
-    "ItemPic": "/refill-e.png",
-    "wixProductId": "bcf97633-479f-49fd-8775-3200e70a458b",
-    "url": "https://www.dotpb.jp/product-page/refill-e-2003"
-  },
-  {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り） -2003",
-    "slug": "big-refill-e-2003",
-    "description": "30本セットです。",
-    "originalprice": "30,800円",
-    "price": "28,000円",
-    "ItemPic": "/big-refill-e.png",
-    "wixProductId": "1e163a34-ae87-4c31-8d05-e05b65a5f4f2",
-    "url": "https://www.dotpb.jp/product-page/big-refill-e-2003"
-  },
-  {
-    "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 1,500mg -2003",
-    "slug": "case-2003",
-    "description": "薬用スライドケ－スです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/case.png",
-    "wixProductId": "9f4408f6-7cd6-4474-b634-46669da68cb1",
-    "url": "https://www.dotpb.jp/product-page/case-2003"
+    "name": "MV-Si002 お得な大容量 5,000mg - 2003",
+    "slug": "large-2003",
+    "description": "35g - 約150日分",
+    "originalprice": "11,000円",
+    "price": "6,800円",
+    "ItemPic": "/large.png",
+    "wixProductId": "099ff1ff-cc2b-4545-a8bc-e4f391cddb83",
+    "url": "https://www.dotpb.jp/product-page/large-2003"
   }
 ]

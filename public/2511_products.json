@@ -1,23 +1,13 @@
 [
   {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg - 2511",
-    "slug": "standard-2511",
-    "description": "2g - 約60日分",
-    "originalprice": "6,600円",
-    "price": "4,000円",
-    "ItemPic": "/standard.png",
-    "wixProductId": "9020284a-5156-4b8c-ad84-67e8b80af2ff",
-    "url": "https://www.dotpb.jp/product-page/standard-2511"
-  },
-  {
-    "name": "MV-Si002 お得な大容量 5,000mg - 2511",
-    "slug": "large-2511",
-    "description": "35g - 約150日分",
-    "originalprice": "11,000円",
-    "price": "8,000円",
-    "ItemPic": "/large.png",
-    "wixProductId": "102611b8-6e6a-47d7-a4e9-73ce35162597",
-    "url": "https://www.dotpb.jp/product-page/large-2511"
+    "name": "MV-Si002 お試しサイズ 500mg - 2511",
+    "slug": "trial-2511",
+    "description": "1g - 約30日分",
+    "originalprice": "3,300円",
+    "price": "2,000円",
+    "ItemPic": "/trial.png",
+    "wixProductId": "d026ac01-9888-46d3-9731-44d65bc7a47f",
+    "url": "https://www.dotpb.jp/product-page/trial-2511"
   },
   {
     "name": "MV-Si002 お試しサイズ 500mg - 2511",
@@ -30,73 +20,23 @@
     "url": "https://www.dotpb.jp/product-page/trial-2511"
   },
   {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り） -2511",
-    "slug": "big-refill-e-2511",
-    "description": "30本セットです。",
-    "originalprice": "30,800円",
-    "price": "28,000円",
-    "ItemPic": "/big-refill-e.png",
-    "wixProductId": "eb2cbfab-86bf-43ed-a736-0bfc716fe1aa",
-    "url": "https://www.dotpb.jp/product-page/big-refill-e-2511"
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 2511",
+    "slug": "standard-2511",
+    "description": "2g - 約60日分",
+    "originalprice": "6,600円",
+    "price": "3,200円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "9020284a-5156-4b8c-ad84-67e8b80af2ff",
+    "url": "https://www.dotpb.jp/product-page/standard-2511"
   },
   {
-    "name": "PBスキンパウダー：【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り） -2511",
-    "slug": "refill-e-2511",
-    "description": "10本セットです。",
-    "originalprice": "12,100円",
-    "price": "11,000円",
-    "ItemPic": "/refill-e.png",
-    "wixProductId": "41d4c1d4-1b81-4661-91f7-8fc00bbc52f5",
-    "url": "https://www.dotpb.jp/product-page/refill-e-2511"
-  },
-  {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg -2511",
-    "slug": "big-refill-2511",
-    "description": "30本セットです。",
-    "originalprice": "19,800円",
-    "price": "18,000円",
-    "ItemPic": "/big-refill.png",
-    "wixProductId": "cbb91b90-413f-4469-8690-fad97037298d",
-    "url": "https://www.dotpb.jp/product-page/big-refill-2511"
-  },
-  {
-    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg -2511",
-    "slug": "double-2511",
-    "description": "ミックスパックです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/double.png",
-    "wixProductId": "5967a407-3df4-4efb-a6f2-2057ed5b54a3",
-    "url": "https://www.dotpb.jp/product-page/double-2511"
-  },
-  {
-    "name": "PBスキンパウダー：【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り） -2511",
-    "slug": "double-e-2511",
-    "description": "ミックスパックです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/double-e.png",
-    "wixProductId": "45e589c3-bace-46fc-8a74-521cad704055",
-    "url": "https://www.dotpb.jp/product-page/double-e-2511"
-  },
-  {
-    "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り） -2511",
-    "slug": "case-e-2511",
-    "description": "薬用スライドケ－スです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/case-e.png",
-    "wixProductId": "29b15759-12f9-4c26-b360-56ba5f6bf842",
-    "url": "https://www.dotpb.jp/product-page/case-e-2511"
-  },
-  {
-    "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 1,500mg -2511",
-    "slug": "case-2511",
-    "description": "薬用スライドケ－スです。",
-    "originalprice": "3,410円",
-    "price": "3,100円",
-    "ItemPic": "/case.png",
-    "wixProductId": "22600951-0837-4353-8952-eae46c93fe27",
-    "url": "https://www.dotpb.jp/product-page/case-2511"
+    "name": "MV-Si002 お得な大容量 5,000mg - 2511",
+    "slug": "large-2511",
+    "description": "35g - 約150日分",
+    "originalprice": "11,000円",
+    "price": "6,800円",
+    "ItemPic": "/large.png",
+    "wixProductId": "102611b8-6e6a-47d7-a4e9-73ce35162597",
+    "url": "https://www.dotpb.jp/product-page/large-2511"
   }
 ]

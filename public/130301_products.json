@@ -1,25 +1,5 @@
 [
   {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg - 130301",
-    "slug": "standard-130301",
-    "description": "2g - 約60日分",
-    "originalprice": "6,600円",
-    "price": "4,400円",
-    "ItemPic": "/standard.png",
-    "wixProductId": "97a2712a-5dc5-4cde-9d6b-60c91739c073",
-    "url": "https://www.dotpb.jp/product-page/standard-130301"
-  },
-  {
-    "name": "MV-Si002 お得な大容量 5,000mg - 130301",
-    "slug": "large-130301",
-    "description": "35g - 約150日分",
-    "originalprice": "11,000円",
-    "price": "8,800円",
-    "ItemPic": "/large.png",
-    "wixProductId": "b64ed12c-f3f7-44b0-94cc-2a7599a39c60",
-    "url": "https://www.dotpb.jp/product-page/large-130301"
-  },
-  {
     "name": "MV-Si002 お試しサイズ 500mg - 130301",
     "slug": "trial-130301",
     "description": "1g - 約30日分",
@@ -30,73 +10,23 @@
     "url": "https://www.dotpb.jp/product-page/trial-130301"
   },
   {
-    "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り） -130301",
-    "slug": "case-e-130301",
-    "description": "薬用スライドケ－スです。",
-    "originalprice": "3,630円",
-    "price": "3,300円",
-    "ItemPic": "/case-e.png",
-    "wixProductId": "9884ec0c-3b30-4d7f-bad2-c880337fc1be",
-    "url": "https://www.dotpb.jp/product-page/case-e-130301"
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 130301",
+    "slug": "standard-130301",
+    "description": "2g - 約60日分",
+    "originalprice": "6,600円",
+    "price": "3,600円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "97a2712a-5dc5-4cde-9d6b-60c91739c073",
+    "url": "https://www.dotpb.jp/product-page/standard-130301"
   },
   {
-    "name": "PBスキンパウダー：【薬用スライドケース】マザベジシリカパウダー 1,500mg -130301",
-    "slug": "case-130301",
-    "description": "薬用スライドケ－スです。",
-    "originalprice": "3,630円",
-    "price": "3,300円",
-    "ItemPic": "/case.png",
-    "wixProductId": "e98191e4-63db-427b-9646-d3a55ba37aaa",
-    "url": "https://www.dotpb.jp/product-page/case-130301"
-  },
-  {
-    "name": "PBスキンパウダー：【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り） -130301",
-    "slug": "double-e-130301",
-    "description": "ミックスパックです。",
-    "originalprice": "3,630円",
-    "price": "3,300円",
-    "ItemPic": "/double-e.png",
-    "wixProductId": "82aa11fb-9889-4535-9b4f-7b648185e7f5",
-    "url": "https://www.dotpb.jp/product-page/double-e-130301"
-  },
-  {
-    "name": "PBスキンパウダー：【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り） -130301",
-    "slug": "refill-e-130301",
-    "description": "10本セットです。",
-    "originalprice": "13,200円",
-    "price": "12,000円",
-    "ItemPic": "/refill-e.png",
-    "wixProductId": "975c2647-3750-4b86-88e6-4a363ea290cb",
-    "url": "https://www.dotpb.jp/product-page/refill-e-130301"
-  },
-  {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り） -130301",
-    "slug": "big-refill-e-130301",
-    "description": "30本セットです。",
-    "originalprice": "33,000円",
-    "price": "30,000円",
-    "ItemPic": "/big-refill-e.png",
-    "wixProductId": "4208744b-7bbc-4ec1-bde1-7666787e9f30",
-    "url": "https://www.dotpb.jp/product-page/big-refill-e-130301"
-  },
-  {
-    "name": "PBスキンパウダー：【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り） -130301",
-    "slug": "refill-e-130301",
-    "description": "10本セットです。",
-    "originalprice": "13,200円",
-    "price": "12,000円",
-    "ItemPic": "/refill-e.png",
-    "wixProductId": "975c2647-3750-4b86-88e6-4a363ea290cb",
-    "url": "https://www.dotpb.jp/product-page/refill-e-130301"
-  },
-  {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り） -130301",
-    "slug": "big-refill-e-130301",
-    "description": "30本セットです。",
-    "originalprice": "33,000円",
-    "price": "30,000円",
-    "ItemPic": "/big-refill-e.png",
-    "wixProductId": "4208744b-7bbc-4ec1-bde1-7666787e9f30",
-    "url": "https://www.dotpb.jp/product-page/big-refill-e-130301"
+    "name": "MV-Si002 お得な大容量 5,000mg - 130301",
+    "slug": "large-130301",
+    "description": "35g - 約150日分",
+    "originalprice": "11,000円",
+    "price": "7,400円",
+    "ItemPic": "/large.png",
+    "wixProductId": "b64ed12c-f3f7-44b0-94cc-2a7599a39c60",
+    "url": "https://www.dotpb.jp/product-page/large-130301"
   }
 ]

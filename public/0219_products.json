@@ -1,25 +1,5 @@
 [
   {
-    "name": "MV-Si002 お得な大容量 5,000mg - 0219",
-    "slug": "large-0219",
-    "description": "35g - 約150日分",
-    "originalprice": "11,000円",
-    "price": "8,800円",
-    "ItemPic": "/large.png",
-    "wixProductId": "c9149fd3-50d2-4e8a-881a-dc4b270c7770",
-    "url": "https://www.dotpb.jp/product-page/large-0219"
-  },
-  {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg - 0219",
-    "slug": "standard-0219",
-    "description": "2g - 約60日分",
-    "originalprice": "6,600円",
-    "price": "4,400円",
-    "ItemPic": "/standard.png",
-    "wixProductId": "b377449c-6de6-4fe6-bd14-2508131c3a43",
-    "url": "https://www.dotpb.jp/product-page/standard-0219"
-  },
-  {
     "name": "MV-Si002 お試しサイズ 500mg - 0219",
     "slug": "trial-0219",
     "description": "1g - 約30日分",
@@ -30,23 +10,23 @@
     "url": "https://www.dotpb.jp/product-page/trial-0219"
   },
   {
-    "name": "PBスキンパウダー：【30本セット】マザベジシリカパウダー 22,500mg - 0219",
-    "slug": "big-refill-0219",
-    "description": "30本セットです。",
-    "originalprice": "21,780円",
-    "price": "19,800円",
-    "ItemPic": "/big-refill.png",
-    "wixProductId": "13947eb5-2829-43b8-b143-68ea82cac7a6",
-    "url": "https://www.dotpb.jp/product-page/big-refill-0219"
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 0219",
+    "slug": "standard-0219",
+    "description": "2g - 約60日分",
+    "originalprice": "6,600円",
+    "price": "3,600円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "b377449c-6de6-4fe6-bd14-2508131c3a43",
+    "url": "https://www.dotpb.jp/product-page/standard-0219"
   },
   {
-    "name": "PBスキンパウダー： 【ミックスパック】 マザベジシリカパウダー 1,500mg - 0219",
-    "slug": "double-0219",
-    "description": "ミックスパックです。",
-    "originalprice": "3,630円",
-    "price": "3,300円",
-    "ItemPic": "/double.png",
-    "wixProductId": "9b9424fe-7671-48e1-af58-250ded0cdf87",
-    "url": "https://www.dotpb.jp/product-page/double-0219"
+    "name": "MV-Si002 お得な大容量 5,000mg - 0219",
+    "slug": "large-0219",
+    "description": "35g - 約150日分",
+    "originalprice": "11,000円",
+    "price": "7,400円",
+    "ItemPic": "/large.png",
+    "wixProductId": "c9149fd3-50d2-4e8a-881a-dc4b270c7770",
+    "url": "https://www.dotpb.jp/product-page/large-0219"
   }
 ]
