@@ -44,7 +44,7 @@ export default function ProductSection() {
 
   return (
     <section id="product" style={{ padding: "5rem 0.01rem 1rem 0.01rem", backgroundColor: "#f9fafb" }}>
-      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 1rem" }}>
+      <div style={{ maxWidth: "880px", margin: "0 auto", padding: "0 1rem" }}>
         <div style={{ textAlign: "center", marginBottom: "4rem" }}>
           <p style={{ fontSize: "0.875rem", color: "#b8860b", marginBottom: "1rem", letterSpacing: "0.1em" }}>
             商品ラインナップ
