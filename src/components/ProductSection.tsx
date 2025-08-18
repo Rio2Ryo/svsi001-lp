@@ -7,17 +7,17 @@ export default function ProductSection() {
   const [selectedSize, setSelectedSize] = useState("2g");
 
   const products = [
-    {
-      size: "500mg",
-      slug: "trial-mvsi", // ← そのまま
-      title: "お試しサイズ",
-      description: "500mg - 約30日分",
-      features: ["マザーベジタブル 500mg配合", "約30日分", "携帯に便利なコンパクトケース"],
-      originalPrice: "3,300円",
-      price: "2,200円",
-      popular: false,
-      image: "/item_pic1.jpg", // ← 画像を明示
-    },
+    //{
+      //size: "500mg",
+      //slug: "trial-mvsi", // ← そのまま
+      //title: "お試しサイズ",
+      //description: "500mg - 約30日分",
+      //features: ["マザーベジタブル 500mg配合", "約30日分", "携帯に便利なコンパクトケース"],
+      //originalPrice: "3,300円",
+      //price: "2,200円",
+      //popular: false,
+      //image: "/item_pic1.jpg", // ← 画像を明示
+    //},
     {
       size: "2,000mg",
       slug: "standard-mvsi",
