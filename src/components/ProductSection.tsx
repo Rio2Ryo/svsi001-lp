@@ -25,7 +25,7 @@ export default function ProductSection() {
       description: "2,000mg - 約60日分",
       features: ["マザーベジタブル 2,000mg配合", "約60日分", "携帯に便利なコンパクトケース"],
       originalPrice: "6,600円",
-      price: "4,400円",
+      price: "3,600円",
       popular: true,
       image: "/item_pic2.jpg", // ← 明示
     },
@@ -36,7 +36,7 @@ export default function ProductSection() {
       description: "5,000mg - 約150日分",
       features: ["マザーベジタブル 5,000mg配合", "約150日分", "特別な大容量ラグジュアリーケース"],
       originalPrice: "11,000円",
-      price: "8,800円",
+      price: "7,400円",
       popular: false,
       image: "/item_pic3.jpg", // ← 明示
     },
