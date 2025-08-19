@@ -4,29 +4,32 @@
     "slug": "trial-1411",
     "description": "1g - 約30日分",
     "originalprice": "3,300円",
+    "originalprice2": "",
     "price": "2,000円",
     "ItemPic": "/trial.png",
     "wixProductId": "bc2009de-bbac-4de0-be5d-5a26ea4ba2dd",
     "url": "https://www.dotpb.jp/product-page/trial-1411"
   },
   {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg - 1411",
-    "slug": "standard-1411",
-    "description": "2g - 約60日分",
-    "originalprice": "6,600円",
-    "price": "3,200円",
-    "ItemPic": "/standard.png",
-    "wixProductId": "73c805c6-5cfa-49d3-ac37-a374ad59578c",
-    "url": "https://www.dotpb.jp/product-page/standard-1411"
-  },
-  {
     "name": "MV-Si002 お得な大容量 5,000mg - 1411",
     "slug": "large-1411",
     "description": "35g - 約150日分",
-    "originalprice": "11,000円",
+    "originalprice": "",
+    "originalprice2": "通常価格 11,000円",
     "price": "6,800円",
     "ItemPic": "/large.png",
     "wixProductId": "3be753d2-d519-4ea6-857f-266355ff8fc7",
     "url": "https://www.dotpb.jp/product-page/large-1411"
+  },
+  {
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 1411",
+    "slug": "standard-1411",
+    "description": "2g - 約60日分",
+    "originalprice": "",
+    "originalprice2": "通常価格 6,600円",
+    "price": "3,200円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "73c805c6-5cfa-49d3-ac37-a374ad59578c",
+    "url": "https://www.dotpb.jp/product-page/standard-1411"
   }
 ]

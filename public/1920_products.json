@@ -4,39 +4,43 @@
     "slug": "trial-1920",
     "description": "1g - 約30日分",
     "originalprice": "3,300円",
+    "originalprice2": "",
     "price": "2,000円",
     "ItemPic": "/trial.png",
     "wixProductId": "16dd822d-0f17-4bfa-925b-f7df6ab86148",
     "url": "https://www.dotpb.jp/product-page/trial-1920"
   },
   {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg - 1920",
-    "slug": "standard-1920",
-    "description": "2g - 約60日分",
-    "originalprice": "6,600円",
-    "price": "3,200円",
-    "ItemPic": "/standard.png",
-    "wixProductId": "ee713cde-aa0d-41fc-aefb-95f61f008830",
-    "url": "https://www.dotpb.jp/product-page/standard-1920"
-  },
-  {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg - 1920",
-    "slug": "standard-1920",
-    "description": "2g - 約60日分",
-    "originalprice": "6,600円",
-    "price": "3,200円",
-    "ItemPic": "/standard.png",
-    "wixProductId": "ee713cde-aa0d-41fc-aefb-95f61f008830",
-    "url": "https://www.dotpb.jp/product-page/standard-1920"
-  },
-  {
     "name": "MV-Si002 お得な大容量 5,000mg - 1920",
     "slug": "large-1920",
     "description": "35g - 約150日分",
-    "originalprice": "11,000円",
+    "originalprice": "",
+    "originalprice2": "通常価格 11,000円",
     "price": "6,800円",
     "ItemPic": "/large.png",
     "wixProductId": "0b423b1b-d4b8-4a78-b0af-ebf1489647d5",
     "url": "https://www.dotpb.jp/product-page/large-1920"
+  },
+  {
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 1920",
+    "slug": "standard-1920",
+    "description": "2g - 約60日分",
+    "originalprice": "",
+    "originalprice2": "通常価格 6,600円",
+    "price": "3,200円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "ee713cde-aa0d-41fc-aefb-95f61f008830",
+    "url": "https://www.dotpb.jp/product-page/standard-1920"
+  },
+  {
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 1920",
+    "slug": "standard-1920",
+    "description": "2g - 約60日分",
+    "originalprice": "",
+    "originalprice2": "通常価格 6,600円",
+    "price": "3,200円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "ee713cde-aa0d-41fc-aefb-95f61f008830",
+    "url": "https://www.dotpb.jp/product-page/standard-1920"
   }
 ]

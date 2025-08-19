@@ -4,39 +4,43 @@
     "slug": "trial-1913",
     "description": "1g - 約30日分",
     "originalprice": "3,300円",
+    "originalprice2": "",
     "price": "2,000円",
     "ItemPic": "/trial.png",
     "wixProductId": "ea586cd3-a391-4902-8016-94d48afa3151",
     "url": "https://www.dotpb.jp/product-page/trial-1913"
   },
   {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg - 1913",
-    "slug": "standard-1913",
-    "description": "2g - 約60日分",
-    "originalprice": "6,600円",
-    "price": "3,200円",
-    "ItemPic": "/standard.png",
-    "wixProductId": "e05ae576-a9d4-44fa-ad82-8d33f9786b34",
-    "url": "https://www.dotpb.jp/product-page/standard-1913"
-  },
-  {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg - 1913",
-    "slug": "standard-1913",
-    "description": "2g - 約60日分",
-    "originalprice": "6,600円",
-    "price": "3,200円",
-    "ItemPic": "/standard.png",
-    "wixProductId": "e05ae576-a9d4-44fa-ad82-8d33f9786b34",
-    "url": "https://www.dotpb.jp/product-page/standard-1913"
-  },
-  {
     "name": "MV-Si002 お得な大容量 5,000mg - 1913",
     "slug": "large-1913",
     "description": "35g - 約150日分",
-    "originalprice": "11,000円",
+    "originalprice": "",
+    "originalprice2": "通常価格 11,000円",
     "price": "6,800円",
     "ItemPic": "/large.png",
     "wixProductId": "b5f746ee-ce48-4bb8-b2e7-69e5c64745c4",
     "url": "https://www.dotpb.jp/product-page/large-1913"
+  },
+  {
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 1913",
+    "slug": "standard-1913",
+    "description": "2g - 約60日分",
+    "originalprice": "",
+    "originalprice2": "通常価格 6,600円",
+    "price": "3,200円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "e05ae576-a9d4-44fa-ad82-8d33f9786b34",
+    "url": "https://www.dotpb.jp/product-page/standard-1913"
+  },
+  {
+    "name": "MV-Si002 スタンダードサイズ 2,000mg - 1913",
+    "slug": "standard-1913",
+    "description": "2g - 約60日分",
+    "originalprice": "",
+    "originalprice2": "通常価格 6,600円",
+    "price": "3,200円",
+    "ItemPic": "/standard.png",
+    "wixProductId": "e05ae576-a9d4-44fa-ad82-8d33f9786b34",
+    "url": "https://www.dotpb.jp/product-page/standard-1913"
   }
 ]
