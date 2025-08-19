@@ -174,7 +174,7 @@ export default function ProductSection() {
 
                 <div style={{ marginBottom: "1rem" }}>
                   <p style={{ fontSize: "0.75rem", color: "#6b7280", textDecoration: "line-through", marginBottom: "0.25rem" }}>
-                    通常価格 {product.originalPrice}
+                    {/*通常価格*/} {product.originalPrice}
                   </p>
                   <p className="price" style={{ fontSize: "2rem", fontWeight: "300", marginBottom: "0.25rem", color: product.popular ? "#b8860b" : "#1f2937" }}>
                     {product.price}
