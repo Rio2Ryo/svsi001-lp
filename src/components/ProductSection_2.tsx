@@ -9,6 +9,7 @@ type JsonProduct = {
   slug: string;                 // 例: "trial-1111"
   description?: string;
   originalprice?: string;       // JSONは小文字p
+  originalprice2?: string;       // JSONは小文字p
   price?: string;               // 例: "2,000円"
   ItemPic?: string;
   wixProductId?: string;
@@ -44,6 +45,7 @@ export default function ProductSection() {
         description: "2,000mg - 約60日分",
         features: ["マザーベジタブル 2,000mg配合", "約60日分", "携帯に便利なコンパクトケース"],
         originalPrice: "¥6,600",
+        originalPrice2: "¥6,600",
         price: "¥4,400",
         popular: true,
         fallbackImg: "/item_pic2.jpg",
@@ -55,6 +57,7 @@ export default function ProductSection() {
         description: "5,000mg - 約150日分",
         features: ["マザーベジタブル 5,000mg配合", "約150日分", "特別な大容量ラグジュアリーケース"],
         originalPrice: "¥11,000",
+        originalPrice2: "¥11,000",
         price: "¥8,800",
         popular: false,
         fallbackImg: "/item_pic3.jpg",
@@ -93,6 +96,7 @@ export default function ProductSection() {
         slug,
         price: match?.price ?? p.price,
         originalPrice: match?.originalprice ?? p.originalPrice,
+        originalPrice2: match?.originalprice2 ?? p.originalPrice2,
         itemPic: match?.ItemPic ?? p.fallbackImg,
       };
     });
@@ -173,8 +177,11 @@ export default function ProductSection() {
                 </div>
 
                 <div style={{ marginBottom: "1rem" }}>
-                  <p style={{ fontSize: "0.75rem", color: "#6b7280",  marginBottom: "0.25rem" }}>
+                  <p style={{ fontSize: "0.75rem", color: "#6b7280", marginBottom: "0.25rem" }}>
                     通常価格 {product.originalPrice}
+                  </p>
+                  <p style={{ fontSize: "0.75rem", color: "#6b7280", textDecoration: "line-through", marginBottom: "0.25rem" }}>
+                    通常価格 {product.originalPrice2}
                   </p>
                   <p className="price" style={{ fontSize: "2rem", fontWeight: "300", marginBottom: "0.25rem", color: product.popular ? "#b8860b" : "#1f2937" }}>
                     {product.price}
