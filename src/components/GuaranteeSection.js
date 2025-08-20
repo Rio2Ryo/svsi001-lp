@@ -168,7 +168,7 @@ export default function GuaranteeSection() {
         .usage-item {
           display: grid;
           grid-template-columns: 86px 1fr; /* 左に丸画像、右にテキスト */
-          gap: 36px;
+          gap: 70px;
           align-items: center;
           padding: 14px 0;
         }
