@@ -244,10 +244,10 @@ export default function ConceptSection() {
 
         /* 説明テキスト */
         .ms-description { max-width: 880px; margin: 0 auto; color: #4a4a4a; }
-        .ms-description p { margin: 22px 0; font-size: 22px; line-height: 2; letter-spacing: 0.06em; }
+        .ms-description p { margin: 22px 0; font-size: 22px; line-height: 1.6; letter-spacing: 0.06em; }
         .ms-list { list-style: none; padding: 0; margin: 28px 0 16px; }
-        .ms-list li { margin: 10px 0; font-size: 20px; line-height: 2; letter-spacing: 0.04em; }
-        .ms-note { margin-top: 18px; color: #888; font-size: 16px; line-height: 1.9; letter-spacing: 0.04em; }
+        .ms-list li { margin: 10px 0; font-size: 20px; line-height: 1.4; letter-spacing: 0.04em; }
+        .ms-note { margin-top: 18px; color: #888; font-size: 12px; line-height: 1.9; letter-spacing: 0.04em; }
 
         /* レスポンシブ */
         @media (max-width: 1024px) {
