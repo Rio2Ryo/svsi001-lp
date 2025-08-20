@@ -172,7 +172,7 @@ export default function EffectsSection() {
         /* タイトル */
         .mv-certs-title {
           text-align: center;
-          font-size: 26px;
+          font-size: 30px;
           font-weight: 600;
           letter-spacing: 0.12em;
           margin: 6px 0 10px;
@@ -181,14 +181,14 @@ export default function EffectsSection() {
         .mv-certs-sub {
           text-align: center;
           color: #666;
-          font-size: 15px;
+          font-size: 24px;
           letter-spacing: 0.1em;
           margin-bottom: 24px;
         }
 
         /* サブ見出し */
         .mv-subtitle {
-          font-size: 18px;
+          font-size: 24px;
           font-weight: 700;
           letter-spacing: 0.14em;
           color: #444;
@@ -207,8 +207,8 @@ export default function EffectsSection() {
           align-items: baseline;
           gap: 12px;
           padding: 6px 0;
-          font-size: 15.5px;
-          line-height: 2;
+          font-size: 22px;
+          line-height: 1.5;
           color: #555;
         }
         .mv-grade-list .country {
