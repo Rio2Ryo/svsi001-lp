@@ -1,251 +1,224 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
-export default function HeroSection() {
+export default function FAQSection() {
   const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => setIsVisible(true), []);
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
-  // inline用のスタイル（左からの黒グラデ等）
+  // 上部の細い罫線など軽微なインライン用
   const styles = {
-    earthOverlay: {
-      background:
-        "linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.55) 40%, rgba(0,0,0,0) 72%)",
-    },
+    hr: { background: "#cfcfcf", height: 1, width: "100%" },
   };
 
   return (
     <>
-      <section className={`first-view ${isVisible ? "is-visible" : ""}`}>
-        {/* 上のパウダー帯 */}
-        <div className="fv-top">
-          <Image
-            src="/fv-powder.png"
-            alt="Confidence powder"
-            fill
-            priority
-            sizes="(max-width: 1024px) 100vw, 920px"
-            style={{ objectFit: "cover" }}
-          />
-          <div className="fv-top-inner">
-            <h2 className="fv-confidence">
-              <span className="fv-brand">Mother Vegetables</span>
-              <br />
-              Confidence
-            </h2>
-            <p className="fv-tagline">
-              マザーベジタブルから生まれた完全オーガニックのシリカパウダー
-            </p>
-          </div>
-        </div>
+      <section id="faq" className={`faq ${isVisible ? "is-visible" : ""}`}>
+        <div className="container">
+          <div className="faq-rule" style={styles.hr} />
 
-        {/* キャッチコピー */}
-        <h1 className="fv-catch">
-          その選択が
-          <br />
-          肌も、地球も、美しく育てる
-        </h1>
+          <h2 className="faq-title ja-serif">FAQ</h2>
+          <p className="faq-sub">よくあるご質問</p>
 
-        {/* 地球のビジュアル＋テキスト */}
-        <div className="fv-earth">
-          <Image
-            src="/fv-earth.jpg"
-            alt="Earth"
-            fill
-            sizes="(max-width: 1024px) 100vw, 920px"
-            style={{ objectFit: "cover" }}
-          />
-          <div className="fv-earth-overlay" style={styles.earthOverlay} />
-          <div className="fv-earth-text">
-            <p>
-              Mother Vegetables から生まれた「マザベジコンフィデンス」
-              <br />
-              それはあなたの肌をやさしく育てながら地球環境を整えていく
-              <br />
-              世界で唯一の存在です。
-              <br />
-              <br />
-              あなたの美しさと、地球の未来を同時に育てる
-              <br />
-              そんな、新しいスキンケアのかたちが誕生しました。
-              <br />
-              <br />
-              あなたの肌を包み守るやさしさが、地球へのやさしさにもなる
-              <br />
-              すべては、あなたの意思ある選択から始まります
-            </p>
+          <div className="faq-body">
+            <dl className="faq-list">
+              <div className="faq-item">
+                <dt>どんな肌質でも使えますか？</dt>
+                <dd>
+                  乾燥肌や敏感肌を含め、さまざまな肌タイプの方にご使用いただけます。<br />
+                  ※すべての方に皮膚刺激が起きないわけではありません。<br />
+                  ご使用前には目立たない部位で試すことをおすすめします。
+                </dd>
+              </div>
+
+              <div className="faq-item">
+                <dt>赤ちゃんにも使えますか？</dt>
+                <dd>
+                  シリカ（ケイ素）は赤ちゃんが最も保持するものであり、成長と共に減少していくことが確認されています。<br />
+                  そのため、赤ちゃんへの使用も可能ですが、赤ちゃんは肌が特に敏感なため、<br />
+                  ご使用前に小さな範囲で試すことをおすすめします。
+                </dd>
+              </div>
+
+              <div className="faq-item">
+                <dt>食用としても可能ですか？</dt>
+                <dd>
+                  FDAの基準に準じた検査では「Premium Food Grade」と評価を得ていますが、食品ではありません。<br />
+                  お口に入ってもリスクはございませんが、化粧品としてお使いください。
+                </dd>
+              </div>
+
+              <div className="faq-item">
+                <dt>使用期限はありますか？</dt>
+                <dd>
+                  本製品は安定性が高く、未開封の場合は長期保存が可能です。<br />
+                  開封後は、品質保持のためなるべく早めにご使用ください。
+                </dd>
+              </div>
+
+              <div className="faq-item">
+                <dt>妊娠中・授乳中でも使えますか？</dt>
+                <dd>
+                  特に制限はありません。ご不安な点があれば医師にご相談ください。
+                </dd>
+              </div>
+
+              <div className="faq-item">
+                <dt>他のスキンケアと併用できますか？</dt>
+                <dd>
+                  はい。化粧水や美容液、乳液の後などにご使用いただけます。
+                </dd>
+              </div>
+
+              <div className="faq-item">
+                <dt>頭皮についても問題はありませんか？</dt>
+                <dd>
+                  はい。べたつきを抑え、頭皮の皮脂汚れの改善にも期待できます。
+                </dd>
+              </div>
+
+              <div className="faq-item">
+                <dt>香りはありますか？</dt>
+                <dd>香りはございません。</dd>
+              </div>
+
+              <div className="faq-item">
+                <dt>保管方法に注意点はありますか？</dt>
+                <dd>
+                  高温多湿や直射日光を避け、冷暗所で保管してください。
+                </dd>
+              </div>
+            </dl>
           </div>
         </div>
       </section>
 
-      {/* styled-jsx */}
       <style jsx>{`
-        /* ベース */
-        h2,p,span{
-        font-family: Arial, Helvetica, sans-serif!important;
-        }
-
-        .first-view {
-          background: #fff;
-          padding: 32px 16px 60px;
+        /* ===== Base ===== */
+        .faq {
+          background: #ffffff;
+          color: #3a3a3a;
+          padding: 32px 16px 80px;
         }
         .is-visible {
-          animation: fadeInUp 0.9s ease-out both;
+          animation: fadeInUp 0.8s ease-out both;
         }
         @keyframes fadeInUp {
           from {
             opacity: 0;
-            transform: translate3d(0, 10px, 0);
+            transform: translate3d(0, 8px, 0);
           }
           to {
             opacity: 1;
             transform: translateZ(0);
           }
         }
-
-        /* 上部帯（パウダー） */
-        .fv-top {
-          position: relative;
-          height: 220px;
-          max-width: 1000px;
+        .container {
+          max-width: 980px;
           margin: 0 auto;
-          overflow: hidden;
-          border-radius: 0;
-          background: #fff;
         }
-        .fv-top-inner {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
+        .ja-serif {
+          font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP",
+            "Hiragino Kaku Gothic ProN", serif;
+        }
+
+        /* ===== Header ===== */
+        .faq-rule {
+          max-width: 860px; /* スクショのようにやや狭めの直線 */
+          margin: 0 auto 12px;
+        }
+        .faq-title {
           text-align: center;
-          color: #2a2a2a;
-          padding: 12px;
-        }
-        .fv-confidence {
-          margin: 0 0 6px;
-          font-weight: 400;
-          font-size: 38px;
-          line-height: 1.22;
-          letter-spacing: 0.06em;
-          color: #3a3a3a;
-        }
-        .fv-brand {
-          font-size: 16px;
-          font-weight: 400;
-          letter-spacing: 0.14em;
-          color: #5a5a5a;
-        }
-        .fv-tagline {
-          margin: 6px 0 0;
-          font-size: 12px;
+          font-size: 22px;
           letter-spacing: 0.12em;
-          color: #777;
+          color: #444;
+          margin: 6px 0 4px;
+          font-weight: 600;
         }
-
-        /* キャッチ */
-        .fv-catch {
-          margin: 64px auto 36px;
+        .faq-sub {
           text-align: center;
-          color: #3a3a3a;
-          font-size: 40px;
-          line-height: 1.8;
-          letter-spacing: 0.1em;
-          font-weight: 500;
+          color: #777;
+          font-size: 13px;
+          letter-spacing: 0.14em;
+          margin: 0 0 18px;
         }
 
-        /* 地球ブロック */
-        .fv-earth {
-          position: relative;
-          height: 380px;
-          max-width: 920px;
+        /* ===== Body ===== */
+        .faq-body {
+          max-width: 760px; /* 本文は細めのカラム */
           margin: 0 auto;
-          border-radius: 0;
-          overflow: hidden;
-          background: #000;
         }
-        .fv-earth-overlay {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          pointer-events: none;
-        }
-        .fv-earth-text {
-          position: absolute;
-          z-index: 2;
-          top: 50%;
-          left: 40px;
-          transform: translateY(-50%);
-          color: #fff;
-          max-width: 640px;
-          padding-right: 24px;
-          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-        }
-        .fv-earth-text p {
+        .faq-list {
           margin: 0;
-          font-size: 16px;
-          line-height: 2.0;
-          letter-spacing: 0.08em;
+          padding: 0;
+        }
+        .faq-item {
+          margin: 18px 0 26px;
         }
 
-        /* レスポンシブ */
-        @media (max-width: 1024px) {
-          .fv-top {
-            height: 200px;
-          }
-          .fv-confidence {
-            font-size: 34px;
-          }
-          .fv-catch {
-            font-size: 34px;
-            margin: 56px auto 28px;
-          }
-          .fv-earth {
-            height: 340px;
-          }
-          .fv-earth-text {
-            left: 28px;
-            max-width: 560px;
-          }
+        /* 質問（Q） */
+        .faq-item dt {
+          position: relative;
+          margin: 0 0 8px;
+          padding-left: 2.1em; /* Q. の分だけ字下げ */
+          font-size: 15.5px;
+          line-height: 2;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          color: #3f3f3f;
         }
-        @media (max-width: 600px) {
-          .first-view {
-            padding: 24px 12px 44px;
+        .faq-item dt::before {
+          content: "Q.";
+          position: absolute;
+          left: 0;
+          top: 0;
+          color: #333;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+        }
+
+        /* 回答（A） */
+        .faq-item dd {
+          position: relative;
+          margin: 0;
+          padding-left: 2.1em; /* A. の分だけ字下げ */
+          font-size: 15px;
+          line-height: 2;
+          letter-spacing: 0.04em;
+          color: #555;
+        }
+        .faq-item dd::before {
+          content: "A.";
+          position: absolute;
+          left: 0;
+          top: 0;
+          color: #333;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 640px) {
+          .faq-rule {
+            max-width: 100%;
+            margin-bottom: 10px;
           }
-          .fv-top {
-            height: 180px;
+          .faq-title {
+            font-size: 20px;
+            margin-bottom: 2px;
           }
-          .fv-confidence {
-            font-size: 28px;
+          .faq-sub {
+            font-size: 12px;
+            margin-bottom: 16px;
           }
-          .fv-brand {
-            font-size: 14px;
+          .faq-body {
+            max-width: 100%;
           }
-          .fv-tagline {
-            font-size: 11px;
-            letter-spacing: 0.1em;
+          .faq-item dt {
+            font-size: 15px;
+            line-height: 1.9;
           }
-          .fv-catch {
-            font-size: 26px;
-            line-height: 1.7;
-            margin: 40px auto 22px;
-            letter-spacing: 0.08em;
-          }
-          .fv-earth {
-            height: 300px;
-          }
-          .fv-earth-text {
-            left: 16px;
-            right: 16px;
-            max-width: none;
-          }
-          .fv-earth-text p {
-            font-size: 14px;
+          .faq-item dd {
+            font-size: 14.5px;
             line-height: 1.9;
           }
         }
