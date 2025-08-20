@@ -23,7 +23,7 @@ export default function HeroSection() {
         {/* 上のパウダー帯 */}
         <div className="fv-top">
           <Image
-            src="/fv-powder.jpg"
+            src="/fv-powder.png"
             alt="Confidence powder"
             fill
             priority
