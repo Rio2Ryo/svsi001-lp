@@ -7,7 +7,7 @@ export default function Footer() {
         <div style={styles.container}>
           <div style={styles.textCenter}>
             <h3 style={styles.title}>Mother Vegetables Confidence</h3>
-            <p style={styles.subtitle}>MV-Si002</p>
+            <p style={styles.subtitle}>MV-Si001</p>
 
             <div style={styles.section}>
               <p style={styles.company}>dotpb株式会社</p>
