@@ -274,7 +274,7 @@ export default function TestimonialSection() {
         }
         .uv-intro {
           text-align: center; color: #666; font-size: 24px;
-          line-height: 1.4; letter-spacing: 0.04em; margin-bottom: 36px;
+          line-height: 1.4; letter-spacing: 0.04em; margin-bottom: 76px;
         }
         .uv-note { color: #888; font-size: 24px; }
 
