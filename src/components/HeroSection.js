@@ -85,7 +85,7 @@ export default function HeroSection() {
       <style jsx>{`
         /* ベース */
         h2,p,span{
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: Arial, Helvetica, sans-serif!important;
         }
 
         .first-view {
