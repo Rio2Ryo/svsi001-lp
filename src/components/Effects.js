@@ -294,7 +294,7 @@ export default function EffectsSection() {
         .mv-collab-img {
           position: relative;
           width: 100%;
-          
+          height: 480px;
           overflow: hidden;
           background: #f0f2f4;
         }
