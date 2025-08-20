@@ -84,8 +84,12 @@ export default function HeroSection() {
       {/* styled-jsx */}
       <style jsx>{`
         /* ベース */
+        h2,p,span{
+        font-family: Arial, Helvetica, sans-serif;
+        }
+
         .first-view {
-          background: #f7f7f5;
+          background: #fff;
           padding: 32px 16px 60px;
         }
         .is-visible {
