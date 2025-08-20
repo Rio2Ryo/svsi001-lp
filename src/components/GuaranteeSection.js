@@ -15,8 +15,8 @@ export default function GuaranteeSection() {
     <>
       <section id="usage" className={`usage ${isVisible ? "is-visible" : ""}`}>
         <div className="container">
-          <div className="usage-rule" style={styles.hr} />
           <h2 className="usage-title">使用方法</h2>
+          <div className="usage-rule" style={styles.hr} />
 
           <ul className="usage-list">
             <li className="usage-item">
@@ -152,7 +152,7 @@ export default function GuaranteeSection() {
         .usage-title {
           text-align: center;
           font-weight: 600;
-          font-size: 26px;
+          font-size: 30px;
           color: #444;
           letter-spacing: 0.12em;
           margin: 0 0 18px;
@@ -181,7 +181,7 @@ export default function GuaranteeSection() {
         }
         .usage-text h3 {
           margin: 0 0 6px;
-          font-size: 20px;
+          font-size: 24px;
           font-weight: 700;
           letter-spacing: 0.06em;
           color: #3f3f3f;

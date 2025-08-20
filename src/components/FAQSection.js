@@ -128,7 +128,7 @@ export default function FAQSection() {
         }
         .faq-title {
           text-align: center;
-          font-size: 26px;
+          font-size: 30px;
           letter-spacing: 0.12em;
           color: #444;
           margin: 6px 0 4px;
