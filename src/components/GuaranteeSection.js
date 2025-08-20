@@ -30,7 +30,7 @@ export default function GuaranteeSection() {
               />
               <div className="usage-text">
                 <h3>お化粧前に</h3>
-                <p>ファンデーションを塗る前に50mgをパフやブラシで薄く塗布</p>
+                <p>ファンデーションを塗る前に<br></br>50mgをパフやブラシで薄く塗布</p>
               </div>
             </li>
 
@@ -50,7 +50,7 @@ export default function GuaranteeSection() {
 
             <li className="usage-item">
               <Image
-                src="/usage-smell.jpg"
+                src="/usage-smell.png"
                 alt="smell"
                 width={70}
                 height={70}
@@ -64,7 +64,7 @@ export default function GuaranteeSection() {
 
             <li className="usage-item">
               <Image
-                src="/usage-allergy.jpg"
+                src="/usage-allergy.png"
                 alt="allergy"
                 width={70}
                 height={70}
