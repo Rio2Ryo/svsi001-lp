@@ -31,8 +31,8 @@ export default function ConceptSection() {
 
           <div className="cert-logos">
             <Image src="/ORGANIC_1.png" alt="COSMOS ORGANIC" width={88} height={88} />
-            <Image src="/JHCPO_1.png" alt="HALAL" width={88} height={88} />
-            <Image src="/VEGAN.png" alt="VEGAN" width={88} height={88} />
+            <Image src="/JHCPO_1.png" alt="HALAL" width={101} height={88} />
+            <Image src="/VEGAN.png" alt="VEGAN" width={101} height={88} />
           </div>
 
           <div className="cert-table">
@@ -218,14 +218,8 @@ export default function ConceptSection() {
           max-width: 980px;
           margin: 56px auto 40px;
           overflow: hidden;
-          background: #eaeaea;
         }
-        .ms-banner-overlay {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          pointer-events: none;
-        }
+       
         .ms-banner-text {
           position: absolute;
           z-index: 2;
