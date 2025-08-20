@@ -196,13 +196,13 @@ export default function FeatureSection() {
         }
         .mv-info-img {
           position: relative;
-          height: 300px;
+          height: 550px;
           background: #f0f0f0;
           overflow: hidden;
         }
         .mv-subtitle {
           margin: 0 0 14px;
-          font-size: 26px;
+          font-size: 23px;
           font-weight: 700;
           letter-spacing: 0.08em;
           color: #4a4a4a;
@@ -213,7 +213,7 @@ export default function FeatureSection() {
           margin: 0;
         }
         .mv-list li {
-          font-size: 26px;
+          font-size: 23px;
           line-height: 2.1;
           letter-spacing: 0.04em;
           margin: 6px 0;
