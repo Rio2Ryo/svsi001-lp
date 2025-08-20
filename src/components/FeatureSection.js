@@ -6,13 +6,13 @@ export default function FeatureSection() {
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => setIsVisible(true), []);
 
-  // インラインで使う軽量スタイル（グラデや罫線など）
+  // インライン用（影・グラデ）
   const styles = {
-    calloutShadow:
-      "0 2px 8px rgba(0,0,0,.06), 0 12px 28px rgba(0,0,0,.06)",
-    calloutOverlay: {
+    calloutShadow: "0 2px 8px rgba(0,0,0,.06), 0 12px 28px rgba(0,0,0,.06)",
+    // 左→右の灰グラ背景
+    grayGradient: {
       background:
-        "linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,.92) 45%, rgba(255,255,255,.5) 66%, rgba(255,255,255,0) 86%)",
+        "linear-gradient(90deg, #e6e6e6 0%, #eeeeee 40%, rgba(238,238,238,0) 82%)",
     },
   };
 
@@ -83,19 +83,24 @@ export default function FeatureSection() {
             </div>
           </div>
 
-          {/* ===== Callout over powder ===== */}
+          {/* ===== Callout：左→右 灰グラ背景 + 右に silica.png ===== */}
           <div className="mv-callout">
-            {/* Powder image on right */}
+            {/* 背景：左→右の灰グラ（最背面） */}
+            <div className="mv-gradient" style={styles.grayGradient} />
+
+            {/* 右側パウダー画像（中面） */}
             <div className="mv-powder">
               <Image
-                src="/mv-powder.jpg"
+                src="/silica.png"
                 alt="silica powder"
                 fill
                 sizes="(max-width: 1024px) 100vw, 980px"
-                style={{ objectFit: "contain" }}
+                style={{ objectFit: "contain", objectPosition: "right center" }}
+                priority
               />
             </div>
-            <div className="mv-callout-overlay" style={styles.calloutOverlay} />
+
+            {/* 左の説明ボックス（最前面） */}
             <div className="mv-callout-box" style={{ boxShadow: styles.calloutShadow }}>
               <p>
                 マザベジコンフィデンスは、製造時に薬品を一切使わない他
@@ -223,34 +228,35 @@ export default function FeatureSection() {
           color: #555;
         }
 
-        /* ===== Callout with powder ===== */
+        /* ===== Callout（左→右 灰グラ + 右 silica.png） ===== */
         .mv-callout {
           position: relative;
-          min-height: 330px;
+          min-height: 340px;
           margin: 38px 0 0;
-          overflow: hidden;
-          background: #fff;
+          overflow: visible; /* 画像が右に少しはみ出せるように */
+          background: transparent;
         }
+        /* 灰色グラデ背景（最背面） */
+        .mv-gradient {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+        }
+        /* 右側のパウダー画像（中面） */
         .mv-powder {
           position: absolute;
           inset: 0;
           right: -6%;
-          width: 100%;
-          height: 100%;
-          z-index: 0;
-          pointer-events: none;
-        }
-        .mv-callout-overlay {
-          position: absolute;
-          inset: 0;
           z-index: 1;
           pointer-events: none;
         }
+        /* 左のテキストボックス（最前面） */
         .mv-callout-box {
           position: relative;
           z-index: 2;
           display: inline-block;
-          background: rgba(238, 238, 238, 0.9);
+          background: rgba(238, 238, 238, 0.92);
           padding: 28px 28px 22px;
           margin: 26px 0 0 16px;
           max-width: 680px;
@@ -301,11 +307,15 @@ export default function FeatureSection() {
             height: 220px;
           }
           .mv-callout {
-            min-height: 260px;
+            min-height: 280px;
+          }
+          .mv-powder {
+            right: -12%;
           }
           .mv-callout-box {
             margin: 18px 12px 0 12px;
             padding: 22px 18px;
+            max-width: none;
           }
         }
         @media (max-width: 420px) {
