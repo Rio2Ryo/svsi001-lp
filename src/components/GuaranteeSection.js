@@ -30,7 +30,7 @@ export default function GuaranteeSection() {
               />
               <div className="usage-text">
                 <h3>お化粧前に</h3>
-                <p>ファンデーションを塗る前に<br></br>50mgをパフやブラシで薄く塗布</p>
+                <p>ファンデーションを塗る前に50mgを<br></br>パフやブラシで薄く塗布</p>
               </div>
             </li>
 
@@ -58,7 +58,7 @@ export default function GuaranteeSection() {
               />
               <div className="usage-text">
                 <h3>ニオイの気になるところに</h3>
-                <p>ワキやデリケートゾーンなどには1円玉サイズのお水に混ぜて塗り込む</p>
+                <p>ワキやデリケートゾーンなどには<br></br>1円玉サイズのお水に混ぜて塗り込む</p>
               </div>
             </li>
 
@@ -78,7 +78,7 @@ export default function GuaranteeSection() {
 
             <li className="usage-item">
               <Image
-                src="/usage-acne.jpg"
+                src="/usage-acne.png"
                 alt="acne"
                 width={70}
                 height={70}
@@ -92,7 +92,7 @@ export default function GuaranteeSection() {
 
             <li className="usage-item">
               <Image
-                src="/usage-shine.jpg"
+                src="/usage-shine.png"
                 alt="shine"
                 width={70}
                 height={70}
@@ -106,7 +106,7 @@ export default function GuaranteeSection() {
 
             <li className="usage-item">
               <Image
-                src="/usage-spray.jpg"
+                src="/usage-spray.png"
                 alt="spray"
                 width={70}
                 height={70}
@@ -114,7 +114,7 @@ export default function GuaranteeSection() {
               />
               <div className="usage-text">
                 <h3>スプレーとして</h3>
-                <p>マザベジシリカを水と混ぜてスプレー状にして使用もOK（防菌、抗酸化作用があります）</p>
+                <p>マザベジシリカを水と混ぜてスプレー状にして<br></br>使用もOK（防菌、抗酸化作用があります）</p>
               </div>
             </li>
           </ul>
@@ -188,7 +188,7 @@ export default function GuaranteeSection() {
         }
         .usage-text p {
           margin: 0;
-          font-size: 16px;
+          font-size: 24px;
           line-height: 2;
           letter-spacing: 0.04em;
           color: #555;
