@@ -244,7 +244,7 @@ export default function HeroSection() {
           position: absolute; font-size:24px; z-index: 2; top: 50%; padding:20px 100px; transform: translateY(-50%);
           color: #fff; max-width: 640px; padding-right: 24px; text-shadow: 0 1px 2px rgba(0,0,0,.45);
         }
-        .fv-earth-text p { margin: 0; font-size: 16px; line-height: 2; letter-spacing: 0.08em; }
+        .fv-earth-text p { margin: 0; font-size: 22px; line-height: 2; letter-spacing: 0.08em; }
 
         @media (max-width: 1024px) {
           .fv-top { height: 200px; }
