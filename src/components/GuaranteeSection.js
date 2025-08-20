@@ -21,7 +21,7 @@ export default function GuaranteeSection() {
           <ul className="usage-list">
             <li className="usage-item">
               <Image
-                src="/usage-makeup.jpg"
+                src="/usage-makeup.png"
                 alt="makeup"
                 width={70}
                 height={70}
@@ -36,7 +36,7 @@ export default function GuaranteeSection() {
 
             <li className="usage-item">
               <Image
-                src="/usage-night.jpg"
+                src="/usage-night.png"
                 alt="night care"
                 width={70}
                 height={70}
@@ -152,7 +152,7 @@ export default function GuaranteeSection() {
         .usage-title {
           text-align: center;
           font-weight: 600;
-          font-size: 30px;
+          font-size: 32px;
           color: #444;
           letter-spacing: 0.12em;
           margin: 0 0 18px;

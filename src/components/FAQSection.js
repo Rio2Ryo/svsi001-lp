@@ -14,10 +14,9 @@ export default function FAQSection() {
     <>
       <section id="faq" className={`faq ${isVisible ? "is-visible" : ""}`}>
         <div className="container">
-          <div className="faq-rule" style={styles.hr} />
-
           <h2 className="faq-title ja-serif">FAQ</h2>
           <p className="faq-sub">よくあるご質問</p>
+          <div className="faq-rule" style={styles.hr} />
 
           <div className="faq-body">
             <dl className="faq-list">
@@ -128,7 +127,7 @@ export default function FAQSection() {
         }
         .faq-title {
           text-align: center;
-          font-size: 30px;
+          font-size: 32px;
           letter-spacing: 0.12em;
           color: #444;
           margin: 6px 0 4px;
