@@ -270,13 +270,13 @@ export default function TestimonialSection() {
 
         .uv-title {
           text-align: center; font-weight: 700; font-size: 26px;
-          letter-spacing: 0.12em; margin: 22px 0 12px; color: #444;
+          letter-spacing: 0.12em; margin: 62px 0 12px; color: #444;
         }
         .uv-intro {
-          text-align: center; color: #666; font-size: 20px;
-          line-height: 2; letter-spacing: 0.04em; margin-bottom: 36px;
+          text-align: center; color: #666; font-size: 24px;
+          line-height: 1.4; letter-spacing: 0.04em; margin-bottom: 36px;
         }
-        .uv-note { color: #888; font-size: 14px; }
+        .uv-note { color: #888; font-size: 24px; }
 
         .uv-sep {
           display: flex; align-items: center; gap: 16px; margin: 42px 0 14px;
@@ -298,7 +298,7 @@ export default function TestimonialSection() {
         .uv-case { color: #3a3a3a; font-size: 22px; letter-spacing: 0.08em; }
         .uv-case span { font-size: 16px; color: #777; }
 
-        .uv-btn-wrap { display: flex; justify-content: center; margin: 14px 0 40px; }
+        .uv-btn-wrap { display: flex; justify-content: center; margin: 14px 0 70px; }
 
         .modal-overlay {
           position: fixed; inset: 0; background: rgba(0,0,0,.55);
