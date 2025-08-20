@@ -257,7 +257,7 @@ export default function TestimonialSection() {
         .user-voice {
           background: #ffffff;
           color: #3a3a3a;
-          padding: 48px 16px 80px;
+          padding: 98px 0px 98px 0px;
         }
         .is-visible {
           animation: fadeInUp 0.8s ease-out both;
@@ -298,7 +298,7 @@ export default function TestimonialSection() {
         .uv-case { color: #3a3a3a; font-size: 22px; letter-spacing: 0.08em; }
         .uv-case span { font-size: 16px; color: #777; }
 
-        .uv-btn-wrap { display: flex; justify-content: center; margin: 14px 0 70px; }
+        .uv-btn-wrap { display: flex; justify-content: center; margin: 14px 0 110px; }
 
         .modal-overlay {
           position: fixed; inset: 0; background: rgba(0,0,0,.55);
