@@ -137,14 +137,14 @@ export default function FAQSection() {
         .faq-sub {
           text-align: center;
           color: #777;
-          font-size: 16px;
+          font-size: 18px;
           letter-spacing: 0.14em;
           margin: 0 0 18px;
         }
 
         /* ===== Body ===== */
         .faq-body {
-          max-width: 760px; /* 本文は細めのカラム */
+          max-width: 860px; /* 本文は細めのカラム */
           margin: 0 auto;
         }
         .faq-list {
@@ -160,8 +160,8 @@ export default function FAQSection() {
           position: relative;
           margin: 0 0 8px;
           padding-left: 2.1em; /* Q. の分だけ字下げ */
-          font-size: 20.5px;
-          line-height: 2;
+          font-size: 23.5px;
+          line-height: 1.4;
           font-weight: 700;
           letter-spacing: 0.06em;
           color: #3f3f3f;
@@ -181,8 +181,8 @@ export default function FAQSection() {
           position: relative;
           margin: 0;
           padding-left: 2.1em; /* A. の分だけ字下げ */
-          font-size: 21.5px;
-          line-height: 2;
+          font-size: 23.5px;
+          line-height: 1.4;
           letter-spacing: 0.04em;
           color: #555;
         }
