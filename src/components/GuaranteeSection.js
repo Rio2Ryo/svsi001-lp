@@ -1,174 +1,215 @@
-import React from "react";
+"use client";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function GuaranteeSection() {
-  const guarantees = [
-    { number: "01", label: "送料無料" },
-    { number: "02", label: "安心の医薬部外品" },
-    { number: "03", label: "専門スタッフサポート" }
-  ];
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() => setIsVisible(true), []);
+
+  // 横罫線など軽微なインライン用
+  const styles = {
+    hr: { background: "#cfcfcf", height: 1, width: "100%" },
+  };
 
   return (
     <>
-      <section className="guarantee-section">
-        <div className="guarantee-container">
-          <div className="guarantee-box">
-            <h2 className="guarantee-title">30日間返金保証</h2>
-            <p className="guarantee-description">
-              万が一、お肌に合わない場合は<br />
-              商品到着後30日以内であれば全額返金いたします
-            </p>
+      <section id="usage" className={`usage ${isVisible ? "is-visible" : ""}`}>
+        <div className="container">
+          <div className="usage-rule" style={styles.hr} />
+          <h2 className="usage-title">使用方法</h2>
 
-            <div className="guarantee-grid">
-              {guarantees.map((item) => (
-                <div key={item.number} className="guarantee-item">
-                  <div className="guarantee-number-circle">
-                    <span className="guarantee-number">{item.number}</span>
-                  </div>
-                  <p className="guarantee-label">{item.label}</p>
-                </div>
-              ))}
-            </div>
+          <ul className="usage-list">
+            <li className="usage-item">
+              <Image
+                src="/usage-makeup.jpg"
+                alt="makeup"
+                width={70}
+                height={70}
+                className="usage-img"
+                priority
+              />
+              <div className="usage-text">
+                <h3>お化粧前に</h3>
+                <p>ファンデーションを塗る前に50mgをパフやブラシで薄く塗布</p>
+              </div>
+            </li>
 
-            <button
-  className="guarantee-button"
-  onClick={() => {
-    const element = document.getElementById("product");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  }}
->
-  安心して今すぐ試してみる
-</button>
-          </div>
+            <li className="usage-item">
+              <Image
+                src="/usage-night.jpg"
+                alt="night care"
+                width={70}
+                height={70}
+                className="usage-img"
+              />
+              <div className="usage-text">
+                <h3>夜のスキンケアに</h3>
+                <p>寝る前に50mgを乳液やクリームと一緒に使用</p>
+              </div>
+            </li>
+
+            <li className="usage-item">
+              <Image
+                src="/usage-smell.jpg"
+                alt="smell"
+                width={70}
+                height={70}
+                className="usage-img"
+              />
+              <div className="usage-text">
+                <h3>ニオイの気になるところに</h3>
+                <p>ワキやデリケートゾーンなどには1円玉サイズのお水に混ぜて塗り込む</p>
+              </div>
+            </li>
+
+            <li className="usage-item">
+              <Image
+                src="/usage-allergy.jpg"
+                alt="allergy"
+                width={70}
+                height={70}
+                className="usage-img"
+              />
+              <div className="usage-text">
+                <h3>アレルギーやアトピーの方に</h3>
+                <p>肌の隙間に入り込むように塗り込む</p>
+              </div>
+            </li>
+
+            <li className="usage-item">
+              <Image
+                src="/usage-acne.jpg"
+                alt="acne"
+                width={70}
+                height={70}
+                className="usage-img"
+              />
+              <div className="usage-text">
+                <h3>ニキビ肌に</h3>
+                <p>気になるニキビに指で馴染ませる</p>
+              </div>
+            </li>
+
+            <li className="usage-item">
+              <Image
+                src="/usage-shine.jpg"
+                alt="shine"
+                width={70}
+                height={70}
+                className="usage-img"
+              />
+              <div className="usage-text">
+                <h3>顔のテカリや化粧崩れに</h3>
+                <p>お化粧の上からブラシで整える</p>
+              </div>
+            </li>
+
+            <li className="usage-item">
+              <Image
+                src="/usage-spray.jpg"
+                alt="spray"
+                width={70}
+                height={70}
+                className="usage-img"
+              />
+              <div className="usage-text">
+                <h3>スプレーとして</h3>
+                <p>マザベジシリカを水と混ぜてスプレー状にして使用もOK（防菌、抗酸化作用があります）</p>
+              </div>
+            </li>
+          </ul>
         </div>
       </section>
 
       <style jsx>{`
-        .guarantee-section {
-          padding: 5rem 1rem 6rem;
-          background: #000;
+        .usage {
+          background: #ffffff;
+          color: #3a3a3a;
+          padding: 32px 16px 72px;
         }
-
-        .guarantee-container {
-          max-width: 1280px;
+        .is-visible {
+          animation: fadeInUp 0.8s ease-out both;
+        }
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translate3d(0, 10px, 0);
+          }
+          to {
+            opacity: 1;
+            transform: translateZ(0);
+          }
+        }
+        .container {
+          max-width: 980px;
           margin: 0 auto;
         }
 
-        .guarantee-box {
-          max-width: 800px;
-          margin: 0 auto;
-          background: linear-gradient(to bottom right, #1f1f1f, #000);
-          border-radius: 1rem;
-          padding: 2rem;
+        /* 見出し＆罫線 */
+        .usage-rule {
+          margin: 0 auto 16px;
+        }
+        .usage-title {
           text-align: center;
-          border: 1px solid rgba(184, 134, 11, 0.2);
+          font-weight: 600;
+          font-size: 22px;
+          color: #444;
+          letter-spacing: 0.12em;
+          margin: 0 0 18px;
         }
 
-        .guarantee-title {
-          font-size: 2rem;
-          font-weight: 300;
-          color: #b8860b;
-          margin-bottom: 1.5rem;
+        /* リスト */
+        .usage-list {
+          list-style: none;
+          padding: 0;
+          margin: 0 auto;
+          max-width: 760px; /* 画像の並びと本文のバランスをスクショに合わせる */
         }
-
-        .guarantee-description {
-          font-size: 1rem;
-          color: #ccc;
-          line-height: 1.6;
-          margin-bottom: 2rem;
-        }
-
-        @media (min-width: 768px) {
-          .guarantee-title {
-            font-size: 2.5rem;
-          }
-
-          .guarantee-description {
-            font-size: 1.125rem;
-          }
-        }
-
-        .guarantee-grid {
+        .usage-item {
           display: grid;
-          grid-template-columns: 1fr;
-          gap: 1rem;
-          margin-bottom: 2rem;
-        }
-
-        @media (min-width: 768px) {
-          .guarantee-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-          }
-        }
-
-        .guarantee-item {
-          text-align: center;
-        }
-
-        .guarantee-number-circle {
-          width: 48px;
-          height: 48px;
-          margin: 0 auto 0.75rem;
-          background: #000;
-          border: 1px solid rgba(184, 134, 11, 0.3);
-          border-radius: 50%;
-          display: flex;
+          grid-template-columns: 86px 1fr; /* 左に丸画像、右にテキスト */
+          gap: 16px;
           align-items: center;
-          justify-content: center;
+          padding: 14px 0;
+        }
+        .usage-img {
+          display: block;
+          border-radius: 50%;
+          object-fit: cover;
+          background: #fff;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+        .usage-text h3 {
+          margin: 0 0 6px;
+          font-size: 16px;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          color: #3f3f3f;
+        }
+        .usage-text p {
+          margin: 0;
+          font-size: 15px;
+          line-height: 2;
+          letter-spacing: 0.04em;
+          color: #555;
         }
 
-        @media (min-width: 768px) {
-          .guarantee-number-circle {
-            width: 56px;
-            height: 56px;
+        /* レスポンシブ */
+        @media (max-width: 640px) {
+          .usage-list {
+            max-width: 100%;
           }
-        }
-
-        .guarantee-number {
-          color: #b8860b;
-          font-weight: 300;
-          font-size: 1rem;
-        }
-
-        @media (min-width: 768px) {
-          .guarantee-number {
-            font-size: 1.125rem;
+          .usage-item {
+            grid-template-columns: 72px 1fr;
+            gap: 14px;
+            padding: 12px 0;
           }
-        }
-
-        .guarantee-label {
-          font-size: 0.875rem;
-          color: #ccc;
-        }
-
-        @media (min-width: 768px) {
-          .guarantee-label {
-            font-size: 1rem;
+          .usage-text h3 {
+            font-size: 15.5px;
           }
-        }
-
-        .guarantee-button {
-          background: linear-gradient(to right, #b8860b, #d4c4b0);
-          color: white;
-          padding: 0.75rem 2rem;
-          font-size: 1rem;
-          border: none;
-          border-radius: 0;
-          cursor: pointer;
-          letter-spacing: 0.05em;
-          transition: background 0.3s ease;
-        }
-
-        .guarantee-button:hover {
-          background: linear-gradient(to right, #d4c4b0, #b8860b);
-        }
-
-        @media (min-width: 768px) {
-          .guarantee-button {
-            padding: 1rem 3rem;
-            font-size: 1.125rem;
+          .usage-text p {
+            font-size: 14.5px;
+            line-height: 1.9;
           }
         }
       `}</style>
