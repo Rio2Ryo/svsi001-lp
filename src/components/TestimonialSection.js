@@ -285,7 +285,7 @@ export default function TestimonialSection() {
         }
         .uv-sep > span {
           flex: none; color: #444; font-weight: 600;
-          letter-spacing: 0.18em; font-size: 18px;
+          letter-spacing: 0.18em; font-size: 26px;
         }
 
         .uv-cases {
@@ -337,7 +337,7 @@ export default function TestimonialSection() {
         .modal-labels {
           display: grid; grid-template-columns: 1fr 1fr;
           gap: 10px; margin: 8px auto 0; max-width: 580px;
-          color: #444; font-size: 14px; letter-spacing: 0.06em;
+          color: #444; font-size: 22px; letter-spacing: 0.06em;
         }
 
         @media (max-width: 860px) {
