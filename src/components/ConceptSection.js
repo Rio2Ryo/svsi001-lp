@@ -31,8 +31,8 @@ export default function ConceptSection() {
 
           <div className="cert-logos">
             <Image src="/ORGANIC_1.png" alt="COSMOS ORGANIC" width={88} height={88} />
-            <Image src="/logo-halal.svg" alt="HALAL" width={88} height={88} />
-            <Image src="/logo-vegan.svg" alt="VEGAN" width={88} height={88} />
+            <Image src="/JHCPO_1.png" alt="HALAL" width={88} height={88} />
+            <Image src="/VEGAN.png" alt="VEGAN" width={88} height={88} />
           </div>
 
           <div className="cert-table">
