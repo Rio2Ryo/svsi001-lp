@@ -128,7 +128,7 @@ export default function FAQSection() {
         }
         .faq-title {
           text-align: center;
-          font-size: 22px;
+          font-size: 26px;
           letter-spacing: 0.12em;
           color: #444;
           margin: 6px 0 4px;
@@ -137,7 +137,7 @@ export default function FAQSection() {
         .faq-sub {
           text-align: center;
           color: #777;
-          font-size: 13px;
+          font-size: 16px;
           letter-spacing: 0.14em;
           margin: 0 0 18px;
         }
@@ -160,7 +160,7 @@ export default function FAQSection() {
           position: relative;
           margin: 0 0 8px;
           padding-left: 2.1em; /* Q. の分だけ字下げ */
-          font-size: 15.5px;
+          font-size: 20.5px;
           line-height: 2;
           font-weight: 700;
           letter-spacing: 0.06em;
@@ -181,7 +181,7 @@ export default function FAQSection() {
           position: relative;
           margin: 0;
           padding-left: 2.1em; /* A. の分だけ字下げ */
-          font-size: 15px;
+          font-size: 21.5px;
           line-height: 2;
           letter-spacing: 0.04em;
           color: #555;
