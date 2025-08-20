@@ -110,7 +110,7 @@ export default function HeroSection() {
         .fv-top {
           position: relative;
           height: 220px;
-          max-width: 920px;
+          max-width: 1000px;
           margin: 0 auto;
           overflow: hidden;
           border-radius: 0;
