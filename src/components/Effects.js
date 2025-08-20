@@ -105,13 +105,12 @@ export default function EffectsSection() {
                 <h4>イギリス</h4>
                 <p>ノッティンガム大学と Mother Vegetables の研究</p>
               </div>
-            </div>
 
-          <div>
-          <p className="mv-footnote">
+              <p className="mv-footnote">
                 ※当グループが保有する国際特許「WO2023234767」の技術は、日本だけでなく世界の美容を支えるために活用されています。
               </p>
-          </div>
+            </div>
+
             <div className="mv-collab-right">
               <div className="mv-collab-logos">
                 <div className="logo-row">
