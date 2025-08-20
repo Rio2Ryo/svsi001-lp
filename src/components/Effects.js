@@ -61,9 +61,7 @@ export default function EffectsSection() {
             </div>
 
             <div className="mv-cert-logos">
-              <Image src="/logo-gmo.png" alt="GMO" width={86} height={44} />
-              <Image src="/logo-cosmos.png" alt="COSMOS" width={86} height={44} />
-              <Image src="/logo-vegan.png" alt="VEGAN" width={86} height={44} />
+              <Image src="/logo-gmo.png" alt="GMO" width={260} height={80} />
             </div>
           </div>
         </div>
@@ -107,12 +105,13 @@ export default function EffectsSection() {
                 <h4>イギリス</h4>
                 <p>ノッティンガム大学と Mother Vegetables の研究</p>
               </div>
-
-              <p className="mv-footnote">
-                ※当グループが保有する国際特許「WO2023234767」の技術は、日本だけでなく世界の美容を支えるために活用されています。
-              </p>
             </div>
 
+          <div>
+          <p className="mv-footnote">
+                ※当グループが保有する国際特許「WO2023234767」の技術は、日本だけでなく世界の美容を支えるために活用されています。
+              </p>
+          </div>
             <div className="mv-collab-right">
               <div className="mv-collab-logos">
                 <div className="logo-row">
@@ -130,7 +129,7 @@ export default function EffectsSection() {
                   src="/mv-greenhouse.jpg"
                   alt="greenhouse"
                   fill
-                  sizes="(max-width: 1024px) 50vw, 420px"
+                  sizes="(max-width: 1024px) 50vw, 520px"
                   style={{ objectFit: "cover" }}
                   priority
                 />
@@ -164,7 +163,7 @@ export default function EffectsSection() {
           }
         }
         .container {
-          max-width: 980px;
+          max-width: 1100px;
           margin: 0 auto;
         }
         .ja-serif {
