@@ -186,7 +186,7 @@ export default function FeatureSection() {
           grid-template-columns: 1fr 360px;
           gap: 28px;
           align-items: start;
-          margin: 50px 0 48px;
+          margin: 100px 0 100px 0;
         }
         .mv-info-single {
           grid-template-columns: 1fr;
@@ -196,7 +196,7 @@ export default function FeatureSection() {
         }
         .mv-info-img {
           position: relative;
-          height: 550px;
+          height: 400px;
           background: #f0f0f0;
           overflow: hidden;
         }
