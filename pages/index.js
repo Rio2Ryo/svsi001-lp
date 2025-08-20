@@ -227,8 +227,8 @@ export default function Home() {
          <ConceptSection />
          <TestimonialSection />
          <FeatureSection />
-         <ProductSection />
          <Effects />
+         <ProductSection />
          <GuaranteeSection />
          <FAQSection />
          <Footer />
