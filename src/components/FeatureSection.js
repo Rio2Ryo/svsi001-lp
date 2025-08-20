@@ -174,7 +174,7 @@ export default function FeatureSection() {
           text-align: center;
           margin: 0 auto 46px;
           max-width: 820px;
-          font-size: 24px;
+          font-size: 21px;
           line-height: 2.1;
           letter-spacing: 0.06em;
           color: #555;
@@ -202,7 +202,7 @@ export default function FeatureSection() {
         }
         .mv-subtitle {
           margin: 0 0 14px;
-          font-size: 23px;
+          font-size: 21px;
           font-weight: 700;
           letter-spacing: 0.08em;
           color: #4a4a4a;
@@ -265,8 +265,8 @@ export default function FeatureSection() {
         }
         .mv-callout-box p {
           margin: 0;
-          font-size: 24px;
-          line-height: 2.1;
+          font-size: 21px;
+          line-height: 1.5;
           letter-spacing: 0.04em;
         }
         .mv-note {
