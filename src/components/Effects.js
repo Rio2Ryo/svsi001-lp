@@ -173,7 +173,7 @@ export default function EffectsSection() {
         /* タイトル */
         .mv-certs-title {
           text-align: center;
-          font-size: 30px;
+          font-size: 38px;
           font-weight: 600;
           letter-spacing: 0.12em;
           margin: 6px 0 10px;

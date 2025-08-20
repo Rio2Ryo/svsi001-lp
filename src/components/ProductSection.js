@@ -226,7 +226,7 @@ export default function ProductSection() {
         /* 見出し */
         .products-title {
           text-align: center;
-          font-size: 24px;
+          font-size: 36px;
           letter-spacing: 0.14em;
           color: #444;
           font-weight: 600;
@@ -245,7 +245,7 @@ export default function ProductSection() {
         /* シリーズ見出し */
         .products-series {
           text-align: center;
-          font-size: 20px;
+          font-size: 28px;
           letter-spacing: 0.08em;
           color: #3f3f3f;
           font-weight: 700;
@@ -254,7 +254,7 @@ export default function ProductSection() {
         .products-desc {
           text-align: center;
           color: #666;
-          font-size: 14.5px;
+          font-size: 18.5px;
           line-height: 1.9;
           letter-spacing: 0.06em;
           margin: 0 0 18px;
