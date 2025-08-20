@@ -127,6 +127,7 @@ export default function TestimonialSection() {
     hr: { background: "#bfbfbf", height: 1, width: "100%" },
     btn: {
       background: "#565656",
+      fontSize:"22px",
       color: "#fff",
       border: "none",
       borderRadius: "2px",
