@@ -61,7 +61,7 @@ export default function EffectsSection() {
             </div>
 
             <div className="mv-cert-logos">
-              <Image src="/logo-gmo.png" alt="GMO" width={310} height={130} />
+              <Image src="/logo-gmo.png" alt="GMO" width={410} height={130} />
             </div>
           </div>
         </div>
@@ -118,7 +118,7 @@ export default function EffectsSection() {
                   <Image src="/logo-shizuoka.png" alt="shizuoka" width={200} height={88} />
                 </div>
                 <div className="logo-row">
-                  <Image src="/logo-kawazu.png" alt="kawazu" width={188} height={88} />
+                  <Image src="/logo-kawazu.png" alt="kawazu" width={208} height={88} />
                   <Image src="/logo-malaysia-univ.png" alt="U. of Malaya" width={186} height={88} />
                 </div>
               </div>
