@@ -30,9 +30,9 @@ export default function ConceptSection() {
           <h2 className="cert-title">国際的な信頼と品質基準をすべてクリア</h2>
 
           <div className="cert-logos">
-            <Image src="/ORGANIC_1.png" alt="COSMOS ORGANIC" width={88} height={88} />
+            <Image src="/ORGANIC_1.png" alt="COSMOS ORGANIC" width={85} height={85} />
             <Image src="/JHCPO_1.png" alt="HALAL" width={101} height={88} />
-            <Image src="/VEGAN.png" alt="VEGAN" width={101} height={88} />
+            <Image src="/VEGAN.png" alt="VEGAN" width={99} height={88} />
           </div>
 
           <div className="cert-table">

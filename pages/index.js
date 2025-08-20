@@ -225,8 +225,8 @@ export default function Home() {
         </div>*/}
          <HeroSection />
          <ConceptSection />
-         <FeatureSection />
          <TestimonialSection />
+         <FeatureSection />
          <ProductSection />
          <Effects />
          <GuaranteeSection />

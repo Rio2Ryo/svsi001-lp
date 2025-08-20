@@ -1,301 +1,437 @@
-import React, { useState } from "react";
+"use client";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function TestimonialSection() {
-  const [modalImage, setModalImage] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  useEffect(() => setIsVisible(true), []);
+  useEffect(() => {
+    const onKey = (e) => e.key === "Escape" && setShowModal(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
-  const testimonials = [
-    {
-      id: 1,
-      name: "50代女性 3週間使用",
-      comment: "年齢を重ねるにつれ、頬のシミや目元のクマがメイクでも隠しきれず、肌に自信を持てなくなっていました。そんなときにマザーベジタブルに出会いました。使い始めて3週間ほどで、肌の印象が見違えるように変わりました。特に気になっていた頬のシミがふんわりとカバーされるだけでなく、徐々に薄くなってきたように感じています。目元のクマやくすみもやわらぎ、肌全体が明るく均一に整ってきました。大人の肌にも無理なく使えます。"
-    },
-    {
-      id: 2,
-      name: "20代女性 1ヶ月使用",
-      comment: "マザーベジタブルを使い始めてから、肌の調子が本当に変わりました。あれだけ気になっていた頬の毛穴がキュッと引き締まり、赤みや小さなブツブツも落ち着いてきました。肌全体がなめらかに整いますし、仕上がりも自然で、素肌そのものがキレイになったように見えるのが嬉しかったです。朝のメイクが長時間キープできて、化粧直しの回数もぐっと減りました。メイクとスキンケアを同時に叶えてくれる頼れるアイテムとして、毎日の必需品になっています。"
-    },
-    {
-      id: 3,
-      name: "80代女性 1ヶ月使用",
-      comment: "若い頃から外に出ることが多かったせいか、いつの間にか腕にシミや痣が沢山できてしまい、年齢を感じるたびに少し気になっていました。もう仕方ないと諦めていましたが、娘にすすめられてこちらを使い始めました。使い始めてしばらくすると、濃かったシミと痣が少しずつ薄くなってきて、肌の色も以前より均一になってきたように思います。ごわついていた腕も、なめらかになった気がします。年を重ねてもきちんとお手入れをしてあげれば、肌は応えてくれるものなんですね。"
-    }
-  ];
+  const toggleModal = () => setShowModal((v) => !v);
 
-  const surveyResults = [
-    { label: "化粧崩れが減った", percentage: 98 },
-    { label: "肌の調子が良くなった", percentage: 95 },
-    { label: "陶器肌になれた", percentage: 97 },
-    { label: "リピートしたい", percentage: 99 }
-  ];
+  // 罫線やボタンなど軽微なインライン用
+  const styles = {
+    hr: { background: "#bfbfbf", height: 1, width: "100%" },
+    btn: {
+      background: "#565656",
+      color: "#fff",
+      border: "none",
+      borderRadius: "2px",
+      padding: "16px 24px",
+      minWidth: 340,
+      cursor: "pointer",
+      letterSpacing: ".06em",
+    },
+  };
 
   return (
     <>
-      <section className="testimonial-section">
+      <section className={`user-voice ${isVisible ? "is-visible" : ""}`}>
         <div className="container">
-          <div className="header">
-            <p className="section-label">お客様の声</p>
-            <h2 className="section-title">実際にご使用いただいた<br />お客様の喜びの声</h2>
-            <div className="section-separator" />
+          <div className="uv-hr" style={styles.hr} />
+
+          <h2 className="uv-title">実際に利用された方の声</h2>
+          <p className="uv-intro">
+            本製品をご愛用いただいている方々のご協力のもと
+            <br />
+            （傷、アトピー、肌荒れ、シミでお困りの方々）
+            <br />
+            使用前後の肌印象をお写真でご紹介しています。
+            <br />
+            <span className="uv-note">
+              ※個人の感想であり、使用感には個人差があります。
+            </span>
+          </p>
+
+          {/* ====== Block 1 ====== */}
+          <div className="uv-sep">
+            <span>シミ・あざ</span>
           </div>
-
-          <div className="card-grid">
-            {testimonials.map(t => (
-              <div key={t.id} className="testimonial-card">
-                <h4 className="card-label">使用前</h4>
-                <div className="image-box" onClick={() => setModalImage(`before${t.id}`)}>
-                  <img
-                    src={`/before${t.id}.jpg`}
-                    alt={`Before Photo ${t.id}`}
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      objectFit: "cover",
-                      borderRadius: "1rem"
-                    }}
-                  />
-                  <div className="badge">Before</div>
-                </div>
-
-                <h4 className="card-label">使用後</h4>
-                <div className="image-box after" onClick={() => setModalImage(`after${t.id}`)}>
-                  <img
-                    src={`/after${t.id}.jpg`}
-                    alt={`After Photo ${t.id}`}
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      objectFit: "cover",
-                      borderRadius: "1rem"
-                    }}
-                  />
-                  <div className="badge after">After</div>
-                </div>
-                    <p className="name">{t.name}</p>
-                <p className="comment">{t.comment}</p>
-                
-              </div>
-            ))}
-          </div>
-
-          <div className="survey-box">
-            <h3 className="survey-title">ご愛用者様アンケート結果</h3>
-            <div className="survey-grid">
-              {surveyResults.map((r, i) => (
-                <div key={i}>
-                  <div className="survey-bar-header">
-                    <span>{r.label}</span>
-                    <span className="highlight">{r.percentage}%</span>
-                  </div>
-                  <div className="survey-bar-bg">
-                    <div className="survey-bar-fill" style={{ width: `${r.percentage}%` }} />
-                  </div>
-                </div>
-              ))}
+          <div className="uv-cases two">
+            <div className="uv-case">
+              頬のシミ・クマ
+              <br />
+              <span>（50代の女性）</span>
             </div>
-            <p className="note">※2024年10月実施 n=500</p>
+            <div className="uv-case">
+              腕のシミ・あざ
+              <br />
+              <span>（80代の女性）</span>
+            </div>
+          </div>
+          <div className="uv-btn-wrap">
+            <button className="btn-modal" style={styles.btn} onClick={toggleModal}>
+              Before After 画像はこちらをタップ
+            </button>
+          </div>
+
+          {/* ====== Block 2 ====== */}
+          <div className="uv-sep">
+            <span>アトピー・肌荒れ</span>
+          </div>
+          <div className="uv-cases four">
+            <div className="uv-case">
+              両手の親指
+              <br />
+              <span>（30代の男性）</span>
+            </div>
+            <div className="uv-case">
+              乾癬の皮膚炎
+              <br />
+              <span>（40代の女性）</span>
+            </div>
+            <div className="uv-case">
+              アトピー性皮膚炎
+              <br />
+              <span>（10歳の男の子）</span>
+            </div>
+            <div className="uv-case">
+              肌荒れ
+              <br />
+              <span>（5歳の男の子）</span>
+            </div>
+          </div>
+          <div className="uv-btn-wrap">
+            <button className="btn-modal" style={styles.btn} onClick={toggleModal}>
+              Before After 画像はこちらをタップ
+            </button>
+          </div>
+
+          {/* ====== Block 3 ====== */}
+          <div className="uv-sep">
+            <span>傷口</span>
+          </div>
+          <div className="uv-cases two">
+            <div className="uv-case">
+              腕のやけど
+              <br />
+              <span>（50代の女性）</span>
+            </div>
+            <div className="uv-case">
+              転んだ傷
+              <br />
+              <span>（50代の女性）</span>
+            </div>
+          </div>
+          <div className="uv-btn-wrap">
+            <button className="btn-modal" style={styles.btn} onClick={toggleModal}>
+              Before After 画像はこちらをタップ
+            </button>
           </div>
         </div>
       </section>
 
-      {modalImage && (
-        <div className="modal" onClick={() => setModalImage(null)}>
-          <button className="modal-close">×</button>
+      {/* ====== Modal ====== */}
+      {showModal && (
+        <div className="modal-overlay" onClick={toggleModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={`/${modalImage}.jpg`}
-              alt={`拡大画像 ${modalImage}`}
-              style={{ maxWidth: "90vw", maxHeight: "80vh", borderRadius: "1rem" }}
-            />
+            <button className="modal-close" onClick={toggleModal} aria-label="close">
+              ×
+            </button>
+
+            <div className="modal-cases">
+              {/* 1 */}
+              <div className="modal-case">
+                <h4 className="modal-case-title">
+                  頬のシミ・クマ
+                  <br />
+                  <span>（50代の女性）</span>
+                </h4>
+                <div className="modal-images">
+                  <div className="ba">
+                    <span className="badge">Before</span>
+                    <Image src="/case1-before.jpg" alt="before" width={260} height={170} />
+                  </div>
+                  <span className="arrow">▶</span>
+                  <div className="ba">
+                    <span className="badge">After</span>
+                    <Image src="/case1-after.jpg" alt="after" width={260} height={170} />
+                  </div>
+                </div>
+                <div className="modal-labels">
+                  <span>使用前</span>
+                  <span>20日後</span>
+                </div>
+              </div>
+
+              {/* 2 */}
+              <div className="modal-case">
+                <h4 className="modal-case-title">
+                  腕のシミ・あざ
+                  <br />
+                  <span>（80代の女性）</span>
+                </h4>
+                <div className="modal-images">
+                  <div className="ba">
+                    <span className="badge">Before</span>
+                    <Image src="/case2-before.jpg" alt="before" width={260} height={170} />
+                  </div>
+                  <span className="arrow">▶</span>
+                  <div className="ba">
+                    <span className="badge">After</span>
+                    <Image src="/case2-after.jpg" alt="after" width={260} height={170} />
+                  </div>
+                </div>
+                <div className="modal-labels">
+                  <span>使用前</span>
+                  <span>24日後</span>
+                </div>
+              </div>
+
+              {/* 3 */}
+              <div className="modal-case">
+                <h4 className="modal-case-title">
+                  両手の親指（やけど）
+                  <br />
+                  <span>（50代の女性）</span>
+                </h4>
+                <div className="modal-images">
+                  <div className="ba">
+                    <span className="badge">Before</span>
+                    <Image src="/case3-before.jpg" alt="before" width={260} height={170} />
+                  </div>
+                  <span className="arrow">▶</span>
+                  <div className="ba">
+                    <span className="badge">After</span>
+                    <Image src="/case3-after.jpg" alt="after" width={260} height={170} />
+                  </div>
+                </div>
+                <div className="modal-labels">
+                  <span>使用前</span>
+                  <span>15日後</span>
+                </div>
+              </div>
+
+              {/* 4 */}
+              <div className="modal-case">
+                <h4 className="modal-case-title">
+                  転んだ傷
+                  <br />
+                  <span>（50代の女性）</span>
+                </h4>
+                <div className="modal-images">
+                  <div className="ba">
+                    <span className="badge">Before</span>
+                    <Image src="/case4-before.jpg" alt="before" width={260} height={170} />
+                  </div>
+                  <span className="arrow">▶</span>
+                  <div className="ba">
+                    <span className="badge">After</span>
+                    <Image src="/case4-after.jpg" alt="after" width={260} height={170} />
+                  </div>
+                </div>
+                <div className="modal-labels">
+                  <span>使用前</span>
+                  <span>18日後</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
 
+      {/* ===== styled-jsx ===== */}
       <style jsx>{`
-        .testimonial-section {
-          padding: 5rem 1rem 6rem;
-          background: #f9fafb;
+        .user-voice {
+          background: #ffffff;
+          color: #3a3a3a;
+          padding: 48px 16px 80px;
+        }
+        .is-visible {
+          animation: fadeInUp 0.8s ease-out both;
+        }
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translate3d(0, 10px, 0);
+          }
+          to {
+            opacity: 1;
+            transform: translateZ(0);
+          }
         }
         .container {
-          max-width: 1280px;
-          margin: 0 auto;
-        }
-        .header {
-          text-align: center;
-          margin-bottom: 4rem;
-        }
-        .section-label {
-          color: #b8860b;
-          font-size: 0.9rem;
-          letter-spacing: 0.1em;
-          margin-bottom: 1rem;
-        }
-        .section-title {
-          font-size: 2rem;
-          color: #2d2d2d;
-          margin-bottom: 1.5rem;
-        }
-        .section-separator {
-          width: 80px;
-          height: 4px;
-          background: #b8860b;
+          max-width: 980px;
           margin: 0 auto;
         }
 
-        .card-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 2rem;
-        }
-        @media (min-width: 768px) {
-          .card-grid {
-            grid-template-columns: repeat(3, 1fr);
-          }
-        }
-
-        .testimonial-card {
-          background: white;
-          border-radius: 1.5rem;
-          padding: 2rem;
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        .uv-title {
           text-align: center;
-        }
-       .card-label {
-  color: #b8860b;
-  margin-bottom: 0.5rem;
-  font-weight: 300;
-  text-align: left; /* 👈 追加 */
-}
-        .image-box {
-          
-          border-radius: 1rem;
-          padding: 0;
-          margin-bottom: 1.5rem;
-          position: relative;
-          cursor: pointer;
-          overflow: hidden;
-        }
-        
-       
-        .badge {
-          position: absolute;
-          bottom: 12px;
-          left: 12px;
-          background: rgba(255,255,255,0.9);
-          padding: 0.4rem 1rem;
-          border-radius: 999px;
-          font-size: 0.8rem;
-          font-weight: 600;
-          color: #b8860b;
-        }
-        .badge.after {
-          background: linear-gradient(to right, #b8860b, #d4c4b0);
-          color: #000;
-        }
-
-        .comment {
-          font-size: 0.95rem;
-          color: #333;
-          margin: 1rem 0;
-          line-height: 1.6;
-          text-align:left!important;
-        }
-        .name {
-          font-size: 1.1rem;
-          color: #b8860b;
-        }
-
-        .survey-box {
-          background: white;
-          padding: 2rem;
-          border-radius: 1.5rem;
-          margin-top: 4rem;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-        }
-        .survey-title {
-          font-size: 1.5rem;
-          text-align: center;
-          margin-bottom: 2rem;
-          color: #2d2d2d;
-        }
-        .survey-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-         @media (max-width: 768px) {
-          h2 {
-          font-size: 1.4rem !important;
-          line-height: 1.3 !important;
-           }
-        }
-        @media (min-width: 768px) {
-          .survey-grid {
-            grid-template-columns: 1fr 1fr;
-          }
-        }
-        .survey-bar-header {
-          display: flex;
-          justify-content: space-between;
-          margin-bottom: 0.3rem;
-          font-size: 0.9rem;
+          font-weight: 700;
+          font-size: 22px;
+          letter-spacing: 0.12em;
+          margin: 22px 0 12px;
           color: #444;
         }
-        .highlight {
-          font-weight: bold;
-          color: #b8860b;
-        }
-        .survey-bar-bg {
-          background: #ddd;
-          border-radius: 999px;
-          height: 12px;
-          overflow: hidden;
-        }
-        .survey-bar-fill {
-          background: linear-gradient(to right, #b8860b, #d4c4b0);
-          height: 100%;
-          transition: width 1s ease;
-        }
-        .note {
-          font-size: 0.75rem;
+        .uv-intro {
           text-align: center;
+          color: #666;
+          font-size: 15px;
+          line-height: 2;
+          letter-spacing: 0.04em;
+          margin-bottom: 36px;
+        }
+        .uv-note {
           color: #888;
-          margin-top: 1rem;
+          font-size: 14px;
         }
 
-        .modal {
+        /* セパレーター付き見出し */
+        .uv-sep {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin: 42px 0 14px;
+        }
+        .uv-sep::before,
+        .uv-sep::after {
+          content: "";
+          height: 1px;
+          background: #bfbfbf;
+          flex: 1;
+        }
+        .uv-sep > span {
+          flex: none;
+          color: #444;
+          font-weight: 600;
+          letter-spacing: 0.18em;
+          font-size: 18px;
+        }
+
+        /* ケースの並び */
+        .uv-cases {
+          display: grid;
+          gap: 24px 48px;
+          justify-content: center;
+          text-align: center;
+          margin-bottom: 18px;
+        }
+        .uv-cases.two {
+          grid-template-columns: repeat(2, minmax(220px, 1fr));
+        }
+        .uv-cases.four {
+          grid-template-columns: repeat(2, minmax(220px, 1fr));
+        }
+        .uv-case {
+          color: #3a3a3a;
+          font-size: 22px;
+          letter-spacing: 0.08em;
+        }
+        .uv-case span {
+          font-size: 14px;
+          color: #777;
+        }
+
+        .uv-btn-wrap {
+          display: flex;
+          justify-content: center;
+          margin: 14px 0 40px;
+        }
+
+        /* ===== Modal ===== */
+        .modal-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(0,0,0,0.9);
+          background: rgba(0, 0, 0, 0.55);
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 1000;
-        }
-        .modal-close {
-          position: absolute;
-          top: 20px;
-          right: 30px;
-          font-size: 2rem;
-          color: white;
-          background: none;
-          border: none;
-          cursor: pointer;
+          z-index: 60;
+          padding: 24px;
         }
         .modal-content {
-          background: #f0f0f0;
-          border-radius: 1rem;
-          padding: 2rem;
-          text-align: center;
-          max-width: 90vw;
+          position: relative;
+          background: #fff;
+          width: 100%;
+          max-width: 980px;
           max-height: 90vh;
-          display: flex;
+          overflow-y: auto;
+          padding: 28px 20px 32px;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        }
+        .modal-close {
+          position: sticky;
+          top: 0;
+          margin-left: auto;
+          display: inline-block;
+          background: transparent;
+          border: none;
+          font-size: 30px;
+          line-height: 1;
+          cursor: pointer;
+          color: #666;
+        }
+        .modal-cases {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 36px 28px;
+          padding: 8px 8px 18px;
+        }
+        .modal-case-title {
+          text-align: center;
+          font-size: 18px;
+          color: #3a3a3a;
+          letter-spacing: 0.06em;
+          margin: 0 0 10px;
+        }
+        .modal-case-title span {
+          font-size: 14px;
+          color: #777;
+        }
+        .modal-images {
+          display: grid;
+          grid-template-columns: auto 24px auto;
           align-items: center;
           justify-content: center;
+          gap: 10px;
         }
-        .modal-content img {
-          width: 100%;
-          height: auto;
-          border-radius: 1rem;
+        .arrow {
+          color: #777;
+          font-size: 20px;
+          text-align: center;
+        }
+        .ba {
+          position: relative;
+        }
+        .badge {
+          position: absolute;
+          left: 10px;
+          top: 10px;
+          background: #565656;
+          color: #fff;
+          font-size: 14px;
+          padding: 6px 10px;
+          border-radius: 2px;
+          letter-spacing: 0.06em;
+        }
+        .modal-labels {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          margin: 8px auto 0;
+          max-width: 580px;
+          color: #444;
+          font-size: 14px;
+          letter-spacing: 0.06em;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 860px) {
+          .uv-cases.two,
+          .uv-cases.four {
+            grid-template-columns: 1fr;
+          }
+          .modal-cases {
+            grid-template-columns: 1fr;
+          }
+          .modal-images {
+            grid-template-columns: auto 20px auto;
+          }
         }
       `}</style>
     </>
