@@ -23,8 +23,8 @@ export default function GuaranteeSection() {
               <Image
                 src="/usage-makeup.png"
                 alt="makeup"
-                width={70}
-                height={70}
+                width={100}
+                height={100}
                 className="usage-img"
                 priority
               />
@@ -38,8 +38,8 @@ export default function GuaranteeSection() {
               <Image
                 src="/usage-night.png"
                 alt="night care"
-                width={70}
-                height={70}
+                width={100}
+                height={100}
                 className="usage-img"
               />
               <div className="usage-text">
@@ -52,8 +52,8 @@ export default function GuaranteeSection() {
               <Image
                 src="/usage-smell.png"
                 alt="smell"
-                width={70}
-                height={70}
+                width={100}
+                height={100}
                 className="usage-img"
               />
               <div className="usage-text">
@@ -66,8 +66,8 @@ export default function GuaranteeSection() {
               <Image
                 src="/usage-allergy.png"
                 alt="allergy"
-                width={70}
-                height={70}
+                width={100}
+                height={100}
                 className="usage-img"
               />
               <div className="usage-text">
@@ -80,8 +80,8 @@ export default function GuaranteeSection() {
               <Image
                 src="/usage-acne.png"
                 alt="acne"
-                width={70}
-                height={70}
+                width={100}
+                height={100}
                 className="usage-img"
               />
               <div className="usage-text">
@@ -94,8 +94,8 @@ export default function GuaranteeSection() {
               <Image
                 src="/usage-shine.png"
                 alt="shine"
-                width={70}
-                height={70}
+                width={100}
+                height={100}
                 className="usage-img"
               />
               <div className="usage-text">
@@ -108,8 +108,8 @@ export default function GuaranteeSection() {
               <Image
                 src="/usage-spray.png"
                 alt="spray"
-                width={70}
-                height={70}
+                width={100}
+                height={100}
                 className="usage-img"
               />
               <div className="usage-text">
@@ -189,7 +189,7 @@ export default function GuaranteeSection() {
         .usage-text p {
           margin: 0;
           font-size: 24px;
-          line-height: 2;
+          line-height: 1.4;
           letter-spacing: 0.04em;
           color: #555;
         }
