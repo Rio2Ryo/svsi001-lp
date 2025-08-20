@@ -32,7 +32,7 @@ export default function ProductSection() {
             <div className="product-card">
               <div className="product-img">
                 <Image
-                  src="/product-mixpack.jpg"
+                  src="/MV_LOGO.png"
                   alt="mix pack"
                   fill
                   sizes="(max-width: 1024px) 33vw, 300px"

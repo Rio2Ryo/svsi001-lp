@@ -101,7 +101,7 @@ export default function HeroSection() {
             alt="Confidence powder"
             fill
             priority
-            sizes="(max-width: 1024px) 100vw, 1000px"
+            sizes="(max-width: 900px) 100vw, 900px"
             style={{ objectFit: "cover" }}
           />
           <div className="fv-top-inner">
@@ -231,6 +231,7 @@ export default function HeroSection() {
 
         .fv-catch {
           margin: 64px auto 36px; text-align: center; color: #3a3a3a;
+          font-family: ot-bunyu-mincho-stdn, serif;
           font-size: 40px; line-height: 1.8; letter-spacing: 0.1em; font-weight: 500;
         }
 
