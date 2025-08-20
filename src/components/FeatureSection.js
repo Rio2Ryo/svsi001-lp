@@ -6,13 +6,12 @@ export default function FeatureSection() {
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => setIsVisible(true), []);
 
-  // インライン用（影・グラデ）
+  // インライン用（グラデのみ使用）
   const styles = {
-    calloutShadow: "0 2px 8px rgba(0,0,0,.06), 0 12px 28px rgba(0,0,0,.06)",
-    // 左→右の灰グラ背景
+    // 左 → 右 の灰色グラデーション（右端に向かって透過）
     grayGradient: {
       background:
-        "linear-gradient(90deg, #e6e6e6 0%, #eeeeee 40%, rgba(238,238,238,0) 82%)",
+        "linear-gradient(90deg, #e6e6e6 0%, #eeeeee 45%, rgba(238,238,238,0) 85%)",
     },
   };
 
@@ -83,12 +82,12 @@ export default function FeatureSection() {
             </div>
           </div>
 
-          {/* ===== Callout：左→右 灰グラ背景 + 右に silica.png ===== */}
+          {/* ===== Callout：左→右の灰グラ + 右に silica.png（拡大） ===== */}
           <div className="mv-callout">
-            {/* 背景：左→右の灰グラ（最背面） */}
+            {/* 背景グラデーション（最背面） */}
             <div className="mv-gradient" style={styles.grayGradient} />
 
-            {/* 右側パウダー画像（中面） */}
+            {/* 右のパウダー画像（拡大・右寄せ） */}
             <div className="mv-powder">
               <Image
                 src="/silica.png"
@@ -100,8 +99,8 @@ export default function FeatureSection() {
               />
             </div>
 
-            {/* 左の説明ボックス（最前面） */}
-            <div className="mv-callout-box" style={{ boxShadow: styles.calloutShadow }}>
+            {/* 左のテキスト（背景なし・シャドウなし） */}
+            <div className="mv-callout-box">
               <p>
                 マザベジコンフィデンスは、製造時に薬品を一切使わない他
                 <br />
@@ -228,37 +227,39 @@ export default function FeatureSection() {
           color: #555;
         }
 
-        /* ===== Callout（左→右 灰グラ + 右 silica.png） ===== */
+        /* ===== Callout（左グラ + 右 silica.png 拡大） ===== */
         .mv-callout {
           position: relative;
           min-height: 340px;
           margin: 38px 0 0;
-          overflow: visible; /* 画像が右に少しはみ出せるように */
+          overflow: visible;
           background: transparent;
         }
-        /* 灰色グラデ背景（最背面） */
+        /* 背景グラデ（最背面） */
         .mv-gradient {
           position: absolute;
           inset: 0;
           z-index: 0;
           pointer-events: none;
         }
-        /* 右側のパウダー画像（中面） */
+        /* パウダー画像（中面・大きめ） */
         .mv-powder {
           position: absolute;
           inset: 0;
-          right: -6%;
+          right: -8%;
           z-index: 1;
           pointer-events: none;
+          transform: scale(1.45);         /* ← 画像を大きく */
+          transform-origin: right center;  /* ← 右端基準で拡大 */
         }
-        /* 左のテキストボックス（最前面） */
+        /* テキスト（最前面／背景・影なし） */
         .mv-callout-box {
           position: relative;
           z-index: 2;
           display: inline-block;
-          background: rgba(238, 238, 238, 0.92);
-          padding: 28px 28px 22px;
-          margin: 26px 0 0 16px;
+          background: transparent;   /* ← 背景なし */
+          padding: 0;                 /* ← 余白は段落で管理 */
+          margin: 18px 0 0 16px;
           max-width: 680px;
           color: #4a4a4a;
         }
@@ -282,7 +283,11 @@ export default function FeatureSection() {
             height: 260px;
           }
           .mv-callout {
-            min-height: 300px;
+            min-height: 320px;
+          }
+          .mv-powder {
+            right: -12%;
+            transform: scale(1.3);
           }
           .mv-callout-box {
             max-width: 620px;
@@ -310,11 +315,11 @@ export default function FeatureSection() {
             min-height: 280px;
           }
           .mv-powder {
-            right: -12%;
+            right: -16%;
+            transform: scale(1.15);
           }
           .mv-callout-box {
-            margin: 18px 12px 0 12px;
-            padding: 22px 18px;
+            margin: 16px 12px 0 12px;
             max-width: none;
           }
         }
