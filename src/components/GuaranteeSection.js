@@ -152,7 +152,7 @@ export default function GuaranteeSection() {
         .usage-title {
           text-align: center;
           font-weight: 600;
-          font-size: 22px;
+          font-size: 26px;
           color: #444;
           letter-spacing: 0.12em;
           margin: 0 0 18px;
@@ -181,14 +181,14 @@ export default function GuaranteeSection() {
         }
         .usage-text h3 {
           margin: 0 0 6px;
-          font-size: 16px;
+          font-size: 20px;
           font-weight: 700;
           letter-spacing: 0.06em;
           color: #3f3f3f;
         }
         .usage-text p {
           margin: 0;
-          font-size: 15px;
+          font-size: 16px;
           line-height: 2;
           letter-spacing: 0.04em;
           color: #555;
