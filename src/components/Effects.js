@@ -147,6 +147,9 @@ export default function EffectsSection() {
           color: #3a3a3a;
           padding: 36px 16px 80px;
         }
+        h4{
+        font-weight:bold;
+        }
         .is-visible {
           animation: fadeInUp 0.7s ease-out both;
         }
@@ -206,7 +209,7 @@ export default function EffectsSection() {
           grid-template-columns: 220px 1fr;
           align-items: baseline;
           gap: 12px;
-          padding: 6px 0;
+          padding: 2px 0;
           font-size: 22px;
           line-height: 1.5;
           color: #555;
@@ -252,7 +255,7 @@ export default function EffectsSection() {
           align-items: start;
         }
         .mv-collab-text h4 {
-          font-size: 16px;
+          font-size: 22px;
           margin: 18px 0 6px;
           color: #4a4a4a;
           letter-spacing: 0.1em;
@@ -260,8 +263,8 @@ export default function EffectsSection() {
         .mv-collab-text p {
           margin: 0 0 10px;
           color: #555;
-          font-size: 15.5px;
-          line-height: 2;
+          font-size: 22px;
+          line-height: 1.5;
           letter-spacing: 0.04em;
         }
         .mv-footnote {
