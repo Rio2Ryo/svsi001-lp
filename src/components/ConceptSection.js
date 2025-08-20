@@ -191,7 +191,7 @@ export default function ConceptSection() {
       {/* ===== styled-jsx ===== */}
       <style jsx>{`
         :global(html) { scroll-behavior: smooth; }
-        .concept-section { background: #ffffff; color: #3a3a3a; padding: 32px 16px 72px; }
+        .concept-section { background: #ffffff; color: #3a3a3a; padding: 32px 16px 10px; }
         .is-visible { animation: fadeInUp 0.8s ease-out both; }
         @keyframes fadeInUp {
           from { opacity: 0; transform: translate3d(0, 10px, 0); }
@@ -228,10 +228,9 @@ export default function ConceptSection() {
 
         /* バナー */
         .ms-banner {
-          position: relative; height: 420px; max-width: 980px;
+          position: relative; height: 420px; max-width: 1024px;
           margin: 56px auto 40px; overflow: hidden;
         }
-        .ms-banner-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .ms-banner-text {
           position: absolute; z-index: 2; top: 56px; left: 44px;
           color: rgba(58,58,58,.9); font-size: 32px; line-height: 1.9;
