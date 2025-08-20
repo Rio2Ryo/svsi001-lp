@@ -114,12 +114,12 @@ export default function EffectsSection() {
             <div className="mv-collab-right">
               <div className="mv-collab-logos">
                 <div className="logo-row">
-                  <Image src="/logo-fisheries.png" alt="fisheries" width={130} height={48} />
-                  <Image src="/logo-shizuoka.png" alt="shizuoka" width={90} height={48} />
+                  <Image src="/logo-fisheries.png" alt="fisheries" width={180} height={98} />
+                  <Image src="/logo-shizuoka.png" alt="shizuoka" width={180} height={98} />
                 </div>
                 <div className="logo-row">
-                  <Image src="/logo-kawazu.png" alt="kawazu" width={140} height={48} />
-                  <Image src="/logo-malaysia-univ.png" alt="U. of Malaya" width={166} height={48} />
+                  <Image src="/logo-kawazu.png" alt="kawazu" width={180} height={98} />
+                  <Image src="/logo-malaysia-univ.png" alt="U. of Malaya" width={186} height={98} />
                 </div>
               </div>
 
@@ -294,7 +294,7 @@ export default function EffectsSection() {
         .mv-collab-img {
           position: relative;
           width: 100%;
-          height: 480px;
+          height: 380px;
           overflow: hidden;
           background: #f0f2f4;
         }
