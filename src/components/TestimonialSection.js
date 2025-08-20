@@ -257,7 +257,7 @@ export default function TestimonialSection() {
         .user-voice {
           background: #ffffff;
           color: #3a3a3a;
-          padding: 98px 0px 98px 0px;
+          padding: 48px 0px 28px 0px;
         }
         .is-visible {
           animation: fadeInUp 0.8s ease-out both;
@@ -270,7 +270,7 @@ export default function TestimonialSection() {
 
         .uv-title {
           text-align: center; font-weight: 700; font-size: 26px;
-          letter-spacing: 0.12em; margin: 62px 0 12px; color: #444;
+          letter-spacing: 0.12em; margin: 92px 0 12px; color: #444;
         }
         .uv-intro {
           text-align: center; color: #666; font-size: 24px;
