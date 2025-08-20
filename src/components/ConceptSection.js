@@ -137,7 +137,7 @@ export default function ConceptSection() {
               alt="makeup skin banner"
               fill
               priority
-              sizes="(max-width: 1024px) 100vw, 980px"
+              sizes="(max-width: 1024px) 100vw, 1024px"
               style={{ objectFit: "cover" }}
             />
             <div className="ms-banner-overlay" style={styles.bannerOverlay} />
@@ -209,7 +209,7 @@ export default function ConceptSection() {
         /* ロゴ列 */
         .cert-logos {
           display: flex; justify-content: center; align-items: center;
-          gap: 56px; margin: 8px 0 36px;
+          gap: 26px; margin: 8px 0 36px;
         }
 
         /* 表風 2カラム（左：項目、右：説明） */
@@ -222,7 +222,7 @@ export default function ConceptSection() {
           width: 240px; justify-items: end; color: #4b4b4b; letter-spacing: 0.12em;
         }
         .cert-right { flex: 1; min-width: 0; color: #555; letter-spacing: 0.02em; }
-        .cert-left p, .cert-right p { margin: 0; line-height: 2; font-size: 20px; }
+        .cert-left p, .cert-right p { margin: 0; line-height: 2; font-size: 22px; }
         .cert-divider { width: 1px; background: #d9d9d9; align-self: stretch; }
         .cert-divider-mobile { display: none; margin: 8px 0; }
 
@@ -239,15 +239,15 @@ export default function ConceptSection() {
         }
         .ja-serif {
           font-family: "Yu Mincho","Hiragino Mincho ProN","Noto Serif JP","Hiragino Kaku Gothic ProN",serif;
-          font-weight: 500;
+          font-weight: 300;
         }
 
         /* 説明テキスト */
         .ms-description { max-width: 880px; margin: 0 auto; color: #4a4a4a; }
-        .ms-description p { margin: 22px 0; font-size: 16px; line-height: 2; letter-spacing: 0.06em; }
+        .ms-description p { margin: 22px 0; font-size: 22px; line-height: 2; letter-spacing: 0.06em; }
         .ms-list { list-style: none; padding: 0; margin: 28px 0 16px; }
-        .ms-list li { margin: 10px 0; font-size: 16px; line-height: 2; letter-spacing: 0.04em; }
-        .ms-note { margin-top: 18px; color: #888; font-size: 12px; line-height: 1.9; letter-spacing: 0.04em; }
+        .ms-list li { margin: 10px 0; font-size: 20px; line-height: 2; letter-spacing: 0.04em; }
+        .ms-note { margin-top: 18px; color: #888; font-size: 16px; line-height: 1.9; letter-spacing: 0.04em; }
 
         /* レスポンシブ */
         @media (max-width: 1024px) {
