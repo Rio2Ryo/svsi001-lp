@@ -144,7 +144,7 @@ export default function FeatureSection() {
         }
 
         .container {
-          max-width: 980px;
+          max-width: 1024px;
           margin: 0 auto;
         }
 
@@ -166,7 +166,7 @@ export default function FeatureSection() {
           margin: 26px 0 14px;
           text-align: center;
           font-weight: 500;
-          font-size: 34px;
+          font-size: 36px;
           letter-spacing: 0.08em;
           color: #444;
         }
@@ -174,7 +174,7 @@ export default function FeatureSection() {
           text-align: center;
           margin: 0 auto 46px;
           max-width: 820px;
-          font-size: 15.5px;
+          font-size: 24px;
           line-height: 2.1;
           letter-spacing: 0.06em;
           color: #555;
@@ -186,7 +186,7 @@ export default function FeatureSection() {
           grid-template-columns: 1fr 360px;
           gap: 28px;
           align-items: start;
-          margin: 10px 0 48px;
+          margin: 50px 0 48px;
         }
         .mv-info-single {
           grid-template-columns: 1fr;
@@ -202,7 +202,7 @@ export default function FeatureSection() {
         }
         .mv-subtitle {
           margin: 0 0 14px;
-          font-size: 20px;
+          font-size: 26px;
           font-weight: 700;
           letter-spacing: 0.08em;
           color: #4a4a4a;
@@ -213,7 +213,7 @@ export default function FeatureSection() {
           margin: 0;
         }
         .mv-list li {
-          font-size: 15.5px;
+          font-size: 26px;
           line-height: 2.1;
           letter-spacing: 0.04em;
           margin: 6px 0;
@@ -265,7 +265,7 @@ export default function FeatureSection() {
         }
         .mv-callout-box p {
           margin: 0;
-          font-size: 16px;
+          font-size: 24px;
           line-height: 2.1;
           letter-spacing: 0.04em;
         }
