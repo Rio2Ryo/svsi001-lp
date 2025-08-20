@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { useI18n } from "@/src/lib/i18n";
+import { useI18n } from "../lib/i18n";
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
