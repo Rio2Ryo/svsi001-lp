@@ -221,8 +221,8 @@ export default function FeatureSection() {
         }
         .mv-paragraph {
           margin: 8px 0 10px;
-          font-size: 15.5px;
-          line-height: 2.1;
+          font-size: 20px;
+          line-height: 1.5;
           letter-spacing: 0.04em;
           color: #555;
         }
@@ -265,8 +265,9 @@ export default function FeatureSection() {
         }
         .mv-callout-box p {
           margin: 0;
-          font-size: 21px;
-          line-height: 1.5;
+          font-weight:bold;
+          font-size: 20px;
+          line-height: 1.2;
           letter-spacing: 0.04em;
         }
         .mv-note {
