@@ -11,14 +11,14 @@ export default function ProductSection() {
   const { t, lang } = useI18n();
   const tr = (key) => {
     const v = t(key);
-    return v && v !== key ? v : ""; // ← 未定義キーは空文字に
+    return v && v !== key ? v : ""; // 未定義キーは空文字に
   };
 
   useEffect(() => setIsVisible(true), []);
 
   // ========== 価格フォーマッタ（特例: 3300円→$22.37 / 3100円→$21.02） ==========
   const USD_OVERRIDE = { 3300: 22.37, 3100: 21.02 };
-  const JPY_TO_USD_RATE = 22.37 / 3300; // その他は同レートで換算
+  const JPY_TO_USD_RATE = 22.37 / 3300; // その他は同レート換算
   const parseJPY = (v) => {
     if (typeof v === "number") return v;
     if (v == null) return 0;
@@ -27,7 +27,7 @@ export default function ProductSection() {
   };
   const fmtPrice = (value, curLang) => {
     if (curLang === "ja") {
-      if (typeof value === "string") return value; // 整形済ならそのまま
+      if (typeof value === "string") return value; // 整形済みはそのまま
       const n = parseJPY(value);
       return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(n);
     } else {
@@ -37,22 +37,18 @@ export default function ProductSection() {
     }
   };
 
-  // ========== 商品JSON（言語別 or 単一）読み込み ==========
-  // あなたのファイル名に合わせたベース名
-  const BASENAME = "mvsi_products"; // public/mvsi_products.json がある
+  // ========== 商品JSON 読み込み（mvsi_products.*.json を優先） ==========
+  const BASENAME = "mvsi_products"; // public/mvsi_products.json など
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
         setErr("");
 
-        // 優先順にトライ:
-        //   /mvsi_products.en.json → /mvsi_products.ja.json → /mvsi_products.json
-        //   （最後に互換用 /products.xxx.json も試す）
         const urlCandidates = [
-          `/${BASENAME}.${lang || "ja"}.json`,
+          `/${BASENAME}.${(lang || "ja").toLowerCase()}.json`,
           `/${BASENAME}.json`,
-          `/products.${lang || "ja"}.json`,
+          `/products.${(lang || "ja").toLowerCase()}.json`,
           `/products.json`,
         ];
 
@@ -60,15 +56,9 @@ export default function ProductSection() {
         for (const url of urlCandidates) {
           try {
             const res = await fetch(url, { cache: "no-store" });
-            if (res.ok) {
-              data = await res.json();
-              break;
-            } else {
-              lastErr = `HTTP ${res.status} at ${url}`;
-            }
-          } catch (e) {
-            lastErr = e?.message || String(e);
-          }
+            if (res.ok) { data = await res.json(); break; }
+            lastErr = `HTTP ${res.status} at ${url}`;
+          } catch (e) { lastErr = e?.message || String(e); }
         }
         if (!data) throw new Error(lastErr || "no data");
 
@@ -78,9 +68,7 @@ export default function ProductSection() {
         if (!cancelled) setErr(tr("products.error") || "商品データを読み込めませんでした。");
       }
     })();
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [lang]);
 
   // ========== グルーピング（エクトイン配合の判定） ==========
@@ -114,8 +102,7 @@ export default function ProductSection() {
             src={p.ItemPic || "/placeholder.png"}
             alt={p.name || "product"}
             fill
-            sizes="(max-width: 1200px) 33vw, 300px"
-            style={{ objectFit: "contain" }}
+            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 33vw, 300px"
             priority={priority}
           />
         </div>
@@ -123,12 +110,7 @@ export default function ProductSection() {
         <p className="product-price-label">{priceLabel}</p>
         {showOriginal && <p className="product-original">{fmtPrice(p.originalprice, lang)}</p>}
         <p className="product-price">{fmtPrice(p.price, lang)}</p>
-        <a
-          className="product-btn"
-          href={p.url || "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a className="product-btn" href={p.url || "#"} target="_blank" rel="noopener noreferrer">
           {buyLabel}
         </a>
       </div>
@@ -152,6 +134,7 @@ export default function ProductSection() {
               <h3 className="products-series">{seriesSilica}</h3>
               <div className="series-rule" style={styles.hr} />
               <p className="products-desc">{descSilica}</p>
+
               <div className="product-list three">
                 {pure.map((p, i) => (
                   <Card key={p.slug || i} p={p} priority={i === 0} />
@@ -168,6 +151,7 @@ export default function ProductSection() {
               <h3 className="products-series">{seriesEctoin}</h3>
               <div className="series-rule" style={styles.hr} />
               <p className="products-desc">{descEctoin}</p>
+
               <div className="product-list four">
                 {ect.map((p, i) => (
                   <Card key={p.slug || `e-${i}`} p={p} />
@@ -188,6 +172,7 @@ export default function ProductSection() {
 
         .products-title { text-align: center; font-size: 36px; letter-spacing: 0.14em; color: #444; font-weight: 600; margin: 6px 0 6px; }
         .products-logo { display: flex; justify-content: center; margin: 2px 0 28px; }
+
         .products-series { text-align: center; font-size: 28px; letter-spacing: 0.08em; color: #3f3f3f; font-weight: 700; margin: 80px 0 6px; }
         .series-rule { max-width: 860px; margin: 0 auto 16px; }
         .products-desc { text-align: center; color: #666; font-size: 18.5px; line-height: 1.9; letter-spacing: 0.06em; margin: 0 0 18px; }
@@ -197,7 +182,34 @@ export default function ProductSection() {
         .product-list.four  { grid-template-columns: repeat(4, minmax(220px, 1fr)); max-width: 1080px; }
 
         .product-card { text-align: center; color: #3a3a3a; }
-        .product-img { position: relative; width: 100%; height: 220px; margin: 0 auto 8px; background: #fff; }
+
+        /* ★ 画像はここで制御（親枠固定＋内部要素を contain に強制） */
+        .product-img {
+          position: relative;
+          width: 100%;
+          height: 220px;       /* 画像枠の高さ固定 */
+          overflow: hidden;    /* はみ出し防止 */
+          background: #fff;
+          border-radius: 6px;
+        }
+        /* next/image の内部ラッパ span を親枠いっぱいに */
+        .product-img :global(span) {
+          position: absolute !important;
+          inset: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          display: block !important;
+        }
+        /* 実画像を常に contain で中央表示 */
+        .product-img :global(img) {
+          position: absolute !important;
+          inset: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: contain !important;
+          object-position: center center !important;
+        }
+
         .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
         .product-price-label { margin: 0; color: #666; font-size: 12.5px; letter-spacing: 0.06em; }
         .product-original { margin: 2px 0; font-size: 12px; color: #888; text-decoration: line-through; }

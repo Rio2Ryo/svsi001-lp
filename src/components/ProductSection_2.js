@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useI18n } from "../lib/i18n";
-import { useRouter } from "next/router"; // Pages Router 前提（App Routerなら props で渡すか pathname 解析へ）
+import { useRouter } from "next/router"; // Pages Router を想定
 
 export default function ProductSection({ productsId }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,19 +18,14 @@ export default function ProductSection({ productsId }) {
 
   useEffect(() => setIsVisible(true), []);
 
-  // ===== ID 推定 =====
+  // ===== ID 推定（props → query → path → 環境変数 → 既定） =====
   const guessedId = useMemo(() => {
-    // 1) props
     if (productsId) return String(productsId).toLowerCase();
 
-    // 2) router query
     const q = (router?.isReady && router.query) || {};
     const qKeys = ["productsId", "itemId", "id", "agent"];
-    for (const k of qKeys) {
-      if (q[k]) return String(q[k]).toLowerCase();
-    }
+    for (const k of qKeys) if (q[k]) return String(q[k]).toLowerCase();
 
-    // 3) URL パスから推定（/item/252003 など）
     if (typeof window !== "undefined") {
       const segs = window.location.pathname.split("/").filter(Boolean);
       const bad = new Set(["item", "items", "products", "product", "ja", "en"]);
@@ -40,25 +35,24 @@ export default function ProductSection({ productsId }) {
       }
     }
 
-    // 4) 環境変数 or 既定
     if (typeof process !== "undefined" && process.env.NEXT_PUBLIC_PRODUCTS_ID) {
       return String(process.env.NEXT_PUBLIC_PRODUCTS_ID).toLowerCase();
     }
-    return "mvsi"; // 最終フォールバック
+    return "mvsi";
   }, [productsId, router?.isReady, router?.query]);
 
   // ===== 価格フォーマッタ（特例: 3300円→$22.37 / 3100円→$21.02） =====
   const USD_OVERRIDE = { 3300: 22.37, 3100: 21.02 };
-  const JPY_TO_USD_RATE = 22.37 / 3300; // その他は同一レート換算
+  const JPY_TO_USD_RATE = 22.37 / 3300;
   const parseJPY = (v) => {
     if (typeof v === "number") return v;
     if (v == null) return 0;
-    const num = String(v).replace(/[^\d.-]/g, ""); // "3,300円" -> "3300"
+    const num = String(v).replace(/[^\d.-]/g, "");
     return Number(num || 0);
   };
   const fmtPrice = (value, curLang) => {
     if (curLang === "ja") {
-      if (typeof value === "string") return value; // 整形済ならそのまま
+      if (typeof value === "string") return value;
       const n = parseJPY(value);
       return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(n);
     } else {
@@ -68,13 +62,12 @@ export default function ProductSection({ productsId }) {
     }
   };
 
-  // ===== 商品JSON 読み込み（ID/言語に応じて候補を順に試す） =====
+  // ===== 商品JSON 読み込み（<ID>_products.*.json を優先） =====
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
         setErr("");
-
         const id = guessedId;
         const L = (lang || "ja").toLowerCase();
 
@@ -100,7 +93,6 @@ export default function ProductSection({ productsId }) {
           }
         }
         if (!data) throw new Error(lastErr || "no product json found");
-
         if (!cancelled) setItems(Array.isArray(data) ? data : []);
       } catch (e) {
         console.error("Product load failed:", e);
@@ -113,8 +105,8 @@ export default function ProductSection({ productsId }) {
   // ===== グルーピング（エクトイン配合の判定） =====
   const isEctoin = (p) =>
     /エクトイン|ectoin/i.test(p?.name || "") || (p?.slug || "").includes("-e-");
-  const pure = items.filter((p) => !isEctoin(p)); // シリカのみ
-  const ect  = items.filter((p) =>  isEctoin(p)); // エクトイン配合
+  const pure = items.filter((p) => !isEctoin(p));
+  const ect  = items.filter((p) =>  isEctoin(p));
 
   // ===== UIラベル（i18n） =====
   const title        = tr("products.title") || "商品ラインナップ";
@@ -125,9 +117,7 @@ export default function ProductSection({ productsId }) {
   const priceLabel   = tr("products.labels.price") || (lang === "en" ? "Price (incl. tax)" : "価格(税込)");
   const buyLabel     = tr("cta.buy") || tr("products.labels.buy") || (lang === "en" ? "Buy now" : "ご購入はこちら");
 
-  // 細い罫線など
-  const styles = { hr: { background: "#bfbfbf", height: 1, width: "100%" } };
-
+  // ===== カード =====
   const Card = ({ p, priority = false }) => {
     const showOriginal =
       p.originalprice != null &&
@@ -141,8 +131,7 @@ export default function ProductSection({ productsId }) {
             src={p.ItemPic || "/placeholder.png"}
             alt={p.name || "product"}
             fill
-            sizes="(max-width: 1200px) 33vw, 300px"
-            style={{ objectFit: "contain" }}
+            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 33vw, 300px"
             priority={priority}
           />
         </div>
@@ -150,18 +139,14 @@ export default function ProductSection({ productsId }) {
         <p className="product-price-label">{priceLabel}</p>
         {showOriginal && <p className="product-original">{fmtPrice(p.originalprice, lang)}</p>}
         <p className="product-price">{fmtPrice(p.price, lang)}</p>
-        <a
-          className="product-btn"
-          href={p.url || "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a className="product-btn" href={p.url || "#"} target="_blank" rel="noopener noreferrer">
           {buyLabel}
         </a>
       </div>
     );
   };
 
+  // ===== 表示 =====
   return (
     <>
       <section id="products" className={`products ${isVisible ? "is-visible" : ""}`}>
@@ -177,7 +162,7 @@ export default function ProductSection({ productsId }) {
           {pure.length > 0 && (
             <>
               <h3 className="products-series">{seriesSilica}</h3>
-              <div className="series-rule" style={styles.hr} />
+              <div className="series-rule" />
               <p className="products-desc">{descSilica}</p>
               <div className="product-list three">
                 {pure.map((p, i) => (
@@ -193,7 +178,7 @@ export default function ProductSection({ productsId }) {
           {ect.length > 0 && (
             <>
               <h3 className="products-series">{seriesEctoin}</h3>
-              <div className="series-rule" style={styles.hr} />
+              <div className="series-rule" />
               <p className="products-desc">{descEctoin}</p>
               <div className="product-list four">
                 {ect.map((p, i) => (
@@ -217,7 +202,7 @@ export default function ProductSection({ productsId }) {
         .products-logo { display: flex; justify-content: center; margin: 2px 0 28px; }
 
         .products-series { text-align: center; font-size: 28px; letter-spacing: 0.08em; color: #3f3f3f; font-weight: 700; margin: 80px 0 6px; }
-        .series-rule { max-width: 860px; margin: 0 auto 16px; }
+        .series-rule { max-width: 860px; height: 1px; background: #bfbfbf; margin: 0 auto 16px; }
         .products-desc { text-align: center; color: #666; font-size: 18.5px; line-height: 1.9; letter-spacing: 0.06em; margin: 0 0 18px; }
 
         .product-list { display: grid; gap: 36px 17px; justify-content: center; margin: 10px auto 48px; }
@@ -225,7 +210,33 @@ export default function ProductSection({ productsId }) {
         .product-list.four  { grid-template-columns: repeat(4, minmax(220px, 1fr)); max-width: 1080px; }
 
         .product-card { text-align: center; color: #3a3a3a; }
-        .product-img { position: relative; width: 100%; height: 220px; margin: 0 auto 8px; background: #fff; }
+
+        /* ★ ここが重要：親枠で高さを固定し、内部要素を強制 contain */
+        .product-img {
+          position: relative;
+          width: 100%;
+          height: 220px;        /* 画像枠を固定 */
+          overflow: hidden;      /* はみ出し防止 */
+          background: #fff;
+          border-radius: 6px;
+        }
+        /* next/image の内部要素を強制制御（scoped :global） */
+        .product-img :global(span) {
+          position: absolute !important;
+          inset: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          display: block !important;
+        }
+        .product-img :global(img) {
+          position: absolute !important;
+          inset: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: contain !important;   /* 枠内に収める */
+          object-position: center center !important;
+        }
+
         .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
         .product-price-label { margin: 0; color: #666; font-size: 12.5px; letter-spacing: 0.06em; }
         .product-original { margin: 2px 0; font-size: 12px; color: #888; text-decoration: line-through; }
