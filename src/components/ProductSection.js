@@ -1,13 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useI18n } from "../lib/i18n";
 
-// ▼i18n辞書（JSON）を読み込み（パスは調整してください）
-import ja from "../locales/ja.json";
-import en from "../locales/en.json";
-
-// ▼商品データ（ご指定の7件／日本語ベース）
+// 既存の7商品（JSONそのまま）
 const PRODUCTS = [
   {
     name: "【ミックスパック】 マザベジシリカパウダー 1,500mg",
@@ -17,7 +14,7 @@ const PRODUCTS = [
     price: "3,300円",
     ItemPic: "/mix1500.png",
     wixProductId: "dcb1eb79-e65a-02df-a8f2-a80385c56e00",
-    url: "https://www.dotpb.jp/product-page/double-mvsi",
+    url: "https://www.dotpb.jp/product-page/double-mvsi"
   },
   {
     name: "【薬用スライドケース】マザベジシリカパウダー 1,500mg",
@@ -27,7 +24,7 @@ const PRODUCTS = [
     price: "3,300円",
     ItemPic: "/case1500.png",
     wixProductId: "7be06482-8fca-e20d-6a73-48bd3e914460",
-    url: "https://www.dotpb.jp/product-page/case-mvsi",
+    url: "https://www.dotpb.jp/product-page/case-mvsi"
   },
   {
     name: "【30本セット】マザベジシリカパウダー 22,500mg",
@@ -37,7 +34,7 @@ const PRODUCTS = [
     price: "20,000円",
     ItemPic: "/30p22500.png",
     wixProductId: "fb6bbce6-a63f-b4d1-b817-da05d987e163",
-    url: "https://www.dotpb.jp/product-page/big-refill-mvsi",
+    url: "https://www.dotpb.jp/product-page/big-refill-mvsi"
   },
   {
     name: "【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り）",
@@ -47,7 +44,7 @@ const PRODUCTS = [
     price: "3,300円",
     ItemPic: "/mix2000.png",
     wixProductId: "7ba04481-0674-5262-9325-8d62f2d25095",
-    url: "https://www.dotpb.jp/product-page/double-e-mvsi",
+    url: "https://www.dotpb.jp/product-page/double-e-mvsi"
   },
   {
     name: "【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り）",
@@ -57,7 +54,7 @@ const PRODUCTS = [
     price: "3,300円",
     ItemPic: "/case2000.png",
     wixProductId: "48c2a407-4738-2f3f-e317-d118a4046e5c",
-    url: "https://www.dotpb.jp/product-page/case-e-mvsi",
+    url: "https://www.dotpb.jp/product-page/case-e-mvsi"
   },
   {
     name: "【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り）",
@@ -67,7 +64,7 @@ const PRODUCTS = [
     price: "12,000円",
     ItemPic: "/10p10000.png",
     wixProductId: "cc620bb2-fd77-8db3-4bf1-cff751f9e55d",
-    url: "https://www.dotpb.jp/product-page/refill-e-mvsi",
+    url: "https://www.dotpb.jp/product-page/refill-e-mvsi"
   },
   {
     name: "【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り）",
@@ -77,83 +74,43 @@ const PRODUCTS = [
     price: "30,000円",
     ItemPic: "/30p30000.png",
     wixProductId: "c15bad90-8fff-b003-7792-2282202b6ccb",
-    url: "https://www.dotpb.jp/product-page/big-refill-e-mvsi",
-  },
+    url: "https://www.dotpb.jp/product-page/big-refill-e-mvsi"
+  }
 ];
 
 export default function ProductLineupSection() {
-  // ===== 言語状態（localStorage保存あり） =====
-  const [lang, setLang] = useState("ja");
-  useEffect(() => {
-    const saved = typeof window !== "undefined" && localStorage.getItem("lang");
-    if (saved === "en" || saved === "ja") setLang(saved);
-  }, []);
-  useEffect(() => {
-    if (typeof window !== "undefined") localStorage.setItem("lang", lang);
-  }, [lang]);
+  const { t } = useI18n();
+  const tr = (key) => t(key) ?? "";
 
-  // ===== 辞書＆翻訳ヘルパー =====
-  const dict = lang === "en" ? en : ja;
-  const t = (key) => {
-    const d = lang === "en" ? en : ja;
-    return key.split(".").reduce((o, k) => (o && o[k] != null ? o[k] : null), d) ??
-      key.split(".").reduce((o, k) => (o && o[k] != null ? o[k] : null), ja) ??
-      "";
-  };
+  // 見出し・注記（辞書）
+  const baseTitle = tr("lineup.baseTitle");
+  const ectoTitle = tr("lineup.ectoTitle");
+  const baseNote  = tr("lineup.note.base");
+  const ectoNote1 = tr("lineup.note.ecto1");
+  const ectoNote2 = tr("lineup.note.ecto2");
 
-  // 商品名・説明の翻訳（slugで置換／未定義は日本語のまま）
-  const resolveProductText = (p) => {
-    if (lang !== "en") return { name: p.name, description: p.description };
-    const tr = en.productsBySlug?.[p.slug];
-    return {
-      name: tr?.name || p.name,
-      description: tr?.description || p.description,
-    };
-  };
-
-  // ── グルーピング（slugベースで判定）
-  const baseItems = PRODUCTS.filter((p) => !p.slug.includes("-e-")); // 3件
-  const ectoItems = PRODUCTS.filter((p) => p.slug.includes("-e-"));  // 4件
+  // 振り分け（slug に "-e-" が含まれる＝エクトイン）
+  const baseItems = PRODUCTS.filter((p) => !p.slug.includes("-e-"));
+  const ectoItems = PRODUCTS.filter((p) =>  p.slug.includes("-e-"));
 
   return (
     <section className="lineup">
-      {/* 言語切替（このセクション内に実装） */}
-      <div className="langbar" aria-label={t("ui.langLabel")}>
-        <button className={lang === "ja" ? "on" : ""} onClick={() => setLang("ja")}>
-          {t("ui.ja")}
-        </button>
-        <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>
-          {t("ui.en")}
-        </button>
-      </div>
-
-      {/* ── 素版 ── */}
-      <h2 className="title">{t("lineup.baseTitle")}</h2>
+      {/* ── シリカの素版 ── */}
+      <h2 className="title">{baseTitle}</h2>
       <div className="divider" />
-      <p className="note">{t("lineup.note.base")}</p>
-      <Row
-        columns={3}
-        items={baseItems}
-        t={t}
-        resolveProductText={resolveProductText}
-      />
+      <p className="note">{baseNote}</p>
+      <Row columns={3} items={baseItems} tr={tr} />
 
       {/* ── エクトイン配合版 ── */}
-      <h2 className="title">{t("lineup.ectoTitle")}</h2>
+      <h2 className="title">{ectoTitle}</h2>
       <div className="divider" />
       <p className="note">
-        {t("lineup.note.ecto1")}
+        {ectoNote1}
         <br />
-        <span className="subnote">{t("lineup.note.ecto2")}</span>
+        <span className="subnote">{ectoNote2}</span>
       </p>
-      <Row
-        columns={4}
-        items={ectoItems}
-        t={t}
-        resolveProductText={resolveProductText}
-      />
+      <Row columns={4} items={ectoItems} tr={tr} />
 
-      {/* ===== styled-jsx ===== */}
       <style jsx>{`
         .lineup {
           max-width: 1120px;
@@ -161,26 +118,6 @@ export default function ProductLineupSection() {
           padding: 40px 16px 80px;
           background: #fff;
         }
-        .langbar {
-          display: flex;
-          gap: 8px;
-          justify-content: flex-end;
-          margin-bottom: 8px;
-        }
-        .langbar button {
-          border: 1px solid #ddd;
-          background: #fff;
-          padding: 6px 10px;
-          border-radius: 9999px;
-          font-size: 12px;
-          cursor: pointer;
-        }
-        .langbar button.on {
-          background: #111;
-          color: #fff;
-          border-color: #111;
-        }
-
         .title {
           text-align: center;
           font-family: "ot-bunyu-mincho-stdn", serif;
@@ -202,43 +139,37 @@ export default function ProductLineupSection() {
           letter-spacing: 0.06em;
           margin-bottom: 26px;
         }
-        .note .subnote {
-          display: inline-block;
-          margin-top: 4px;
-        }
+        .note .subnote { display: inline-block; margin-top: 4px; }
 
         @media (max-width: 1024px) {
-          .title {
-            font-size: 24px;
-          }
+          .title { font-size: 24px; }
         }
         @media (max-width: 560px) {
-          .title {
-            font-size: 20px;
-            line-height: 1.6;
-          }
-          .note {
-            font-size: 12px;
-          }
+          .title { font-size: 20px; line-height: 1.6; }
+          .note  { font-size: 12px; }
         }
       `}</style>
     </section>
   );
 }
 
-/* 横並び：flexで確実に横配置。列数をpropsで制御 */
-function Row({ items, columns = 3, t, resolveProductText }) {
+/* 横並び：PCで3列/4列、タブレット2列、スマホ1列 */
+function Row({ items, columns = 3, tr }) {
   return (
     <>
       <div className="row" role="list">
         {items.map((p) => {
-          const trP = resolveProductText(p);
+          // 辞書に商品名があれば上書き（なければJSONのまま）
+          const name = tr(`products.${p.slug}.name`) || p.name;
+          const priceTaxIn = tr("ui.shop.priceTaxIn");
+          const buyNowText = tr("ui.shop.buyNow");
+
           return (
             <article key={p.slug} className="card" role="listitem">
               <div className="thumb">
                 <Image
                   src={p.ItemPic}
-                  alt={trP.name}
+                  alt={name}
                   fill
                   sizes="(max-width: 1024px) 100vw, 320px"
                   style={{ objectFit: "contain" }}
@@ -246,16 +177,16 @@ function Row({ items, columns = 3, t, resolveProductText }) {
                 />
               </div>
 
-              <h3 className="name">{trP.name}</h3>
-              <div className="amount">{extractAmount(trP.name)}</div>
+              <h3 className="name">{name}</h3>
+              <div className="amount">{extractAmount(name)}</div>
 
               <div className="pricewrap">
-                {t("ui.price.taxin")}
+                {priceTaxIn}
                 <span className="price">{p.price}</span>
               </div>
 
-              <Link href={p.url} className="cta" aria-label={trP.name}>
-                {t("ui.buy")}
+              <Link href={p.url} className="cta" aria-label={name}>
+                {buyNowText}
               </Link>
             </article>
           );
@@ -284,28 +215,10 @@ function Row({ items, columns = 3, t, resolveProductText }) {
           padding-top: 70%;
           margin: 0 auto 10px;
         }
-        .name {
-          font-weight: 600;
-          color: #333;
-          line-height: 1.6;
-          font-size: 15px;
-        }
-        .amount {
-          margin-top: 4px;
-          font-size: 13px;
-          color: #111;
-        }
-        .pricewrap {
-          margin-top: 10px;
-          font-size: 13px;
-          color: #666;
-        }
-        .price {
-          display: block;
-          font-size: 18px;
-          color: #111;
-          margin-top: 2px;
-        }
+        .name { font-weight: 600; color: #333; line-height: 1.6; font-size: 15px; }
+        .amount { margin-top: 4px; font-size: 13px; color: #111; }
+        .pricewrap { margin-top: 10px; font-size: 13px; color: #666; }
+        .price { display: block; font-size: 18px; color: #111; margin-top: 2px; }
         .cta {
           display: inline-block;
           margin-top: 12px;
@@ -320,31 +233,20 @@ function Row({ items, columns = 3, t, resolveProductText }) {
 
         /* タブレット：2列 */
         @media (max-width: 1024px) {
-          .card {
-            width: calc((100% - 36px) / 2);
-          }
+          .card { width: calc((100% - 36px) / 2); }
         }
         /* スマホ：1列 */
         @media (max-width: 560px) {
-          .row {
-            gap: 20px;
-          }
-          .card {
-            width: 100%;
-          }
-          .name {
-            font-size: 14px;
-          }
-          .price {
-            font-size: 17px;
-          }
+          .row  { gap: 20px; }
+          .card { width: 100%; }
+          .name { font-size: 14px; }
+          .price{ font-size: 17px; }
         }
       `}</style>
     </>
   );
 }
 
-/* ヘルパー：製品名から mg を抽出（任意） */
 function extractAmount(name) {
   const m = name.match(/([0-9,]+mg)/);
   return m ? m[1] : "";

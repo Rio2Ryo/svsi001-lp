@@ -1,7 +1,7 @@
 {
   "ui": {
-    "lang": { "label": "Language", "ja": "日本語", "en": "English" }
-  },
+    "lang": { "label": "Language", "ja": "Japanese", "en": "English" },
+    "shop": { "priceTaxIn": "Price (incl. tax)", "buyNow": "Buy now" },
   "hero": {
     "brand": "Mother Vegetables",
     "title": "Confidence",
@@ -290,16 +290,6 @@
     "legalText": "Legal Notice (Specified Commercial Transactions Act)",
     "copyright": "Copyright © 2025 dotpb Co.,Ltd. All Rights Reserved."
   },
-  "products": {
-    "title": "Product Lineup",
-    "series": { "silica": "Mazavegi Confidence [Silica Only]", "ectoin": "Mazavegi Confidence [with Ectoin]" },
-    "desc": {
-      "silica": "Ingredient: Organic Silica, purity 97.1%+",
-      "ectoin": "Ingredient: Organic Silica 97.1%+ with\nEctoin (a natural amino acid) for moisturizing\nand soothing benefits"
-    },
-    "labels": { "price": "Price (incl. tax)", "buy": "Buy now" },
-    "error": "Failed to load product data."
-  },
   "cta": { "buy": "Buy now" }
   ,
   "lineup": {
@@ -308,37 +298,17 @@
     "note": {
       "base": "Ingredient: Organic silica purity 97.1% or higher",
       "ecto1": "Ingredient: Organic silica purity 97.1% or higher",
-      "ecto2": "Expected moisturizing and anti-inflammatory benefits / Contains Ectoine (natural amino acid)"
+      "ecto2": "Expected moisturizing/anti-inflammatory benefits • Contains Ectoine (natural amino acid)"
     }
   },
-  "productsBySlug": {
-    "double-mvsi": {
-      "name": "Mix Pack – Mother Vege Silica Powder 1,500mg",
-      "description": "Mix pack."
-    },
-    "case-mvsi": {
-      "name": "Medicinal Slide Case – Mother Vege Silica Powder 1,500mg",
-      "description": "Slide case type."
-    },
-    "big-refill-mvsi": {
-      "name": "30 Sticks Set – Mother Vege Silica Powder 22,500mg",
-      "description": "Pack of 30 sticks."
-    },
-    "double-e-mvsi": {
-      "name": "Mix Pack – Mother Vege Silica Powder 2,000mg (with Ectoine)",
-      "description": "Mix pack with Ectoine."
-    },
-    "case-e-mvsi": {
-      "name": "Medicinal Slide Case – Mother Vege Silica Powder 2,000mg (with Ectoine)",
-      "description": "Slide case with Ectoine."
-    },
-    "refill-e-mvsi": {
-      "name": "10 Sticks Set – Mother Vege Silica Powder 10,000mg (with Ectoine)",
-      "description": "10-piece set with Ectoine."
-    },
-    "big-refill-e-mvsi": {
-      "name": "30 Sticks Set – Mother Vege Silica Powder 30,000mg (with Ectoine)",
-      "description": "30-piece set with Ectoine."
-    }
+  "products": {
+    "double-mvsi": { "name": "Mix Pack – Mother Vege Silica Powder 1,500mg" },
+    "case-mvsi": { "name": "Medicinal Slide Case – Mother Vege Silica Powder 1,500mg" },
+    "big-refill-mvsi": { "name": "30 Sticks Set – Mother Vege Silica Powder 22,500mg" },
+    "double-e-mvsi": { "name": "Mix Pack – Mother Vege Silica Powder 2,000mg (with Ectoine)" },
+    "case-e-mvsi": { "name": "Medicinal Slide Case – Mother Vege Silica Powder 2,000mg (with Ectoine)" },
+    "refill-e-mvsi": { "name": "10 Sticks Set – Mother Vege Silica Powder 10,000mg (with Ectoine)" },
+    "big-refill-e-mvsi": { "name": "30 Sticks Set – Mother Vege Silica Powder 30,000mg (with Ectoine)" }
   }
+}
 }
