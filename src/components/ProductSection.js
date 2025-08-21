@@ -208,6 +208,7 @@ export default function ProductSection() {
         }
         .product-img img {
           width: 100%!important;
+          position:relative!important;
         }
         /* ▲▲▲ ここまで修正 ▲▲▲ */
 
