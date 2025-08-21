@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";              // ← ロゴ等で使用
+import Image from "next/image";
 import { useI18n } from "../lib/i18n";
 
 export default function ProductSection() {
@@ -11,23 +11,23 @@ export default function ProductSection() {
   const { t, lang } = useI18n();
   const tr = (key) => {
     const v = t(key);
-    return v && v !== key ? v : "";
+    return v && v !== key ? v : ""; // ← 未定義キーは空文字に
   };
 
   useEffect(() => setIsVisible(true), []);
 
-  // ===== 価格（特例: 3300円→$22.37 / 3100円→$21.02） =====
+  // ========== 価格フォーマッタ（特例: 3300円→$22.37 / 3100円→$21.02） ==========
   const USD_OVERRIDE = { 3300: 22.37, 3100: 21.02 };
-  const JPY_TO_USD_RATE = 22.37 / 3300;
+  const JPY_TO_USD_RATE = 22.37 / 3300; // その他は同レートで換算
   const parseJPY = (v) => {
     if (typeof v === "number") return v;
     if (v == null) return 0;
-    const num = String(v).replace(/[^\d.-]/g, "");
+    const num = String(v).replace(/[^\d.-]/g, ""); // "3,300円" -> "3300"
     return Number(num || 0);
   };
   const fmtPrice = (value, curLang) => {
     if (curLang === "ja") {
-      if (typeof value === "string") return value;
+      if (typeof value === "string") return value; // 整形済ならそのまま
       const n = parseJPY(value);
       return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(n);
     } else {
@@ -37,44 +37,59 @@ export default function ProductSection() {
     }
   };
 
-  // ===== 商品JSON 読み込み（mvsi_products.*.json を優先） =====
-  const BASENAME = "mvsi_products";
+  // ========== 商品JSON（言語別 or 単一）読み込み ==========
+  // あなたのファイル名に合わせたベース名
+  const BASENAME = "mvsi_products"; // public/mvsi_products.json がある
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
         setErr("");
+
+        // 優先順にトライ:
+        //   /mvsi_products.en.json → /mvsi_products.ja.json → /mvsi_products.json
+        //   （最後に互換用 /products.xxx.json も試す）
         const urlCandidates = [
-          `/${BASENAME}.${(lang || "ja").toLowerCase()}.json`,
+          `/${BASENAME}.${lang || "ja"}.json`,
           `/${BASENAME}.json`,
-          `/products.${(lang || "ja").toLowerCase()}.json`,
+          `/products.${lang || "ja"}.json`,
           `/products.json`,
         ];
+
         let data = null, lastErr = null;
         for (const url of urlCandidates) {
           try {
             const res = await fetch(url, { cache: "no-store" });
-            if (res.ok) { data = await res.json(); break; }
-            lastErr = `HTTP ${res.status} at ${url}`;
-          } catch (e) { lastErr = e?.message || String(e); }
+            if (res.ok) {
+              data = await res.json();
+              break;
+            } else {
+              lastErr = `HTTP ${res.status} at ${url}`;
+            }
+          } catch (e) {
+            lastErr = e?.message || String(e);
+          }
         }
         if (!data) throw new Error(lastErr || "no data");
+
         if (!cancelled) setItems(Array.isArray(data) ? data : []);
       } catch (e) {
         console.error("Product load failed:", e);
         if (!cancelled) setErr(tr("products.error") || "商品データを読み込めませんでした。");
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [lang]);
 
-  // ===== グルーピング =====
+  // ========== グルーピング（エクトイン配合の判定） ==========
   const isEctoin = (p) =>
     /エクトイン|ectoin/i.test(p?.name || "") || (p?.slug || "").includes("-e-");
-  const pure = items.filter((p) => !isEctoin(p));
-  const ect  = items.filter((p) =>  isEctoin(p));
+  const pure = items.filter((p) => !isEctoin(p)); // シリカのみ
+  const ect  = items.filter((p) =>  isEctoin(p)); // エクトイン配合
 
-  // ===== ラベル =====
+  // ========== UIラベル（i18n） ==========
   const title        = tr("products.title") || "商品ラインナップ";
   const seriesSilica = tr("products.series.silica") || "マザベジコンフィデンス【シリカのみ版】";
   const seriesEctoin = tr("products.series.ectoin") || "マザベジコンフィデンス【エクトイン配合版】";
@@ -83,7 +98,9 @@ export default function ProductSection() {
   const priceLabel   = tr("products.labels.price") || (lang === "en" ? "Price (incl. tax)" : "価格(税込)");
   const buyLabel     = tr("cta.buy") || tr("products.labels.buy") || (lang === "en" ? "Buy now" : "ご購入はこちら");
 
-  // ===== カード（商品画像は <img> で描画） =====
+  // 細い罫線など
+  const styles = { hr: { background: "#bfbfbf", height: 1, width: "100%" } };
+
   const Card = ({ p, priority = false }) => {
     const showOriginal =
       p.originalprice != null &&
@@ -93,20 +110,25 @@ export default function ProductSection() {
     return (
       <div className="product-card">
         <div className="product-img">
-          <img
+          <Image
             src={p.ItemPic || "/placeholder.png"}
             alt={p.name || "product"}
-            loading={priority ? "eager" : "lazy"}
-            decoding="async"
-            draggable={false}
-            className="product-img-el"
+            fill
+            sizes="(max-width: 1200px) 33vw, 300px"
+            style={{ objectFit: "contain" }}
+            priority={priority}
           />
         </div>
         <p className="product-name">{p.name}</p>
         <p className="product-price-label">{priceLabel}</p>
         {showOriginal && <p className="product-original">{fmtPrice(p.originalprice, lang)}</p>}
         <p className="product-price">{fmtPrice(p.price, lang)}</p>
-        <a className="product-btn" href={p.url || "#"} target="_blank" rel="noopener noreferrer">
+        <a
+          className="product-btn"
+          href={p.url || "#"}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {buyLabel}
         </a>
       </div>
@@ -128,7 +150,7 @@ export default function ProductSection() {
           {pure.length > 0 && (
             <>
               <h3 className="products-series">{seriesSilica}</h3>
-              <div className="series-rule" />
+              <div className="series-rule" style={styles.hr} />
               <p className="products-desc">{descSilica}</p>
               <div className="product-list three">
                 {pure.map((p, i) => (
@@ -144,7 +166,7 @@ export default function ProductSection() {
           {ect.length > 0 && (
             <>
               <h3 className="products-series">{seriesEctoin}</h3>
-              <div className="series-rule" />
+              <div className="series-rule" style={styles.hr} />
               <p className="products-desc">{descEctoin}</p>
               <div className="product-list four">
                 {ect.map((p, i) => (
@@ -166,9 +188,8 @@ export default function ProductSection() {
 
         .products-title { text-align: center; font-size: 36px; letter-spacing: 0.14em; color: #444; font-weight: 600; margin: 6px 0 6px; }
         .products-logo { display: flex; justify-content: center; margin: 2px 0 28px; }
-
         .products-series { text-align: center; font-size: 28px; letter-spacing: 0.08em; color: #3f3f3f; font-weight: 700; margin: 80px 0 6px; }
-        .series-rule { max-width: 860px; height: 1px; background: #bfbfbf; margin: 0 auto 16px; }
+        .series-rule { max-width: 860px; margin: 0 auto 16px; }
         .products-desc { text-align: center; color: #666; font-size: 18.5px; line-height: 1.9; letter-spacing: 0.06em; margin: 0 0 18px; }
 
         .product-list { display: grid; gap: 36px 17px; justify-content: center; margin: 10px auto 48px; }
@@ -176,35 +197,7 @@ export default function ProductSection() {
         .product-list.four  { grid-template-columns: repeat(4, minmax(220px, 1fr)); max-width: 1080px; }
 
         .product-card { text-align: center; color: #3a3a3a; }
-
-        /* ★ 画像はカード枠に100%フィット（Next/Imageの強制レイアウトを回避） */
-        .product-img {
-          position: relative;
-          width: 100%;
-          max-width: 280px;
-          aspect-ratio: 4 / 3;   /* 比率固定（必要なら 1/1 等に変更） */
-          max-height: 220px;
-          margin: 0 auto 8px;
-          overflow: hidden;
-          background: #fff;
-          border-radius: 6px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .product-img > :global(img.product-img-el) {
-          /* ここでカード枠に一致させる */
-          width: 100% !important;
-          height: 100% !important;
-          max-width: 100% !important;
-          max-height: 100% !important;
-          object-fit: contain !important;
-          object-position: center center !important;
-          display: block !important;
-        }
-        /* 念のため、カード内部のimgに付いた他所のCSSを無効化 */
-        .product-card :global(img) { max-width: 100%; height: auto; }
-
+        .product-img { position: relative; width: 100%; height: 240px; margin: 0 auto 8px; background: #fff; }
         .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
         .product-price-label { margin: 0; color: #666; font-size: 12.5px; letter-spacing: 0.06em; }
         .product-original { margin: 2px 0; font-size: 12px; color: #888; text-decoration: line-through; }
@@ -221,13 +214,13 @@ export default function ProductSection() {
         @media (max-width: 1024px) {
           .product-list.three { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
           .product-list.four  { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
-          .product-img { max-width: 260px; max-height: 210px; }
+          .product-img { height: 230px; }
         }
         @media (max-width: 640px) {
           .series-rule { max-width: 100%; }
           .products-desc { font-size: 14px; }
           .product-list.three, .product-list.four { grid-template-columns: 1fr; gap: 28px 24px; }
-          .product-img { max-width: 320px; max-height: 200px; }
+          .product-img { height: 220px; }
         }
       `}</style>
     </>

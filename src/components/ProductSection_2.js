@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";                 // ← ロゴ等で使用
+import Image from "next/image";
 import { useI18n } from "../lib/i18n";
-import { useRouter } from "next/router";
+import { useRouter } from "next/router"; // Pages Router を想定
 
 export default function ProductSection({ productsId }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,7 +18,7 @@ export default function ProductSection({ productsId }) {
 
   useEffect(() => setIsVisible(true), []);
 
-  // ===== ID 推定（props → query → path → env → 既定） =====
+  // ===== ID 推定（props → query → path → 環境変数 → 既定） =====
   const guessedId = useMemo(() => {
     if (productsId) return String(productsId).toLowerCase();
 
@@ -34,13 +34,14 @@ export default function ProductSection({ productsId }) {
         if (!bad.has(s) && /^[a-z0-9_-]+$/.test(s)) return s;
       }
     }
+
     if (typeof process !== "undefined" && process.env.NEXT_PUBLIC_PRODUCTS_ID) {
       return String(process.env.NEXT_PUBLIC_PRODUCTS_ID).toLowerCase();
     }
     return "mvsi";
   }, [productsId, router?.isReady, router?.query]);
 
-  // ===== 価格（特例: 3300円→$22.37 / 3100円→$21.02） =====
+  // ===== 価格フォーマッタ（特例: 3300円→$22.37 / 3100円→$21.02） =====
   const USD_OVERRIDE = { 3300: 22.37, 3100: 21.02 };
   const JPY_TO_USD_RATE = 22.37 / 3300;
   const parseJPY = (v) => {
@@ -81,9 +82,15 @@ export default function ProductSection({ productsId }) {
         for (const url of candidates) {
           try {
             const res = await fetch(url, { cache: "no-store" });
-            if (res.ok) { data = await res.json(); break; }
-            lastErr = `HTTP ${res.status} at ${url}`;
-          } catch (e) { lastErr = e?.message || String(e); }
+            if (res.ok) {
+              data = await res.json();
+              break;
+            } else {
+              lastErr = `HTTP ${res.status} at ${url}`;
+            }
+          } catch (e) {
+            lastErr = e?.message || String(e);
+          }
         }
         if (!data) throw new Error(lastErr || "no product json found");
         if (!cancelled) setItems(Array.isArray(data) ? data : []);
@@ -95,13 +102,13 @@ export default function ProductSection({ productsId }) {
     return () => { cancelled = true; };
   }, [guessedId, lang]);
 
-  // ===== グルーピング =====
+  // ===== グルーピング（エクトイン配合の判定） =====
   const isEctoin = (p) =>
     /エクトイン|ectoin/i.test(p?.name || "") || (p?.slug || "").includes("-e-");
   const pure = items.filter((p) => !isEctoin(p));
   const ect  = items.filter((p) =>  isEctoin(p));
 
-  // ===== UIラベル =====
+  // ===== UIラベル（i18n） =====
   const title        = tr("products.title") || "商品ラインナップ";
   const seriesSilica = tr("products.series.silica") || "マザベジコンフィデンス【シリカのみ版】";
   const seriesEctoin = tr("products.series.ectoin") || "マザベジコンフィデンス【エクトイン配合版】";
@@ -110,7 +117,7 @@ export default function ProductSection({ productsId }) {
   const priceLabel   = tr("products.labels.price") || (lang === "en" ? "Price (incl. tax)" : "価格(税込)");
   const buyLabel     = tr("cta.buy") || tr("products.labels.buy") || (lang === "en" ? "Buy now" : "ご購入はこちら");
 
-  // ===== カード（商品画像は <img> を使用：属性width/heightに依存しない） =====
+  // ===== カード =====
   const Card = ({ p, priority = false }) => {
     const showOriginal =
       p.originalprice != null &&
@@ -120,13 +127,12 @@ export default function ProductSection({ productsId }) {
     return (
       <div className="product-card">
         <div className="product-img">
-          <img
+          <Image
             src={p.ItemPic || "/placeholder.png"}
             alt={p.name || "product"}
-            loading={priority ? "eager" : "lazy"}
-            decoding="async"
-            draggable={false}
-            className="product-img-el"
+            fill
+            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 33vw, 300px"
+            priority={priority}
           />
         </div>
         <p className="product-name">{p.name}</p>
@@ -205,32 +211,31 @@ export default function ProductSection({ productsId }) {
 
         .product-card { text-align: center; color: #3a3a3a; }
 
-        /* ★ 画像はカード枠に100%フィット（width/height属性を使わない） */
+        /* ★ ここが重要：親枠で高さを固定し、内部要素を強制 contain */
         .product-img {
           position: relative;
           width: 100%;
-          max-width: 280px;
-          aspect-ratio: 4 / 3;
-          max-height: 220px;
-          margin: 0 auto 8px;
-          overflow: hidden;
+          height: 220px;        /* 画像枠を固定 */
+          overflow: hidden;      /* はみ出し防止 */
           background: #fff;
           border-radius: 6px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
         }
-        .product-img > :global(img.product-img-el) {
+        /* next/image の内部要素を強制制御（scoped :global） */
+        .product-img :global(span) {
+          position: absolute !important;
+          inset: 0 !important;
           width: 100% !important;
           height: 100% !important;
-          max-width: 100% !important;
-          max-height: 100% !important;
-          object-fit: contain !important;
-          object-position: center center !important;
           display: block !important;
         }
-        /* 念のため、カード内のimgに付いた他所のCSSを無効化 */
-        .product-card :global(img) { max-width: 100%; height: auto; }
+        .product-img :global(img) {
+          position: absolute !important;
+          inset: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: contain !important;   /* 枠内に収める */
+          object-position: center center !important;
+        }
 
         .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
         .product-price-label { margin: 0; color: #666; font-size: 12.5px; letter-spacing: 0.06em; }
@@ -248,13 +253,13 @@ export default function ProductSection({ productsId }) {
         @media (max-width: 1024px) {
           .product-list.three { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
           .product-list.four  { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
-          .product-img { max-width: 260px; max-height: 210px; }
+          .product-img { height: 210px; }
         }
         @media (max-width: 640px) {
           .series-rule { max-width: 100%; }
           .products-desc { font-size: 14px; }
           .product-list.three, .product-list.four { grid-template-columns: 1fr; gap: 28px 24px; }
-          .product-img { max-width: 320px; max-height: 200px; }
+          .product-img { height: 200px; }
         }
       `}</style>
     </>
