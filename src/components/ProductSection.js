@@ -18,7 +18,7 @@ export default function ProductSection() {
         <div className="container">
           <h2 className="products-title ja-serif">商品ラインナップ</h2>
           <div className="products-logo">
-            <Image src="/MV_LOGO.png" alt="Confidence" width={220} height={64} priority />
+            <Image src="/MV_LOGO.png" alt="Confidence" width={200} height={90} priority />
           </div>
 
          
