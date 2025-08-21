@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
+import Image from "next/image";                 // ← ロゴ等で使用
 import { useI18n } from "../lib/i18n";
-import { useRouter } from "next/router"; // Pages Router を想定
+import { useRouter } from "next/router";
 
 export default function ProductSection({ productsId }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,7 +18,7 @@ export default function ProductSection({ productsId }) {
 
   useEffect(() => setIsVisible(true), []);
 
-  // ===== ID 推定（props → query → path → 環境変数 → 既定） =====
+  // ===== ID 推定（props → query → path → env → 既定） =====
   const guessedId = useMemo(() => {
     if (productsId) return String(productsId).toLowerCase();
 
@@ -34,14 +34,13 @@ export default function ProductSection({ productsId }) {
         if (!bad.has(s) && /^[a-z0-9_-]+$/.test(s)) return s;
       }
     }
-
     if (typeof process !== "undefined" && process.env.NEXT_PUBLIC_PRODUCTS_ID) {
       return String(process.env.NEXT_PUBLIC_PRODUCTS_ID).toLowerCase();
     }
     return "mvsi";
   }, [productsId, router?.isReady, router?.query]);
 
-  // ===== 価格フォーマッタ（特例: 3300円→$22.37 / 3100円→$21.02） =====
+  // ===== 価格（特例: 3300円→$22.37 / 3100円→$21.02） =====
   const USD_OVERRIDE = { 3300: 22.37, 3100: 21.02 };
   const JPY_TO_USD_RATE = 22.37 / 3300;
   const parseJPY = (v) => {
@@ -82,15 +81,9 @@ export default function ProductSection({ productsId }) {
         for (const url of candidates) {
           try {
             const res = await fetch(url, { cache: "no-store" });
-            if (res.ok) {
-              data = await res.json();
-              break;
-            } else {
-              lastErr = `HTTP ${res.status} at ${url}`;
-            }
-          } catch (e) {
-            lastErr = e?.message || String(e);
-          }
+            if (res.ok) { data = await res.json(); break; }
+            lastErr = `HTTP ${res.status} at ${url}`;
+          } catch (e) { lastErr = e?.message || String(e); }
         }
         if (!data) throw new Error(lastErr || "no product json found");
         if (!cancelled) setItems(Array.isArray(data) ? data : []);
@@ -102,13 +95,13 @@ export default function ProductSection({ productsId }) {
     return () => { cancelled = true; };
   }, [guessedId, lang]);
 
-  // ===== グルーピング（エクトイン配合の判定） =====
+  // ===== グルーピング =====
   const isEctoin = (p) =>
     /エクトイン|ectoin/i.test(p?.name || "") || (p?.slug || "").includes("-e-");
   const pure = items.filter((p) => !isEctoin(p));
   const ect  = items.filter((p) =>  isEctoin(p));
 
-  // ===== UIラベル（i18n） =====
+  // ===== UIラベル =====
   const title        = tr("products.title") || "商品ラインナップ";
   const seriesSilica = tr("products.series.silica") || "マザベジコンフィデンス【シリカのみ版】";
   const seriesEctoin = tr("products.series.ectoin") || "マザベジコンフィデンス【エクトイン配合版】";
@@ -117,7 +110,7 @@ export default function ProductSection({ productsId }) {
   const priceLabel   = tr("products.labels.price") || (lang === "en" ? "Price (incl. tax)" : "価格(税込)");
   const buyLabel     = tr("cta.buy") || tr("products.labels.buy") || (lang === "en" ? "Buy now" : "ご購入はこちら");
 
-  // ===== カード（★ fill を使わず、絶対配置スタイルを根絶） =====
+  // ===== カード（商品画像は <img> を使用：属性width/heightに依存しない） =====
   const Card = ({ p, priority = false }) => {
     const showOriginal =
       p.originalprice != null &&
@@ -127,15 +120,13 @@ export default function ProductSection({ productsId }) {
     return (
       <div className="product-card">
         <div className="product-img">
-          {/* fill を使わない => Next は absolute/100% を付けない */}
-          <Image
+          <img
             src={p.ItemPic || "/placeholder.png"}
             alt={p.name || "product"}
-            width={800}               // アスペクト比 4:3 相当（任意）
-            height={600}
-            priority={priority}
-            draggable={false}
+            loading={priority ? "eager" : "lazy"}
             decoding="async"
+            draggable={false}
+            className="product-img-el"
           />
         </div>
         <p className="product-name">{p.name}</p>
@@ -214,13 +205,13 @@ export default function ProductSection({ productsId }) {
 
         .product-card { text-align: center; color: #3a3a3a; }
 
-        /* ★ 画像をカード枠に“確実に”収める（fill を使わない前提） */
+        /* ★ 画像はカード枠に100%フィット（width/height属性を使わない） */
         .product-img {
           position: relative;
           width: 100%;
-          max-width: 280px;     /* グリッド幅に合わせた上限 */
-          aspect-ratio: 4 / 3;  /* 枠の比率固定 */
-          max-height: 220px;    /* 高さの上限 */
+          max-width: 280px;
+          aspect-ratio: 4 / 3;
+          max-height: 220px;
           margin: 0 auto 8px;
           overflow: hidden;
           background: #fff;
@@ -229,18 +220,17 @@ export default function ProductSection({ productsId }) {
           align-items: center;
           justify-content: center;
         }
-        /* Next が fill で付ける absolute を使っていないが、念のため打ち消し */
-        .product-img :global(img) {
-          position: static !important;
-          inset: auto !important;
+        .product-img > :global(img.product-img-el) {
+          width: 100% !important;
+          height: 100% !important;
           max-width: 100% !important;
           max-height: 100% !important;
-          width: auto !important;
-          height: auto !important;
           object-fit: contain !important;
           object-position: center center !important;
-          display: block;
+          display: block !important;
         }
+        /* 念のため、カード内のimgに付いた他所のCSSを無効化 */
+        .product-card :global(img) { max-width: 100%; height: auto; }
 
         .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
         .product-price-label { margin: 0; color: #666; font-size: 12.5px; letter-spacing: 0.06em; }

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import Image from "next/image";              // ← ロゴ等で使用
 import { useI18n } from "../lib/i18n";
 
 export default function ProductSection() {
@@ -11,18 +11,18 @@ export default function ProductSection() {
   const { t, lang } = useI18n();
   const tr = (key) => {
     const v = t(key);
-    return v && v !== key ? v : ""; // 未定義キーは空文字
+    return v && v !== key ? v : "";
   };
 
   useEffect(() => setIsVisible(true), []);
 
-  // ===== 価格フォーマッタ（特例: 3300円→$22.37 / 3100円→$21.02） =====
+  // ===== 価格（特例: 3300円→$22.37 / 3100円→$21.02） =====
   const USD_OVERRIDE = { 3300: 22.37, 3100: 21.02 };
   const JPY_TO_USD_RATE = 22.37 / 3300;
   const parseJPY = (v) => {
     if (typeof v === "number") return v;
     if (v == null) return 0;
-    const num = String(v).replace(/[^\d.-]/g, ""); // "3,300円" -> "3300"
+    const num = String(v).replace(/[^\d.-]/g, "");
     return Number(num || 0);
   };
   const fmtPrice = (value, curLang) => {
@@ -68,13 +68,13 @@ export default function ProductSection() {
     return () => { cancelled = true; };
   }, [lang]);
 
-  // ===== グルーピング（エクトイン配合の判定） =====
+  // ===== グルーピング =====
   const isEctoin = (p) =>
     /エクトイン|ectoin/i.test(p?.name || "") || (p?.slug || "").includes("-e-");
   const pure = items.filter((p) => !isEctoin(p));
   const ect  = items.filter((p) =>  isEctoin(p));
 
-  // ===== UIラベル（i18n） =====
+  // ===== ラベル =====
   const title        = tr("products.title") || "商品ラインナップ";
   const seriesSilica = tr("products.series.silica") || "マザベジコンフィデンス【シリカのみ版】";
   const seriesEctoin = tr("products.series.ectoin") || "マザベジコンフィデンス【エクトイン配合版】";
@@ -83,7 +83,7 @@ export default function ProductSection() {
   const priceLabel   = tr("products.labels.price") || (lang === "en" ? "Price (incl. tax)" : "価格(税込)");
   const buyLabel     = tr("cta.buy") || tr("products.labels.buy") || (lang === "en" ? "Buy now" : "ご購入はこちら");
 
-  // ===== カード =====
+  // ===== カード（商品画像は <img> で描画） =====
   const Card = ({ p, priority = false }) => {
     const showOriginal =
       p.originalprice != null &&
@@ -93,16 +93,13 @@ export default function ProductSection() {
     return (
       <div className="product-card">
         <div className="product-img">
-          {/* fill を使わない（絶対配置/100%を根絶） */}
-          <Image
+          <img
             src={p.ItemPic || "/placeholder.png"}
             alt={p.name || "product"}
-            width={800}      // 任意の元解像度（表示はCSSで収める）
-            height={600}
-            className="product-img-el"
-            priority={priority}
-            draggable={false}
+            loading={priority ? "eager" : "lazy"}
             decoding="async"
+            draggable={false}
+            className="product-img-el"
           />
         </div>
         <p className="product-name">{p.name}</p>
@@ -180,13 +177,13 @@ export default function ProductSection() {
 
         .product-card { text-align: center; color: #3a3a3a; }
 
-        /* ★ 画像はカード枠に絶対収める（fill不使用） */
+        /* ★ 画像はカード枠に100%フィット（Next/Imageの強制レイアウトを回避） */
         .product-img {
           position: relative;
           width: 100%;
-          max-width: 280px;     /* グリッド幅に合わせた上限 */
-          aspect-ratio: 4 / 3;  /* 枠比率 */
-          max-height: 220px;    /* 高さの上限 */
+          max-width: 280px;
+          aspect-ratio: 4 / 3;   /* 比率固定（必要なら 1/1 等に変更） */
+          max-height: 220px;
           margin: 0 auto 8px;
           overflow: hidden;
           background: #fff;
@@ -195,17 +192,18 @@ export default function ProductSection() {
           align-items: center;
           justify-content: center;
         }
-        .product-img :global(img.product-img-el) {
+        .product-img > :global(img.product-img-el) {
+          /* ここでカード枠に一致させる */
+          width: 100% !important;
+          height: 100% !important;
           max-width: 100% !important;
           max-height: 100% !important;
-          width: auto !important;
-          height: auto !important;
           object-fit: contain !important;
           object-position: center center !important;
-          display: block;
+          display: block !important;
         }
-        /* 念のため、カード内の img のグローバル干渉を打ち消す */
-        .product-card :global(img) { width: auto; max-width: 100%; }
+        /* 念のため、カード内部のimgに付いた他所のCSSを無効化 */
+        .product-card :global(img) { max-width: 100%; height: auto; }
 
         .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
         .product-price-label { margin: 0; color: #666; font-size: 12.5px; letter-spacing: 0.06em; }
