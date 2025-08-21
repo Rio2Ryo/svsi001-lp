@@ -2,168 +2,118 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ProductLineupSection() {
-  // ====== 商品データ（画像srcとurlは貴社の実物に差し替えてください） ======
-  const silica = {
-    title: "マザベジコンフィデンス【シリカの素版】",
-    note: "成分 オーガニックシリカ純度97.1%以上",
-    items: [
-      {
-        img: "/images/products/mixpack_1500.png",
-        name: "PBスキンパウダー -【ミックスパック】",
-        subtitle: "マザベジコンフィデンスパウダー",
-        amount: "1,500mg",
-        price: "3,300円",
-        url: "/product/silica-mixpack-1500",
-        imgW: 420,
-        imgH: 300,
-      },
-      {
-        img: "/images/products/slidecase_1500.png",
-        name: "PBスキンパウダー -【薬用スライドケース】",
-        subtitle: "マザベジコンフィデンスパウダー",
-        amount: "1,500mg",
-        price: "3,300円",
-        url: "/product/silica-slidecase-1500",
-        imgW: 420,
-        imgH: 300,
-      },
-      {
-        img: "/images/products/30set_22500.png",
-        name: "PBスキンパウダー -【30本セット】",
-        subtitle: "マザベジコンフィデンスパウダー",
-        amount: "22,500mg",
-        price: "19,800円",
-        url: "/product/silica-30set-22500",
-        imgW: 420,
-        imgH: 300,
-      },
-    ],
-  };
+// ▼そのまま貼り付けOK（必要なら外部JSON fetchに差し替え可）
+const PRODUCTS = [
+  {
+    "name": "【ミックスパック】 マザベジシリカパウダー 1,500mg",
+    "slug": "double-mvsi",
+    "description": "ミックスパックです。",
+    "originalprice": "3,300円",
+    "price": "3,300円",
+    "ItemPic": "/mix1500.png",
+    "wixProductId": "dcb1eb79-e65a-02df-a8f2-a80385c56e00",
+    "url": "https://www.dotpb.jp/product-page/double-mvsi"
+  },
+  {
+    "name": "【薬用スライドケース】マザベジシリカパウダー 1,500mg",
+    "slug": "case-mvsi",
+    "description": "薬用スライドケ－スです。",
+    "originalprice": "3,300円",
+    "price": "3,300円",
+    "ItemPic": "/case1500.png",
+    "wixProductId": "7be06482-8fca-e20d-6a73-48bd3e914460",
+    "url": "https://www.dotpb.jp/product-page/case-mvsi"
+  },
+  {
+    "name": "【30本セット】マザベジシリカパウダー 22,500mg",
+    "slug": "big-refill-mvsi",
+    "description": "30本セットです。",
+    "originalprice": "20,000円",
+    "price": "20,000円",
+    "ItemPic": "/30p22500.png",
+    "wixProductId": "fb6bbce6-a63f-b4d1-b817-da05d987e163",
+    "url": "https://www.dotpb.jp/product-page/big-refill-mvsi"
+  },
+  {
+    "name": "【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り）",
+    "slug": "double-e-mvsi",
+    "description": "ミックスパック（エクトイン入り）です。",
+    "originalprice": "3,300円",
+    "price": "3,300円",
+    "ItemPic": "/mix2000.png",
+    "wixProductId": "7ba04481-0674-5262-9325-8d62f2d25095",
+    "url": "https://www.dotpb.jp/product-page/double-e-mvsi"
+  },
+  {
+    "name": "【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り）",
+    "slug": "case-e-mvsi",
+    "description": "薬用スライドケ－ス（エクトイン入り）です。",
+    "originalprice": "3,300円",
+    "price": "3,300円",
+    "ItemPic": "/case2000.png",
+    "wixProductId": "48c2a407-4738-2f3f-e317-d118a4046e5c",
+    "url": "https://www.dotpb.jp/product-page/case-e-mvsi"
+  },
+  {
+    "name": "【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り）",
+    "slug": "refill-e-mvsi",
+    "description": "10本セット（エクトイン入り）です。",
+    "originalprice": "12,000円",
+    "price": "12,000円",
+    "ItemPic": "/10p10000.png",
+    "wixProductId": "cc620bb2-fd77-8db3-4bf1-cff751f9e55d",
+    "url": "https://www.dotpb.jp/product-page/refill-e-mvsi"
+  },
+  {
+    "name": "【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り）",
+    "slug": "big-refill-e-mvsi",
+    "description": "30本セット（エクトイン入り）です。",
+    "originalprice": "30,000円",
+    "price": "30,000円",
+    "ItemPic": "/30p30000.png",
+    "wixProductId": "c15bad90-8fff-b003-7792-2282202b6ccb",
+    "url": "https://www.dotpb.jp/product-page/big-refill-e-mvsi"
+  }
+];
 
-  const ectoine = {
-    title: "マザベジコンフィデンス【エクトイン配合版】",
-    noteTop: "成分 オーガニックシリカ純度97.1%以上",
-    noteBottom: "保湿効果や炎症を抑える効果が期待できる\n天然アミノ酸のエクトイン配合",
-    items: [
-      {
-        img: "/images/products/mixpack_2000_ect.png",
-        name: "PBスキンパウダー -【ミックスパック】",
-        subtitle: "マザベジコンフィデンスパウダー",
-        amount: "2,000mg",
-        price: "3,300円",
-        url: "/product/ectoine-mixpack-2000",
-        imgW: 420,
-        imgH: 300,
-        foot: "天然アミノ酸のエクトイン配合版",
-      },
-      {
-        img: "/images/products/slidecase_2000_ect.png",
-        name: "PBスキンパウダー -【薬用スライドケース】",
-        subtitle: "マザベジコンフィデンスパウダー",
-        amount: "2,000mg",
-        price: "3,300円",
-        url: "/product/ectoine-slidecase-2000",
-        imgW: 420,
-        imgH: 300,
-        foot: "天然アミノ酸のエクトイン配合版",
-      },
-      {
-        img: "/images/products/10set_10000_ect.png",
-        name: "PBスキンパウダー -【10本セット】",
-        subtitle: "マザベジコンフィデンスパウダー",
-        amount: "10,000mg",
-        price: "12,000円",
-        url: "/product/ectoine-10set-10000",
-        imgW: 420,
-        imgH: 300,
-        foot: "天然アミノ酸のエクトイン配合版",
-      },
-      {
-        img: "/images/products/30set_30000_ect.png",
-        name: "PBスキンパウダー -【30本セット】",
-        subtitle: "マザベジコンフィデンスパウダー",
-        amount: "30,000mg",
-        price: "30,000円",
-        url: "/product/ectoine-30set-30000",
-        imgW: 420,
-        imgH: 300,
-        foot: "天然アミノ酸のエクトイン配合版",
-      },
-    ],
-  };
+export default function ProductLineupSection() {
+  // 「エクトイン入り」有無で自動仕分け
+  const isEcto = (p) => p.name.includes("エクトイン");
+  const baseItems = PRODUCTS.filter((p) => !isEcto(p)); // 3件
+  const ectoItems = PRODUCTS.filter(isEcto);            // 4件
 
   return (
     <section className="lineup">
-      {/* ===== ヘッダー（ブランドロゴ）任意 ===== */}
-      <div className="brand">
-        <p className="brand-top">商品ラインナップ</p>
-        <div className="brand-mark">
-          <Image
-            src="/MV_LOGO.png"
-            alt="Mother Vegetables Confidence"
-            width={220}
-            height={80}
-            priority
-          />
-        </div>
-      </div>
+      {/* ── 素版 ── */}
+      <h2 className="title">マザベジコンフィデンス【シリカの素版】</h2>
+      <div className="divider" />
+      <p className="note">成分 オーガニックシリカ純度97.1%以上</p>
+      <Row columns={3} items={baseItems} />
 
-      {/* ====== シリカの素版 ====== */}
-      <Block title={silica.title} note={silica.note}>
-        <Cards items={silica.items} />
-      </Block>
-
-      {/* ====== エクトイン配合版 ====== */}
-      <Block
-        title={ectoine.title}
-        note={
-          <>
-            <span>{ectoine.noteTop}</span>
-            <br />
-            <span className="subnote">
-              {ectoine.noteBottom.split("\n").map((l, i) => (
-                <span key={i}>
-                  {l}
-                  {i === 0 ? <br /> : null}
-                </span>
-              ))}
-            </span>
-          </>
-        }
-      >
-        <Cards items={ectoine.items} four />
-      </Block>
+      {/* ── エクトイン配合版 ── */}
+      <h2 className="title">マザベジコンフィデンス【エクトイン配合版】</h2>
+      <div className="divider" />
+      <p className="note">
+        成分 オーガニックシリカ純度97.1%以上
+        <br />
+        <span className="subnote">
+          保湿効果や炎症を抑える効果が期待できる／天然アミノ酸のエクトイン配合
+        </span>
+      </p>
+      <Row columns={4} items={ectoItems} />
 
       <style jsx>{`
         .lineup {
           max-width: 1120px;
           margin: 0 auto;
-          padding: 48px 16px 80px;
+          padding: 40px 16px 80px;
           background: #fff;
         }
-        .brand-top {
-          text-align: center;
-          letter-spacing: 0.3em;
-          color: #222;
-          margin: 0 0 6px;
-        }
-        .brand-mark {
-          display: flex;
-          justify-content: center;
-          margin-bottom: 18px;
-          opacity: 0.9;
-        }
-
-        /* セクション見出し */
-        .block {
-          margin-top: 42px;
-        }
         .title {
-          font-family: "ot-bunyu-mincho-stdn", serif;
           text-align: center;
+          font-family: "ot-bunyu-mincho-stdn", serif;
           font-size: 28px;
-          letter-spacing: 0.12em;
+          letter-spacing: 0.1em;
           color: #222;
           margin: 28px 0 10px;
         }
@@ -180,24 +130,65 @@ export default function ProductLineupSection() {
           letter-spacing: 0.06em;
           margin-bottom: 26px;
         }
-        .note .subnote {
-          display: inline-block;
-          margin-top: 4px;
-        }
+        .note .subnote { display: inline-block; margin-top: 4px; }
 
-        /* 商品カード */
-        .grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 24px 36px;
-          max-width: 1000px;
-          margin: 0 auto;
+        @media (max-width: 1024px) {
+          .title { font-size: 24px; }
         }
-        .grid.four {
-          grid-template-columns: repeat(4, 1fr);
-          gap: 24px 24px;
+        @media (max-width: 560px) {
+          .title { font-size: 20px; line-height: 1.6; }
+          .note { font-size: 12px; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+/* 横並び：flexで確実に横配置。列数はpropsで指定 */
+function Row({ items, columns = 3 }) {
+  return (
+    <>
+      <div className="row" role="list">
+        {items.map((p) => (
+          <article key={p.slug} className="card" role="listitem">
+            <div className="thumb">
+              <Image
+                src={p.ItemPic}
+                alt={p.name}
+                fill
+                sizes="(max-width: 1024px) 100vw, 320px"
+                style={{ objectFit: "contain" }}
+                priority
+              />
+            </div>
+
+            <h3 className="name">{p.name}</h3>
+            <div className="amount">{extractAmount(p.name)}</div>
+
+            <div className="pricewrap">
+              価格(税込)
+              <span className="price">{p.price}</span>
+            </div>
+
+            <Link href={p.url} className="cta" aria-label={`${p.name} を購入`}>
+              ご購入はこちら
+            </Link>
+          </article>
+        ))}
+      </div>
+
+      <style jsx>{`
+        .row {
+          display: flex;
+          flex-wrap: wrap;                 /* 折返し */
+          justify-content: center;         /* 中央寄せ */
+          gap: 24px 36px;                  /* 行間/列間 */
+          max-width: 1000px;
+          margin: 0 auto 42px;
         }
         .card {
+          width: calc((100% - ${columns - 1} * 36px) / ${columns}); /* 横並び幅を固定 */
+          min-width: 240px;               /* 画面が狭い時に2列/1列に落ちる */
           text-align: center;
           padding: 8px 12px 20px;
         }
@@ -206,17 +197,13 @@ export default function ProductLineupSection() {
           width: 100%;
           height: 0;
           padding-top: 70%;
-          margin: 0 auto 6px;
+          margin: 0 auto 10px;
         }
         .name {
           font-weight: 600;
           color: #333;
           line-height: 1.6;
-        }
-        .subtitle {
-          color: #666;
-          font-size: 13px;
-          line-height: 1.6;
+          font-size: 15px;
         }
         .amount {
           margin-top: 4px;
@@ -234,7 +221,6 @@ export default function ProductLineupSection() {
           color: #111;
           margin-top: 2px;
         }
-
         .cta {
           display: inline-block;
           margin-top: 12px;
@@ -246,86 +232,27 @@ export default function ProductLineupSection() {
           font-weight: 700;
           letter-spacing: 0.08em;
         }
-        .foot {
-          margin-top: 10px;
-          color: #666;
-          font-size: 12px;
-        }
 
-        /* RWD */
+        /* タブレット：2列 */
         @media (max-width: 1024px) {
-          .grid,
-          .grid.four {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-          }
-          .title {
-            font-size: 24px;
+          .card {
+            width: calc((100% - 36px) / 2);
           }
         }
+        /* スマホ：1列 */
         @media (max-width: 560px) {
-          .grid,
-          .grid.four {
-            grid-template-columns: 1fr;
-          }
-          .title {
-            font-size: 20px;
-            line-height: 1.6;
-          }
-          .note {
-            font-size: 12px;
-          }
+          .row { gap: 20px; }
+          .card { width: 100%; }
+          .name { font-size: 14px; }
+          .price { font-size: 17px; }
         }
       `}</style>
-    </section>
+    </>
   );
 }
 
-/* ============ sub components ============ */
-function Block({ title, note, children }) {
-  return (
-    <div className="block">
-      <h2 className="title">{title}</h2>
-      <div className="divider" />
-      <p className="note">{note}</p>
-      {children}
-      <style jsx>{`
-        .block {
-          margin-bottom: 48px;
-        }
-      `}</style>
-    </div>
-  );
-}
-
-function Cards({ items, four = false }) {
-  return (
-    <div className={`grid ${four ? "four" : ""}`}>
-      {items.map((p, i) => (
-        <article key={i} className="card">
-          <div className="thumb">
-            <Image
-              src={p.img}
-              alt={p.name}
-              fill
-              sizes="(max-width: 1024px) 100vw, 320px"
-              style={{ objectFit: "contain" }}
-              priority={i < 2}
-            />
-          </div>
-          <h3 className="name">{p.name}</h3>
-          <div className="subtitle">{p.subtitle}</div>
-          <div className="amount">{p.amount}</div>
-          <div className="pricewrap">
-            価格(税込)
-            <span className="price">{p.price}</span>
-          </div>
-          <Link href={p.url} className="cta" aria-label={`${p.name} を購入`}>
-            ご購入はこちら
-          </Link>
-          {p.foot ? <div className="foot">{p.foot}</div> : null}
-        </article>
-      ))}
-    </div>
-  );
+/* ヘルパー：製品名から mg 数を抽出（任意） */
+function extractAmount(name) {
+  const m = name.match(/([0-9,]+mg)/);
+  return m ? m[1] : "";
 }
