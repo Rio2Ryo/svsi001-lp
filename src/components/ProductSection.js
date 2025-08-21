@@ -197,6 +197,27 @@ export default function ProductSection() {
           .product-list.three,.product-list.four{ grid-template-columns:1fr; gap:28px 24px; }
           .product-img{ height:200px; }
         }
+        /* 画像がフルスクリーン化するのを防ぐガード */
+  .product-card .product-img{
+    position: relative !important;
+    height: 220px !important;   /* ここが無いと fill が迷子になります */
+    max-width: 100%;
+    overflow: hidden;
+  }
+  /* Next/Image のラッパー span と img を確実に親の中に固定 */
+  .product-card .product-img :global(span){ 
+    position: absolute !important; 
+    inset: 0 !important; 
+  }
+  .product-card .product-img :global(img){
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+
+  @media (max-width: 640px){
+    .product-card .product-img{ height: 200px !important; }
+  }
       `}</style>
     </>
   );
