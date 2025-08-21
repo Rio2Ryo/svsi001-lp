@@ -11,7 +11,7 @@ export default function ProductSection() {
   const { t, lang } = useI18n();
   const tr = (key) => {
     const v = t(key);
-    return v && v !== key ? v : ""; // 未定義キーは空文字に
+    return v && v !== key ? v : ""; // 未定義キーは空文字
   };
 
   useEffect(() => setIsVisible(true), []);
@@ -38,20 +38,18 @@ export default function ProductSection() {
   };
 
   // ===== 商品JSON 読み込み（mvsi_products.*.json を優先） =====
-  const BASENAME = "mvsi_products"; // public/mvsi_products.json など
+  const BASENAME = "mvsi_products";
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
         setErr("");
-
         const urlCandidates = [
           `/${BASENAME}.${(lang || "ja").toLowerCase()}.json`,
           `/${BASENAME}.json`,
           `/products.${(lang || "ja").toLowerCase()}.json`,
           `/products.json`,
         ];
-
         let data = null, lastErr = null;
         for (const url of urlCandidates) {
           try {
@@ -61,7 +59,6 @@ export default function ProductSection() {
           } catch (e) { lastErr = e?.message || String(e); }
         }
         if (!data) throw new Error(lastErr || "no data");
-
         if (!cancelled) setItems(Array.isArray(data) ? data : []);
       } catch (e) {
         console.error("Product load failed:", e);
@@ -96,11 +93,13 @@ export default function ProductSection() {
     return (
       <div className="product-card">
         <div className="product-img">
+          {/* fill を使わない（絶対配置/100%を根絶） */}
           <Image
             src={p.ItemPic || "/placeholder.png"}
             alt={p.name || "product"}
-            fill
-            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 33vw, 300px"
+            width={800}      // 任意の元解像度（表示はCSSで収める）
+            height={600}
+            className="product-img-el"
             priority={priority}
             draggable={false}
             decoding="async"
@@ -181,39 +180,32 @@ export default function ProductSection() {
 
         .product-card { text-align: center; color: #3a3a3a; }
 
-        /* ★ 画像のはみ出し防止（カード枠に確実に収める） */
+        /* ★ 画像はカード枠に絶対収める（fill不使用） */
         .product-img {
           position: relative;
           width: 100%;
-          max-width: 280px;     /* グリッド幅に応じて上限 */
-          aspect-ratio: 4 / 3;  /* 比率固定（必要なら 1/1 に変更） */
+          max-width: 280px;     /* グリッド幅に合わせた上限 */
+          aspect-ratio: 4 / 3;  /* 枠比率 */
           max-height: 220px;    /* 高さの上限 */
           margin: 0 auto 8px;
           overflow: hidden;
           background: #fff;
           border-radius: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
-        /* next/image が生成する内部要素を強制制御 */
-        .product-img :global(span) {
-         
-          inset: 0 !important;
-
-          display: block !important;
-        }
-        .product-img :global(img) {
-          
-          inset: 0 !important;
-          
-          object-fit: contain !important;
-          object-position: center center !important;
+        .product-img :global(img.product-img-el) {
           max-width: 100% !important;
           max-height: 100% !important;
-        }
-        /* 万一のグローバルCSS干渉をカード内で打ち消す */
-        .product-card :global(img) {
           width: auto !important;
-          max-width: 100% !important;
+          height: auto !important;
+          object-fit: contain !important;
+          object-position: center center !important;
+          display: block;
         }
+        /* 念のため、カード内の img のグローバル干渉を打ち消す */
+        .product-card :global(img) { width: auto; max-width: 100%; }
 
         .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
         .product-price-label { margin: 0; color: #666; font-size: 12.5px; letter-spacing: 0.06em; }

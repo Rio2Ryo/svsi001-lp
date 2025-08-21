@@ -117,7 +117,7 @@ export default function ProductSection({ productsId }) {
   const priceLabel   = tr("products.labels.price") || (lang === "en" ? "Price (incl. tax)" : "価格(税込)");
   const buyLabel     = tr("cta.buy") || tr("products.labels.buy") || (lang === "en" ? "Buy now" : "ご購入はこちら");
 
-  // ===== カード =====
+  // ===== カード（★ fill を使わず、絶対配置スタイルを根絶） =====
   const Card = ({ p, priority = false }) => {
     const showOriginal =
       p.originalprice != null &&
@@ -127,11 +127,12 @@ export default function ProductSection({ productsId }) {
     return (
       <div className="product-card">
         <div className="product-img">
+          {/* fill を使わない => Next は absolute/100% を付けない */}
           <Image
             src={p.ItemPic || "/placeholder.png"}
             alt={p.name || "product"}
-            fill
-            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 33vw, 300px"
+            width={800}               // アスペクト比 4:3 相当（任意）
+            height={600}
             priority={priority}
             draggable={false}
             decoding="async"
@@ -213,36 +214,32 @@ export default function ProductSection({ productsId }) {
 
         .product-card { text-align: center; color: #3a3a3a; }
 
-        /* ★ 画像をカード枠に“絶対に”収める */
+        /* ★ 画像をカード枠に“確実に”収める（fill を使わない前提） */
         .product-img {
           position: relative;
           width: 100%;
-          max-width: 280px;     /* グリッド幅に合わせて上限を設定 */
-          aspect-ratio: 4 / 3;  /* 比率固定（必要に応じて 1/1 などに変更可） */
+          max-width: 280px;     /* グリッド幅に合わせた上限 */
+          aspect-ratio: 4 / 3;  /* 枠の比率固定 */
           max-height: 220px;    /* 高さの上限 */
           margin: 0 auto 8px;
-          overflow: hidden;     /* はみ出し防止 */
+          overflow: hidden;
           background: #fff;
           border-radius: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
-        /* next/image の内部要素を強制制御 */
-        .product-img :global(span) {
-          
-          inset: 0 !important;
-          
-          display: block !important;
-        }
+        /* Next が fill で付ける absolute を使っていないが、念のため打ち消し */
         .product-img :global(img) {
-          inset: 0 !important;
-          object-fit: contain !important;  /* 枠内に収める */
-          object-position: center center !important;
+          position: static !important;
+          inset: auto !important;
           max-width: 100% !important;
           max-height: 100% !important;
-        }
-        /* 万一のグローバルCSS干渉（img { width:100vw }等）をカード内で打ち消す */
-        .product-card :global(img) {
           width: auto !important;
-          max-width: 100% !important;
+          height: auto !important;
+          object-fit: contain !important;
+          object-position: center center !important;
+          display: block;
         }
 
         .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
