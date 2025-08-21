@@ -18,7 +18,7 @@ export default function ProductSection() {
         <div className="container">
           <h2 className="products-title ja-serif">商品ラインナップ</h2>
           <div className="products-logo">
-            <Image src="/logo-confidence.png" alt="Confidence" width={220} height={64} priority />
+            <Image src="/MV_LOGO.png" alt="Confidence" width={220} height={64} priority />
           </div>
 
          
@@ -33,7 +33,7 @@ export default function ProductSection() {
             <div className="product-card">
               <div className="product-img">
                 <Image
-                  src="/MV_LOGO.png"
+                  src="/MV_LO.png"
                   alt="mix pack"
                   fill
                   sizes="(max-width: 1024px) 33vw, 300px"
