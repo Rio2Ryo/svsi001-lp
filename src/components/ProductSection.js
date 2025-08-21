@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-/* 金額フォーマット（"3,100円" 等の文字列でもOK） */
+/* 金額フォーマット */
 function formatJPY(n) {
   const digits = String(n ?? "").replace(/[^\d.]/g, "");
   if (!digits) return n ?? "";
@@ -11,28 +11,20 @@ function formatJPY(n) {
   catch { return digits; }
 }
 
-/* 商品名を厳密に3行へ：1)【…】 2)本文 3) 数値mg（+（…）可） */
+/* 商品名 → 厳密に3行へ（1:【…】 2:本文 3:数値mg（＋（…）可）） */
 function splitNameTo3(raw = "") {
   let name = String(raw).replace(/\s+/g, " ").trim();
 
-  // 1) 先頭の【…】
   const headMatch = name.match(/【[^】]+】/);
   const l1 = headMatch ? headMatch[0].trim() : "";
   name = headMatch ? name.replace(headMatch[0], "").trim() : name;
 
-  // 3) 末尾の mg（+全角カッコ内も含む）
   const mgMatch = name.match(/([0-9,]+mg(?:（[^）]*）)?)/i);
   const l3 = mgMatch ? mgMatch[1].trim() : "";
   name = mgMatch ? name.replace(mgMatch[1], "").trim() : name;
 
-  // 2) 中央（飾りのダッシュや中黒を除去）
-  let l2 = name
-    .replace(/^[\-—・]/, "")
-    .replace(/[\-—・]$/, "")
-    .replace(/\s+/g, " ")
-    .trim();
+  let l2 = name.replace(/^[\-—・]/, "").replace(/[\-—・]$/, "").trim();
 
-  // フォールバック：不足分は等分割して必ず3行に
   const lines = [l1, l2, l3].filter(Boolean);
   if (lines.length === 3) return [l1, l2, l3];
   if (lines.length === 2) {
@@ -47,7 +39,7 @@ function splitNameTo3(raw = "") {
   return ["", "", ""];
 }
 
-/* ------- 汎用カード（画像は必ず枠内） ------- */
+/* ------- 汎用カード ------- */
 const ProductCard = memo(function ProductCard({
   imgSrc,
   imgAlt,
@@ -55,7 +47,7 @@ const ProductCard = memo(function ProductCard({
   price,
   originalprice,
   note,
-  href, // 内部 or 外部
+  href,
 }) {
   const isExternal = href?.startsWith("http");
   const nameLines = splitNameTo3(name);
@@ -63,21 +55,20 @@ const ProductCard = memo(function ProductCard({
   return (
     <div className="product-card">
       <div className="product-img">
-        {/* fill を使わず、明示サイズ + CSS で枠フィット */}
+        {/* fillを使わず、枠固定＋containで必ず収まる */}
         <Image
           src={imgSrc || "/placeholder.png"}
           alt={imgAlt || ""}
           width={800}
           height={600}
           style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
-          priority={false}
         />
       </div>
 
       <p className="product-name">
-        {nameLines.map((line, i) => (
-          <span key={i}>{line}</span>
-        ))}
+        <span>{nameLines[0]}</span>
+        <span>{nameLines[1]}</span>
+        <span>{nameLines[2]}</span>
       </p>
 
       <p className="product-price-label">価格(税込)</p>
@@ -89,18 +80,14 @@ const ProductCard = memo(function ProductCard({
 
       {href ? (
         isExternal ? (
-          <a className="product-btn" href={href} target="_blank" rel="noopener noreferrer">
-            ご購入はこちら
-          </a>
+          <a className="product-btn" href={href} target="_blank" rel="noopener noreferrer">ご購入はこちら</a>
         ) : (
-          <Link className="product-btn" href={href}>
-            ご購入はこちら
+          <Link href={href} legacyBehavior>
+            <a className="product-btn">ご購入はこちら</a>
           </Link>
         )
       ) : (
-        <button className="product-btn" type="button" disabled>
-          ご購入はこちら
-        </button>
+        <button className="product-btn" type="button" disabled>ご購入はこちら</button>
       )}
     </div>
   );
@@ -110,10 +97,9 @@ const ProductCard = memo(function ProductCard({
 export default function ProductSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
   useEffect(() => setIsVisible(true), []);
 
-  /* JSON取得（/public/mvsi_products.json） */
+  // /public/mvsi_products.json を読む
   useEffect(() => {
     (async () => {
       try {
@@ -124,13 +110,11 @@ export default function ProductSection() {
       } catch (e) {
         console.error(e);
         setItems([]);
-      } finally {
-        setLoading(false);
       }
     })();
   }, []);
 
-  /* グルーピング＋順序 */
+  // グルーピングと表示順
   const ectoinPredicate = (p) =>
     (p?.slug || "").includes("-e-") || (p?.name || "").includes("エクトイン");
   const orderSilica = ["double-mvsi", "case-mvsi", "big-refill-mvsi"];
@@ -173,7 +157,7 @@ export default function ProductSection() {
                 name={p.name}
                 price={p.price}
                 originalprice={p.originalprice}
-                href={`/item/mvsi/${p.slug}`}   /* 外部に飛ばすなら href={p.url} */
+                href={`/item/mvsi/${p.slug}`}  /* 外部に飛ばすなら href={p.url} */
               />
             ))}
           </div>
@@ -201,14 +185,13 @@ export default function ProductSection() {
                 price={p.price}
                 originalprice={p.originalprice}
                 note="天然アミノ酸のエクトイン配合版"
-                href={`/item/mvsi/${p.slug}`}   /* または外部URL: p.url */
+                href={`/item/mvsi/${p.slug}`}  /* または外部URL: p.url */
               />
             ))}
           </div>
         </div>
       </section>
 
-      {/* ===== styled-jsx ===== */}
       <style jsx>{`
         .products { background:#fff; color:#3a3a3a; padding:36px 16px 84px; }
         .is-visible { animation: fadeInUp .7s ease-out both; }
@@ -227,13 +210,17 @@ export default function ProductSection() {
         .product-list.three { grid-template-columns: repeat(3, minmax(240px, 1fr)); max-width:1080px; }
         .product-list.four  { grid-template-columns: repeat(4, minmax(220px, 1fr)); max-width:1080px; }
 
-        .product-card { text-align:center; color:#1f2937; }
+        .product-card {
+          text-align:center; color:#1f2937;
+          display:flex; flex-direction:column; align-items:center;
+        }
 
         /* 画像は必ず枠内 */
         .product-img {
           position: relative;
           width: 100%;
           aspect-ratio: 4 / 3;
+          max-width: 320px;              /* カード内の上限（必要なら調整） */
           margin: 0 auto 12px;
           background: #fff;
           overflow: hidden;
@@ -246,35 +233,33 @@ export default function ProductSection() {
           display: block !important;
         }
 
-        /* --- 中央寄せ＆3行表示を強制 --- */
+        /* ---- 中央寄せ＋3行固定 ---- */
         .product-name {
           margin: 6px 0 10px;
-          text-align: center !important;
-          letter-spacing: .02em;
-          line-height: 1.7;
-          font-size: 14px;
-          font-weight: 700;
+          text-align:center !important;
+          letter-spacing:.02em; line-height:1.7; font-size:14px; font-weight:700;
         }
-        .product-name > span { display:block; } /* 3行固定 */
+        .product-name > span { display:block; }  /* 強制3行 */
 
         .product-price-label { margin:0; color:#666; font-size:12.5px; letter-spacing:.06em; text-align:center !important; }
         .product-price { margin:8px 0 12px; font-size:18px; font-weight:800; letter-spacing:.06em; color:#111827; text-align:center !important; }
         .product-note { margin:-6px 0 12px; color:#777; font-size:12.5px; text-align:center !important; }
 
-        /* --- ご購入はこちら（黄色の丸ボタン再現） --- */
+        /* ---- ご購入はこちら（黄色の丸ボタン） ---- */
         .product-btn {
           display:inline-flex; align-items:center; justify-content:center;
-          height: 44px; padding: 0 26px;
+          height: 44px; padding: 0 26px; margin-top: 6px;
           border-radius: 9999px;
           background: linear-gradient(180deg, #FFE173 0%, #FFD84D 100%);
-          color:#1f2937; font-size:14px; font-weight:700; letter-spacing:.06em;
-          text-decoration:none;
+          color:#1f2937 !important; font-size:14px; font-weight:700; letter-spacing:.06em;
+          text-decoration:none !important;
           box-shadow:
             0 8px 20px rgba(255, 216, 77, .35),
             inset 0 -2px 0 rgba(0,0,0,.08),
             inset 0 1px 0 rgba(255,255,255,.6);
           transition: transform .08s ease, filter .12s ease, box-shadow .12s ease;
         }
+        .product-btn:visited { color:#1f2937 !important; }
         .product-btn:hover {
           filter: brightness(.98);
           transform: translateY(-1px);
