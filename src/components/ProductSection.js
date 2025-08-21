@@ -265,7 +265,7 @@ export default function ProductSection() {
         /* 商品グリッド */
         .product-list {
           display: grid;
-          gap: 36px 54px;
+          gap: 36px 17px;
           justify-content: center;
           margin: 10px auto 48px;
         }
