@@ -241,7 +241,7 @@ export default function HeroSection() {
         }
         .fv-earth-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .fv-earth-text {
-          font-size:20px; z-index: 2; padding:20px 40px; 
+          position: absolute; font-size:20px; z-index: 2; top: 50%; padding:20px 40px; transform: translateY(-50%);
           color: #fff; max-width: 740px; padding-right: 24px; text-shadow: 0 1px 2px rgba(0,0,0,.45);
         }
         .fv-earth-text p { margin: 0; font-size: 22px; line-height: 2; letter-spacing: 0.08em; }
