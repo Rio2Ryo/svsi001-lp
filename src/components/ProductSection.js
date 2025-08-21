@@ -114,7 +114,7 @@ export default function ProductSection() {
             src={p.ItemPic || "/placeholder.png"}
             alt={p.name || "product"}
             fill
-            sizes="(max-width: 1200px) 33vw, 300px"
+            sizes="(max-width: 27px) 33vw, 270px"
             style={{ objectFit: "contain" }}
             priority={priority}
           />
@@ -205,6 +205,9 @@ export default function ProductSection() {
           aspect-ratio: 1 / 1; /* 高さを固定せず、正方形の比率を維持 */
           margin: 0 auto 12px; /* 下の余白を少し調整 */
           background: #fff;
+        }
+        .product-img img {
+          width: 100%!important;
         }
         /* ▲▲▲ ここまで修正 ▲▲▲ */
 
