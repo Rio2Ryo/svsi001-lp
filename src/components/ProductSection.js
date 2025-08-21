@@ -1,260 +1,331 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";               // ロゴのみ最適化に使用
-import { useI18n } from "../lib/i18n";
+import Image from "next/image";
+import Link from "next/link";
 
-export default function ProductSection() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [items, setItems] = useState([]);
-  const [err, setErr] = useState("");
-
-  const { t, lang } = useI18n();
-  const tr = (k, fb = "") => {
-    const v = t(k);
-    return v && v !== k ? v : fb;
+export default function ProductLineupSection() {
+  // ====== 商品データ（画像srcとurlは貴社の実物に差し替えてください） ======
+  const silica = {
+    title: "マザベジコンフィデンス【シリカの素版】",
+    note: "成分 オーガニックシリカ純度97.1%以上",
+    items: [
+      {
+        img: "/images/products/mixpack_1500.png",
+        name: "PBスキンパウダー -【ミックスパック】",
+        subtitle: "マザベジコンフィデンスパウダー",
+        amount: "1,500mg",
+        price: "3,300円",
+        url: "/product/silica-mixpack-1500",
+        imgW: 420,
+        imgH: 300,
+      },
+      {
+        img: "/images/products/slidecase_1500.png",
+        name: "PBスキンパウダー -【薬用スライドケース】",
+        subtitle: "マザベジコンフィデンスパウダー",
+        amount: "1,500mg",
+        price: "3,300円",
+        url: "/product/silica-slidecase-1500",
+        imgW: 420,
+        imgH: 300,
+      },
+      {
+        img: "/images/products/30set_22500.png",
+        name: "PBスキンパウダー -【30本セット】",
+        subtitle: "マザベジコンフィデンスパウダー",
+        amount: "22,500mg",
+        price: "19,800円",
+        url: "/product/silica-30set-22500",
+        imgW: 420,
+        imgH: 300,
+      },
+    ],
   };
 
-  useEffect(() => setIsVisible(true), []);
-
-  // --- 価格表示 ---
-  const USD_OVERRIDE = { 3300: 22.37, 3100: 21.02 };
-  const RATE = 22.37 / 3300;
-  const num = (v) => Number(String(v ?? "").replace(/[^\d.-]/g, "")) || 0;
-  const fmt = (v) =>
-    lang === "ja"
-      ? new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(
-          typeof v === "number" ? v : num(v)
-        )
-      : `$${((USD_OVERRIDE[num(v)] ?? num(v) * RATE)).toFixed(2)}`;
-
-  // --- 商品（画像は固定） ---
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        setErr("");
-        const base = "mvsi_products";
-        const urls = [
-          `/${base}.${lang || "ja"}.json`,
-          `/${base}.json`,
-          `/products.${lang || "ja"}.json`,
-          `/products.json`,
-        ];
-        let data = null;
-        for (const u of urls) {
-          try {
-            const r = await fetch(u, { cache: "no-store" });
-            if (r.ok) {
-              data = await r.json();
-              break;
-            }
-          } catch {}
-        }
-        if (!data) throw new Error("no data");
-        if (!cancelled) setItems(Array.isArray(data) ? data : []);
-      } catch {
-        if (!cancelled) setErr(tr("products.error", "商品データを読み込めませんでした。"));
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [lang]);
-
-  // --- グルーピング ---
-  const isEctoin = (p) =>
-    /エクトイン|ectoin/i.test(p?.name || "") || String(p?.slug || "").includes("-e-");
-  const { pure, ect } = useMemo(
-    () => ({ pure: items.filter((p) => !isEctoin(p)), ect: items.filter((p) => isEctoin(p)) }),
-    [items]
-  );
-
-  // --- ラベル ---
-  const title = tr("products.title", "商品ラインナップ");
-  const seriesSilica = tr("products.series.silica", "マザベジコンフィデンス【シリカのみ版】");
-  const seriesEctoin = tr("products.series.ectoin", "マザベジコンフィデンス【エクトイン配合版】");
-  const descSilica = tr("products.desc.silica", "成分 オーガニックシリカ 純度97.1%以上");
-  const descEctoin = tr(
-    "products.desc.ectoin",
-    "成分 オーガニックシリカ純度97.1%以上＋ 保湿効果や炎症を抑える効果が期待できる 天然アミノ酸のエクトイン配合"
-  );
-  const priceLabel = tr("products.labels.price", lang === "en" ? "Price (incl. tax)" : "価格(税込)");
-  const buyLabel = tr("cta.buy", tr("products.labels.buy", lang === "en" ? "Buy now" : "ご購入はこちら"));
-
-  // --- 画像固定 ---
-  const FIXED_IMAGE_SRC = "/mix1500.png";
-
-  // --- カード ---
-  const Card = ({ p }) => {
-    const showOriginal = p?.originalprice != null && String(p.originalprice) !== String(p.price);
-    return (
-      <article className="card">
-        <div className="thumb">
-          {/* Next/Image を使うが、下の CSS でラッパ<span>を100%化してズレを殺す */}
-          <Image
-            src={FIXED_IMAGE_SRC}
-            alt={p?.name || "product"}
-            width={1200}
-            height={900}
-            priority={false}
-            className="thumbImg"
-            quality={90}
-          />
-        </div>
-
-        <h4 className="name">{p?.name || ""}</h4>
-        <p className="priceLabel">{priceLabel}</p>
-        {showOriginal ? (
-          <p className="original">{fmt(p.originalprice)}</p>
-        ) : (
-          <p className="original placeholder"> </p>
-        )}
-        <p className="price">{fmt(p.price)}</p>
-
-        <a className="btn" href={p?.url || "#"} target="_blank" rel="noopener noreferrer">
-          {buyLabel}
-        </a>
-      </article>
-    );
+  const ectoine = {
+    title: "マザベジコンフィデンス【エクトイン配合版】",
+    noteTop: "成分 オーガニックシリカ純度97.1%以上",
+    noteBottom: "保湿効果や炎症を抑える効果が期待できる\n天然アミノ酸のエクトイン配合",
+    items: [
+      {
+        img: "/images/products/mixpack_2000_ect.png",
+        name: "PBスキンパウダー -【ミックスパック】",
+        subtitle: "マザベジコンフィデンスパウダー",
+        amount: "2,000mg",
+        price: "3,300円",
+        url: "/product/ectoine-mixpack-2000",
+        imgW: 420,
+        imgH: 300,
+        foot: "天然アミノ酸のエクトイン配合版",
+      },
+      {
+        img: "/images/products/slidecase_2000_ect.png",
+        name: "PBスキンパウダー -【薬用スライドケース】",
+        subtitle: "マザベジコンフィデンスパウダー",
+        amount: "2,000mg",
+        price: "3,300円",
+        url: "/product/ectoine-slidecase-2000",
+        imgW: 420,
+        imgH: 300,
+        foot: "天然アミノ酸のエクトイン配合版",
+      },
+      {
+        img: "/images/products/10set_10000_ect.png",
+        name: "PBスキンパウダー -【10本セット】",
+        subtitle: "マザベジコンフィデンスパウダー",
+        amount: "10,000mg",
+        price: "12,000円",
+        url: "/product/ectoine-10set-10000",
+        imgW: 420,
+        imgH: 300,
+        foot: "天然アミノ酸のエクトイン配合版",
+      },
+      {
+        img: "/images/products/30set_30000_ect.png",
+        name: "PBスキンパウダー -【30本セット】",
+        subtitle: "マザベジコンフィデンスパウダー",
+        amount: "30,000mg",
+        price: "30,000円",
+        url: "/product/ectoine-30set-30000",
+        imgW: 420,
+        imgH: 300,
+        foot: "天然アミノ酸のエクトイン配合版",
+      },
+    ],
   };
 
   return (
-    <>
-      <section id="products" className={`wrap ${isVisible ? "is-visible" : ""}`}>
-        <div className="inner">
-          <h2 className="title ja-serif">{title}</h2>
-          <div className="logo">
-            <Image src="/MV_LOGO.png" alt="Confidence" width={220} height={64} priority />
-          </div>
-
-          {err && <p className="error">{err}</p>}
-
-          {/* シリカのみ */}
-          {pure.length > 0 && (
-            <>
-              <h3 className="series">{seriesSilica}</h3>
-              <hr className="rule" />
-              <p className="desc">{descSilica}</p>
-              <div className="grid grid3">
-                {pure.map((p, i) => (
-                  <Card key={p.slug || i} p={p} />
-                ))}
-              </div>
-            </>
-          )}
+    <section className="lineup">
+      {/* ===== ヘッダー（ブランドロゴ）任意 ===== */}
+      <div className="brand">
+        <p className="brand-top">商品ラインナップ</p>
+        <div className="brand-mark">
+          <Image
+            src="/MV_LOGO.png"
+            alt="Mother Vegetables Confidence"
+            width={220}
+            height={80}
+            priority
+          />
         </div>
+      </div>
 
-        {/* エクトイン配合 */}
-        <div className="inner">
-          {ect.length > 0 && (
-            <>
-              <h3 className="series">{seriesEctoin}</h3>
-              <hr className="rule" />
-              <p className="desc">{descEctoin}</p>
-              <div className="grid grid4">
-                {ect.map((p, i) => (
-                  <Card key={p.slug || `e-${i}`} p={p} />
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      </section>
+      {/* ====== シリカの素版 ====== */}
+      <Block title={silica.title} note={silica.note}>
+        <Cards items={silica.items} />
+      </Block>
+
+      {/* ====== エクトイン配合版 ====== */}
+      <Block
+        title={ectoine.title}
+        note={
+          <>
+            <span>{ectoine.noteTop}</span>
+            <br />
+            <span className="subnote">
+              {ectoine.noteBottom.split("\n").map((l, i) => (
+                <span key={i}>
+                  {l}
+                  {i === 0 ? <br /> : null}
+                </span>
+              ))}
+            </span>
+          </>
+        }
+      >
+        <Cards items={ectoine.items} four />
+      </Block>
 
       <style jsx>{`
-        /* ===== ベース ===== */
-        .wrap { background:#fff; color:#3a3a3a; padding:36px 16px 84px; }
-        .is-visible { animation: fadeInUp .4s ease-out both; }
-        @keyframes fadeInUp { from { opacity:0; transform: translate3d(0,8px,0); } to { opacity:1; transform: translateZ(0); } }
-        .inner { max-width:1080px; margin:0 auto; }
-        .ja-serif { font-family:"Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif; }
-        .title { text-align:center; font-size:36px; letter-spacing:.14em; color:#444; font-weight:600; margin:6px 0; }
-        .logo  { display:flex; justify-content:center; margin:6px 0 28px; }
-
-        .series { text-align:center; font-size:28px; letter-spacing:.08em; color:#3f3f3f; font-weight:700; margin:76px 0 8px; }
-        .rule   { max-width:860px; margin:0 auto 16px; border:none; height:1px; background:#bfbfbf; }
-        .desc   { text-align:center; color:#666; font-size:18px; line-height:1.9; letter-spacing:.06em; margin:0 0 18px; }
-        .error  { color:#c00; text-align:center; }
-
-        /* ===== グリッド ===== */
-        .grid { display:grid; gap:36px 18px; justify-content:center; margin:12px auto 48px; }
-        .grid3 { grid-template-columns: repeat(3, minmax(240px, 1fr)); max-width:980px; }
-        .grid4 { grid-template-columns: repeat(4, minmax(220px, 1fr)); max-width:1080px; }
-
-        /* ===== カード ===== */
-        .card{
-          display:flex;
-          flex-direction:column;
-          height:100%;
-          text-align:center;
-          color:#3a3a3a;
+        .lineup {
+          max-width: 1120px;
+          margin: 0 auto;
+          padding: 48px 16px 80px;
+          background: #fff;
+        }
+        .brand-top {
+          text-align: center;
+          letter-spacing: 0.3em;
+          color: #222;
+          margin: 0 0 6px;
+        }
+        .brand-mark {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 18px;
+          opacity: 0.9;
         }
 
-        /* 画像枠：固定高さ（全カードを完全同期） */
-        .thumb{
-          width:100%;
-          height:300px;               /* ← 必要なら 280〜320 に調整可 */
-          margin:0 auto 12px;
-          background:#fff;
-          border:1px solid #eee;
-          border-radius:10px;
-          box-shadow:0 1px 2px rgba(0,0,0,.04);
-          overflow:hidden;
+        /* セクション見出し */
+        .block {
+          margin-top: 42px;
+        }
+        .title {
+          font-family: "ot-bunyu-mincho-stdn", serif;
+          text-align: center;
+          font-size: 28px;
+          letter-spacing: 0.12em;
+          color: #222;
+          margin: 28px 0 10px;
+        }
+        .divider {
+          height: 1px;
+          background: #d9d9d9;
+          margin: 10px auto 14px;
+          max-width: 980px;
+        }
+        .note {
+          text-align: center;
+          color: #6d6d6d;
+          font-size: 14px;
+          letter-spacing: 0.06em;
+          margin-bottom: 26px;
+        }
+        .note .subnote {
+          display: inline-block;
+          margin-top: 4px;
         }
 
-        /* ★ Next/Image のラッパ <span> を100%化してズレを殺す ★ */
-        .thumb :global(span){
-          display:block !important;
-          width:100% !important;
-          height:100% !important;
-          position:static !important;   /* 相対位置を解除 */
-          overflow:visible !important;
+        /* 商品カード */
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px 36px;
+          max-width: 1000px;
+          margin: 0 auto;
         }
-        /* その中の <img> を等倍内フィット＋下揃え */
-        .thumb :global(span) > img,
-        .thumb :global(img.thumbImg){
-          width:100% !important;
-          height:100% !important;
-          object-fit:contain !important;
-          object-position:center bottom !important;
-          display:block;
+        .grid.four {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 24px 24px;
+        }
+        .card {
+          text-align: center;
+          padding: 8px 12px 20px;
+        }
+        .thumb {
+          position: relative;
+          width: 100%;
+          height: 0;
+          padding-top: 70%;
+          margin: 0 auto 6px;
+        }
+        .name {
+          font-weight: 600;
+          color: #333;
+          line-height: 1.6;
+        }
+        .subtitle {
+          color: #666;
+          font-size: 13px;
+          line-height: 1.6;
+        }
+        .amount {
+          margin-top: 4px;
+          font-size: 13px;
+          color: #111;
+        }
+        .pricewrap {
+          margin-top: 10px;
+          font-size: 13px;
+          color: #666;
+        }
+        .price {
+          display: block;
+          font-size: 18px;
+          color: #111;
+          margin-top: 2px;
         }
 
-        /* テキスト行の段差防止 */
-        .name        { margin:6px 0 8px; font-size:13px; line-height:1.5; letter-spacing:.02em; color:#444; min-height:3.0em; }
-        .priceLabel  { margin:0; color:#666; font-size:12.5px; letter-spacing:.06em; }
-        .original    { margin:2px 0; font-size:12px; color:#888; text-decoration:line-through; min-height:1.2em; }
-        .original.placeholder { text-decoration:none; color:transparent; }
-        .price       { margin:0 0 12px; font-size:16px; font-weight:700; letter-spacing:.06em; color:#2f2f2f; min-height:1.4em; }
-
-        .btn{
-          margin-top:auto;
-          align-self:center;
-          display:inline-block;
-          padding:10px 18px;
-          border-radius:9999px;
-          background:#ffd84d;
-          color:#333;
-          font-size:14px;
-          letter-spacing:.06em;
-          text-decoration:none;
-          transition:transform .08s ease, filter .12s ease, box-shadow .12s ease;
-          box-shadow:0 2px 0 rgba(0,0,0,.08);
+        .cta {
+          display: inline-block;
+          margin-top: 12px;
+          padding: 10px 18px;
+          border-radius: 9999px;
+          background: #ffd400;
+          text-decoration: none;
+          color: #111;
+          font-weight: 700;
+          letter-spacing: 0.08em;
         }
-        .btn:hover { filter:brightness(.98); transform:translateY(-1px); }
-        .btn:active{ transform:translateY(0); filter:brightness(.96); }
-
-        @media (max-width:1024px){
-          .grid3 { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
-          .grid4 { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
-          .thumb { height:260px; }
+        .foot {
+          margin-top: 10px;
+          color: #666;
+          font-size: 12px;
         }
-        @media (max-width:640px){
-          .desc { font-size:14px; }
-          .grid3, .grid4 { grid-template-columns:1fr; gap:28px 24px; }
-          .thumb { height:220px; }
+
+        /* RWD */
+        @media (max-width: 1024px) {
+          .grid,
+          .grid.four {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+          }
+          .title {
+            font-size: 24px;
+          }
+        }
+        @media (max-width: 560px) {
+          .grid,
+          .grid.four {
+            grid-template-columns: 1fr;
+          }
+          .title {
+            font-size: 20px;
+            line-height: 1.6;
+          }
+          .note {
+            font-size: 12px;
+          }
         }
       `}</style>
-    </>
+    </section>
+  );
+}
+
+/* ============ sub components ============ */
+function Block({ title, note, children }) {
+  return (
+    <div className="block">
+      <h2 className="title">{title}</h2>
+      <div className="divider" />
+      <p className="note">{note}</p>
+      {children}
+      <style jsx>{`
+        .block {
+          margin-bottom: 48px;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function Cards({ items, four = false }) {
+  return (
+    <div className={`grid ${four ? "four" : ""}`}>
+      {items.map((p, i) => (
+        <article key={i} className="card">
+          <div className="thumb">
+            <Image
+              src={p.img}
+              alt={p.name}
+              fill
+              sizes="(max-width: 1024px) 100vw, 320px"
+              style={{ objectFit: "contain" }}
+              priority={i < 2}
+            />
+          </div>
+          <h3 className="name">{p.name}</h3>
+          <div className="subtitle">{p.subtitle}</div>
+          <div className="amount">{p.amount}</div>
+          <div className="pricewrap">
+            価格(税込)
+            <span className="price">{p.price}</span>
+          </div>
+          <Link href={p.url} className="cta" aria-label={`${p.name} を購入`}>
+            ご購入はこちら
+          </Link>
+          {p.foot ? <div className="foot">{p.foot}</div> : null}
+        </article>
+      ))}
+    </div>
   );
 }
