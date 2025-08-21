@@ -1,24 +1,55 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useI18n } from "../lib/i18n";
+import { useRouter } from "next/router"; // Pages Router 前提（App Routerなら props で渡すか pathname 解析へ）
 
-export default function ProductSection() {
+export default function ProductSection({ productsId }) {
   const [isVisible, setIsVisible] = useState(false);
   const [items, setItems] = useState([]);
   const [err, setErr] = useState("");
 
+  const router = useRouter?.();
   const { t, lang } = useI18n();
   const tr = (key) => {
     const v = t(key);
-    return v && v !== key ? v : ""; // ← 未定義キーは空文字に
+    return v && v !== key ? v : "";
   };
 
   useEffect(() => setIsVisible(true), []);
 
-  // ========== 価格フォーマッタ（特例: 3300円→$22.37 / 3100円→$21.02） ==========
+  // ===== ID 推定 =====
+  const guessedId = useMemo(() => {
+    // 1) props
+    if (productsId) return String(productsId).toLowerCase();
+
+    // 2) router query
+    const q = (router?.isReady && router.query) || {};
+    const qKeys = ["productsId", "itemId", "id", "agent"];
+    for (const k of qKeys) {
+      if (q[k]) return String(q[k]).toLowerCase();
+    }
+
+    // 3) URL パスから推定（/item/252003 など）
+    if (typeof window !== "undefined") {
+      const segs = window.location.pathname.split("/").filter(Boolean);
+      const bad = new Set(["item", "items", "products", "product", "ja", "en"]);
+      for (let i = segs.length - 1; i >= 0; i--) {
+        const s = segs[i].toLowerCase();
+        if (!bad.has(s) && /^[a-z0-9_-]+$/.test(s)) return s;
+      }
+    }
+
+    // 4) 環境変数 or 既定
+    if (typeof process !== "undefined" && process.env.NEXT_PUBLIC_PRODUCTS_ID) {
+      return String(process.env.NEXT_PUBLIC_PRODUCTS_ID).toLowerCase();
+    }
+    return "mvsi"; // 最終フォールバック
+  }, [productsId, router?.isReady, router?.query]);
+
+  // ===== 価格フォーマッタ（特例: 3300円→$22.37 / 3100円→$21.02） =====
   const USD_OVERRIDE = { 3300: 22.37, 3100: 21.02 };
-  const JPY_TO_USD_RATE = 22.37 / 3300; // その他は同レートで換算
+  const JPY_TO_USD_RATE = 22.37 / 3300; // その他は同一レート換算
   const parseJPY = (v) => {
     if (typeof v === "number") return v;
     if (v == null) return 0;
@@ -37,27 +68,25 @@ export default function ProductSection() {
     }
   };
 
-  // ========== 商品JSON（言語別 or 単一）読み込み ==========
-  // あなたのファイル名に合わせたベース名
-  const BASENAME = "mvsi_products"; // public/mvsi_products.json がある
+  // ===== 商品JSON 読み込み（ID/言語に応じて候補を順に試す） =====
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
         setErr("");
 
-        // 優先順にトライ:
-        //   /mvsi_products.en.json → /mvsi_products.ja.json → /mvsi_products.json
-        //   （最後に互換用 /products.xxx.json も試す）
-        const urlCandidates = [
-          `/${BASENAME}.${lang || "ja"}.json`,
-          `/${BASENAME}.json`,
-          `/products.${lang || "ja"}.json`,
+        const id = guessedId;
+        const L = (lang || "ja").toLowerCase();
+
+        const candidates = [
+          `/${id}_products.${L}.json`,
+          `/${id}_products.json`,
+          `/products.${L}.json`,
           `/products.json`,
         ];
 
         let data = null, lastErr = null;
-        for (const url of urlCandidates) {
+        for (const url of candidates) {
           try {
             const res = await fetch(url, { cache: "no-store" });
             if (res.ok) {
@@ -70,7 +99,7 @@ export default function ProductSection() {
             lastErr = e?.message || String(e);
           }
         }
-        if (!data) throw new Error(lastErr || "no data");
+        if (!data) throw new Error(lastErr || "no product json found");
 
         if (!cancelled) setItems(Array.isArray(data) ? data : []);
       } catch (e) {
@@ -78,18 +107,16 @@ export default function ProductSection() {
         if (!cancelled) setErr(tr("products.error") || "商品データを読み込めませんでした。");
       }
     })();
-    return () => {
-      cancelled = true;
-    };
-  }, [lang]);
+    return () => { cancelled = true; };
+  }, [guessedId, lang]);
 
-  // ========== グルーピング（エクトイン配合の判定） ==========
+  // ===== グルーピング（エクトイン配合の判定） =====
   const isEctoin = (p) =>
     /エクトイン|ectoin/i.test(p?.name || "") || (p?.slug || "").includes("-e-");
   const pure = items.filter((p) => !isEctoin(p)); // シリカのみ
   const ect  = items.filter((p) =>  isEctoin(p)); // エクトイン配合
 
-  // ========== UIラベル（i18n） ==========
+  // ===== UIラベル（i18n） =====
   const title        = tr("products.title") || "商品ラインナップ";
   const seriesSilica = tr("products.series.silica") || "マザベジコンフィデンス【シリカのみ版】";
   const seriesEctoin = tr("products.series.ectoin") || "マザベジコンフィデンス【エクトイン配合版】";
@@ -188,6 +215,7 @@ export default function ProductSection() {
 
         .products-title { text-align: center; font-size: 36px; letter-spacing: 0.14em; color: #444; font-weight: 600; margin: 6px 0 6px; }
         .products-logo { display: flex; justify-content: center; margin: 2px 0 28px; }
+
         .products-series { text-align: center; font-size: 28px; letter-spacing: 0.08em; color: #3f3f3f; font-weight: 700; margin: 80px 0 6px; }
         .series-rule { max-width: 860px; margin: 0 auto 16px; }
         .products-desc { text-align: center; color: #666; font-size: 18.5px; line-height: 1.9; letter-spacing: 0.06em; margin: 0 0 18px; }

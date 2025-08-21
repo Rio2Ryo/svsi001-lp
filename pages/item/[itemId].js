@@ -18,7 +18,7 @@ import HeroSection from "../../src/components/HeroSection";
 import ConceptSection from "../../src/components/ConceptSection";
 import FeatureSection from "../../src/components/FeatureSection";
 import TestimonialSection from "../../src/components/TestimonialSection";
-import ProductSection from "../../src/components/ProductSection";
+import ProductSection_2 from "../../src/components/ProductSection_2";
 import Effects from "../../src/components/Effects";
 import GuaranteeSection from "../../src/components/GuaranteeSection";
 import FAQSection from "../../src/components/FAQSection";
@@ -233,7 +233,7 @@ export default function AgentItemPage() {
         <TestimonialSection />
         <FeatureSection />
         <Effects />
-        <ProductSection />
+        <ProductSection_2 />
         <GuaranteeSection />
         <FAQSection />
         <Footer />
