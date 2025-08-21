@@ -227,10 +227,9 @@ export default function ProductSection({ productsId }) {
         }
         /* next/image の内部要素を強制制御 */
         .product-img :global(span) {
-          position: absolute !important;
+          
           inset: 0 !important;
-          width: 100% !important;
-          height: 100% !important;
+          
           display: block !important;
         }
         .product-img :global(img) {

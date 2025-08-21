@@ -201,10 +201,9 @@ export default function ProductSection() {
           display: block !important;
         }
         .product-img :global(img) {
-          position: absolute !important;
+          
           inset: 0 !important;
-          width: 100% !important;
-          height: 100% !important;
+          
           object-fit: contain !important;
           object-position: center center !important;
           max-width: 100% !important;
