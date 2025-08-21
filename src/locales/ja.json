@@ -289,5 +289,16 @@
     "emailText": "info@dotpb.jp",
     "legalText": "特定商取引に基づく表記",
     "copyright": "Copyright © 2025 dotpb Co.,Ltd. All Rights Reserved."
-  }
+  },
+  "products": {
+    "title": "商品ラインナップ",
+    "series": { "silica": "マザベジコンフィデンス【シリカのみ版】", "ectoin": "マザベジコンフィデンス【エクトイン配合版】" },
+    "desc": {
+      "silica": "成分 オーガニックシリカ 純度97.1%以上",
+      "ectoin": "成分 オーガニックシリカ純度97.1%以上＋\n保湿効果や炎症を抑える効果が期待できる\n天然アミノ酸のエクトイン配合"
+    },
+    "labels": { "price": "価格(税込)", "buy": "ご購入はこちら" },
+    "error": "商品データを読み込めませんでした。"
+  },
+  "cta": { "buy": "ご購入はこちら" }
 }

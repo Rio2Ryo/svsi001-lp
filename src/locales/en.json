@@ -289,5 +289,16 @@
     "emailText": "info@dotpb.jp",
     "legalText": "Legal Notice (Specified Commercial Transactions Act)",
     "copyright": "Copyright © 2025 dotpb Co.,Ltd. All Rights Reserved."
-  }
+  },
+  "products": {
+    "title": "Product Lineup",
+    "series": { "silica": "Mazavegi Confidence [Silica Only]", "ectoin": "Mazavegi Confidence [with Ectoin]" },
+    "desc": {
+      "silica": "Ingredient: Organic Silica, purity 97.1%+",
+      "ectoin": "Ingredient: Organic Silica 97.1%+ with\nEctoin (a natural amino acid) for moisturizing\nand soothing benefits"
+    },
+    "labels": { "price": "Price (incl. tax)", "buy": "Buy now" },
+    "error": "Failed to load product data."
+  },
+  "cta": { "buy": "Buy now" }
 }
