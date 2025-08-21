@@ -8,36 +8,27 @@ export default function HeroSection() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 
-  // i18n
   const { t, lang, setLang } = useI18n();
-  const tr = (key, fallback) => {
-    const v = t(key);
-    return v == null || v === key ? fallback : v;
-  };
+  // t(key) が null なら空文字に
+  const tr = (key) => t(key) ?? "";
 
-  // 表示テキスト（辞書になければ日本語デフォルト）
-  const brand   = tr("hero.brand", "Mother Vegetables");
-  const title   = tr("hero.title", "Confidence");
-  const tagline = tr(
-    "hero.tagline",
-    "マザーベジタブルから生まれた完全オーガニックのシリカパウダー"
-  );
-  const catch1  = tr("hero.catch1", "その選択が");
-  const catch2  = tr("hero.catch2", "肌も、地球も、美しく育てる");
-  const body = tr(
-    "hero.body",
-    [
-      "Mother Vegetables から生まれた「マザベジコンフィデンス」",
-      "それはあなたの肌をやさしく育てながら地球環境を整えていく",
-      "世界で唯一の存在です。",
-      "",
-      "あなたの美しさと、地球の未来を同時に育てる",
-      "そんな、新しいスキンケアのかたちが誕生しました。",
-      "",
-      "あなたの肌を包み守るやさしさが、地球へのやさしさにもなる",
-      "すべては、あなたの意思ある選択から始まります"
-    ].join("\n")
-  );
+  // すべて辞書から取得
+  const brand   = tr("hero.brand");
+  const title   = tr("hero.title");
+  const tagline = tr("hero.tagline");
+  const catch1  = tr("hero.catch1");
+  const catch2  = tr("hero.catch2");
+  const body    = tr("hero.body");
+
+  // 画像の代替テキスト等も辞書化
+  const altPowder = tr("hero.alt.powder");
+  const altLogo   = tr("hero.alt.logo");   // brand と title をそのまま使いたければ辞書側で組み立てておく
+  const altEarth  = tr("hero.alt.earth");
+
+  // スイッチャー表示名も辞書から
+  const labelLang = tr("ui.lang.label");  // 例) "Language" / "言語"
+  const labelJA   = tr("ui.lang.ja");     // 例) "日本語"
+  const labelEN   = tr("ui.lang.en");     // 例) "English"
 
   useEffect(() => setIsVisible(true), []);
   useEffect(() => {
@@ -50,7 +41,6 @@ export default function HeroSection() {
     return () => window.removeEventListener("mousedown", onDown);
   }, [open]);
 
-  // 地球画像の左→右黒グラ
   const styles = {
     earthOverlay: {
       background:
@@ -70,20 +60,21 @@ export default function HeroSection() {
               aria-haspopup="menu"
               aria-expanded={open}
               aria-label="Language selector"
+              title={labelLang || "Language"}
             >
-              {lang?.toUpperCase() || "JA"} <span className="caret">▾</span>
+              {(lang || "ja").toUpperCase()} <span className="caret">▾</span>
             </button>
 
             {open && (
-              <ul className="lang-menu" role="menu">
+              <ul className="lang-menu" role="menu" aria-label={labelLang || "Language"}>
                 <li role="menuitem">
                   <button className="lang-item" onClick={() => setLang("ja")}>
-                    日本語 <span className="code">JA</span>
+                    {labelJA || "日本語"} <span className="code">JA</span>
                   </button>
                 </li>
                 <li role="menuitem">
                   <button className="lang-item" onClick={() => setLang("en")}>
-                    English <span className="code">EN</span>
+                    {labelEN || "English"} <span className="code">EN</span>
                   </button>
                 </li>
               </ul>
@@ -98,18 +89,18 @@ export default function HeroSection() {
         <div className="fv-top">
           <Image
             src="/fv-powder.png"
-            alt="Confidence powder"
+            alt={altPowder}
             fill
             priority
             sizes="(max-width: 900px) 100vw, 900px"
             style={{ objectFit: "cover" }}
           />
           <div className="fv-top-inner">
-            {/* ▼ テキスト見出し → ロゴ画像に置き換え */}
+            {/* ロゴ */}
             <div className="fv-logo">
               <Image
                 src="/MV_LOGO.png"
-                alt={`${brand} ${title}`}
+                alt={altLogo}
                 width={205}
                 height={80}
                 priority
@@ -131,7 +122,7 @@ export default function HeroSection() {
         <div className="fv-earth">
           <Image
             src="/fv-earth.jpg"
-            alt="Earth"
+            alt={altEarth}
             fill
             sizes="(max-width: 1024px) 100vw, 1024px"
             style={{ objectFit: "cover" }}
@@ -139,7 +130,7 @@ export default function HeroSection() {
           <div className="fv-earth-overlay" style={styles.earthOverlay} />
           <div className="fv-earth-text">
             <p>
-              {body.split("\n").map((line, i) => (
+              {(body || "").split("\n").map((line, i) => (
                 <span key={i}>
                   {line}
                   <br />
@@ -218,7 +209,6 @@ export default function HeroSection() {
           align-items: center; justify-content: center; text-align: center; color: #2a2a2a; padding: 12px;
         }
 
-        /* ▼ ロゴ画像サイズ（レスポンシブ） */
         .fv-logo-img {
           width: clamp(260px, 60vw, 540px);
           height: auto;

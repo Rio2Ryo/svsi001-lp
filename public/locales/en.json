@@ -1,13 +1,293 @@
 {
-    "header": { "ja": "Japanese", "en": "English" },
-    "hero": {
-      "brand": "Mother Vegetables",
-      "title": "Confidence",
-      "tagline": "A fully organic silica powder born from Mother Vegetables",
-      "catch1": "Your choice",
-      "catch2": "Nurtures both your skin and the Earth",
-      "body": "“Mother Vegetables Confidence” was born from Mother Vegetables.\nIt gently nurtures your skin while helping restore the environment,\na one-of-a-kind skincare in the world.\n\nIt grows your beauty and the future of our planet at the same time.\nThis new form of skincare has now arrived.\n\nThe gentleness that protects your skin also becomes kindness to the Earth.\nAnd it all begins with your conscious choice."
+  "ui": {
+    "lang": { "label": "Language", "ja": "日本語", "en": "English" }
+  },
+  "hero": {
+    "brand": "Mother Vegetables",
+    "title": "Confidence",
+    "tagline": "A fully organic silica powder born from Mother Vegetables",
+    "catch1": "Your choice",
+    "catch2": "Nurtures both your skin and the Earth",
+    "body": "“Mother Vegetables Confidence” was born from Mother Vegetables.\nIt gently nurtures your skin while helping restore the environment,\na one-of-a-kind skincare in the world.\n\nIt grows your beauty and the future of our planet at the same time.\nThis new form of skincare has now arrived.\n\nThe gentleness that protects your skin also becomes kindness to the Earth.\nAnd it all begins with your conscious choice.",
+    "alt": {
+      "powder": "Confidence powder",
+      "logo": "Mother Vegetables Confidence logo",
+      "earth": "Earth imagery"
+    }
+  },
+  "faq": {
+    "title": "FAQ",
+    "subtitle": "Frequently Asked Questions",
+
+    "q1": "Is it suitable for all skin types?",
+    "a1": "Yes, it can be used on various skin types including dry and sensitive skin.\n*Note: This does not guarantee zero irritation for everyone.*\nWe recommend a patch test on a small, inconspicuous area before first use.",
+
+    "q2": "Can it be used on babies?",
+    "a2": "Silica is known to be most abundant in infants and decreases with growth.\nIt can be used for babies; however, because their skin is especially delicate,\nplease test on a small area first.",
+
+    "q3": "Is it edible?",
+    "a3": "Although it has been evaluated as “Premium Food Grade” under FDA-aligned testing, it is not a food product.\nThere is no particular risk if it gets in your mouth, but please use it as a cosmetic.",
+
+    "q4": "Does it have an expiration date?",
+    "a4": "The product is highly stable and can be stored long-term if unopened.\nAfter opening, please use as early as possible to maintain quality.",
+
+    "q5": "Is it safe during pregnancy or breastfeeding?",
+    "a5": "There are no specific restrictions. If you have concerns, please consult your physician.",
+
+    "q6": "Can I use it with other skincare products?",
+    "a6": "Yes. You can use it after toner, serum, or emulsion, etc.",
+
+    "q7": "Is it okay to use on the scalp?",
+    "a7": "Yes. It helps control greasiness and may improve sebum-related concerns on the scalp.",
+
+    "q8": "Does it have any fragrance?",
+    "a8": "No. It is fragrance-free.",
+
+    "q9": "Any storage precautions?",
+    "a9": "Avoid high temperature, humidity, and direct sunlight. Store in a cool, dark place."
+  },
+  "concept": {
+    "title": "Meets Every International Trust & Quality Standard",
+    "alt": {
+      "cosmos": "COSMOS ORGANIC",
+      "halal": "HALAL certification logo",
+      "vegan": "VEGAN certification logo",
+      "banner": "Makeup and skincare banner"
     },
-    "cta": { "buy": "Buy now" }
+    "countries": {
+      "0": "Japan",
+      "1": "Australia",
+      "2": "United States"
+    },
+    "countryGrades": {
+      "0": "Quasi-drug ingredient standards",
+      "1": "Quasi-drug ingredient standards",
+      "2": "Clears FDA-aligned Premium Food Grade (safe even if ingested)"
+    },
+    "leftCerts": {
+      "0": "International Organic Certification",
+      "1": "Vegan Certification",
+      "2": "Halal Certification"
+    },
+    "rightCertDescs": {
+      "0": "COSMOS certified (global standard for organic cosmetics)",
+      "1": "No animal-derived ingredients / no animal testing",
+      "2": "Approved for safe use by Muslims"
+    },
+    "banner": {
+      "0": "Makeup and skincare,",
+      "1": "with just this one step,",
+      "2": "stay beautiful 24 hours"
+    },
+    "desc": {
+      "p1": "Blend it and your cosmetics reach department-store quality.\nApply before makeup or on areas of concern,\nand feel the difference.",
+      "p2": "It can also be used before bedtime,\nso your skin keeps improving 24 hours a day."
+    },
+    "list": {
+      "0": "• Refines texture for a softly bright look",
+      "1": "• Helps makeup go on smoothly and last longer",
+      "2": "• Gently controls shine and sebum for a clean impression",
+      "3": "• Gentle on delicate skin and keeps unstable seasonal skin healthy",
+      "4": "• Also for nails and hair to bring out a natural luster",
+      "5": "• Simple, reliable base care that shields from oxidation and external stressors",
+      "6": "• Suitable for skin prone to allergies/atopy"
+    },
+    "note": {
+      "0": "*This product is a cosmetic.*",
+      "1": "*Organic silica that meets Japan’s quasi-drug ingredient standards.*",
+      "2": "*Do not use if you have skin abnormalities.*"
+    }
+  },
+  "testimonials": {
+    "title": "Voices from Real Users",
+    "intro": "With the cooperation of users who love this product\n(people troubled by wounds, atopic dermatitis, rough skin, and spots),\nwe introduce their skin impressions before and after use with photos.",
+    "note": "*Individual experiences vary.*",
+
+    "openButton": "Tap here to see Before/After photos",
+    "badgeBefore": "Before",
+    "badgeAfter": "After",
+
+    "alt": { "before": "before", "after": "after" },
+
+    "sections": {
+      "0": {
+        "title": "Spots & Bruises",
+        "cases": {
+          "0": { "title": "Cheek spots & dark circles", "age": "(Female in her 50s)" },
+          "1": { "title": "Arm spots & bruises", "age": "(Female in her 80s)" }
+        }
+      },
+      "1": {
+        "title": "Atopy & Rough Skin",
+        "cases": {
+          "0": { "title": "Both thumbs", "age": "(Male in his 30s)" },
+          "1": { "title": "Psoriatic dermatitis", "age": "(Female in her 40s)" },
+          "2": { "title": "Atopic dermatitis", "age": "(Boy, 10 years old)" },
+          "3": { "title": "Rough skin", "age": "(Boy, 5 years old)" }
+        }
+      },
+      "2": {
+        "title": "Wounds",
+        "cases": {
+          "0": { "title": "Arm burn", "age": "(Female in her 50s)" },
+          "1": { "title": "Scrape from a fall", "age": "(Female in her 50s)" }
+        }
+      }
+    },
+
+    "modal": {
+      "0": {
+        "title": "Cheek spots & dark circles",
+        "age": "(Female in her 50s)",
+        "beforeLabel": "Before",
+        "afterLabel": "After 20 Days",
+        "beforeImg": "/case1-before.jpg",
+        "afterImg": "/case1-after.jpg"
+      },
+      "1": {
+        "title": "Arm spots & bruises",
+        "age": "(Female in her 80s)",
+        "beforeLabel": "Before",
+        "afterLabel": "After 24 Days",
+        "beforeImg": "/case2-before.jpg",
+        "afterImg": "/case2-after.jpg"
+      },
+      "2": {
+        "title": "Both thumbs (burn)",
+        "age": "(Female in her 50s)",
+        "beforeLabel": "Before",
+        "afterLabel": "After 15 Days",
+        "beforeImg": "/case3-before.jpg",
+        "afterImg": "/case3-after.jpg"
+      },
+      "3": {
+        "title": "Scrape from a fall",
+        "age": "(Female in her 50s)",
+        "beforeLabel": "Before",
+        "afterLabel": "After 18 Days",
+        "beforeImg": "/case4-before.jpg",
+        "afterImg": "/case4-after.jpg"
+      }
+    }
+  },
+  "feature": {
+    "alt": {
+      "banner": "Mother Vegetables banner",
+      "rack": "Rack photo",
+      "silica": "Silica powder"
+    },
+    "title": "What is  Mother Vegetables ?",
+    "lead": "Mother Vegetables (aka “Mazavegi”) is\nan organism that has existed unchanged for about 3.5 billion years,\noften called the beginning of life.\nIt is the only source in the world that can organically produce silica\nat 97.1%–99.9999% purity.\n(Our group holds the technology under international patent WO2023234765.)",
+    "merit": {
+      "title": "Benefits of Growing and Using Mazavegi Confidence",
+      "list": {
+        "0": "Growing Mazavegi absorbs CO2 via photosynthesis (≈700× natural turf).",
+        "1": "No pesticides or chemical fertilizers are used during production.",
+        "2": "Manufactured in facilities that do not pollute soil.",
+        "3": "Residual components after silica extraction can be used as organic fertilizer, etc.",
+        "4": "Fully organic “Mazavegi Confidence” achieves the world’s only top purity of 99.9999%."
+      }
+    },
+    "conventional": {
+      "title": "Common Manufacturing of High-Purity Silica",
+      "p1": "Quartz-derived / Rice or bamboo-derived",
+      "p2": "These methods risk chemical residue and allergic reactions,\nso applying to skin can be risky.\nOther-source silica falls below the 95% purity quasi-drug standard."
+    },
+    "callout": {
+      "p": "Mazavegi Confidence is produced entirely without chemicals,\nand the more you use it, the more it contributes to CO2 reduction.\n\nFor skin and planet alike—\nthe world’s only high-purity organic silica powder.\nGive it a try.",
+      "note": "(Being organic-derived and amorphous, it is non-carcinogenic.)"
+    }
+  },
+  "effects": {
+    "title": "Mazavegi Confidence Certifications",
+    "subtitle": "Global standards that meet international trust",
+
+    "grade": {
+      "title": "Grades of Mazavegi Confidence",
+      "rows": {
+        "0": { "country": "Japan", "desc": "Quasi-drug ingredient standards" },
+        "1": { "country": "Australia", "desc": "Quasi-drug ingredient standards" },
+        "2": { "country": "United States", "desc": "Clears FDA Premium Food Grade (safe even if ingested)" }
+      }
+    },
+
+    "other": {
+      "title": "Other Certifications",
+      "rows": {
+        "0": { "name": "COSMOS Certification", "desc": "Meets the international standard for organic cosmetics" },
+        "1": { "name": "Vegan Certification", "desc": "No animal-derived ingredients detected" },
+        "2": { "name": "Halal Certification", "desc": "Compatible with religious restrictions" }
+      }
+    },
+
+    "collab": {
+      "title": "Collaboration with Academic Institutions and Public Agencies",
+      "countries": {
+        "0": { "name": "Japan", "body": "In cooperation with the Fisheries Agency, we began\na Mother Vegetables aquaculture project in Kawazu, Shizuoka." },
+        "1": { "name": "Malaysia", "body": "Research on Mother Vegetables with the Malaysian government\nand the No.1 University of Malaya;\naquaculture area equivalent to 40 Tokyo Domes." },
+        "2": { "name": "Singapore", "body": "Research on Mother Vegetables with the Singapore government\nand the nation’s top University of Singapore." },
+        "3": { "name": "United Kingdom", "body": "Research on Mother Vegetables with the University of Nottingham." }
+      },
+      "footnote": "*Our international patent technology “WO2023234767” is leveraged not only in Japan but also to support global beauty.*"
+    },
+
+    "alt": {
+      "gmo": "GMO logo",
+      "fisheries": "Fisheries Agency logo",
+      "shizuoka": "Shizuoka Prefecture logo",
+      "kawazu": "Kawazu Town logo",
+      "malaysiaUni": "University of Malaya logo",
+      "greenhouse": "Greenhouse photo"
+    }
+  },
+  "usage": {
+    "title": "How to Use",
+    "items": {
+      "0": {
+        "alt": "Makeup",
+        "title": "Before makeup",
+        "body": "Apply 50 mg thinly with a puff or brush\nbefore foundation."
+      },
+      "1": {
+        "alt": "Night care",
+        "title": "Night skincare",
+        "body": "Use 50 mg together with lotion or cream\nbefore going to bed."
+      },
+      "2": {
+        "alt": "Odor care",
+        "title": "For areas of concern",
+        "body": "For underarms or delicate zones,\nmix with a coin-sized amount of water and rub in."
+      },
+      "3": {
+        "alt": "Allergy / Atopy",
+        "title": "For allergies or atopy",
+        "body": "Massage in so it fills the micro-gaps of the skin."
+      },
+      "4": {
+        "alt": "Acne",
+        "title": "For acne-prone skin",
+        "body": "Gently blend with your finger on the concerned acne."
+      },
+      "5": {
+        "alt": "Shine / Makeup breakdown",
+        "title": "For shine or makeup breakdown",
+        "body": "Tidy with a brush over your makeup."
+      },
+      "6": {
+        "alt": "Spray",
+        "title": "As a spray",
+        "body": "Mix Mazavegi Silica with water to make a spray\n(antibacterial and antioxidant effects)."
+      }
+    }
+  },
+  "footer": {
+    "brand": "Mother Vegetables Confidence",
+    "model": "MV-Si001",
+    "company": "dotpb Co.,Ltd.",
+    "zip": "103-0026",
+    "address": "Kabutocho Daiichi Heiwa Bldg. 3F, 5-1 Nihonbashi-Kabutocho,\nChuo-ku, Tokyo, Japan",
+    "emailText": "info@dotpb.jp",
+    "legalText": "Legal Notice (Specified Commercial Transactions Act)",
+    "copyright": "Copyright © 2025 dotpb Co.,Ltd. All Rights Reserved."
   }
-  
+}

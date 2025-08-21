@@ -1,91 +1,50 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useI18n } from "../lib/i18n";
 
 export default function FAQSection() {
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => setIsVisible(true), []);
 
-  // 上部の細い罫線など軽微なインライン用
-  const styles = {
-    hr: { background: "#cfcfcf", height: 1, width: "100%" },
-  };
+  const { t } = useI18n();
+  const tr = (key) => t(key) ?? ""; // フォールバック無し（未登録は空に）
+
+  const styles = { hr: { background: "#cfcfcf", height: 1, width: "100%" } };
+
+  // 質問数：必要数に応じて増減可（辞書キーは faq.q1/faq.a1 ...）
+  const qaIndexes = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  const title = tr("faq.title");       // "FAQ" など
+  const subtitle = tr("faq.subtitle"); // "よくあるご質問" など
 
   return (
     <>
       <section id="faq" className={`faq ${isVisible ? "is-visible" : ""}`}>
         <div className="container">
-          <h2 className="faq-title ja-serif">FAQ</h2>
-          <p className="faq-sub">よくあるご質問</p>
+          <h2 className="faq-title ja-serif">{title}</h2>
+          <p className="faq-sub">{subtitle}</p>
           <div className="faq-rule" style={styles.hr} />
 
           <div className="faq-body">
             <dl className="faq-list">
-              <div className="faq-item">
-                <dt>どんな肌質でも使えますか？</dt>
-                <dd>
-                  乾燥肌や敏感肌を含め、さまざまな肌タイプの方にご使用いただけます。<br />
-                  ※すべての方に皮膚刺激が起きないわけではありません。<br />
-                  ご使用前には目立たない部位で試すことをおすすめします。
-                </dd>
-              </div>
-
-              <div className="faq-item">
-                <dt>赤ちゃんにも使えますか？</dt>
-                <dd>
-                  シリカ（ケイ素）は赤ちゃんが最も保持するものであり、成長と共に減少していくことが確認されています。<br />
-                  そのため、赤ちゃんへの使用も可能ですが、赤ちゃんは肌が特に敏感なため、<br />
-                  ご使用前に小さな範囲で試すことをおすすめします。
-                </dd>
-              </div>
-
-              <div className="faq-item">
-                <dt>食用としても可能ですか？</dt>
-                <dd>
-                  FDAの基準に準じた検査では「Premium Food Grade」と評価を得ていますが、食品ではありません。<br />
-                  お口に入ってもリスクはございませんが、化粧品としてお使いください。
-                </dd>
-              </div>
-
-              <div className="faq-item">
-                <dt>使用期限はありますか？</dt>
-                <dd>
-                  本製品は安定性が高く、未開封の場合は長期保存が可能です。<br />
-                  開封後は、品質保持のためなるべく早めにご使用ください。
-                </dd>
-              </div>
-
-              <div className="faq-item">
-                <dt>妊娠中・授乳中でも使えますか？</dt>
-                <dd>
-                  特に制限はありません。ご不安な点があれば医師にご相談ください。
-                </dd>
-              </div>
-
-              <div className="faq-item">
-                <dt>他のスキンケアと併用できますか？</dt>
-                <dd>
-                  はい。化粧水や美容液、乳液の後などにご使用いただけます。
-                </dd>
-              </div>
-
-              <div className="faq-item">
-                <dt>頭皮についても問題はありませんか？</dt>
-                <dd>
-                  はい。べたつきを抑え、頭皮の皮脂汚れの改善にも期待できます。
-                </dd>
-              </div>
-
-              <div className="faq-item">
-                <dt>香りはありますか？</dt>
-                <dd>香りはございません。</dd>
-              </div>
-
-              <div className="faq-item">
-                <dt>保管方法に注意点はありますか？</dt>
-                <dd>
-                  高温多湿や直射日光を避け、冷暗所で保管してください。
-                </dd>
-              </div>
+              {qaIndexes.map((i) => {
+                const q = tr(`faq.q${i}`);
+                const a = tr(`faq.a${i}`);
+                if (!q && !a) return null; // 未定義はスキップ
+                return (
+                  <div className="faq-item" key={i}>
+                    <dt>{q}</dt>
+                    <dd>
+                      {(a || "").split("\n").map((line, idx) => (
+                        <span key={idx}>
+                          {line}
+                          <br />
+                        </span>
+                      ))}
+                    </dd>
+                  </div>
+                );
+              })}
             </dl>
           </div>
         </div>
@@ -122,7 +81,7 @@ export default function FAQSection() {
 
         /* ===== Header ===== */
         .faq-rule {
-          max-width: 860px; /* スクショのようにやや狭めの直線 */
+          max-width: 860px;
           margin: 0 auto 12px;
         }
         .faq-title {
@@ -143,7 +102,7 @@ export default function FAQSection() {
 
         /* ===== Body ===== */
         .faq-body {
-          max-width: 860px; /* 本文は細めのカラム */
+          max-width: 860px;
           margin: 0 auto;
         }
         .faq-list {
@@ -154,11 +113,11 @@ export default function FAQSection() {
           margin: 18px 0 26px;
         }
 
-        /* 質問（Q） */
+        /* Q */
         .faq-item dt {
           position: relative;
           margin: 0 0 8px;
-          padding-left: 2.1em; /* Q. の分だけ字下げ */
+          padding-left: 2.1em;
           font-size: 23.5px;
           line-height: 1.4;
           font-weight: 700;
@@ -175,11 +134,11 @@ export default function FAQSection() {
           letter-spacing: 0.06em;
         }
 
-        /* 回答（A） */
+        /* A */
         .faq-item dd {
           position: relative;
           margin: 0;
-          padding-left: 2.1em; /* A. の分だけ字下げ */
+          padding-left: 2.1em;
           font-size: 23.5px;
           line-height: 1.4;
           letter-spacing: 0.04em;

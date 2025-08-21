@@ -17,117 +17,57 @@ export default function TestimonialSection() {
 
   // i18n
   const { t } = useI18n();
-  const tr = (key, fallback) => {
-    const v = t(key);
-    return v == null || v === key ? fallback : v;
-  };
+  const tr = (key) => t(key) ?? ""; // 未登録は空文字
 
   // 見出し・導入
-  const title = tr("testimonials.title", "実際に利用された方の声");
-  const intro = tr(
-    "testimonials.intro",
-    "本製品をご愛用いただいている方々のご協力のもと\n（傷、アトピー、肌荒れ、シミでお困りの方々）\n使用前後の肌印象をお写真でご紹介しています。"
-  );
-  const note = tr(
-    "testimonials.note",
-    "※個人の感想であり、使用感には個人差があります。"
-  );
+  const title = tr("testimonials.title");
+  const intro = tr("testimonials.intro");
+  const note = tr("testimonials.note");
 
   // セクション見出し
-  const sec1Title = tr("testimonials.sections.0.title", "シミ・あざ");
-  const sec2Title = tr("testimonials.sections.1.title", "アトピー・肌荒れ");
-  const sec3Title = tr("testimonials.sections.2.title", "傷口");
+  const sec1Title = tr("testimonials.sections.0.title");
+  const sec2Title = tr("testimonials.sections.1.title");
+  const sec3Title = tr("testimonials.sections.2.title");
 
   // 各ケース（本文リスト）
-  const sec1Cases = [
-    {
-      title: tr("testimonials.sections.0.cases.0.title", "頬のシミ・クマ"),
-      age: tr("testimonials.sections.0.cases.0.age", "（50代の女性）"),
-    },
-    {
-      title: tr("testimonials.sections.0.cases.1.title", "腕のシミ・あざ"),
-      age: tr("testimonials.sections.0.cases.1.age", "（80代の女性）"),
-    },
-  ];
-  const sec2Cases = [
-    {
-      title: tr("testimonials.sections.1.cases.0.title", "両手の親指"),
-      age: tr("testimonials.sections.1.cases.0.age", "（30代の男性）"),
-    },
-    {
-      title: tr("testimonials.sections.1.cases.1.title", "乾癬の皮膚炎"),
-      age: tr("testimonials.sections.1.cases.1.age", "（40代の女性）"),
-    },
-    {
-      title: tr("testimonials.sections.1.cases.2.title", "アトピー性皮膚炎"),
-      age: tr("testimonials.sections.1.cases.2.age", "（10歳の男の子）"),
-    },
-    {
-      title: tr("testimonials.sections.1.cases.3.title", "肌荒れ"),
-      age: tr("testimonials.sections.1.cases.3.age", "（5歳の男の子）"),
-    },
-  ];
-  const sec3Cases = [
-    {
-      title: tr("testimonials.sections.2.cases.0.title", "腕のやけど"),
-      age: tr("testimonials.sections.2.cases.0.age", "（50代の女性）"),
-    },
-    {
-      title: tr("testimonials.sections.2.cases.1.title", "転んだ傷"),
-      age: tr("testimonials.sections.2.cases.1.age", "（50代の女性）"),
-    },
-  ];
+  const sec1Cases = [0, 1].map((i) => ({
+    title: tr(`testimonials.sections.0.cases.${i}.title`),
+    age: tr(`testimonials.sections.0.cases.${i}.age`),
+  }));
+  const sec2Cases = [0, 1, 2, 3].map((i) => ({
+    title: tr(`testimonials.sections.1.cases.${i}.title`),
+    age: tr(`testimonials.sections.1.cases.${i}.age`),
+  }));
+  const sec3Cases = [0, 1].map((i) => ({
+    title: tr(`testimonials.sections.2.cases.${i}.title`),
+    age: tr(`testimonials.sections.2.cases.${i}.age`),
+  }));
 
   // ボタン・バッジ等
-  const openBtn = tr(
-    "testimonials.openButton",
-    "Before After 画像はこちらをタップ"
-  );
-  const badgeBefore = tr("testimonials.badgeBefore", "Before");
-  const badgeAfter = tr("testimonials.badgeAfter", "After");
+  const openBtn = tr("testimonials.openButton");
+  const badgeBefore = tr("testimonials.badgeBefore");
+  const badgeAfter = tr("testimonials.badgeAfter");
 
-  // モーダル（タイトル・期間ラベル）
-  const modalCases = [
-    {
-      title: tr("testimonials.modal.0.title", "頬のシミ・クマ"),
-      age: tr("testimonials.modal.0.age", "（50代の女性）"),
-      beforeLabel: tr("testimonials.modal.0.beforeLabel", "使用前"),
-      afterLabel: tr("testimonials.modal.0.afterLabel", "20日後"),
-      beforeImg: "/case1-before.jpg",
-      afterImg: "/case1-after.jpg",
-    },
-    {
-      title: tr("testimonials.modal.1.title", "腕のシミ・あざ"),
-      age: tr("testimonials.modal.1.age", "（80代の女性）"),
-      beforeLabel: tr("testimonials.modal.1.beforeLabel", "使用前"),
-      afterLabel: tr("testimonials.modal.1.afterLabel", "24日後"),
-      beforeImg: "/case2-before.jpg",
-      afterImg: "/case2-after.jpg",
-    },
-    {
-      title: tr("testimonials.modal.2.title", "両手の親指（やけど）"),
-      age: tr("testimonials.modal.2.age", "（50代の女性）"),
-      beforeLabel: tr("testimonials.modal.2.beforeLabel", "使用前"),
-      afterLabel: tr("testimonials.modal.2.afterLabel", "15日後"),
-      beforeImg: "/case3-before.jpg",
-      afterImg: "/case3-after.jpg",
-    },
-    {
-      title: tr("testimonials.modal.3.title", "転んだ傷"),
-      age: tr("testimonials.modal.3.age", "（50代の女性）"),
-      beforeLabel: tr("testimonials.modal.3.beforeLabel", "使用前"),
-      afterLabel: tr("testimonials.modal.3.afterLabel", "18日後"),
-      beforeImg: "/case4-before.jpg",
-      afterImg: "/case4-after.jpg",
-    },
-  ];
+  // モーダル用データ（文言は辞書、画像パスのみ固定。必要なら辞書化も可）
+  const modalCases = [0, 1, 2, 3].map((i) => ({
+    title: tr(`testimonials.modal.${i}.title`),
+    age: tr(`testimonials.modal.${i}.age`),
+    beforeLabel: tr(`testimonials.modal.${i}.beforeLabel`),
+    afterLabel: tr(`testimonials.modal.${i}.afterLabel`),
+    beforeImg: tr(`testimonials.modal.${i}.beforeImg`) || `/case${i + 1}-before.jpg`,
+    afterImg: tr(`testimonials.modal.${i}.afterImg`) || `/case${i + 1}-after.jpg`,
+  }));
+
+  // アクセシビリティ用 alt
+  const altBefore = tr("testimonials.alt.before"); // 例: "before"
+  const altAfter = tr("testimonials.alt.after");   // 例: "after"
 
   // 罫線やボタンなど軽微なインライン用
   const styles = {
     hr: { background: "#bfbfbf", height: 1, width: "100%" },
     btn: {
       background: "#565656",
-      fontSize:"22px",
+      fontSize: "22px",
       color: "#fff",
       border: "none",
       borderRadius: "2px",
@@ -146,7 +86,7 @@ export default function TestimonialSection() {
 
           <h2 className="uv-title">{title}</h2>
           <p className="uv-intro">
-            {intro.split("\n").map((line, i) => (
+            {(intro || "").split("\n").map((line, i) => (
               <span key={`intro-${i}`}>
                 {line}
                 <br />
@@ -160,13 +100,15 @@ export default function TestimonialSection() {
             <span>{sec1Title}</span>
           </div>
           <div className="uv-cases two">
-            {sec1Cases.map((c, i) => (
-              <div className="uv-case" key={`s1-${i}`}>
-                {c.title}
-                <br />
-                <span>{c.age}</span>
-              </div>
-            ))}
+            {sec1Cases.map((c, i) =>
+              c.title || c.age ? (
+                <div className="uv-case" key={`s1-${i}`}>
+                  {c.title}
+                  <br />
+                  <span>{c.age}</span>
+                </div>
+              ) : null
+            )}
           </div>
           <div className="uv-btn-wrap">
             <button className="btn-modal" style={styles.btn} onClick={toggleModal}>
@@ -179,13 +121,15 @@ export default function TestimonialSection() {
             <span>{sec2Title}</span>
           </div>
           <div className="uv-cases four">
-            {sec2Cases.map((c, i) => (
-              <div className="uv-case" key={`s2-${i}`}>
-                {c.title}
-                <br />
-                <span>{c.age}</span>
-              </div>
-            ))}
+            {sec2Cases.map((c, i) =>
+              c.title || c.age ? (
+                <div className="uv-case" key={`s2-${i}`}>
+                  {c.title}
+                  <br />
+                  <span>{c.age}</span>
+                </div>
+              ) : null
+            )}
           </div>
           <div className="uv-btn-wrap">
             <button className="btn-modal" style={styles.btn} onClick={toggleModal}>
@@ -198,13 +142,15 @@ export default function TestimonialSection() {
             <span>{sec3Title}</span>
           </div>
           <div className="uv-cases two">
-            {sec3Cases.map((c, i) => (
-              <div className="uv-case" key={`s3-${i}`}>
-                {c.title}
-                <br />
-                <span>{c.age}</span>
-              </div>
-            ))}
+            {sec3Cases.map((c, i) =>
+              c.title || c.age ? (
+                <div className="uv-case" key={`s3-${i}`}>
+                  {c.title}
+                  <br />
+                  <span>{c.age}</span>
+                </div>
+              ) : null
+            )}
           </div>
           <div className="uv-btn-wrap">
             <button className="btn-modal" style={styles.btn} onClick={toggleModal}>
@@ -233,12 +179,12 @@ export default function TestimonialSection() {
                   <div className="modal-images">
                     <div className="ba">
                       <span className="badge">{badgeBefore}</span>
-                      <Image src={m.beforeImg} alt="before" width={260} height={170} />
+                      <Image src={m.beforeImg} alt={altBefore || "before"} width={260} height={170} />
                     </div>
                     <span className="arrow">▶</span>
                     <div className="ba">
                       <span className="badge">{badgeAfter}</span>
-                      <Image src={m.afterImg} alt="after" width={260} height={170} />
+                      <Image src={m.afterImg} alt={altAfter || "after"} width={260} height={170} />
                     </div>
                   </div>
                   <div className="modal-labels">

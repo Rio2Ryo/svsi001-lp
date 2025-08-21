@@ -8,74 +8,28 @@ export default function ConceptSection() {
   useEffect(() => setIsVisible(true), []);
 
   const { t } = useI18n();
-  const tr = (key, fallback) => {
-    const v = t(key);
-    return v == null || v === key ? fallback : v;
-  };
+  const tr = (key) => t(key) ?? ""; // 未登録キーは空文字扱い
 
-  // ====== 文言（辞書→無ければ日本語） ======
-  const certTitle = tr(
-    "concept.title",
-    "国際的な信頼と品質基準をすべてクリア"
-  );
+  // 見出し
+  const certTitle = tr("concept.title");
 
-  const countries = [
-    tr("concept.countries.0", "日本"),
-    tr("concept.countries.1", "オーストラリア"),
-    tr("concept.countries.2", "アメリカ"),
-  ];
-  const countryGrades = [
-    tr("concept.countryGrades.0", "医薬部外品原料規格"),
-    tr("concept.countryGrades.1", "医薬部外品原料規格"),
-    tr(
-      "concept.countryGrades.2",
-      "FDA基準のpremium food grade をクリア（口に入れても安心）"
-    ),
-  ];
+  // 画像の代替テキスト
+  const altCosmos = tr("concept.alt.cosmos"); // 例: "COSMOS ORGANIC"
+  const altHalal  = tr("concept.alt.halal");  // 例: "HALAL"
+  const altVegan  = tr("concept.alt.vegan");  // 例: "VEGAN"
+  const altBanner = tr("concept.alt.banner"); // 例: "makeup and skincare banner"
 
-  const leftCerts = [
-    tr("concept.leftCerts.0", "国際オーガニック認証"),
-    tr("concept.leftCerts.1", "ヴィーガン認証"),
-    tr("concept.leftCerts.2", "ハラール認証"),
-  ];
-  const rightCertDescs = [
-    tr("concept.rightCertDescs.0", "COSMOS認証取得（オーガニック化粧品の世界基準）"),
-    tr("concept.rightCertDescs.1", "動物性成分不使用・動物実験なし"),
-    tr("concept.rightCertDescs.2", "イスラム教徒も安心して使用できる認証取得"),
-  ];
+  // 表の左列／右列（国と規格・認証名と説明）
+  const countryIdx = [0, 1, 2];
+  const leftCertIdx = [0, 1, 2];
 
-  const bannerLines = [
-    tr("concept.banner.0", "メイクもスキンケアも"),
-    tr("concept.banner.1", "たったこれだけで"),
-    tr("concept.banner.2", "24時間ずっときれい"),
-  ];
+  // バナーの行、本文パラグラフ、箇条書き、注意書き
+  const bannerIdx = [0, 1, 2];
+  const descIdx = [1, 2];
+  const bulletIdx = [0, 1, 2, 3, 4, 5, 6];
+  const noteIdx = [0, 1, 2];
 
-  const desc1 = tr(
-    "concept.desc.p1",
-    "混ぜるだけであなたのコスメがデパコスクオリティーになる\nお化粧前や、お肌の気になるところにさっと塗って\n変化を実感してください。"
-  );
-  const desc2 = tr(
-    "concept.desc.p2",
-    "就寝前にも使用できるので\n24時間、たったこれだけであなたのお肌が育ちます。"
-  );
-
-  const bullets = [
-    tr("concept.list.0", "・キメを整えて、ふんわり明るい印象に"),
-    tr("concept.list.1", "・メイクがきれいにのる肌に導き、崩れにくさもサポート"),
-    tr("concept.list.2", "・日中のテカリや皮脂汚れをおだやかにおさえ、清潔感ある肌印象へ"),
-    tr("concept.list.3", "・デリケートな肌にもやさしく、季節の変わり目の不安定な肌をすこやかに保ちます"),
-    tr("concept.list.4", "・爪や髪にも使え、つややかな質感をそっと引き出します"),
-    tr("concept.list.5", "・酸化や外的ダメージから肌を守る、シンプルで頼れるベースケア"),
-    tr("concept.list.6", "・アレルギー/アトピー体質の肌にも対応しています"),
-  ];
-
-  const noteLines = [
-    tr("concept.note.0", "※当商品は化粧品です。"),
-    tr("concept.note.1", "※厚生労働省医薬外品原料規格を満たしたオーガニックシリカです。"),
-    tr("concept.note.2", "※お肌に異常がある場合は使用をお控えください。"),
-  ];
-
-  // inline 用（バナーの白グラデ／スマホ用の横罫線）
+  // inline 用（バナーの白グラデ／スマホ横罫線）
   const styles = {
     bannerOverlay: {
       background:
@@ -95,36 +49,44 @@ export default function ConceptSection() {
           <h2 className="cert-title">{certTitle}</h2>
 
           <div className="cert-logos">
-            <Image src="/ORGANIC_1.png" alt="COSMOS ORGANIC" width={85} height={85} />
-            <Image src="/JHCPO_1.png" alt="HALAL" width={101} height={88} />
-            <Image src="/VEGAN.png" alt="VEGAN" width={99} height={88} />
+            <Image src="/ORGANIC_1.png" alt={altCosmos} width={85} height={85} />
+            <Image src="/JHCPO_1.png" alt={altHalal}  width={101} height={88} />
+            <Image src="/VEGAN.png"    alt={altVegan}  width={99} height={88} />
           </div>
 
           <div className="cert-table">
             <div className="cert-left">
-              {countries.map((c, i) => (
-                <p key={`c-${i}`}>{c}</p>
-              ))}
+              {/* 左列：国名 */}
+              {countryIdx.map((i) => {
+                const c = tr(`concept.countries.${i}`);
+                return c ? <p key={`c-${i}`}>{c}</p> : null;
+              })}
 
               <div className="cert-divider-mobile" style={styles.hrLight} />
 
-              {leftCerts.map((c, i) => (
-                <p key={`lc-${i}`}>{c}</p>
-              ))}
+              {/* 左列：認証名 */}
+              {leftCertIdx.map((i) => {
+                const text = tr(`concept.leftCerts.${i}`);
+                return text ? <p key={`lc-${i}`}>{text}</p> : null;
+              })}
             </div>
 
             <div className="cert-divider" />
 
             <div className="cert-right">
-              {countryGrades.map((g, i) => (
-                <p key={`g-${i}`}>{g}</p>
-              ))}
+              {/* 右列：国ごとの規格説明 */}
+              {countryIdx.map((i) => {
+                const g = tr(`concept.countryGrades.${i}`);
+                return g ? <p key={`g-${i}`}>{g}</p> : null;
+              })}
 
               <div className="cert-divider-mobile" style={styles.hrLight} />
 
-              {rightCertDescs.map((d, i) => (
-                <p key={`rc-${i}`}>{d}</p>
-              ))}
+              {/* 右列：認証の説明 */}
+              {leftCertIdx.map((i) => {
+                const d = tr(`concept.rightCertDescs.${i}`);
+                return d ? <p key={`rc-${i}`}>{d}</p> : null;
+              })}
             </div>
           </div>
         </div>
@@ -134,7 +96,7 @@ export default function ConceptSection() {
           <div className="ms-banner">
             <Image
               src="/ms-banner.jpg"
-              alt="makeup skin banner"
+              alt={altBanner}
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 1024px"
@@ -142,47 +104,52 @@ export default function ConceptSection() {
             />
             <div className="ms-banner-overlay" style={styles.bannerOverlay} />
             <div className="ms-banner-text ja-serif">
-              {bannerLines.map((line, i) => (
-                <span key={`bl-${i}`}>
-                  {line}
-                  <br />
-                </span>
-              ))}
+              {bannerIdx.map((i) => {
+                const line = tr(`concept.banner.${i}`);
+                return line ? (
+                  <span key={`bl-${i}`}>
+                    {line}
+                    <br />
+                  </span>
+                ) : null;
+              })}
             </div>
           </div>
 
           {/* ===== 説明文 ===== */}
           <div className="ms-description">
-            <p>
-              {desc1.split("\n").map((line, i) => (
-                <span key={`d1-${i}`}>
-                  {line}
-                  <br />
-                </span>
-              ))}
-            </p>
-            <p>
-              {desc2.split("\n").map((line, i) => (
-                <span key={`d2-${i}`}>
-                  {line}
-                  <br />
-                </span>
-              ))}
-            </p>
+            {descIdx.map((i) => {
+              const paragraph = tr(`concept.desc.p${i}`);
+              if (!paragraph) return null;
+              return (
+                <p key={`d-${i}`}>
+                  {paragraph.split("\n").map((line, j) => (
+                    <span key={`d${i}-${j}`}>
+                      {line}
+                      <br />
+                    </span>
+                  ))}
+                </p>
+              );
+            })}
 
             <ul className="ms-list">
-              {bullets.map((b, i) => (
-                <li key={`b-${i}`}>{b}</li>
-              ))}
+              {bulletIdx.map((i) => {
+                const b = tr(`concept.list.${i}`);
+                return b ? <li key={`b-${i}`}>{b}</li> : null;
+              })}
             </ul>
 
             <p className="ms-note">
-              {noteLines.map((n, i) => (
-                <span key={`n-${i}`}>
-                  {n}
-                  <br />
-                </span>
-              ))}
+              {noteIdx.map((i) => {
+                const n = tr(`concept.note.${i}`);
+                return n ? (
+                  <span key={`n-${i}`}>
+                    {n}
+                    <br />
+                  </span>
+                ) : null;
+              })}
             </p>
           </div>
         </div>
