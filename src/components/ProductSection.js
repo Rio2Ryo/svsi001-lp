@@ -292,20 +292,20 @@ export default function ProductSection() {
         }
         .product-name {
           margin: 6px 0 10px;
-          font-size: 15px;
-          line-height: 1.9;
+          font-size: 13px;
+          line-height: 1.5;
           letter-spacing: 0.02em;
           color: #444;
         }
         .product-price-label {
           margin: 0;
           color: #666;
-          font-size: 13.5px;
+          font-size: 12.5px;
           letter-spacing: 0.06em;
         }
         .product-price {
           margin: 0 0 12px;
-          font-size: 18px;
+          font-size: 16px;
           font-weight: 700;
           letter-spacing: 0.06em;
           color: #2f2f2f;
@@ -313,7 +313,7 @@ export default function ProductSection() {
         .product-note {
           margin: -6px 0 12px;
           color: #777;
-          font-size: 13.5px;
+          font-size: 12.5px;
         }
 
         .product-btn {
