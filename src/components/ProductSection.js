@@ -16,18 +16,14 @@ export default function ProductSection() {
 
   useEffect(() => setIsVisible(true), []);
 
-  // ========== 価格表示 ==========
-  const USD_OVERRIDE: Record<number, number> = { 3300: 22.37, 3100: 21.02 };
+  // ===== 価格表示（JS版） =====
+  const USD_OVERRIDE = { 3300: 22.37, 3100: 21.02 };
   const JPY_TO_USD_RATE = 22.37 / 3300;
-  const parseJPY = (v: unknown) =>
-    Number(String(v ?? "").replace(/[^\d.-]/g, "")) || 0;
-  const fmtPrice = (value: number | string) => {
+  const parseJPY = (v) => Number(String(v ?? "").replace(/[^\d.-]/g, "")) || 0;
+  const fmtPrice = (value) => {
     if (lang === "ja") {
       const n = typeof value === "number" ? value : parseJPY(value);
-      return new Intl.NumberFormat("ja-JP", {
-        style: "currency",
-        currency: "JPY",
-      }).format(n);
+      return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(n);
     } else {
       const n = parseJPY(value);
       const usd = USD_OVERRIDE[n] ?? n * JPY_TO_USD_RATE;
@@ -35,7 +31,7 @@ export default function ProductSection() {
     }
   };
 
-  // ========== 商品データ（JSONは読み込むが画像は固定） ==========
+  // ===== 商品データ（画像は固定で使用） =====
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -48,7 +44,7 @@ export default function ProductSection() {
           `/products.${lang || "ja"}.json`,
           `/products.json`,
         ];
-        let data: any[] | null = null;
+        let data = null;
         for (const u of urls) {
           try {
             const r = await fetch(u, { cache: "no-store" });
@@ -61,8 +57,7 @@ export default function ProductSection() {
         if (!data) throw new Error("no data");
         if (!cancelled) setItems(Array.isArray(data) ? data : []);
       } catch {
-        if (!cancelled)
-          setErr(tr("products.error", "商品データを読み込めませんでした。"));
+        if (!cancelled) setErr(tr("products.error", "商品データを読み込めませんでした。"));
       }
     })();
     return () => {
@@ -70,10 +65,9 @@ export default function ProductSection() {
     };
   }, [lang]);
 
-  // ========== グループ分け ==========
-  const isEctoin = (p: any) =>
-    /エクトイン|ectoin/i.test(p?.name || "") ||
-    String(p?.slug || "").includes("-e-");
+  // ===== グループ分け =====
+  const isEctoin = (p) =>
+    /エクトイン|ectoin/i.test(p?.name || "") || String(p?.slug || "").includes("-e-");
   const { pure, ect } = useMemo(
     () => ({
       pure: items.filter((p) => !isEctoin(p)),
@@ -82,50 +76,31 @@ export default function ProductSection() {
     [items]
   );
 
-  // ========== ラベル ==========
+  // ===== ラベル =====
   const title = tr("products.title", "商品ラインナップ");
-  const seriesSilica = tr(
-    "products.series.silica",
-    "マザベジコンフィデンス【シリカのみ版】"
-  );
-  const seriesEctoin = tr(
-    "products.series.ectoin",
-    "マザベジコンフィデンス【エクトイン配合版】"
-  );
-  const descSilica = tr(
-    "products.desc.silica",
-    "成分 オーガニックシリカ純度97.1%以上"
-  );
-  const descEctoin = tr(
-    "products.desc.ectoin",
-    "保湿・抗炎症が期待できる天然アミノ酸エクトイン配合"
-  );
-  const priceLabel = tr(
-    "products.labels.price",
-    lang === "en" ? "Price (incl. tax)" : "価格(税込)"
-  );
-  const buyLabel = tr(
-    "cta.buy",
-    tr("products.labels.buy", lang === "en" ? "Buy now" : "ご購入はこちら")
-  );
+  const seriesSilica = tr("products.series.silica", "マザベジコンフィデンス【シリカのみ版】");
+  const seriesEctoin = tr("products.series.ectoin", "マザベジコンフィデンス【エクトイン配合版】");
+  const descSilica = tr("products.desc.silica", "成分 オーガニックシリカ純度97.1%以上");
+  const descEctoin = tr("products.desc.ectoin", "保湿・抗炎症が期待できる天然アミノ酸エクトイン配合");
+  const priceLabel = tr("products.labels.price", lang === "en" ? "Price (incl. tax)" : "価格(税込)");
+  const buyLabel = tr("cta.buy", tr("products.labels.buy", lang === "en" ? "Buy now" : "ご購入はこちら"));
 
-  // ========== 画像は固定 ==========
-  const FIXED_IMAGE_SRC = "/mix1500.png"; // ← public/mix1500.png を配置
+  // ===== 画像は固定（absoluteなし） =====
+  const FIXED_IMAGE_SRC = "/mix1500.png"; // public/mix1500.png を配置
 
-  // ========== カード ==========
-  const Card = ({ p, priority = false }: { p: any; priority?: boolean }) => {
+  // ===== カード =====
+  const Card = ({ p, priority = false }) => {
     const showOriginal =
-      p?.originalprice != null &&
-      String(p.originalprice) !== String(p.price);
+      p?.originalprice != null && String(p.originalprice) !== String(p.price);
 
     return (
       <article className="card">
         <div className="thumb">
-          {/* fill を使わず width/height 指定（absolute にならない） */}
+          {/* fillを使わず width/height 指定 → absolute 付かない */}
           <Image
             src={FIXED_IMAGE_SRC}
             alt={p?.name || "product"}
-            width={520}     // だいたいの元画像サイズ／比率でOK
+            width={520}
             height={390}
             sizes="(max-width: 1024px) 50vw, 260px"
             priority={priority}
@@ -136,17 +111,10 @@ export default function ProductSection() {
 
         <h4 className="name">{p?.name || ""}</h4>
         <p className="priceLabel">{priceLabel}</p>
-        {showOriginal && (
-          <p className="original">{fmtPrice(p.originalprice)}</p>
-        )}
+        {showOriginal && <p className="original">{fmtPrice(p.originalprice)}</p>}
         <p className="price">{fmtPrice(p.price)}</p>
 
-        <a
-          className="btn"
-          href={p?.url || "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a className="btn" href={p?.url || "#"} target="_blank" rel="noopener noreferrer">
           {buyLabel}
         </a>
       </article>
@@ -164,12 +132,13 @@ export default function ProductSection() {
 
           {err && <p className="error">{err}</p>}
 
-          {/* --- シリカのみ --- */}
+          {/* シリカのみ */}
           {pure.length > 0 && (
             <>
               <h3 className="series">{seriesSilica}</h3>
               <hr className="rule" />
               <p className="desc">{descSilica}</p>
+
               <div className="grid grid3">
                 {pure.map((p, i) => (
                   <Card key={p.slug || i} p={p} priority={i === 0} />
@@ -179,13 +148,14 @@ export default function ProductSection() {
           )}
         </div>
 
-        {/* --- エクトイン配合 --- */}
+        {/* エクトイン配合 */}
         <div className="inner">
           {ect.length > 0 && (
             <>
               <h3 className="series">{seriesEctoin}</h3>
               <hr className="rule" />
               <p className="desc">{descEctoin}</p>
+
               <div className="grid grid4">
                 {ect.map((p, i) => (
                   <Card key={p.slug || `e-${i}`} p={p} />
@@ -224,9 +194,9 @@ export default function ProductSection() {
         .card { text-align:center; color:#3a3a3a; }
 
         .thumb{
-          position: relative;         /* absoluteは使わない */
+          position: relative;        /* absoluteは使わない */
           width: 100%;
-          aspect-ratio: 4 / 3;        /* 見せ枠（1:1や16:9にしてもOK） */
+          aspect-ratio: 4 / 3;
           margin: 0 auto 14px;
           background: #fff;
           border: 1px solid #eee;
@@ -234,13 +204,13 @@ export default function ProductSection() {
           box-shadow: 0 1px 2px rgba(0,0,0,.04);
           display: flex;
           justify-content: center;
-          align-items: flex-end;      /* 画像を“下揃え”に */
+          align-items: flex-end;     /* 下揃え */
           overflow: hidden;
           padding: 8px 8px 10px;
         }
         .thumbImg{
           max-width: 100%;
-          height: auto;               /* intrinsic: 比率維持 */
+          height: auto;              /* intrinsic（比率維持） */
           object-fit: contain;
           display: block;
         }
