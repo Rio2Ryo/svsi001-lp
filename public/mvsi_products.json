@@ -1,32 +1,72 @@
 [
   {
-    "name": "MV-Si002 お試しサイズ 500mg",
-    "slug": "trial-mvsi",
-    "description": "500mg - 約30日分",
+    "name": "【ミックスパック】 マザベジシリカパウダー 1,500mg",
+    "slug": "double-mvsi",
+    "description": "ミックスパックです。",
     "originalprice": "3,300円",
-    "price": "2,200円",
-    "ItemPic": "/item_pic1.jpg",
-    "wixProductId": "33c9805f-c608-f32d-68fc-c7f7277ff74a",
-    "url": "https://www.dotpb.jp/product-page/trial"
+    "price": "3,100円",
+    "ItemPic": "/mix1500.png",
+    "wixProductId": "78c2dc89-e56a-44fb-ade2-ccd7e66b72a6",
+    "url": "https://www.dotpb.jp/product-page/double-mvsi"
   },
   {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg",
-    "slug": "standard-mvsi",
-    "description": "2,000mg - 約60日分",
-    "originalprice": "6,600円",
-    "price": "3,600円",
-    "ItemPic": "/item_pic2.jpg",
-    "wixProductId": "711d5ba0-1cb9-927e-b760-6ca12d673d54",
-    "url": "https://www.dotpb.jp/product-page/standard"
+    "name": "【薬用スライドケース】マザベジシリカパウダー 1,500mg",
+    "slug": "case-mvsi",
+    "description": "薬用スライドケ－スです。",
+    "originalprice": "3,300円",
+    "price": "3,100円",
+    "ItemPic": "/case1500.png",
+    "wixProductId": "1b2f802c-83e0-4ff4-8e35-5d6ea654ba15",
+    "url": "https://www.dotpb.jp/product-page/case-mvsi"
   },
   {
-   "name": "MV-Si002 お得な大容量 5,000mg",
-    "slug": "large-mvsi",
-    "description": "5,000mg - 約150日分",
-    "originalprice": "11,000円",
-    "price": "7,400円",
-    "ItemPic": "/item_pic3.jpg",
-    "wixProductId": "7bc02832-edab-2b38-3ca4-10c228c74623",
-    "url": "https://www.dotpb.jp/product-page/large"
+   "name": "【30本セット】マザベジシリカパウダー 22,500mg",
+    "slug": "big-refill-mvsi",
+    "description": "30本セットです。",
+    "originalprice": "20,000円",
+    "price": "18,000円",
+    "ItemPic": "/30p22500.png",
+    "wixProductId": "0f87df57-a346-4e98-95ef-1f77599d8533",
+    "url": "https://www.dotpb.jp/product-page/big-refill-mvsi"
+  },
+  {
+    "name": "【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り）",
+    "slug": "double-e-mvsi",
+    "description": "ミックスパック（エクトイン入り）です。",
+    "originalprice": "3,300円",
+    "price": "3,100円",
+    "ItemPic": "/mix2000.png",
+    "wixProductId": "08fa29c4-a0ac-4814-856e-ec719b97074b",
+    "url": "https://www.dotpb.jp/product-page/double-e-mvsi"
+  },
+  {
+   "name": "【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り）",
+    "slug": "case-e-mvsi",
+    "description": "薬用スライドケ－ス（エクトイン入り）です。",
+    "originalprice": "3,300円",
+    "price": "3,100円",
+    "ItemPic": "/case2000.png",
+    "wixProductId": "57d13d6f-ad05-4383-ad9b-87c14ebd1143",
+    "url": "https://www.dotpb.jp/product-page/case-e-mvsi"
+  },
+  {
+   "name": "【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り）",
+    "slug": "refill-e-mvsi",
+    "description": "10本セット（エクトイン入り）です。",
+    "originalprice": "12,000円",
+    "price": "11,000円",
+    "ItemPic": "/10p10000.png",
+    "wixProductId": "d3f941a7-3bb7-424d-a44d-df5b431b2fb7",
+    "url": "https://www.dotpb.jp/product-page/refill-e-mvsi"
+  },
+  {
+   "name": "【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り）",
+    "slug": "big-refill-e-mvsi",
+    "description": "30本セット（エクトイン入り）です。",
+    "originalprice": "30,000円",
+    "price": "28,000円",
+    "ItemPic": "/30p30000.png",
+    "wixProductId": "823384f9-ac14-4e33-bb15-720d5cddec37",
+    "url": "https://www.dotpb.jp/product-page/big-refill-e-mvsi"
   }
 ]

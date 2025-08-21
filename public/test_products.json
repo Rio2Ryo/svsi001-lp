@@ -68,35 +68,5 @@
     "ItemPic": "/30p30000.png",
     "wixProductId": "823384f9-ac14-4e33-bb15-720d5cddec37",
     "url": "https://www.dotpb.jp/product-page/big-refill-e-test"
-  },
-  {
-    "name": "お試しサイズ - test",
-    "slug": "trial-test",
-    "description": "1g - 約30日分",
-    "originalprice": "3,300円",
-    "price": "2,200円",
-    "ItemPic": "/item_pic1.jpg",
-    "wixProductId": "bc73ebac-95c6-51f4-43f3-0e7975085b00",
-    "url": "https://www.dotpb.jp/product-page/trial-test"
-  },
-  {
-    "name": "スタンダードサイズ - test",
-    "slug": "standard-test",
-    "description": "2g - 約60日分",
-    "originalprice": "5,500円",
-    "price": "3,300円",
-    "ItemPic": "/item_pic2.jpg",
-    "wixProductId": "74e172a1-f417-78a4-3eae-b03823517123",
-    "url": "https://www.dotpb.jp/product-page/standard-test"
-  },
-  {
-   "name": "お得な大容量 - test",
-    "slug": "large-test",
-    "description": "35g - 約150日分",
-    "originalprice": "8,800円",
-    "price": "5,500円",
-    "ItemPic": "/item_pic3.jpg",
-    "wixProductId": "5074782e-1ea4-8588-2bc1-977458263566",
-    "url": "https://www.dotpb.jp/product-page/large-test"
   }
 ]
