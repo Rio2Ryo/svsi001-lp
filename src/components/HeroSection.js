@@ -133,7 +133,7 @@ export default function HeroSection() {
             src="/fv-earth.jpg"
             alt="Earth"
             fill
-            sizes="(max-width: 1024px) 100vw, 920px"
+            sizes="(max-width: 1024px) 100vw, 1024px"
             style={{ objectFit: "cover" }}
           />
           <div className="fv-earth-overlay" style={styles.earthOverlay} />
@@ -242,7 +242,7 @@ export default function HeroSection() {
         .fv-earth-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
         .fv-earth-text {
           position: absolute; font-size:20px; z-index: 2; top: 50%; padding:20px 40px; transform: translateY(-50%);
-          color: #fff; max-width: 640px; padding-right: 24px; text-shadow: 0 1px 2px rgba(0,0,0,.45);
+          color: #fff; max-width: 740px; padding-right: 24px; text-shadow: 0 1px 2px rgba(0,0,0,.45);
         }
         .fv-earth-text p { margin: 0; font-size: 22px; line-height: 2; letter-spacing: 0.08em; }
 
