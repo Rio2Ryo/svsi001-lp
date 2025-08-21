@@ -234,10 +234,7 @@ export default function ProductSection({ productsId }) {
           display: block !important;
         }
         .product-img :global(img) {
-          position: absolute !important;
           inset: 0 !important;
-          width: 100% !important;
-          height: 100% !important;
           object-fit: contain !important;  /* 枠内に収める */
           object-position: center center !important;
           max-width: 100% !important;
