@@ -1,8 +1,9 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
-// ▼データはそのまま
+// ▼データはそのまま（省略禁止のため全文記載）
 const PRODUCTS = [
   {
     name: "【ミックスパック】 マザベジシリカパウダー 1,500mg",
@@ -77,6 +78,10 @@ const PRODUCTS = [
 ];
 
 export default function ProductLineupSection() {
+  // 一覧URLが /item/[itemId] で開かれている前提。itemId を取得して子に渡す
+  const { query } = useRouter();
+  const itemId = typeof query.itemId === "string" ? query.itemId : "";
+
   const isEcto = (p) => p.name.includes("エクトイン");
   const baseItems = PRODUCTS.filter((p) => !isEcto(p)); // 上段3
   const ectoItems = PRODUCTS.filter(isEcto); // 下段4
@@ -87,7 +92,7 @@ export default function ProductLineupSection() {
       <h2 className="title">マザベジコンフィデンス【シリカの素版】</h2>
       <div className="divider" />
       <p className="note">成分 オーガニックシリカ純度97.1%以上</p>
-      <Row items={baseItems} />
+      <Row items={baseItems} itemId={itemId} />
 
       {/* ── エクトイン配合版 ── */}
       <h2 className="title">マザベジコンフィデンス【エクトイン配合版】</h2>
@@ -99,11 +104,11 @@ export default function ProductLineupSection() {
           保湿効果や炎症を抑える効果が期待できる／天然アミノ酸のエクトイン配合
         </span>
       </p>
-      <Row items={ectoItems} />
+      <Row items={ectoItems} itemId={itemId} />
 
       <style jsx>{`
         .lineup {
-          max-width: 1000px;      /* ★ wrap = 1000px */
+          max-width: 1200px;
           margin: 0 auto;
           padding: 40px 16px 64px;
           background: #fff;
@@ -147,59 +152,69 @@ export default function ProductLineupSection() {
   );
 }
 
-/* 行：中央寄せ。カード幅は固定230px。 */
-function Row({ items }) {
+/* 行：中央寄せ。カード幅は固定240px。 */
+function Row({ items, itemId }) {
   return (
     <>
       <div className="row" role="list">
-        {items.map((p) => (
-          <article key={p.slug} className="card" role="listitem">
-            <div className="thumb">
-              <Image
-                src={p.ItemPic}
-                alt={p.name}
-                fill
-                sizes="230px"
-                style={{ objectFit: "contain" }}
-                priority
-              />
-            </div>
+        {items.map((p) => {
+          // 「ご購入はこちら」→ 動的商品詳細ページ /item/[itemId]/[productSlug] へ
+          const href = itemId ? `/item/${itemId}/${p.slug}` : "#";
 
-            <h3 className="name">{p.name}</h3>
-            <div className="amount">{extractAmount(p.name)}</div>
+          return (
+            <article key={p.slug} className="card" role="listitem">
+              <div className="thumb">
+                <Image
+                  src={p.ItemPic}
+                  alt={p.name}
+                  fill
+                  sizes="240px"
+                  style={{ objectFit: "contain" }}
+                  priority
+                />
+              </div>
 
-            <div className="pricewrap">
-              価格(税込)
-              <span className="price">{p.price}</span>
-            </div>
+              <h3 className="name">{p.name}</h3>
+              <div className="amount">{extractAmount(p.name)}</div>
 
-            <Link href={p.url} className="cta" aria-label={`${p.name} を購入`}>
-              ご購入はこちら
-            </Link>
-          </article>
-        ))}
+              <div className="pricewrap">
+                価格(税込)
+                <span className="price">{p.price}</span>
+              </div>
+
+              <Link
+                href={href}
+                className="cta"
+                aria-label={`${p.name} を購入`}
+                prefetch={false}
+              >
+                ご購入はこちら
+              </Link>
+            </article>
+          );
+        })}
       </div>
 
       <style jsx>{`
         .row {
-          width: 1000px;                 /* ★ wrap固定 */
-          margin: 0 auto;                /* 中央寄せ */
+          width: 1200px; /* wrap固定 */
+          margin: 0 auto; /* 中央寄せ */
           display: flex;
           flex-wrap: wrap;
-          justify-content: center;       /* 行全体を中央配置 */
-          gap: 20px;                     /* 列間・行間 */
+          justify-content: center; /* 行全体を中央配置 */
+          gap: 20px; /* 列間・行間 */
         }
 
         .card {
-          width: 230px;                  /* ★ カード幅固定 */
+          width: 240px; /* カード幅固定 */
           text-align: center;
           padding: 8px 10px 18px;
         }
 
         .thumb {
           position: relative;
-          width: 230px;
-          height: 160px;                 /* 画像枠を統一（比率はcontainで調整） */
+          width: 240px;
+          height: 160px; /* 画像枠を統一（比率はcontainで調整） */
           margin: 0 auto 10px;
         }
 
@@ -225,16 +240,31 @@ function Row({ items }) {
           color: #111;
           margin-top: 2px;
         }
+
+        /* ★ 指定どおり：背景が黄色い横長の角丸ボタン */
         .cta {
-          display: inline-block;
-          margin-top: 12px;
-          padding: 10px 18px;
-          border-radius: 9999px;
-          background: #ffd400;
+          display: block;          /* 横長に */
+          width: 100%;
+          margin: 14px auto 0;
+          padding: 14px 18px;
+          border-radius: 9999px;   /* 角丸 */
+          background: #ffd400;     /* 黄色 */
           text-decoration: none;
           color: #111;
-          font-weight: 700;
+          font-weight: 800;
           letter-spacing: 0.08em;
+          text-align: center;
+          box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
+          transition: transform 0.05s ease, box-shadow 0.05s ease, opacity 0.2s ease;
+        }
+        .cta:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+          opacity: 0.95;
+        }
+        .cta:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
         }
 
         /* スマホでも崩れないよう100%幅＆中央寄せ */
