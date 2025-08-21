@@ -185,7 +185,7 @@ export default function ProductSection() {
         .products-desc { text-align:center; color:#666; font-size:18.5px; line-height:1.9; letter-spacing:.06em; margin:0 0 18px; }
 
         .product-list { display:grid; gap:36px 17px; justify-content:center; margin:10px auto 48px; }
-        .product-list.three { grid-template-columns: repeat(3, minmax(240px, 1fr)); max-width:980px; }
+        .product-list.three { grid-template-columns: repeat(3, minmax(240px, 1fr)); max-width:800px; }
         .product-list.four  { grid-template-columns: repeat(4, minmax(220px, 1fr)); max-width:1080px; }
 
         .product-card { text-align:center; color:#3a3a3a; }
