@@ -2,85 +2,84 @@
 import Image from "next/image";
 import Link from "next/link";
 
-// ▼そのまま貼り付けOK（必要なら外部JSON fetchに差し替え可）
+// ▼データはそのまま
 const PRODUCTS = [
   {
-    "name": "【ミックスパック】 マザベジシリカパウダー 1,500mg",
-    "slug": "double-mvsi",
-    "description": "ミックスパックです。",
-    "originalprice": "3,300円",
-    "price": "3,300円",
-    "ItemPic": "/mix1500.png",
-    "wixProductId": "dcb1eb79-e65a-02df-a8f2-a80385c56e00",
-    "url": "https://www.dotpb.jp/product-page/double-mvsi"
+    name: "【ミックスパック】 マザベジシリカパウダー 1,500mg",
+    slug: "double-mvsi",
+    description: "ミックスパックです。",
+    originalprice: "3,300円",
+    price: "3,300円",
+    ItemPic: "/mix1500.png",
+    wixProductId: "dcb1eb79-e65a-02df-a8f2-a80385c56e00",
+    url: "https://www.dotpb.jp/product-page/double-mvsi",
   },
   {
-    "name": "【薬用スライドケース】マザベジシリカパウダー 1,500mg",
-    "slug": "case-mvsi",
-    "description": "薬用スライドケ－スです。",
-    "originalprice": "3,300円",
-    "price": "3,300円",
-    "ItemPic": "/case1500.png",
-    "wixProductId": "7be06482-8fca-e20d-6a73-48bd3e914460",
-    "url": "https://www.dotpb.jp/product-page/case-mvsi"
+    name: "【薬用スライドケース】マザベジシリカパウダー 1,500mg",
+    slug: "case-mvsi",
+    description: "薬用スライドケ－スです。",
+    originalprice: "3,300円",
+    price: "3,300円",
+    ItemPic: "/case1500.png",
+    wixProductId: "7be06482-8fca-e20d-6a73-48bd3e914460",
+    url: "https://www.dotpb.jp/product-page/case-mvsi",
   },
   {
-    "name": "【30本セット】マザベジシリカパウダー 22,500mg",
-    "slug": "big-refill-mvsi",
-    "description": "30本セットです。",
-    "originalprice": "20,000円",
-    "price": "20,000円",
-    "ItemPic": "/30p22500.png",
-    "wixProductId": "fb6bbce6-a63f-b4d1-b817-da05d987e163",
-    "url": "https://www.dotpb.jp/product-page/big-refill-mvsi"
+    name: "【30本セット】マザベジシリカパウダー 22,500mg",
+    slug: "big-refill-mvsi",
+    description: "30本セットです。",
+    originalprice: "20,000円",
+    price: "20,000円",
+    ItemPic: "/30p22500.png",
+    wixProductId: "fb6bbce6-a63f-b4d1-b817-da05d987e163",
+    url: "https://www.dotpb.jp/product-page/big-refill-mvsi",
   },
   {
-    "name": "【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り）",
-    "slug": "double-e-mvsi",
-    "description": "ミックスパック（エクトイン入り）です。",
-    "originalprice": "3,300円",
-    "price": "3,300円",
-    "ItemPic": "/mix2000.png",
-    "wixProductId": "7ba04481-0674-5262-9325-8d62f2d25095",
-    "url": "https://www.dotpb.jp/product-page/double-e-mvsi"
+    name: "【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り）",
+    slug: "double-e-mvsi",
+    description: "ミックスパック（エクトイン入り）です。",
+    originalprice: "3,300円",
+    price: "3,300円",
+    ItemPic: "/mix2000.png",
+    wixProductId: "7ba04481-0674-5262-9325-8d62f2d25095",
+    url: "https://www.dotpb.jp/product-page/double-e-mvsi",
   },
   {
-    "name": "【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り）",
-    "slug": "case-e-mvsi",
-    "description": "薬用スライドケ－ス（エクトイン入り）です。",
-    "originalprice": "3,300円",
-    "price": "3,300円",
-    "ItemPic": "/case2000.png",
-    "wixProductId": "48c2a407-4738-2f3f-e317-d118a4046e5c",
-    "url": "https://www.dotpb.jp/product-page/case-e-mvsi"
+    name: "【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り）",
+    slug: "case-e-mvsi",
+    description: "薬用スライドケ－ス（エクトイン入り）です。",
+    originalprice: "3,300円",
+    price: "3,300円",
+    ItemPic: "/case2000.png",
+    wixProductId: "48c2a407-4738-2f3f-e317-d118a4046e5c",
+    url: "https://www.dotpb.jp/product-page/case-e-mvsi",
   },
   {
-    "name": "【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り）",
-    "slug": "refill-e-mvsi",
-    "description": "10本セット（エクトイン入り）です。",
-    "originalprice": "12,000円",
-    "price": "12,000円",
-    "ItemPic": "/10p10000.png",
-    "wixProductId": "cc620bb2-fd77-8db3-4bf1-cff751f9e55d",
-    "url": "https://www.dotpb.jp/product-page/refill-e-mvsi"
+    name: "【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り）",
+    slug: "refill-e-mvsi",
+    description: "10本セット（エクトイン入り）です。",
+    originalprice: "12,000円",
+    price: "12,000円",
+    ItemPic: "/10p10000.png",
+    wixProductId: "cc620bb2-fd77-8db3-4bf1-cff751f9e55d",
+    url: "https://www.dotpb.jp/product-page/refill-e-mvsi",
   },
   {
-    "name": "【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り）",
-    "slug": "big-refill-e-mvsi",
-    "description": "30本セット（エクトイン入り）です。",
-    "originalprice": "30,000円",
-    "price": "30,000円",
-    "ItemPic": "/30p30000.png",
-    "wixProductId": "c15bad90-8fff-b003-7792-2282202b6ccb",
-    "url": "https://www.dotpb.jp/product-page/big-refill-e-mvsi"
-  }
+    name: "【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り）",
+    slug: "big-refill-e-mvsi",
+    description: "30本セット（エクトイン入り）です。",
+    originalprice: "30,000円",
+    price: "30,000円",
+    ItemPic: "/30p30000.png",
+    wixProductId: "c15bad90-8fff-b003-7792-2282202b6ccb",
+    url: "https://www.dotpb.jp/product-page/big-refill-e-mvsi",
+  },
 ];
 
 export default function ProductLineupSection() {
-  // 「エクトイン入り」有無で自動仕分け
   const isEcto = (p) => p.name.includes("エクトイン");
-  const baseItems = PRODUCTS.filter((p) => !isEcto(p)); // 3件
-  const ectoItems = PRODUCTS.filter(isEcto);            // 4件
+  const baseItems = PRODUCTS.filter((p) => !isEcto(p)); // 上段3
+  const ectoItems = PRODUCTS.filter(isEcto); // 下段4
 
   return (
     <section className="lineup">
@@ -88,7 +87,7 @@ export default function ProductLineupSection() {
       <h2 className="title">マザベジコンフィデンス【シリカの素版】</h2>
       <div className="divider" />
       <p className="note">成分 オーガニックシリカ純度97.1%以上</p>
-      <Row columns={3} items={baseItems} />
+      <Row items={baseItems} />
 
       {/* ── エクトイン配合版 ── */}
       <h2 className="title">マザベジコンフィデンス【エクトイン配合版】</h2>
@@ -100,13 +99,13 @@ export default function ProductLineupSection() {
           保湿効果や炎症を抑える効果が期待できる／天然アミノ酸のエクトイン配合
         </span>
       </p>
-      <Row columns={4} items={ectoItems} />
+      <Row items={ectoItems} />
 
       <style jsx>{`
         .lineup {
-          max-width: 820px;
+          max-width: 1000px;      /* ★ wrap = 1000px */
           margin: 0 auto;
-          padding: 40px 16px 80px;
+          padding: 40px 16px 64px;
           background: #fff;
         }
         .title {
@@ -121,7 +120,7 @@ export default function ProductLineupSection() {
           height: 1px;
           background: #d9d9d9;
           margin: 10px auto 14px;
-          max-width: 980px;
+          max-width: 100%;
         }
         .note {
           text-align: center;
@@ -130,22 +129,26 @@ export default function ProductLineupSection() {
           letter-spacing: 0.06em;
           margin-bottom: 26px;
         }
-        .note .subnote { display: inline-block; margin-top: 4px; }
-
-        @media (max-width: 1024px) {
-          .title { font-size: 24px; }
+        .note .subnote {
+          display: inline-block;
+          margin-top: 4px;
         }
         @media (max-width: 560px) {
-          .title { font-size: 20px; line-height: 1.6; }
-          .note { font-size: 12px; }
+          .title {
+            font-size: 20px;
+            line-height: 1.6;
+          }
+          .note {
+            font-size: 12px;
+          }
         }
       `}</style>
     </section>
   );
 }
 
-/* 横並び：flexで確実に横配置。列数はpropsで指定 */
-function Row({ items, columns = 3 }) {
+/* 行：中央寄せ。カード幅は固定230px。 */
+function Row({ items }) {
   return (
     <>
       <div className="row" role="list">
@@ -156,7 +159,7 @@ function Row({ items, columns = 3 }) {
                 src={p.ItemPic}
                 alt={p.name}
                 fill
-                sizes="(max-width: 1024px) 100vw, 320px"
+                sizes="230px"
                 style={{ objectFit: "contain" }}
                 priority
               />
@@ -179,26 +182,27 @@ function Row({ items, columns = 3 }) {
 
       <style jsx>{`
         .row {
+          width: 1000px;                 /* ★ wrap固定 */
+          margin: 0 auto;                /* 中央寄せ */
           display: flex;
-          flex-wrap: wrap;                 /* 折返し */
-          justify-content: center;         /* 中央寄せ */
-                         /* 行間/列間 */
-          max-width: 1000px;
-         
+          flex-wrap: wrap;
+          justify-content: center;       /* 行全体を中央配置 */
+          gap: 20px;                     /* 列間・行間 */
         }
+
         .card {
-          width: calc((100% - ${columns - 1} * 36px) / ${columns}); /* 横並び幅を固定 */
-          min-width: 240px;               /* 画面が狭い時に2列/1列に落ちる */
+          width: 230px;                  /* ★ カード幅固定 */
           text-align: center;
-          padding: 8px 12px 20px;
+          padding: 8px 10px 18px;
         }
+
         .thumb {
           position: relative;
-          width: 100%;
-          height: 0;
-          padding-top: 70%;
+          width: 230px;
+          height: 160px;                 /* 画像枠を統一（比率はcontainで調整） */
           margin: 0 auto 10px;
         }
+
         .name {
           font-weight: 600;
           color: #333;
@@ -233,25 +237,34 @@ function Row({ items, columns = 3 }) {
           letter-spacing: 0.08em;
         }
 
-        /* タブレット：2列 */
-        @media (max-width: 1024px) {
-          .card {
-            width: calc((100% - 36px) / 2);
-          }
-        }
-        /* スマホ：1列 */
+        /* スマホでも崩れないよう100%幅＆中央寄せ */
         @media (max-width: 560px) {
-          .row { gap: 20px; }
-          .card { width: 100%; }
-          .name { font-size: 14px; }
-          .price { font-size: 17px; }
+          .row {
+            width: 100%;
+            gap: 16px;
+          }
+          .card {
+            width: 100%;
+            max-width: 360px;
+          }
+          .thumb {
+            width: 100%;
+            max-width: 360px;
+            height: 180px;
+          }
+          .name {
+            font-size: 14px;
+          }
+          .price {
+            font-size: 17px;
+          }
         }
       `}</style>
     </>
   );
 }
 
-/* ヘルパー：製品名から mg 数を抽出（任意） */
+/* ヘルパー */
 function extractAmount(name) {
   const m = name.match(/([0-9,]+mg)/);
   return m ? m[1] : "";
