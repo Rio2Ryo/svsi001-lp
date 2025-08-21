@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";           // ← ロゴだけで使用
+import Image from "next/image";               // ロゴのみ最適化に使用
 import { useI18n } from "../lib/i18n";
 
 export default function ProductSection() {
@@ -9,29 +9,25 @@ export default function ProductSection() {
   const [err, setErr] = useState("");
 
   const { t, lang } = useI18n();
-  const tr = (k, fallback = "") => {
+  const tr = (k, fb = "") => {
     const v = t(k);
-    return v && v !== k ? v : fallback;
+    return v && v !== k ? v : fb;
   };
 
   useEffect(() => setIsVisible(true), []);
 
-  // ===== 価格表示 =====
+  // --- 価格表示 ---
   const USD_OVERRIDE = { 3300: 22.37, 3100: 21.02 };
-  const JPY_TO_USD_RATE = 22.37 / 3300;
-  const parseJPY = (v) => Number(String(v ?? "").replace(/[^\d.-]/g, "")) || 0;
-  const fmtPrice = (value) => {
-    if (lang === "ja") {
-      const n = typeof value === "number" ? value : parseJPY(value);
-      return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(n);
-    } else {
-      const n = parseJPY(value);
-      const usd = USD_OVERRIDE[n] ?? n * JPY_TO_USD_RATE;
-      return `$${usd.toFixed(2)}`;
-    }
-  };
+  const RATE = 22.37 / 3300;
+  const num = (v) => Number(String(v ?? "").replace(/[^\d.-]/g, "")) || 0;
+  const fmt = (v) =>
+    lang === "ja"
+      ? new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(
+          typeof v === "number" ? v : num(v)
+        )
+      : `$${((USD_OVERRIDE[num(v)] ?? num(v) * RATE)).toFixed(2)}`;
 
-  // ===== 商品データ（画像は固定で使う） =====
+  // --- 商品（画像は固定） ---
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -48,7 +44,10 @@ export default function ProductSection() {
         for (const u of urls) {
           try {
             const r = await fetch(u, { cache: "no-store" });
-            if (r.ok) { data = await r.json(); break; }
+            if (r.ok) {
+              data = await r.json();
+              break;
+            }
           } catch {}
         }
         if (!data) throw new Error("no data");
@@ -57,10 +56,12 @@ export default function ProductSection() {
         if (!cancelled) setErr(tr("products.error", "商品データを読み込めませんでした。"));
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [lang]);
 
-  // ===== グループ分け =====
+  // --- グルーピング ---
   const isEctoin = (p) =>
     /エクトイン|ectoin/i.test(p?.name || "") || String(p?.slug || "").includes("-e-");
   const { pure, ect } = useMemo(
@@ -68,41 +69,47 @@ export default function ProductSection() {
     [items]
   );
 
-  // ===== ラベル =====
+  // --- ラベル ---
   const title = tr("products.title", "商品ラインナップ");
   const seriesSilica = tr("products.series.silica", "マザベジコンフィデンス【シリカのみ版】");
   const seriesEctoin = tr("products.series.ectoin", "マザベジコンフィデンス【エクトイン配合版】");
   const descSilica = tr("products.desc.silica", "成分 オーガニックシリカ 純度97.1%以上");
-  const descEctoin = tr("products.desc.ectoin", "保湿・抗炎症が期待できる天然アミノ酸エクトイン配合");
+  const descEctoin = tr(
+    "products.desc.ectoin",
+    "成分 オーガニックシリカ純度97.1%以上＋ 保湿効果や炎症を抑える効果が期待できる 天然アミノ酸のエクトイン配合"
+  );
   const priceLabel = tr("products.labels.price", lang === "en" ? "Price (incl. tax)" : "価格(税込)");
   const buyLabel = tr("cta.buy", tr("products.labels.buy", lang === "en" ? "Buy now" : "ご購入はこちら"));
 
-  // ===== 画像は固定（absolute なし） =====
-  const FIXED_IMAGE_SRC = "/mix1500.png"; // public/mix1500.png を配置
+  // --- 画像固定 ---
+  const FIXED_IMAGE_SRC = "/mix1500.png";
 
-  // ===== カード =====
+  // --- カード ---
   const Card = ({ p }) => {
     const showOriginal = p?.originalprice != null && String(p.originalprice) !== String(p.price);
     return (
       <article className="card">
         <div className="thumb">
-          {/* Next/Imageを使わず素の<img>で枠に完全フィット */}
-          <img
+          {/* Next/Image を使うが、下の CSS でラッパ<span>を100%化してズレを殺す */}
+          <Image
             src={FIXED_IMAGE_SRC}
             alt={p?.name || "product"}
-            loading="lazy"
+            width={1200}
+            height={900}
+            priority={false}
             className="thumbImg"
+            quality={90}
           />
         </div>
 
         <h4 className="name">{p?.name || ""}</h4>
         <p className="priceLabel">{priceLabel}</p>
         {showOriginal ? (
-          <p className="original">{fmtPrice(p.originalprice)}</p>
+          <p className="original">{fmt(p.originalprice)}</p>
         ) : (
           <p className="original placeholder"> </p>
         )}
-        <p className="price">{fmtPrice(p.price)}</p>
+        <p className="price">{fmt(p.price)}</p>
 
         <a className="btn" href={p?.url || "#"} target="_blank" rel="noopener noreferrer">
           {buyLabel}
@@ -174,7 +181,7 @@ export default function ProductSection() {
         .grid3 { grid-template-columns: repeat(3, minmax(240px, 1fr)); max-width:980px; }
         .grid4 { grid-template-columns: repeat(4, minmax(220px, 1fr)); max-width:1080px; }
 
-        /* ===== カード（高さを揃える） ===== */
+        /* ===== カード ===== */
         .card{
           display:flex;
           flex-direction:column;
@@ -183,10 +190,10 @@ export default function ProductSection() {
           color:#3a3a3a;
         }
 
-        /* 画像枠：固定高さ（絶対配置なし） */
+        /* 画像枠：固定高さ（全カードを完全同期） */
         .thumb{
           width:100%;
-          height:300px;               /* ← これで全カード同じ高さ */
+          height:300px;               /* ← 必要なら 280〜320 に調整可 */
           margin:0 auto 12px;
           background:#fff;
           border:1px solid #eee;
@@ -194,16 +201,26 @@ export default function ProductSection() {
           box-shadow:0 1px 2px rgba(0,0,0,.04);
           overflow:hidden;
         }
-        /* 画像：等倍内フィット＋下揃え（ズレない） */
-        .thumbImg{
-          width:100%;
-          height:100%;
-          object-fit:contain;
-          object-position:center bottom;
+
+        /* ★ Next/Image のラッパ <span> を100%化してズレを殺す ★ */
+        .thumb :global(span){
+          display:block !important;
+          width:100% !important;
+          height:100% !important;
+          position:static !important;   /* 相対位置を解除 */
+          overflow:visible !important;
+        }
+        /* その中の <img> を等倍内フィット＋下揃え */
+        .thumb :global(span) > img,
+        .thumb :global(img.thumbImg){
+          width:100% !important;
+          height:100% !important;
+          object-fit:contain !important;
+          object-position:center bottom !important;
           display:block;
         }
 
-        /* テキストのライン高さも固定して“段差”防止 */
+        /* テキスト行の段差防止 */
         .name        { margin:6px 0 8px; font-size:13px; line-height:1.5; letter-spacing:.02em; color:#444; min-height:3.0em; }
         .priceLabel  { margin:0; color:#666; font-size:12.5px; letter-spacing:.06em; }
         .original    { margin:2px 0; font-size:12px; color:#888; text-decoration:line-through; min-height:1.2em; }
