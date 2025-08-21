@@ -114,7 +114,7 @@ export default function ProductSection() {
             src={p.ItemPic || "/placeholder.png"}
             alt={p.name || "product"}
             fill
-            sizes="(max-width: 27px) 33vw, 270px"
+            sizes="(max-width: 1200px) 33vw, 270px"
             style={{ objectFit: "contain" }}
             priority={priority}
           />
@@ -198,7 +198,6 @@ export default function ProductSection() {
 
         .product-card { text-align: center; color: #3a3a3a; }
         
-        /* ▼▼▼ ここから修正 ▼▼▼ */
         .product-img {
           position: relative;
           width: 100%;
@@ -206,10 +205,14 @@ export default function ProductSection() {
           margin: 0 auto 12px; /* 下の余白を少し調整 */
           background: #fff;
         }
+        
+        /* ▼▼▼ Next.jsがimgに直接スタイルを当てるため、この指定は不要で効かないため削除 ▼▼▼ */
+        /*
         .product-img img {
           width: 100%!important;
           position:relative!important;
         }
+        */
         /* ▲▲▲ ここまで修正 ▲▲▲ */
 
         .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
@@ -228,13 +231,11 @@ export default function ProductSection() {
         @media (max-width: 1024px) {
           .product-list.three { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
           .product-list.four  { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
-          /* .product-img の height 指定は不要なため削除 */
         }
         @media (max-width: 640px) {
           .series-rule { max-width: 100%; }
           .products-desc { font-size: 14px; }
           .product-list.three, .product-list.four { grid-template-columns: 1fr; gap: 28px 24px; }
-          /* .product-img の height 指定は不要なため削除 */
         }
       `}</style>
     </>
