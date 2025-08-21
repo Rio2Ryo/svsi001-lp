@@ -251,7 +251,7 @@ export default function ProductSection() {
           letter-spacing: 0.08em;
           color: #3f3f3f;
           font-weight: 700;
-          margin: 30px 0 6px;
+          margin: 80px 0 6px;
         }
         .products-desc {
           text-align: center;
