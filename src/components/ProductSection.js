@@ -197,7 +197,17 @@ export default function ProductSection() {
         .product-list.four  { grid-template-columns: repeat(4, minmax(220px, 1fr)); max-width: 1080px; }
 
         .product-card { text-align: center; color: #3a3a3a; }
-        .product-img { position: relative; width: 100%; height: 240px; margin: 0 auto 8px; background: #fff; }
+        
+        /* ▼▼▼ ここから修正 ▼▼▼ */
+        .product-img {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 1 / 1; /* 高さを固定せず、正方形の比率を維持 */
+          margin: 0 auto 12px; /* 下の余白を少し調整 */
+          background: #fff;
+        }
+        /* ▲▲▲ ここまで修正 ▲▲▲ */
+
         .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
         .product-price-label { margin: 0; color: #666; font-size: 12.5px; letter-spacing: 0.06em; }
         .product-original { margin: 2px 0; font-size: 12px; color: #888; text-decoration: line-through; }
@@ -214,13 +224,13 @@ export default function ProductSection() {
         @media (max-width: 1024px) {
           .product-list.three { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
           .product-list.four  { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
-          .product-img { height: 230px; }
+          /* .product-img の height 指定は不要なため削除 */
         }
         @media (max-width: 640px) {
           .series-rule { max-width: 100%; }
           .products-desc { font-size: 14px; }
           .product-list.three, .product-list.four { grid-template-columns: 1fr; gap: 28px 24px; }
-          .product-img { height: 220px; }
+          /* .product-img の height 指定は不要なため削除 */
         }
       `}</style>
     </>

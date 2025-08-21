@@ -5,7 +5,7 @@
     "description": "ミックスパックです。",
     "originalprice": "3,300円",
     "price": "3,300円",
-    "ItemPic": "/mix1500.png1",
+    "ItemPic": "/mix1500.png",
     "wixProductId": "dcb1eb79-e65a-02df-a8f2-a80385c56e00",
     "url": "https://www.dotpb.jp/product-page/double-mvsi"
   },
@@ -15,7 +15,7 @@
     "description": "薬用スライドケ－スです。",
     "originalprice": "3,300円",
     "price": "3,300円",
-    "ItemPic": "/case1500.png1",
+    "ItemPic": "/case1500.png",
     "wixProductId": "7be06482-8fca-e20d-6a73-48bd3e914460",
     "url": "https://www.dotpb.jp/product-page/case-mvsi"
   },
@@ -25,7 +25,7 @@
     "description": "30本セットです。",
     "originalprice": "20,000円",
     "price": "20,000円",
-    "ItemPic": "/30p22500.png1",
+    "ItemPic": "/30p22500.png",
     "wixProductId": "fb6bbce6-a63f-b4d1-b817-da05d987e163",
     "url": "https://www.dotpb.jp/product-page/big-refill-mvsi"
   },
@@ -35,7 +35,7 @@
     "description": "ミックスパック（エクトイン入り）です。",
     "originalprice": "3,300円",
     "price": "3,300円",
-    "ItemPic": "/mix2000.png1",
+    "ItemPic": "/mix2000.png",
     "wixProductId": "7ba04481-0674-5262-9325-8d62f2d25095",
     "url": "https://www.dotpb.jp/product-page/double-e-mvsi"
   },
@@ -45,7 +45,7 @@
     "description": "薬用スライドケ－ス（エクトイン入り）です。",
     "originalprice": "3,300円",
     "price": "3,300円",
-    "ItemPic": "/case2000.png1",
+    "ItemPic": "/case2000.png",
     "wixProductId": "48c2a407-4738-2f3f-e317-d118a4046e5c",
     "url": "https://www.dotpb.jp/product-page/case-e-mvsi"
   },
@@ -55,7 +55,7 @@
     "description": "10本セット（エクトイン入り）です。",
     "originalprice": "12,000円",
     "price": "12,000円",
-    "ItemPic": "/10p10000.png1",
+    "ItemPic": "/10p10000.png",
     "wixProductId": "cc620bb2-fd77-8db3-4bf1-cff751f9e55d",
     "url": "https://www.dotpb.jp/product-page/refill-e-mvsi"
   },
@@ -65,7 +65,7 @@
     "description": "30本セット（エクトイン入り）です。",
     "originalprice": "30,000円",
     "price": "30,000円",
-    "ItemPic": "/30p30000.png1",
+    "ItemPic": "/30p30000.png",
     "wixProductId": "c15bad90-8fff-b003-7792-2282202b6ccb",
     "url": "https://www.dotpb.jp/product-page/big-refill-e-mvsi"
   }
