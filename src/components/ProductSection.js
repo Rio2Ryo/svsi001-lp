@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Image from "next/image";
 import { useI18n } from "../lib/i18n";
 
@@ -9,26 +9,20 @@ export default function ProductSection() {
   const [err, setErr] = useState("");
 
   const { t, lang } = useI18n();
-  const tr = (key) => {
-    const v = t(key);
-    return v && v !== key ? v : ""; // ← 未定義キーは空文字に
+  const tr = (k, f) => {
+    const v = t(k);
+    return v && v !== k ? v : f ?? "";
   };
 
   useEffect(() => setIsVisible(true), []);
 
-  // ========== 価格フォーマッタ（特例: 3300円→$22.37 / 3100円→$21.02） ==========
+  // --- 価格表示 ---
   const USD_OVERRIDE = { 3300: 22.37, 3100: 21.02 };
-  const JPY_TO_USD_RATE = 22.37 / 3300; // その他は同レートで換算
-  const parseJPY = (v) => {
-    if (typeof v === "number") return v;
-    if (v == null) return 0;
-    const num = String(v).replace(/[^\d.-]/g, ""); // "3,300円" -> "3300"
-    return Number(num || 0);
-  };
-  const fmtPrice = (value, curLang) => {
-    if (curLang === "ja") {
-      if (typeof value === "string") return value; // 整形済ならそのまま
-      const n = parseJPY(value);
+  const JPY_TO_USD_RATE = 22.37 / 3300;
+  const parseJPY = (v) => Number(String(v ?? "").replace(/[^\d.-]/g, "") || 0);
+  const fmtPrice = (value) => {
+    if (lang === "ja") {
+      const n = typeof value === "number" ? value : parseJPY(value);
       return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(n);
     } else {
       const n = parseJPY(value);
@@ -37,45 +31,33 @@ export default function ProductSection() {
     }
   };
 
-  // ========== 商品JSON（言語別 or 単一）読み込み ==========
-  // あなたのファイル名に合わせたベース名
-  const BASENAME = "mvsi_products"; // public/mvsi_products.json がある
+  // --- 商品読み込み ---
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
         setErr("");
-
-        // 優先順にトライ:
-        //   /mvsi_products.en.json → /mvsi_products.ja.json → /mvsi_products.json
-        //   （最後に互換用 /products.xxx.json も試す）
-        const urlCandidates = [
-          `/${BASENAME}.${lang || "ja"}.json`,
-          `/${BASENAME}.json`,
+        const base = "mvsi_products";
+        const candidates = [
+          `/${base}.${lang || "ja"}.json`,
+          `/${base}.json`,
           `/products.${lang || "ja"}.json`,
           `/products.json`,
         ];
-
-        let data = null, lastErr = null;
-        for (const url of urlCandidates) {
+        let data = null;
+        for (const u of candidates) {
           try {
-            const res = await fetch(url, { cache: "no-store" });
-            if (res.ok) {
-              data = await res.json();
+            const r = await fetch(u, { cache: "no-store" });
+            if (r.ok) {
+              data = await r.json();
               break;
-            } else {
-              lastErr = `HTTP ${res.status} at ${url}`;
             }
-          } catch (e) {
-            lastErr = e?.message || String(e);
-          }
+          } catch {}
         }
-        if (!data) throw new Error(lastErr || "no data");
-
+        if (!data) throw new Error("no data");
         if (!cancelled) setItems(Array.isArray(data) ? data : []);
       } catch (e) {
-        console.error("Product load failed:", e);
-        if (!cancelled) setErr(tr("products.error") || "商品データを読み込めませんでした。");
+        if (!cancelled) setErr(tr("products.error", "商品データを読み込めませんでした。"));
       }
     })();
     return () => {
@@ -83,76 +65,80 @@ export default function ProductSection() {
     };
   }, [lang]);
 
-  // ========== グルーピング（エクトイン配合の判定） ==========
+  // --- グループ分け ---
   const isEctoin = (p) =>
     /エクトイン|ectoin/i.test(p?.name || "") || (p?.slug || "").includes("-e-");
-  const pure = items.filter((p) => !isEctoin(p)); // シリカのみ
-  const ect  = items.filter((p) =>  isEctoin(p)); // エクトイン配合
+  const { pure, ect } = useMemo(
+    () => ({
+      pure: items.filter((p) => !isEctoin(p)),
+      ect: items.filter((p) => isEctoin(p)),
+    }),
+    [items]
+  );
 
-  // ========== UIラベル（i18n） ==========
-  const title        = tr("products.title") || "商品ラインナップ";
-  const seriesSilica = tr("products.series.silica") || "マザベジコンフィデンス【シリカのみ版】";
-  const seriesEctoin = tr("products.series.ectoin") || "マザベジコンフィデンス【エクトイン配合版】";
-  const descSilica   = tr("products.desc.silica") || "成分 オーガニックシリカ 純度97.1%以上";
-  const descEctoin   = tr("products.desc.ectoin") || "オーガニックシリカ97.1%以上＋エクトイン配合";
-  const priceLabel   = tr("products.labels.price") || (lang === "en" ? "Price (incl. tax)" : "価格(税込)");
-  const buyLabel     = tr("cta.buy") || tr("products.labels.buy") || (lang === "en" ? "Buy now" : "ご購入はこちら");
+  // --- ラベル ---
+  const title = tr("products.title", "商品ラインナップ");
+  const seriesSilica = tr("products.series.silica", "マザベジコンフィデンス【シリカのみ版】");
+  const seriesEctoin = tr("products.series.ectoin", "マザベジコンフィデンス【エクトイン配合版】");
+  const descSilica = tr("products.desc.silica", "成分 オーガニックシリカ純度97.1%以上");
+  const descEctoin = tr("products.desc.ectoin", "保湿・抗炎症が期待できる天然アミノ酸エクトイン配合");
+  const priceLabel = tr("products.labels.price", lang === "en" ? "Price (incl. tax)" : "価格(税込)");
+  const buyLabel = tr("cta.buy", tr("products.labels.buy", lang === "en" ? "Buy now" : "ご購入はこちら"));
 
-  // 細い罫線など
-  const styles = { hr: { background: "#bfbfbf", height: 1, width: "100%" } };
-
+  // --- カード ---
   const Card = ({ p, priority = false }) => {
+    const src = p?.ItemPic || "/placeholder.png";
     const showOriginal =
-      p.originalprice != null &&
-      (typeof p.originalprice === "number"
-        ? p.originalprice !== p.price
-        : String(p.originalprice) !== String(p.price));
+      p?.originalprice != null &&
+      String(p.originalprice) !== String(p.price);
+
     return (
-      <div className="product-card">
-        <div className="product-img">
+      <article className="card">
+        <div className="thumb">
+          {/* 画像は“下揃え・内フィット”でブレずに表示 */}
           <Image
-            src={p.ItemPic || "/placeholder.png"}
-            alt={p.name || "product"}
+            src={src}
+            alt={p?.name || "product"}
             fill
-            sizes="(max-width: 1200px) 33vw, 270px"
-            style={{ objectFit: "contain" }}
+            sizes="(max-width: 1024px) 50vw, 260px"
             priority={priority}
+            style={{ objectFit: "contain", objectPosition: "center bottom" }}
           />
+          {/* 底面の薄い影（疑似台座） */}
+          <span className="shadowBase" />
         </div>
-        <p className="product-name">{p.name}</p>
-        <p className="product-price-label">{priceLabel}</p>
-        {showOriginal && <p className="product-original">{fmtPrice(p.originalprice, lang)}</p>}
-        <p className="product-price">{fmtPrice(p.price, lang)}</p>
-        <a
-          className="product-btn"
-          href={p.url || "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+
+        <h4 className="name">{p?.name || ""}</h4>
+        <p className="priceLabel">{priceLabel}</p>
+        {showOriginal && <p className="original">{fmtPrice(p.originalprice)}</p>}
+        <p className="price">{fmtPrice(p.price)}</p>
+
+        <a className="btn" href={p?.url || "#"} target="_blank" rel="noopener noreferrer">
           {buyLabel}
         </a>
-      </div>
+      </article>
     );
   };
 
   return (
     <>
-      <section id="products" className={`products ${isVisible ? "is-visible" : ""}`}>
-        <div className="container">
-          <h2 className="products-title ja-serif">{title}</h2>
-          <div className="products-logo">
+      <section id="products" className={`wrap ${isVisible ? "is-visible" : ""}`}>
+        <div className="inner">
+          <h2 className="title ja-serif">{title}</h2>
+          <div className="logo">
             <Image src="/MV_LOGO.png" alt="Confidence" width={220} height={64} priority />
           </div>
 
-          {err && <p style={{ color: "#c00", textAlign: "center" }}>{err}</p>}
+          {err && <p className="error">{err}</p>}
 
-          {/* シリカのみ */}
+          {/* --- シリカのみ --- */}
           {pure.length > 0 && (
             <>
-              <h3 className="products-series">{seriesSilica}</h3>
-              <div className="series-rule" style={styles.hr} />
-              <p className="products-desc">{descSilica}</p>
-              <div className="product-list three">
+              <h3 className="series">{seriesSilica}</h3>
+              <hr className="rule" />
+              <p className="desc">{descSilica}</p>
+
+              <div className="grid grid3">
                 {pure.map((p, i) => (
                   <Card key={p.slug || i} p={p} priority={i === 0} />
                 ))}
@@ -161,14 +147,15 @@ export default function ProductSection() {
           )}
         </div>
 
-        {/* エクトイン配合 */}
-        <div className="container">
+        {/* --- エクトイン配合 --- */}
+        <div className="inner">
           {ect.length > 0 && (
             <>
-              <h3 className="products-series">{seriesEctoin}</h3>
-              <div className="series-rule" style={styles.hr} />
-              <p className="products-desc">{descEctoin}</p>
-              <div className="product-list four">
+              <h3 className="series">{seriesEctoin}</h3>
+              <hr className="rule" />
+              <p className="desc">{descEctoin}</p>
+
+              <div className="grid grid4">
                 {ect.map((p, i) => (
                   <Card key={p.slug || `e-${i}`} p={p} />
                 ))}
@@ -179,63 +166,88 @@ export default function ProductSection() {
       </section>
 
       <style jsx>{`
-        .products { background: #ffffff; color: #3a3a3a; padding: 36px 16px 84px; }
-        .is-visible { animation: fadeInUp 0.7s ease-out both; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translate3d(0, 8px, 0); } to { opacity: 1; transform: translateZ(0); } }
-
-        .container { max-width: 1080px; margin: 0 auto; }
-        .ja-serif { font-family: "Yu Mincho","Hiragino Mincho ProN","Noto Serif JP","Hiragino Kaku Gothic ProN",serif; }
-
-        .products-title { text-align: center; font-size: 36px; letter-spacing: 0.14em; color: #444; font-weight: 600; margin: 6px 0 6px; }
-        .products-logo { display: flex; justify-content: center; margin: 2px 0 28px; }
-        .products-series { text-align: center; font-size: 28px; letter-spacing: 0.08em; color: #3f3f3f; font-weight: 700; margin: 80px 0 6px; }
-        .series-rule { max-width: 860px; margin: 0 auto 16px; }
-        .products-desc { text-align: center; color: #666; font-size: 18.5px; line-height: 1.9; letter-spacing: 0.06em; margin: 0 0 18px; }
-
-        .product-list { display: grid; gap: 36px 17px; justify-content: center; margin: 10px auto 48px; }
-        .product-list.three { grid-template-columns: repeat(3, minmax(240px, 1fr)); max-width: 980px; }
-        .product-list.four  { grid-template-columns: repeat(4, minmax(220px, 1fr)); max-width: 1080px; }
-
-        .product-card { text-align: center; color: #3a3a3a; }
-        
-        .product-img {
-          position: relative;
-          width: 100%;
-          aspect-ratio: 1 / 1; /* 高さを固定せず、正方形の比率を維持 */
-          margin: 0 auto 12px; /* 下の余白を少し調整 */
-          background: #fff;
+        /* --- レイアウト --- */
+        .wrap { background:#fff; color:#3a3a3a; padding:36px 16px 84px; }
+        .is-visible { animation: fadeInUp .6s ease-out both; }
+        @keyframes fadeInUp {
+          from { opacity:0; transform: translate3d(0, 8px, 0); }
+          to   { opacity:1; transform: translateZ(0); }
         }
-        
-        /* ▼▼▼ Next.jsがimgに直接スタイルを当てるため、この指定は不要で効かないため削除 ▼▼▼ */
-        /*
-        .product-img img {
-          width: 100%!important;
-          position:relative!important;
-        }
-        */
-        /* ▲▲▲ ここまで修正 ▲▲▲ */
+        .inner { max-width:1080px; margin:0 auto; }
+        .ja-serif { font-family:"Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif; }
 
-        .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
-        .product-price-label { margin: 0; color: #666; font-size: 12.5px; letter-spacing: 0.06em; }
-        .product-original { margin: 2px 0; font-size: 12px; color: #888; text-decoration: line-through; }
-        .product-price { margin: 0 0 12px; font-size: 16px; font-weight: 700; letter-spacing: 0.06em; color: #2f2f2f; }
+        .title { text-align:center; font-size:36px; letter-spacing:.14em; color:#444; font-weight:600; margin:6px 0; }
+        .logo { display:flex; justify-content:center; margin:6px 0 28px; }
+        .series { text-align:center; font-size:28px; letter-spacing:.08em; color:#3f3f3f; font-weight:700; margin:76px 0 8px; }
+        .rule { max-width:860px; margin:0 auto 16px; border:none; height:1px; background:#bfbfbf; }
+        .desc { text-align:center; color:#666; font-size:18px; line-height:1.9; letter-spacing:.06em; margin:0 0 18px; }
+        .error { color:#c00; text-align:center; }
 
-        .product-btn {
-          display: inline-block; padding: 10px 18px; border-radius: 9999px;
-          background: #ffd84d; color: #333; font-size: 14px; letter-spacing: 0.06em;
-          text-decoration: none; transition: transform 0.08s ease, filter 0.12s ease;
-        }
-        .product-btn:hover { filter: brightness(0.98); transform: translateY(-1px); }
-        .product-btn:active { transform: translateY(0); filter: brightness(0.96); }
+        /* --- グリッド --- */
+        .grid { display:grid; gap:36px 18px; justify-content:center; margin:12px auto 48px; }
+        .grid3 { grid-template-columns: repeat(3, minmax(240px, 1fr)); max-width:980px; }
+        .grid4 { grid-template-columns: repeat(4, minmax(220px, 1fr)); max-width:1080px; }
 
-        @media (max-width: 1024px) {
-          .product-list.three { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
-          .product-list.four  { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+        /* --- カード --- */
+        .card { text-align:center; color:#3a3a3a; }
+        .thumb {
+          position:relative;
+          width:100%;
+          /* 横長でも縦長でも破綻しない“見せ枠”：
+             4:3をベースにしつつ、実サイズに応じて可変（高さはCSSだけで決定） */
+          aspect-ratio: 4 / 3;
+          margin:0 auto 14px;
+          background:#fff;
+          border:1px solid #eee;
+          border-radius: 10px;
+          box-shadow: 0 1px 2px rgba(0,0,0,.04);
+          overflow:hidden;
         }
-        @media (max-width: 640px) {
-          .series-rule { max-width: 100%; }
-          .products-desc { font-size: 14px; }
-          .product-list.three, .product-list.four { grid-template-columns: 1fr; gap: 28px 24px; }
+        /* 画像は下揃え・等倍内フィット */
+        .thumb :global(img) {
+          mix-blend-mode: normal; /* 透過PNGを想定 */
+        }
+        /* 台座の疑似影 */
+        .shadowBase {
+          position:absolute;
+          left:12%;
+          right:12%;
+          bottom:10px;
+          height:10px;
+          border-radius:9999px;
+          background: radial-gradient(closest-side, rgba(0,0,0,.12), rgba(0,0,0,0));
+          pointer-events:none;
+          filter: blur(2px);
+        }
+
+        .name { margin:6px 0 10px; font-size:13px; line-height:1.5; letter-spacing:.02em; color:#444; }
+        .priceLabel { margin:0; color:#666; font-size:12.5px; letter-spacing:.06em; }
+        .original { margin:2px 0; font-size:12px; color:#888; text-decoration:line-through; }
+        .price { margin:0 0 12px; font-size:16px; font-weight:700; letter-spacing:.06em; color:#2f2f2f; }
+
+        .btn {
+          display:inline-block;
+          padding:10px 18px;
+          border-radius:9999px;
+          background:#ffd84d;
+          color:#333;
+          font-size:14px;
+          letter-spacing:.06em;
+          text-decoration:none;
+          transition:transform .08s ease, filter .12s ease, box-shadow .12s ease;
+          box-shadow: 0 2px 0 rgba(0,0,0,.08);
+        }
+        .btn:hover { filter:brightness(.98); transform:translateY(-1px); }
+        .btn:active { transform:translateY(0); filter:brightness(.96); }
+
+        /* --- レスポンシブ --- */
+        @media (max-width:1024px) {
+          .grid3 { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
+          .grid4 { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+        }
+        @media (max-width:640px) {
+          .desc { font-size:14px; }
+          .grid3, .grid4 { grid-template-columns: 1fr; gap:28px 24px; }
         }
       `}</style>
     </>
