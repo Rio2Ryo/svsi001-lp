@@ -100,7 +100,7 @@ export default function ProductSection() {
           {/* シリーズ間の細い横線 */}
           <div className="series-rule" style={styles.hr} />
           <p className="products-desc">
-            成分 オーガニックシリカ純度97.1%以上
+            成分 オーガニックシリカ純度97.1%以上<br />＋
             <br />保湿効果や炎症を抑える効果が期待できる
             <br />
             天然アミノ酸のエクトイン配合
