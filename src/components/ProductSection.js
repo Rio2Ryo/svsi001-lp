@@ -21,11 +21,12 @@ export default function ProductSection() {
             <Image src="/logo-confidence.png" alt="Confidence" width={220} height={64} priority />
           </div>
 
-          {/* 上部の細い横線 */}
-          <div className="series-rule" style={styles.hr} />
+         
 
           {/* ===== シリカのみ版 ===== */}
           <h3 className="products-series">マザベジコンフィデンス【シリカのみ版】</h3>
+           {/* 上部の細い横線 */}
+           <div className="series-rule" style={styles.hr} />
           <p className="products-desc">成分 オーガニックシリカ 純度97.1%以上</p>
 
           <div className="product-list three">
@@ -93,10 +94,11 @@ export default function ProductSection() {
 
         {/* ===== エクトイン配合版 ===== */}
         <div className="container">
-          {/* シリーズ間の細い横線 */}
-          <div className="series-rule" style={styles.hr} />
+          
 
           <h3 className="products-series">マザベジコンフィデンス【エクトイン配合版】</h3>
+          {/* シリーズ間の細い横線 */}
+          <div className="series-rule" style={styles.hr} />
           <p className="products-desc">
             成分 オーガニックシリカ純度97.1%以上
             <br />保湿効果や炎症を抑える効果が期待できる
@@ -249,7 +251,7 @@ export default function ProductSection() {
           letter-spacing: 0.08em;
           color: #3f3f3f;
           font-weight: 700;
-          margin: 14px 0 6px;
+          margin: 30px 0 6px;
         }
         .products-desc {
           text-align: center;
