@@ -22,7 +22,7 @@ export default function HeroSection() {
     "hero.tagline",
     "マザーベジタブルから生まれた完全オーガニックのシリカパウダー"
   );
-  const catch1  = tr("hero.catch1", "その選択が");
+  const catch1  = tr("hero.catch1", "その選択が、");
   const catch2  = tr("hero.catch2", "肌も、地球も、美しく育てる");
   const body = tr(
     "hero.body",
