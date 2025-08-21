@@ -217,6 +217,11 @@ export default function ProductSection() {
           display:inline-block; padding:10px 18px; border-radius:9999px;
           background:#ffd84d; color:#333; font-size:14px; letter-spacing:.06em;
           text-decoration:none; transition: transform .08s ease, filter .12s ease;
+          background-color: yellow;
+    padding: 10px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    color: black;
         }
         .product-btn:hover { filter:brightness(.98); transform: translateY(-1px); }
         .product-btn:active { transform: translateY(0); filter:brightness(.96); }
