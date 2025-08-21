@@ -133,6 +133,8 @@ export default function ProductSection({ productsId }) {
             fill
             sizes="(max-width: 640px) 90vw, (max-width: 1024px) 33vw, 300px"
             priority={priority}
+            draggable={false}
+            decoding="async"
           />
         </div>
         <p className="product-name">{p.name}</p>
@@ -211,16 +213,19 @@ export default function ProductSection({ productsId }) {
 
         .product-card { text-align: center; color: #3a3a3a; }
 
-        /* ★ ここが重要：親枠で高さを固定し、内部要素を強制 contain */
+        /* ★ 画像をカード枠に“絶対に”収める */
         .product-img {
           position: relative;
           width: 100%;
-          height: 220px;        /* 画像枠を固定 */
-          overflow: hidden;      /* はみ出し防止 */
+          max-width: 280px;     /* グリッド幅に合わせて上限を設定 */
+          aspect-ratio: 4 / 3;  /* 比率固定（必要に応じて 1/1 などに変更可） */
+          max-height: 220px;    /* 高さの上限 */
+          margin: 0 auto 8px;
+          overflow: hidden;     /* はみ出し防止 */
           background: #fff;
           border-radius: 6px;
         }
-        /* next/image の内部要素を強制制御（scoped :global） */
+        /* next/image の内部要素を強制制御 */
         .product-img :global(span) {
           position: absolute !important;
           inset: 0 !important;
@@ -233,8 +238,15 @@ export default function ProductSection({ productsId }) {
           inset: 0 !important;
           width: 100% !important;
           height: 100% !important;
-          object-fit: contain !important;   /* 枠内に収める */
+          object-fit: contain !important;  /* 枠内に収める */
           object-position: center center !important;
+          max-width: 100% !important;
+          max-height: 100% !important;
+        }
+        /* 万一のグローバルCSS干渉（img { width:100vw }等）をカード内で打ち消す */
+        .product-card :global(img) {
+          width: auto !important;
+          max-width: 100% !important;
         }
 
         .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
@@ -253,13 +265,13 @@ export default function ProductSection({ productsId }) {
         @media (max-width: 1024px) {
           .product-list.three { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
           .product-list.four  { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
-          .product-img { height: 210px; }
+          .product-img { max-width: 260px; max-height: 210px; }
         }
         @media (max-width: 640px) {
           .series-rule { max-width: 100%; }
           .products-desc { font-size: 14px; }
           .product-list.three, .product-list.four { grid-template-columns: 1fr; gap: 28px 24px; }
-          .product-img { height: 200px; }
+          .product-img { max-width: 320px; max-height: 200px; }
         }
       `}</style>
     </>

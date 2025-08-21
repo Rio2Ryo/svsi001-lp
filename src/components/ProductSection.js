@@ -16,9 +16,9 @@ export default function ProductSection() {
 
   useEffect(() => setIsVisible(true), []);
 
-  // ========== 価格フォーマッタ（特例: 3300円→$22.37 / 3100円→$21.02） ==========
+  // ===== 価格フォーマッタ（特例: 3300円→$22.37 / 3100円→$21.02） =====
   const USD_OVERRIDE = { 3300: 22.37, 3100: 21.02 };
-  const JPY_TO_USD_RATE = 22.37 / 3300; // その他は同レート換算
+  const JPY_TO_USD_RATE = 22.37 / 3300;
   const parseJPY = (v) => {
     if (typeof v === "number") return v;
     if (v == null) return 0;
@@ -27,7 +27,7 @@ export default function ProductSection() {
   };
   const fmtPrice = (value, curLang) => {
     if (curLang === "ja") {
-      if (typeof value === "string") return value; // 整形済みはそのまま
+      if (typeof value === "string") return value;
       const n = parseJPY(value);
       return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(n);
     } else {
@@ -37,7 +37,7 @@ export default function ProductSection() {
     }
   };
 
-  // ========== 商品JSON 読み込み（mvsi_products.*.json を優先） ==========
+  // ===== 商品JSON 読み込み（mvsi_products.*.json を優先） =====
   const BASENAME = "mvsi_products"; // public/mvsi_products.json など
   useEffect(() => {
     let cancelled = false;
@@ -71,13 +71,13 @@ export default function ProductSection() {
     return () => { cancelled = true; };
   }, [lang]);
 
-  // ========== グルーピング（エクトイン配合の判定） ==========
+  // ===== グルーピング（エクトイン配合の判定） =====
   const isEctoin = (p) =>
     /エクトイン|ectoin/i.test(p?.name || "") || (p?.slug || "").includes("-e-");
-  const pure = items.filter((p) => !isEctoin(p)); // シリカのみ
-  const ect  = items.filter((p) =>  isEctoin(p)); // エクトイン配合
+  const pure = items.filter((p) => !isEctoin(p));
+  const ect  = items.filter((p) =>  isEctoin(p));
 
-  // ========== UIラベル（i18n） ==========
+  // ===== UIラベル（i18n） =====
   const title        = tr("products.title") || "商品ラインナップ";
   const seriesSilica = tr("products.series.silica") || "マザベジコンフィデンス【シリカのみ版】";
   const seriesEctoin = tr("products.series.ectoin") || "マザベジコンフィデンス【エクトイン配合版】";
@@ -86,9 +86,7 @@ export default function ProductSection() {
   const priceLabel   = tr("products.labels.price") || (lang === "en" ? "Price (incl. tax)" : "価格(税込)");
   const buyLabel     = tr("cta.buy") || tr("products.labels.buy") || (lang === "en" ? "Buy now" : "ご購入はこちら");
 
-  // 細い罫線など
-  const styles = { hr: { background: "#bfbfbf", height: 1, width: "100%" } };
-
+  // ===== カード =====
   const Card = ({ p, priority = false }) => {
     const showOriginal =
       p.originalprice != null &&
@@ -104,6 +102,8 @@ export default function ProductSection() {
             fill
             sizes="(max-width: 640px) 90vw, (max-width: 1024px) 33vw, 300px"
             priority={priority}
+            draggable={false}
+            decoding="async"
           />
         </div>
         <p className="product-name">{p.name}</p>
@@ -132,9 +132,8 @@ export default function ProductSection() {
           {pure.length > 0 && (
             <>
               <h3 className="products-series">{seriesSilica}</h3>
-              <div className="series-rule" style={styles.hr} />
+              <div className="series-rule" />
               <p className="products-desc">{descSilica}</p>
-
               <div className="product-list three">
                 {pure.map((p, i) => (
                   <Card key={p.slug || i} p={p} priority={i === 0} />
@@ -149,9 +148,8 @@ export default function ProductSection() {
           {ect.length > 0 && (
             <>
               <h3 className="products-series">{seriesEctoin}</h3>
-              <div className="series-rule" style={styles.hr} />
+              <div className="series-rule" />
               <p className="products-desc">{descEctoin}</p>
-
               <div className="product-list four">
                 {ect.map((p, i) => (
                   <Card key={p.slug || `e-${i}`} p={p} />
@@ -174,7 +172,7 @@ export default function ProductSection() {
         .products-logo { display: flex; justify-content: center; margin: 2px 0 28px; }
 
         .products-series { text-align: center; font-size: 28px; letter-spacing: 0.08em; color: #3f3f3f; font-weight: 700; margin: 80px 0 6px; }
-        .series-rule { max-width: 860px; margin: 0 auto 16px; }
+        .series-rule { max-width: 860px; height: 1px; background: #bfbfbf; margin: 0 auto 16px; }
         .products-desc { text-align: center; color: #666; font-size: 18.5px; line-height: 1.9; letter-spacing: 0.06em; margin: 0 0 18px; }
 
         .product-list { display: grid; gap: 36px 17px; justify-content: center; margin: 10px auto 48px; }
@@ -183,16 +181,19 @@ export default function ProductSection() {
 
         .product-card { text-align: center; color: #3a3a3a; }
 
-        /* ★ 画像はここで制御（親枠固定＋内部要素を contain に強制） */
+        /* ★ 画像のはみ出し防止（カード枠に確実に収める） */
         .product-img {
           position: relative;
           width: 100%;
-          height: 220px;       /* 画像枠の高さ固定 */
-          overflow: hidden;    /* はみ出し防止 */
+          max-width: 280px;     /* グリッド幅に応じて上限 */
+          aspect-ratio: 4 / 3;  /* 比率固定（必要なら 1/1 に変更） */
+          max-height: 220px;    /* 高さの上限 */
+          margin: 0 auto 8px;
+          overflow: hidden;
           background: #fff;
           border-radius: 6px;
         }
-        /* next/image の内部ラッパ span を親枠いっぱいに */
+        /* next/image が生成する内部要素を強制制御 */
         .product-img :global(span) {
           position: absolute !important;
           inset: 0 !important;
@@ -200,7 +201,6 @@ export default function ProductSection() {
           height: 100% !important;
           display: block !important;
         }
-        /* 実画像を常に contain で中央表示 */
         .product-img :global(img) {
           position: absolute !important;
           inset: 0 !important;
@@ -208,6 +208,13 @@ export default function ProductSection() {
           height: 100% !important;
           object-fit: contain !important;
           object-position: center center !important;
+          max-width: 100% !important;
+          max-height: 100% !important;
+        }
+        /* 万一のグローバルCSS干渉をカード内で打ち消す */
+        .product-card :global(img) {
+          width: auto !important;
+          max-width: 100% !important;
         }
 
         .product-name { margin: 6px 0 10px; font-size: 13px; line-height: 1.5; letter-spacing: 0.02em; color: #444; }
@@ -226,13 +233,13 @@ export default function ProductSection() {
         @media (max-width: 1024px) {
           .product-list.three { grid-template-columns: repeat(2, minmax(240px, 1fr)); }
           .product-list.four  { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
-          .product-img { height: 210px; }
+          .product-img { max-width: 260px; max-height: 210px; }
         }
         @media (max-width: 640px) {
           .series-rule { max-width: 100%; }
           .products-desc { font-size: 14px; }
           .product-list.three, .product-list.four { grid-template-columns: 1fr; gap: 28px 24px; }
-          .product-img { height: 200px; }
+          .product-img { max-width: 320px; max-height: 200px; }
         }
       `}</style>
     </>
