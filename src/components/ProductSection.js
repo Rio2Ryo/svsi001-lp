@@ -126,6 +126,7 @@ export default function ProductLineupSection() {
         .lineup-head { text-align: center; margin: 6px 0 40px; }
         .lineup-label {
           font-family: "ot-bunyu-mincho-stdn", serif;
+          f0nt-weight:400;
           font-size: 40px;
           letter-spacing: 0.18em;
           color: #222;
@@ -140,9 +141,9 @@ export default function ProductLineupSection() {
 
         .title {
           text-align: center;
-          font-family: "ot-bunyu-mincho-stdn", serif;
-          font-size: 32px;            /* ← 少し大きく */
-          font-weight: 700;
+          
+          font-size: 30px;            /* ← 少し大きく */
+          font-weight: 500;
           letter-spacing: 0.12em;
           color: #2b2b2b;
           margin: 44px 0 12px;

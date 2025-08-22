@@ -79,7 +79,7 @@ export default function ProductLineupSection() {
       </div>
 
       {/* ── 素版 ── */}
-      <h3 className="title">マザベジコンフィデンス【シリカの素版】</h3>
+      <h3 className="title">マザベジコンフィデンス【シリカのみ版】</h3>
       <div className="divider" />
       <p className="note">成分 オーガニックシリカ純度97.1%以上</p>
       <Row items={baseItems} itemId={itemId} />
@@ -106,6 +106,7 @@ export default function ProductLineupSection() {
         .lineup-label {
           font-family: "ot-bunyu-mincho-stdn", serif;
           font-size: 40px;
+          f0nt-weight:400;
           letter-spacing: 0.18em;
           color: #222;
           margin: 50px 0 18px;
@@ -120,9 +121,9 @@ export default function ProductLineupSection() {
         /* セクション見出し */
         .title {
           text-align: center;
-          font-family: "ot-bunyu-mincho-stdn", serif;
-          font-size: 32px;
-          font-weight: 700;
+          
+          font-size: 30px;
+          font-weight: 500;
           letter-spacing: 0.12em;
           color: #2b2b2b;
           margin: 44px 0 12px;

@@ -214,7 +214,7 @@
     "other": {
       "title": "Other Certifications",
       "rows": {
-        "0": { "name": "COSMOS Certification", "desc": "Meets the international\nstandard for organic\ncosmetics" },
+        "0": { "name": "COSMOS Certification", "desc": "Meets the international\nstandard for organic cosmetics" },
         "1": { "name": "Vegan Certification", "desc": "No animal-derived\ningredients detected" },
         "2": { "name": "Halal Certification", "desc": "Compatible with\nreligious restrictions" }
       }
