@@ -244,10 +244,10 @@ export default function TestimonialSection() {
         }
         .uv-cases.two  { grid-template-columns: repeat(2, minmax(220px,1fr)); }
         .uv-cases.four { grid-template-columns: repeat(2, minmax(220px,1fr)); }
-        .uv-case { color: #3a3a3a; font-size: 28px; letter-spacing: 0.08em; }
+        .uv-case { color: #3a3a3a; font-size: 26px; letter-spacing: 0.08em; line-height: normal; }
         .uv-case span { font-size: 16px; color: #777; }
 
-        .uv-btn-wrap { display: flex; justify-content: center; margin: 14px 0 110px; }
+        .uv-btn-wrap { display: flex; justify-content: center; margin: 40px 0 110px; }
 
         .modal-overlay {
           position: fixed; inset: 0; background: rgba(0,0,0,.55);
