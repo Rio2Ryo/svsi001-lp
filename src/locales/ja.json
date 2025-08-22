@@ -339,7 +339,8 @@
       "checkout": "ご購入手続きへ"
     }
   },
-  "header": "商品ラインナップ",
+  "lineup": {
+    "header": "商品ラインナップ",
     "baseTitle": "マザベジコンフィデンス【シリカのみ版】",
     "ectoTitle": "マザベジコンフィデンス【エクトイン配合版】",
     "note": {
@@ -349,4 +350,5 @@
     "priceLabel": "価格(税込)",
     "cta": "ご購入はこちら",
     "alt": { "brand": "Mother Vegetables Confidence" }
+  }
 }

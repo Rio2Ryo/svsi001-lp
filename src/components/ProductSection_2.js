@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
+import { useI18n } from "../../../src/lib/i18n"; // プロジェクトに合わせて調整
 
 /* ▼ フォールバック（商品名は必ずここを表示用に使う） */
 const PRODUCTS = [
@@ -17,6 +18,9 @@ const PRODUCTS = [
 
 export default function ProductLineupSection() {
   const router = useRouter();
+  const { t } = useI18n();
+  const tr = (k, fb = "") => t(k) ?? fb;
+
   const rawId = router.query?.itemId;
   const itemId = Array.isArray(rawId) ? rawId[0] : rawId;
 
@@ -47,7 +51,6 @@ export default function ProductLineupSection() {
       return PRODUCTS;
     }
     const fbByBase = new Map(PRODUCTS.map(p => [baseKey(p.slug), p]));
-
     return jsonItems.map(j => {
       const fb = fbByBase.get(baseKey(j.slug)) || {};
       return {
@@ -66,11 +69,11 @@ export default function ProductLineupSection() {
     <section className="lineup">
       {/* ── 上部ヘッダー ── */}
       <div className="lineup-head">
-        <h2 className="lineup-label">商品ラインナップ</h2>
+        <h2 className="lineup-label">{tr("lineup.header", "商品ラインナップ")}</h2>
         <div className="brand-lockup">
           <Image
             src="/MV_LOGO.png"
-            alt="Mother Vegetables Confidence"
+            alt={tr("lineup.alt.brand", "Mother Vegetables Confidence")}
             width={480}
             height={140}
             priority
@@ -79,20 +82,16 @@ export default function ProductLineupSection() {
       </div>
 
       {/* ── 素版 ── */}
-      <h3 className="title">マザベジコンフィデンス【シリカのみ版】</h3>
+      <h3 className="title">{tr("lineup.baseTitle", "マザベジコンフィデンス【シリカのみ版】")}</h3>
       <div className="divider" />
-      <p className="note">成分 オーガニックシリカ純度97.1%以上</p>
-      <Row items={baseItems} itemId={itemId} />
+      <p className="note">{tr("lineup.note.base", "成分 オーガニックシリカ純度97.1%以上")}</p>
+      <Row items={baseItems} itemId={itemId} tr={tr} />
 
       {/* ── エクトイン配合版 ── */}
-      <h3 className="title">マザベジコンフィデンス【エクトイン配合版】</h3>
+      <h3 className="title">{tr("lineup.ectoTitle", "マザベジコンフィデンス【エクトイン配合版】")}</h3>
       <div className="divider" />
-      <p className="note">
-        成分 オーガニックシリカ純度97.1%以上
-        <br />
-        <span className="subnote">保湿効果や炎症を抑える効果が期待できる／天然アミノ酸のエクトイン配合</span>
-      </p>
-      <Row items={ectoItems} itemId={itemId} />
+      <p className="note">{tr("lineup.note.ecto", "成分 オーガニックシリカ純度97.1%以上\n保湿効果や炎症を抑える効果が期待できる／天然アミノ酸のエクトイン配合")}</p>
+      <Row items={ectoItems} itemId={itemId} tr={tr} />
 
       <style jsx>{`
         .lineup {
@@ -106,7 +105,7 @@ export default function ProductLineupSection() {
         .lineup-label {
           font-family: "ot-bunyu-mincho-stdn", serif;
           font-size: 40px;
-          f0nt-weight:400;
+          font-weight: 400;
           letter-spacing: 0.18em;
           color: #222;
           margin: 50px 0 18px;
@@ -121,7 +120,6 @@ export default function ProductLineupSection() {
         /* セクション見出し */
         .title {
           text-align: center;
-          
           font-size: 30px;
           font-weight: 500;
           letter-spacing: 0.12em;
@@ -142,6 +140,7 @@ export default function ProductLineupSection() {
           font-size: 15px;
           letter-spacing: 0.06em;
           margin-bottom: 28px;
+          white-space: pre-line; /* \n 改行対応 */
         }
         .note .subnote { display: inline-block; margin-top: 4px; }
 
@@ -163,7 +162,7 @@ export default function ProductLineupSection() {
   );
 }
 
-function Row({ items, itemId }) {
+function Row({ items, itemId, tr }) {
   return (
     <>
       <div className="row" role="list">
@@ -183,11 +182,11 @@ function Row({ items, itemId }) {
               </div>
               <h3 className="name">{p.name}</h3>
               <div className="pricewrap">
-                価格(税込)
+                <span className="priceLabel">{tr("lineup.priceLabel", "価格(税込)")}</span>
                 <span className="price">{p.price}</span>
               </div>
-              <Link href={internalHref} aria-label={`${p.name} を購入`}>
-                <button type="button" className="btn">ご購入はこちら</button>
+              <Link href={internalHref} aria-label={`${p.name} ${tr("lineup.ctaAria", "を購入")}`}>
+                <button type="button" className="btn">{tr("lineup.cta", "ご購入はこちら")}</button>
               </Link>
             </article>
           );
