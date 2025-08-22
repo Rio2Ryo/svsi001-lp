@@ -78,7 +78,7 @@ export default function HeroSection() {
       <section className={`first-view ${isVisible ? "is-visible" : ""}`}>
         {/* 左上ロゴ（重ね） */}
         <div className="brand-dot" aria-hidden="true">
-          <Image src="/logo-dot.png" alt="" width={100} height={100} priority />
+          <Image src="/logo-dot.png" alt="" width={180} height={100} priority />
         </div>
 
         {/* 上のパウダー帯 */}
@@ -203,7 +203,7 @@ export default function HeroSection() {
 
   position: absolute;
   top: clamp(40px, 7vw, 72px);   /* 縦位置は見た目に合わせて調整 */
-  left: 50%;
+  left: 46%;
   transform: translateX(calc(-50% - var(--dot-offset)));
   z-index: 2;
   filter: grayscale(100%) contrast(.9) opacity(.9);
