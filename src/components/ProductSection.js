@@ -245,7 +245,7 @@ function Row({ items }) {
         }
 
         .name {
-          font-weight: 300;
+          font-weight: 400;
           color: #333;
           line-height: 1.7;
           font-size: 15px;          /* ← 商品名を拡大 */

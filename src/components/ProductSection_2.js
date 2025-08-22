@@ -215,7 +215,7 @@ function Row({ items, itemId }) {
           margin: 0 auto 12px;
         }
         .name {
-          font-weight: 300;
+          font-weight: 400;
           color: #333;
           line-height: 1.7;
           font-size: 15px;             /* 商品名拡大 */

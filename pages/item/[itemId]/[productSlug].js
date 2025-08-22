@@ -229,11 +229,8 @@ export default function ProductDetailPage() {
             <h1 className="title">{product.name}</h1>
 
             <p className="lead">
-              世界最古かつ最高品質とされる「マザーベジタブル」を贅沢に配合した、新発想のパフ型化粧品ケース。<br />
-              軽量で持ち運びやすく、外出前のメイク直しやお出かけ後の肌ケア、就寝前のリラックスタイムなど、あらゆるシーンで手軽にご使用いただけます。<br />
-              肌にのせるだけで自然な仕上がりと多彩な美肌効果を実感でき、日常のスキンケアから特別な日のメイクまで幅広く活躍。<br />
-              機能性とデザイン性を兼ね備えた、便利で高品質な新しい化粧品ケースです。
-            </p>
+  {product?.description || ""}
+</p>
 
             {/* 価格 */}
             <div className="priceBlock">
@@ -400,7 +397,7 @@ export default function ProductDetailPage() {
         .media img { width: 100%; border-radius: 12px; object-fit: cover; background: #f6f6f6; }
         .info { display: flex; flex-direction: column; gap: 14px; }
         .title { font-size: 28px; font-weight: 700; }
-        .lead { color: #374151; line-height: 1.9; font-size: 14px; }
+        .lead { color: #374151; line-height: 1.9; font-size: 14px; white-space: pre-line; }
 
         .priceBlock { display: flex; align-items: baseline; gap: 14px; margin-top: 6px; }
         .price, .original { font-size: 18px; }

@@ -289,5 +289,54 @@
     "emailText": "info@dotpb.jp",
     "legalText": "Legal Notice (Specified Commercial Transactions Act)",
     "copyright": "Copyright © 2025 dotpb Co.,Ltd. All Rights Reserved."
+  },
+  "pdp": {
+    "head": {
+      "titleSuffix": "Mother Vegetables Confidence MV-Si002"
+    },
+    "loading": "Loading...",
+    "notFound": "Product not found",
+
+    "title": {
+      "productNameLabel": "Product name:"
+    },
+
+    "lead": {
+      "note": ""
+    },
+
+    "price": {
+      "original": "Original price",
+      "current": "Price (tax incl.)"
+    },
+
+    "quantity": {
+      "label": "Quantity",
+      "ariaChange": "Change quantity",
+      "ariaDecrease": "Decrease",
+      "ariaIncrease": "Increase"
+    },
+
+    "buttons": {
+      "addToCart": "Add to Cart",
+      "buyNow": "Buy Now",
+      "backToList": "Back to product list (keep cart)"
+    },
+
+    "details": {
+      "productInfo": "Product Information",
+      "returns": "Returns & Refund Policy",
+      "shipping": "Shipping Information",
+
+      "returnsBody": "Return period: within 7 days after delivery.\nReturn shipping cost: Covered by us for initial defects; for customer convenience returns, the customer bears the shipping cost.",
+      "shippingBody": "Shipping fee: Domestic shipping is generally free (¥1,500 only for deliveries to Okinawa).\n*Overseas shipping is calculated separately.\nOrders are shipped the next day after the order is placed (excluding weekends and public holidays)."
+    },
+
+    "sidecart": {
+      "header": "Cart ({count} items)",
+      "empty": "Your cart is empty",
+      "subtotalLabel": "Subtotal:",
+      "checkout": "Proceed to Checkout"
+    }
   }
 }
