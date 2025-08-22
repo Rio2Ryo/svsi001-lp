@@ -49,9 +49,9 @@ export default function ConceptSection() {
           <h2 className="cert-title">{certTitle}</h2>
 
           <div className="cert-logos">
-            <Image src="/ORGANIC_1.png" alt={altCosmos} width={85} height={85} />
-            <Image src="/JHCPO_1.png" alt={altHalal}  width={101} height={88} />
-            <Image src="/VEGAN.png"    alt={altVegan}  width={99} height={88} />
+            <Image src="/ORGANIC_1.png" alt={altCosmos} width={98} height={98} />
+            <Image src="/JHCPO_1.png" alt={altHalal}  width={111} height={98} />
+            <Image src="/VEGAN.png"    alt={altVegan}  width={109} height={98} />
           </div>
 
           <div className="cert-table">
@@ -165,7 +165,7 @@ export default function ConceptSection() {
           to   { opacity: 1; transform: translateZ(0); }
         }
 
-        .container { max-width: 980px; margin: 0 auto; }
+        .container { max-width: 1100px; margin: 0 auto; }
 
         /* 見出し */
         .cert-title {
@@ -176,7 +176,7 @@ export default function ConceptSection() {
         /* ロゴ列 */
         .cert-logos {
           display: flex; justify-content: center; align-items: center;
-          gap: 26px; margin: 8px 0 36px;
+          gap: 1px; margin: 8px 0 36px;
         }
 
         /* 表風 2カラム（左：項目、右：説明） */
@@ -184,12 +184,12 @@ export default function ConceptSection() {
           display: flex; align-items: flex-start; justify-content: center;
           gap: 28px; max-width: 880px; margin: 0 auto 68px;
         }
-        .cert-left, .cert-right { display: grid; row-gap: 10px; }
+        .cert-left, .cert-right { display: grid; row-gap: 0px; }
         .cert-left {
           width: 240px; justify-items: end; color: #4b4b4b; letter-spacing: 0.12em;
         }
         .cert-right { flex: 1; min-width: 0; color: #555; letter-spacing: 0.02em; }
-        .cert-left p, .cert-right p { margin: 0; line-height: 2; font-size: 22px; }
+        .cert-left p, .cert-right p { margin: 0; line-height: 1.2; font-size: 22px; }
         .cert-divider { width: 1px; background: #d9d9d9; align-self: stretch; }
         .cert-divider-mobile { display: none; margin: 8px 0; }
 

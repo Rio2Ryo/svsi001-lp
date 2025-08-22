@@ -9,10 +9,8 @@ export default function HeroSection() {
   const menuRef = useRef(null);
 
   const { t, lang, setLang } = useI18n();
-  // t(key) が null なら空文字に
   const tr = (key) => t(key) ?? "";
 
-  // すべて辞書から取得
   const brand   = tr("hero.brand");
   const title   = tr("hero.title");
   const tagline = tr("hero.tagline");
@@ -20,15 +18,12 @@ export default function HeroSection() {
   const catch2  = tr("hero.catch2");
   const body    = tr("hero.body");
 
-  // 画像の代替テキスト等も辞書化
   const altPowder = tr("hero.alt.powder");
-  const altLogo   = tr("hero.alt.logo");   // brand と title をそのまま使いたければ辞書側で組み立てておく
-  const altEarth  = tr("hero.alt.earth");
+  const altLogo   = tr("hero.alt.logo");
 
-  // スイッチャー表示名も辞書から
-  const labelLang = tr("ui.lang.label");  // 例) "Language" / "言語"
-  const labelJA   = tr("ui.lang.ja");     // 例) "日本語"
-  const labelEN   = tr("ui.lang.en");     // 例) "English"
+  const labelLang = tr("ui.lang.label");
+  const labelJA   = tr("ui.lang.ja");
+  const labelEN   = tr("ui.lang.en");
 
   useEffect(() => setIsVisible(true), []);
   useEffect(() => {
@@ -40,13 +35,6 @@ export default function HeroSection() {
     window.addEventListener("mousedown", onDown);
     return () => window.removeEventListener("mousedown", onDown);
   }, [open]);
-
-  const styles = {
-    earthOverlay: {
-      background:
-        "linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.55) 40%, rgba(0,0,0,0) 72%)",
-    },
-  };
 
   return (
     <>
@@ -64,7 +52,6 @@ export default function HeroSection() {
             >
               {(lang || "ja").toUpperCase()} <span className="caret">▾</span>
             </button>
-
             {open && (
               <ul className="lang-menu" role="menu" aria-label={labelLang || "Language"}>
                 <li role="menuitem">
@@ -92,11 +79,10 @@ export default function HeroSection() {
             alt={altPowder}
             fill
             priority
-            sizes="(max-width: 1000px) 100vw, 1000px"
+            sizes="(max-width: 1200px) 100vw, 1200px"
             style={{ objectFit: "cover" }}
           />
           <div className="fv-top-inner">
-            {/* ロゴ */}
             <div className="fv-logo">
               <Image
                 src="/MV_LOGO.png"
@@ -118,61 +104,35 @@ export default function HeroSection() {
           {catch2}
         </h1>
 
-        {/* 地球のビジュアル＋本文 */}
-        <div className="fv-earth">
-          <Image
-            src="/fv-earth.jpg"
-            alt={altEarth}
-            fill
-            sizes="(max-width: 1024px) 100vw, 1024px"
-            style={{ objectFit: "cover" }}
-          />
-          <div className="fv-earth-overlay" style={styles.earthOverlay} />
-          <div className="fv-earth-text">
-            <p>
-              {(body || "").split("\n").map((line, i) => (
-                <span key={i}>
-                  {line}
-                  <br />
-                </span>
-              ))}
-            </p>
-          </div>
+        {/* 地球のビジュアル＋本文（背景に画像指定） */}
+        <div className="fv-earth-bg">
+          <p className="fv-earth-copy">
+            {(body || "").split("\n").map((line, i) => (
+              <span key={i}>
+                {line}
+                <br />
+              </span>
+            ))}
+          </p>
         </div>
       </section>
 
       {/* styled-jsx */}
       <style jsx>{`
         /* ========== Header ========== */
-        .site-header {
-          top: 0;
-          z-index: 100;
-          background: transparent;
-        }
+        .site-header { top: 0; z-index: 100; background: transparent; }
         .header-inner {
           max-width: 1000px;
           margin: 0 auto;
           padding: 10px 16px 0;
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
+          display: flex; justify-content: flex-end; align-items: center;
         }
         .lang-switcher { position: relative; }
         .lang-btn {
-          appearance: none;
-          background: rgba(255, 255, 255, 0.86);
-          backdrop-filter: blur(6px);
-          border: 1px solid #e3e3e3;
-          border-radius: 9999px;
-          padding: 6px 12px;
-          font-size: 12px;
-          letter-spacing: 0.12em;
-          color: #333;
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          cursor: pointer;
-          transition: background 0.15s ease, border-color 0.15s ease;
+          appearance: none; background: rgba(255,255,255,.86); backdrop-filter: blur(6px);
+          border: 1px solid #e3e3e3; border-radius: 9999px; padding: 6px 12px;
+          font-size: 12px; letter-spacing: .12em; color: #333; display: inline-flex; gap: 6px;
+          cursor: pointer; transition: background .15s ease, border-color .15s ease;
         }
         .lang-btn:hover { background: #fff; border-color: #d6d6d6; }
         .caret { font-size: 11px; line-height: 1; }
@@ -191,9 +151,8 @@ export default function HeroSection() {
 
         /* ========== First View ========== */
         h2, p, span { font-family: Arial, Helvetica, sans-serif !important; }
-
         .first-view { background: #fff; padding: 8px 16px 60px; }
-        .is-visible { animation: fadeInUp 0.9s ease-out both; }
+        .is-visible { animation: fadeInUp .9s ease-out both; }
         @keyframes fadeInUp {
           from { opacity: 0; transform: translate3d(0,10px,0); }
           to   { opacity: 1; transform: translateZ(0); }
@@ -207,49 +166,61 @@ export default function HeroSection() {
           position: absolute; inset: 0; display: flex; flex-direction: column;
           align-items: center; justify-content: center; text-align: center; color: #2a2a2a; padding: 12px;
         }
-
-        .fv-logo-img {
-          width: clamp(260px, 60vw, 540px);
-          height: auto;
-          display: block;
-        }
-
-        .fv-tagline {
-          margin: 8px 0 0; font-size: 16px; font-weight:400; letter-spacing: 0.12em; color: #777;font-family: Arial, Helvetica, sans-serif !important;
-        }
+        .fv-logo-img { width: clamp(260px, 60vw, 540px); height: auto; display: block; }
+        .fv-tagline { margin: 8px 0 0; font-size: 16px; font-weight: 400; letter-spacing: .12em; color: #777; font-family: ot-bunyu-mincho-stdn, serif !important; }
 
         .fv-catch {
           margin: 64px auto 39px; text-align: center; color: #3a3a3a;
           font-family: ot-bunyu-mincho-stdn, serif;
-          font-size: 40px; line-height: 1.8; letter-spacing: 0.1em; font-weight: 600;
+          font-size: 43px; line-height: 1.5; letter-spacing: .1em; font-weight: 600;
         }
 
-        .fv-earth {
-          position: relative; height: 380px; max-width: 990px;
-          margin: 0 auto; overflow: hidden; background: #000;
+        /* ===== 地球ブロック ===== */
+        .fv-earth-bg {
+          position: relative;
+          height: 500px;
+          max-width: 1200px;
+          margin: 0 auto;
+          border-radius: 8px;
+          overflow: hidden;
+          background-image:
+            linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.72) 38%, rgba(0,0,0,.3) 68%, rgba(0,0,0,0) 80%),
+            url('/fv-earth.jpg');
+          background-size: cover, cover;
+          background-position: 75% center, 75% center;
+          background-repeat: no-repeat;
+          display: flex;
+          align-items: center;
+          padding: 0 24px 0 120px;
+          color: #fff;
+          text-shadow: 0 1px 2px rgba(0,0,0,.45);
         }
-        .fv-earth-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-        .fv-earth-text {
-          position: absolute; font-size:20px; z-index: 2; top: 50%; padding:20px 40px; transform: translateY(-50%);
-          color: #fff; max-width: 740px; padding-right: 24px; text-shadow: 0 1px 2px rgba(0,0,0,.45);
+        .fv-earth-copy {
+          margin: 0;
+          max-width: 720px;
+          font-size: 22px;
+          line-height: 2;
+          letter-spacing: .08em;
         }
-        .fv-earth-text p { margin: 0; font-size: 22px; line-height: 2; letter-spacing: 0.08em; }
 
-        @media (max-width: 1024px) {
+        @media (max-width:1200px){
+          .fv-earth-bg{ height: 460px; max-width: 1080px; padding-left: 80px; }
+          .fv-earth-copy{ max-width: 640px; }
+        }
+        @media (max-width:1024px){
           .fv-top { height: 200px; }
           .fv-catch { font-size: 34px; margin: 56px auto 28px; }
-          .fv-earth { height: 340px; }
-          .fv-earth-text { left: 28px; max-width: 560px; }
+          .fv-earth-bg{ height: 420px; max-width: 95vw; padding-left: 40px; }
+          .fv-earth-copy{ max-width: 560px; }
         }
-        @media (max-width: 600px) {
+        @media (max-width:600px){
           .header-inner { padding: 8px 12px 0; }
           .first-view { padding: 8px 12px 44px; }
           .fv-top { height: 180px; }
-          .fv-tagline { font-size: 11px; letter-spacing: 0.1em; }
+          .fv-tagline { font-size: 11px; letter-spacing: .1em; }
           .fv-catch { font-size: 26px; line-height: 1.7; margin: 40px auto 22px; }
-          .fv-earth { height: 300px; }
-          .fv-earth-text { left: 16px; right: 16px; max-width: none; }
-          .fv-earth-text p { font-size: 14px; line-height: 1.9; }
+          .fv-earth-bg{ height: 360px; padding: 0 16px; }
+          .fv-earth-copy{ max-width: none; font-size: 15px; line-height: 1.9; }
         }
       `}</style>
     </>
