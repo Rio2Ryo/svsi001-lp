@@ -78,7 +78,7 @@ export default function HeroSection() {
       <section className={`first-view ${isVisible ? "is-visible" : ""}`}>
         {/* 左上ロゴ（重ね） */}
         <div className="brand-dot" aria-hidden="true">
-          <Image src="/logo-dot.png" alt="" width={180} height={100} priority />
+          <Image src="/logo-dot.png" alt="" width={140} height={100} priority />
         </div>
 
         {/* 上のパウダー帯 */}
@@ -203,7 +203,7 @@ export default function HeroSection() {
 
   position: absolute;
   top: clamp(40px, 7vw, 72px);   /* 縦位置は見た目に合わせて調整 */
-  left: 46%;
+  left: 40%;
   transform: translateX(calc(-50% - var(--dot-offset)));
   z-index: 2;
   filter: grayscale(100%) contrast(.9) opacity(.9);
@@ -227,7 +227,7 @@ export default function HeroSection() {
         .fv-logo-img { width: clamp(280px, 56vw, 520px); height: auto; display: block; }
         .fv-tagline {
           margin: 10px 0 0;
-          font-size: 14px;
+          font-size: 20px;
           letter-spacing: .12em;
           color: #6a6a6a;
           font-family: ot-bunyu-mincho-stdn, serif !important;
@@ -238,7 +238,7 @@ export default function HeroSection() {
           text-align: center;
           color: #3a3a3a;
           font-family: ot-bunyu-mincho-stdn, serif;
-          font-size: 34px;
+          font-size: 40px;
           line-height: 1.5;
           letter-spacing: .1em;
           font-weight: 600;
