@@ -2,10 +2,11 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { myWixClient } from "../../../src/lib/wixClient";
 import Cookies from "js-cookie";
 import Footer from "../../../src/components/Footer";
-import { useI18n } from "../../../src/lib/i18n";
+import { useI18n } from "@/lib/i18n";
 
 /* ====== 価格表示：円⇄ドル 切替 ====== */
 const USD_PER_JPY = Number(process.env.NEXT_PUBLIC_USD_PER_JPY) || 0.006724; // 3300 -> 22.19
@@ -13,6 +14,37 @@ const fmtJPY = new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JP
 const fmtUSD = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const parseJPY = (v) => (typeof v === "number" ? v : Number(String(v ?? "").replace(/[^\d]/g, "")) || 0);
 const formatPrice = (v, lang) => (lang === "en" ? fmtUSD.format(parseJPY(v) * USD_PER_JPY) : fmtJPY.format(parseJPY(v)));
+
+/* ====== 動的テキスト（名前・説明）のローカライズ ======
+   優先1: product.name_en / description_en など JSON 内の英語
+   優先2: en.json の pdp.products.{slug}.name / description
+   フォールバック: 日本語JSONの値
+*/
+function pickLocalizedProductText(product, lang, t) {
+  const slug = String(product?.slug || "").toLowerCase();
+
+  // JSON 内の多言語候補
+  const name_ja = product?.name_ja || product?.name || "";
+  const name_en = product?.name_en || product?.i18n?.en?.name || "";
+  const desc_ja = product?.description_ja || product?.description || "";
+  const desc_en = product?.description_en || product?.i18n?.en?.description || "";
+
+  if (lang === "en") {
+    const nameFromDict = t?.(`pdp.products.${slug}.name`);
+    const descFromDict = t?.(`pdp.products.${slug}.description`);
+    return {
+      name: name_en || nameFromDict || name_ja,
+      description: desc_en || descFromDict || desc_ja,
+    };
+  } else {
+    const nameFromDictJA = t?.(`pdp.products.${slug}.name_ja`);
+    const descFromDictJA = t?.(`pdp.products.${slug}.description_ja`);
+    return {
+      name: name_ja || nameFromDictJA || "",
+      description: desc_ja || descFromDictJA || "",
+    };
+  }
+}
 
 export default function ProductDetailPage() {
   const router = useRouter();
@@ -71,7 +103,8 @@ export default function ProductDetailPage() {
 
           if (found) {
             const foundItem = cartData.lineItems?.find(
-              (item) => item.catalogReference.catalogItemId === found.wixProductId
+              (item) =>
+                item.catalogReference.catalogItemId === found.wixProductId
             );
             if (foundItem) {
               setQuantity(foundItem.quantity);
@@ -106,7 +139,7 @@ export default function ProductDetailPage() {
     if (!product || !product.wixProductId) return;
     if (newQty < 0) return;
 
-    try {
+  try {
       if (newQty === 0 && cartItemId) {
         await myWixClient.currentCart.removeLineItemFromCurrentCart(cartItemId);
         setQuantity(0);
@@ -228,14 +261,17 @@ export default function ProductDetailPage() {
       </>
     );
 
-  // ★ ここで価格を言語に応じてフォーマット
+  // ★ ここで名前・説明をローカライズ（JSON英語 → en.json → 日本語）
+  const { name: displayName, description: displayDescription } = pickLocalizedProductText(product, lang, t);
+
+  // ★ 価格を言語に応じてフォーマット
   const displayOriginal = product.originalprice ? formatPrice(product.originalprice, lang) : null;
   const displayPrice = formatPrice(product.price, lang);
 
   return (
     <>
       <Head>
-        <title>{`${product.name} | ${tr("pdp.head.titleSuffix", "Mother Vegetables Confidence MV-Si002")}`}</title>
+        <title>{`${displayName} | ${tr("pdp.head.titleSuffix", "Mother Vegetables Confidence MV-Si002")}`}</title>
       </Head>
 
       {/* ===== 言語切替（HeroSectionと同じ） ===== */}
@@ -271,17 +307,26 @@ export default function ProductDetailPage() {
 
       <div className="page">
         <div className="grid">
-          {/* 左：大きい商品画像 */}
+          {/* 左：大きい商品画像（next/imageに変更） */}
           <div className="media">
-            <img src={mainImg} alt={product.name} />
+            <div className="mediaImg">
+              <Image
+                src={mainImg}
+                alt={displayName}
+                fill
+                sizes="(max-width: 1200px) 60vw, 720px"
+                style={{ objectFit: "cover" }}
+                priority
+              />
+            </div>
           </div>
 
           {/* 右：情報パネル */}
           <div className="info">
-            <h1 className="title">{product.name}</h1>
+            <h1 className="title">{displayName}</h1>
 
-            {/* リード文（JSON description を \n 改行で表示） */}
-            <p className="lead">{product?.description || ""}</p>
+            {/* リード文（\n 改行対応） */}
+            <p className="lead">{displayDescription || ""}</p>
 
             {/* 価格（言語依存で円/ドル） */}
             <div className="priceBlock">
@@ -334,7 +379,7 @@ export default function ProductDetailPage() {
               <div className="accBody">
                 <div>
                   {tr("pdp.title.productNameLabel", "商品名：")}
-                  {product.name}
+                  {displayName}
                 </div>
               </div>
             </details>
@@ -393,6 +438,7 @@ export default function ProductDetailPage() {
             return (
               <div className="lineItem" key={li._id}>
                 <div className="thumb">
+                  {/* ここは外部URLの可能性があるため <img> のままにします */}
                   {thumb ? (
                     <img src={thumb} alt={li.productName?.original || "item"} />
                   ) : (
@@ -402,6 +448,8 @@ export default function ProductDetailPage() {
                 <div className="liInfo">
                   <div className="liName">{li.productName?.original}</div>
                   <div className="liPrice">{li.price?.formattedAmount || ""}</div>
+
+                  {/* ▼ 数量UI */}
                   <div className="liQty">
                     <div className="liQtyBox" role="group" aria-label={tr("pdp.quantity.ariaChange", "数量を変更")}>
                       <button
@@ -475,7 +523,16 @@ export default function ProductDetailPage() {
         .grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 32px; }
         @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
 
-        .media img { width: 100%; border-radius: 12px; object-fit: cover; background: #f6f6f6; }
+        .media { width: 100%; }
+        .mediaImg {
+          position: relative;
+          width: 100%;
+          height: 520px;
+          border-radius: 12px;
+          overflow: hidden;
+          background: #f6f6f6;
+        }
+
         .info { display: flex; flex-direction: column; gap: 14px; }
         .title { font-size: 28px; font-weight: 700; }
         .lead { color: #374151; line-height: 1.9; font-size: 14px; white-space: pre-line; }
@@ -510,7 +567,7 @@ export default function ProductDetailPage() {
         .sideCartBackdrop { position: fixed; inset: 0; background: rgba(0,0,0,.45); opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 1000; }
         .sideCartBackdrop.open { opacity: 1; pointer-events: auto; }
         .sideCart { position: fixed; top: 0; right: 0; width: 380px; max-width: 90vw; height: 100vh; background: #fff;
-          box-shadow: -8px 0 24px rgba(0,0,0,.1); transform: translateX(100%); transition: transform .25s ease;
+          box-shadow: -8px 0 24px rgba(0,0,0,0.1); transform: translateX(100%); transition: transform .25s ease;
           z-index: 1001; display: flex; flex-direction: column; }
         .sideCart.open { transform: translateX(0); }
         .sideCartHeader { display: flex; justify-content: space-between; align-items: center; padding: 16px; font-weight: 700; border-bottom: 1px solid #eee; }
