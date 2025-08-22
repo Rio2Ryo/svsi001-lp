@@ -191,7 +191,7 @@
     "conventional": {
       "title": "Common Manufacturing of High-Purity Silica",
       "p1": "　Quartz-derived / Rice or bamboo-derived",
-      "p2": "　These methods risk chemical residue and allergic reactions,\nso applying to skin can be risky.\nOther-source silica falls below the 95% purity quasi-drug standard."
+      "p2": "　These methods risk chemical residue and allergic reactions,\n　so applying to skin can be risky.\n　Other-source silica falls below the 95% purity quasi-drug standard."
     },
     "callout": {
       "p": "Mazavegi Confidence is produced entirely without chemicals,\nand the more you use it, the more it contributes to CO2 reduction.\n\nFor skin and planet alike—\nthe world’s only high-purity organic silica powder.\nGive it a try.",
@@ -214,9 +214,9 @@
     "other": {
       "title": "Other Certifications",
       "rows": {
-        "0": { "name": "COSMOS Certification", "desc": "Meets the international standard for organic cosmetics" },
-        "1": { "name": "Vegan Certification", "desc": "No animal-derived ingredients detected" },
-        "2": { "name": "Halal Certification", "desc": "Compatible with religious restrictions" }
+        "0": { "name": "COSMOS Certification", "desc": "Meets the international\nstandard for organic\ncosmetics" },
+        "1": { "name": "Vegan Certification", "desc": "No animal-derived\ningredients detected" },
+        "2": { "name": "Halal Certification", "desc": "Compatible with\nreligious restrictions" }
       }
     },
 
