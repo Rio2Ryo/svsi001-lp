@@ -182,14 +182,14 @@ export default function ConceptSection() {
         /* 表風 2カラム（左：項目、右：説明） */
         .cert-table {
           display: flex; align-items: flex-start; justify-content: center;
-          gap: 28px; max-width: 880px; margin: 0 auto 68px;
+          gap: 28px; max-width: 1040px; margin: 0 auto 68px;
         }
         .cert-left, .cert-right { display: grid; row-gap: 0px; }
         .cert-left {
           width: 240px; justify-items: end; color: #4b4b4b; letter-spacing: 0.12em;
         }
         .cert-right { flex: 1; min-width: 0; color: #555; letter-spacing: 0.02em; }
-        .cert-left p, .cert-right p { margin: 0; line-height: 1.2; font-size: 22px; }
+        .cert-left p, .cert-right p { margin: 0; line-height: 1.5; font-size: 24px; }
         .cert-divider { width: 1px; background: #d9d9d9; align-self: stretch; }
         .cert-divider-mobile { display: none; margin: 8px 0; }
 
@@ -200,12 +200,12 @@ export default function ConceptSection() {
         }
         .ms-banner-text {
           position: absolute; z-index: 2; top: 56px; left: 44px;
-          color: rgba(58,58,58,.9); font-size: 32px; line-height: 1.9;
+          color: rgba(58,58,58,.9); font-size: 32px; line-height: 1.6;
           letter-spacing: 0.14em; text-shadow: 0 1px 1px rgba(255,255,255,.45);
         }
         .ja-serif {
           font-family: "Yu Mincho","Hiragino Mincho ProN","Noto Serif JP","Hiragino Kaku Gothic ProN",serif;
-          font-weight: 300;
+          font-weight: 600;
         }
 
         /* 説明テキスト */
@@ -213,7 +213,7 @@ export default function ConceptSection() {
         .ms-description p { margin: 22px 0; font-size: 22px; line-height: 1.6; letter-spacing: 0.06em; }
         .ms-list { list-style: none; padding: 0; margin: 28px 0 16px; }
         .ms-list li { margin: 10px 0; font-size: 20px; line-height: 1.4; letter-spacing: 0.04em; }
-        .ms-note { margin-top: 18px; color: #888; font-size: 12px; line-height: 1.9; letter-spacing: 0.04em; }
+        .ms-note { margin-top: 18px; color: #888; font-size: 14px!important; line-height: 1.9; letter-spacing: 0.04em; }
 
         /* レスポンシブ */
         @media (max-width: 1024px) {

@@ -181,7 +181,7 @@ export default function HeroSection() {
           height: 500px;
           max-width: 1200px;
           margin: 0 auto;
-          border-radius: 8px;
+          border-radius: 0px;
           overflow: hidden;
           background-image:
             linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.72) 38%, rgba(0,0,0,.3) 68%, rgba(0,0,0,0) 80%),
