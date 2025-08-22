@@ -100,19 +100,33 @@ export default function FeatureSection() {
 
           {/* ===== Conventional method ===== */}
           <div className="mv-info mv-info-single">
-            <div className="mv-info-text">
-              <h3 className="mv-subtitle">{convTitle}</h3>
-              <p className="mv-paragraph">{convP1}</p>
-              <p className="mv-paragraph">
-                {(convP2 || "").split("\n").map((line, i) => (
-                  <span key={`conv-${i}`}>
-                    {line}
-                    <br />
-                  </span>
-                ))}
-              </p>
-            </div>
-          </div>
+  <div className="mv-info-text">
+    <h3 className="mv-subtitle">
+      {(convTitle || "").split("\n").map((line, i) => (
+        <span key={`title-${i}`}>
+          {line}
+          <br />
+        </span>
+      ))}
+    </h3>
+    <p className="mv-paragraph">
+      {(convP1 || "").split("\n").map((line, i) => (
+        <span key={`p1-${i}`}>
+          {line}
+          <br />
+        </span>
+      ))}
+    </p>
+    <p className="mv-paragraph">
+      {(convP2 || "").split("\n").map((line, i) => (
+        <span key={`p2-${i}`}>
+          {line}
+          <br />
+        </span>
+      ))}
+    </p>
+  </div>
+</div>
 
           {/* ===== Callout：左→右の灰グラ + 右に silica.png（拡大） ===== */}
           <div className="mv-callout">
