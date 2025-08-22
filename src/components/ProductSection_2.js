@@ -220,6 +220,7 @@ function Row({ items, itemId }) {
           line-height: 1.7;
           font-size: 16.5px;             /* 商品名拡大 */
           letter-spacing: 0.02em;
+          white-space: pre-line; /* ← \n を実際の改行として表示 */
         }
         .pricewrap {
           margin-top: 10px;

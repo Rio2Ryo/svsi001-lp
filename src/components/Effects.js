@@ -190,7 +190,7 @@ export default function EffectsSection() {
         .collab-grid { display: grid; grid-template-columns: 1fr 420px; gap: 36px; align-items: start; }
         .mv-collab-text h4 { font-size: 22px; margin: 18px 0 6px; color: #4a4a4a; letter-spacing: .1em; }
         .mv-collab-text p { margin: 0 0 10px; color: #555; font-size: 22px; line-height: 1.5; letter-spacing: .04em; }
-        .mv-footnote { font-size: 16px; color: #888; letter-spacing: .04em; max-width: 1320px; margin: 10px auto 0; }
+        .mv-footnote { font-size: 16px; color: #888; letter-spacing: .04em; max-width: 1100px; margin: 10px auto 0; }
 
         .mv-collab-right { display: grid; grid-template-rows: auto 1fr; gap: 18px; }
         .mv-collab-logos { display: grid; gap: 14px; }
