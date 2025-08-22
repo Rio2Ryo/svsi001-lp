@@ -72,11 +72,20 @@ export default function FeatureSection() {
             <div className="mv-info-text">
               <h3 className="mv-subtitle">{meritTitle}</h3>
               <ul className="mv-list">
-                {meritListIdx.map((i) => {
-                  const item = tr(`feature.merit.list.${i}`);
-                  return item ? <li key={`merit-${i}`}>{item}</li> : null;
-                })}
-              </ul>
+  {meritListIdx.map((i) => {
+    const item = tr(`feature.merit.list.${i}`);
+    return item ? (
+      <li key={`merit-${i}`}>
+        {item.split("\n").map((line, idx) => (
+          <span key={idx}>
+            {line}
+            <br />
+          </span>
+        ))}
+      </li>
+    ) : null;
+  })}
+</ul>
             </div>
             <div className="mv-info-img">
               <Image
