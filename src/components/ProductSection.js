@@ -241,15 +241,14 @@ function Row({ items }) {
   min-height: 44px;
   margin-top: 12px;
   padding: 10px 18px;
-  border-radius: 8px;
+  border-radius: 30px;
   background: #ffe926;      /* 黒ボタン */
   color: #000;           /* 白文字 */
   text-decoration: none !important;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: 0.06em;
   border: none;
   cursor: pointer;
-  box-shadow: 0 2px 0 rgba(0,0,0,.25);
   transition: transform .02s ease, opacity .2s ease, box-shadow .2s ease;
 }
 :global(.cta:hover) { opacity: .92; }
