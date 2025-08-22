@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
+import { useI18n } from "../../../src/lib/i18n"; // ← プロジェクトに合わせて必要ならパス調整
 
 /* ▼ フォールバック（商品名は必ずここを表示用に使う） */
 const PRODUCTS = [
@@ -12,11 +13,37 @@ const PRODUCTS = [
   { name: "【ミックスパック】\nマザベジコンフィデンスパウダー\n2,000mg（エクトイン入り）", slug: "double-e-mvsi", description: "ミックスパック（エクトイン入り）です。", originalprice: "3,300円", price: "3,300円", ItemPic: "/mix2000.png", wixProductId: "7ba04481-0674-5262-9325-8d62f2d25095", url: "https://www.dotpb.jp/product-page/double-e-mvsi" },
   { name: "【薬用スライドケース】\nマザベジコンフィデンスパウダー\n2,000mg（エクトイン入り）", slug: "case-e-mvsi", description: "薬用スライドケ－ス（エクトイン入り）です。", originalprice: "3,300円", price: "3,300円", ItemPic: "/case2000.png", wixProductId: "48c2a407-4738-2f3f-e317-d118a4046e5c", url: "https://www.dotpb.jp/product-page/case-e-mvsi" },
   { name: "【10本セット】\nマザベジコンフィデンスパウダー\n10,000mg（エクトイン入り）", slug: "refill-e-mvsi", description: "10本セット（エクトイン入り）です。", originalprice: "12,000円", price: "12,000円", ItemPic: "/10p10000.png", wixProductId: "cc620bb2-fd77-8db3-4bf1-cff751f9e55d", url: "https://www.dotpb.jp/product-page/refill-e-mvsi" },
-  { name: "【30本セット】\nマザベジコンフィデンスパウダー\n30,000mg（エクトイン入り）", slug: "big-refill-e-mvsi", description: "30本セット（エクトイン入り）です。", originalprice: "30,000円", price: "30,000円", ItemPic: "/30p30000.png", wixProductId: "c15bad90-8fff-b003-7792-2282202b6ccb", url: "https://www.dotpb.jp/product-page/big-refill-e-mvsi" },
+  { name: "【30本セット】\nマザベジコンフィデンスパウダー\n30,000mg（エクトイン入り）", slug: "big-refill-e-mvsi", description: "30本セット（エクトイン入り）です。", originalprice: "30,000円", price: "30,000円", ItemPic: "/30p30000.png", wixProductId: "c15bad90-8fff-b003-7792-2282202b6ccb", url: "https://www.dotpb.jp/product-page/big-refill-e-mvsi" }
 ];
+
+/* ▼ ENの表示名（slug → 英語名） */
+const EN_NAME_BY_SLUG = {
+  "double-mvsi": "[Mix Pack]\nMazavegi Confidence Powder\n1,500mg",
+  "case-mvsi": "[Slide Case]\nMazavegi Confidence Powder\n1,500mg",
+  "big-refill-mvsi": "[30 Pack]\nMazavegi Confidence Powder\n22,500mg",
+  "double-e-mvsi": "[Mix Pack]\nMazavegi Confidence Powder\n2,000mg (with Ectoine)",
+  "case-e-mvsi": "[Slide Case]\nMazavegi Confidence Powder\n2,000mg (with Ectoine)",
+  "refill-e-mvsi": "[10 Pack]\nMazavegi Confidence Powder\n10,000mg (with Ectoine)",
+  "big-refill-e-mvsi": "[30 Pack]\nMazavegi Confidence Powder\n30,000mg (with Ectoine)"
+};
+
+/* ▼ 為替レート（3,300円 → $22.19 に合わせて 0.006724） */
+const USD_PER_JPY = Number(process.env.NEXT_PUBLIC_USD_PER_JPY) || 0.006724;
+
+/* ▼ フォーマット/パース */
+const fmtJPY = new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 0 });
+const fmtUSD = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const parseJPY = (v) => (typeof v === "number" ? v : Number(String(v ?? "").replace(/[^\d]/g, "")) || 0);
+const formatPrice = (raw, lang) => {
+  const jpy = parseJPY(raw);
+  return lang === "en" ? fmtUSD.format(jpy * USD_PER_JPY) : fmtJPY.format(jpy);
+};
 
 export default function ProductLineupSection() {
   const router = useRouter();
+  const { t, lang } = useI18n();
+  const tr = (k, fb = "") => t(k) ?? fb;
+
   const rawId = router.query?.itemId;
   const itemId = Array.isArray(rawId) ? rawId[0] : rawId;
 
@@ -47,18 +74,18 @@ export default function ProductLineupSection() {
       return PRODUCTS;
     }
     const fbByBase = new Map(PRODUCTS.map(p => [baseKey(p.slug), p]));
-
     return jsonItems.map(j => {
       const fb = fbByBase.get(baseKey(j.slug)) || {};
       return {
         ...fb,
         ...j,                 // 価格や画像などはJSONを優先
-        name: fb.name || "",  // ★ 商品名は必ずPRODUCTSのnameを使用
+        name: fb.name || ""   // ★ 商品名は必ずPRODUCTSのnameを使用（多言語は表示時に差し替え）
       };
     });
   }, [jsonItems]);
 
-  const isEcto = (p) => (p?.name || "").includes("エクトイン");
+  /* ★ 判定は名前ではなく slug 基準（エクトイン = '-e-' を含む） */
+  const isEcto = (p) => String(p.slug || "").includes("-e-");
   const baseItems = itemsForDisplay.filter((p) => !isEcto(p));
   const ectoItems = itemsForDisplay.filter(isEcto);
 
@@ -66,11 +93,11 @@ export default function ProductLineupSection() {
     <section className="lineup">
       {/* ── 上部ヘッダー ── */}
       <div className="lineup-head">
-        <h2 className="lineup-label">商品ラインナップ</h2>
+        <h2 className="lineup-label">{tr("lineup.header", "商品ラインナップ")}</h2>
         <div className="brand-lockup">
           <Image
             src="/MV_LOGO.png"
-            alt="Mother Vegetables Confidence"
+            alt={tr("lineup.alt.brand", "Mother Vegetables Confidence")}
             width={480}
             height={140}
             priority
@@ -79,20 +106,18 @@ export default function ProductLineupSection() {
       </div>
 
       {/* ── 素版 ── */}
-      <h3 className="title">マザベジコンフィデンス【シリカのみ版】</h3>
+      <h3 className="title">{tr("lineup.baseTitle", "マザベジコンフィデンス【シリカのみ版】")}</h3>
       <div className="divider" />
-      <p className="note">成分 オーガニックシリカ純度97.1%以上</p>
-      <Row items={baseItems} itemId={itemId} />
+      <p className="note">{tr("lineup.note.base", "成分 オーガニックシリカ純度97.1%以上")}</p>
+      <Row items={baseItems} itemId={itemId} tr={tr} lang={lang} />
 
       {/* ── エクトイン配合版 ── */}
-      <h3 className="title">マザベジコンフィデンス【エクトイン配合版】</h3>
+      <h3 className="title">{tr("lineup.ectoTitle", "マザベジコンフィデンス【エクトイン配合版】")}</h3>
       <div className="divider" />
       <p className="note">
-        成分 オーガニックシリカ純度97.1%以上
-        <br />
-        <span className="subnote">保湿効果や炎症を抑える効果が期待できる／天然アミノ酸のエクトイン配合</span>
+        {tr("lineup.note.ecto", "成分 オーガニックシリカ純度97.1%以上\n保湿効果や炎症を抑える効果が期待できる／天然アミノ酸のエクトイン配合")}
       </p>
-      <Row items={ectoItems} itemId={itemId} />
+      <Row items={ectoItems} itemId={itemId} tr={tr} lang={lang} />
 
       <style jsx>{`
         .lineup {
@@ -106,7 +131,7 @@ export default function ProductLineupSection() {
         .lineup-label {
           font-family: "ot-bunyu-mincho-stdn", serif;
           font-size: 40px;
-          f0nt-weight:400;
+          font-weight: 400;               /* ← 0(ゼロ)ではなく o(オー) */
           letter-spacing: 0.18em;
           color: #222;
           margin: 50px 0 18px;
@@ -121,7 +146,6 @@ export default function ProductLineupSection() {
         /* セクション見出し */
         .title {
           text-align: center;
-          
           font-size: 30px;
           font-weight: 500;
           letter-spacing: 0.12em;
@@ -142,6 +166,7 @@ export default function ProductLineupSection() {
           font-size: 15px;
           letter-spacing: 0.06em;
           margin-bottom: 28px;
+          white-space: pre-line; /* \n 改行対応 */
         }
         .note .subnote { display: inline-block; margin-top: 4px; }
 
@@ -163,31 +188,44 @@ export default function ProductLineupSection() {
   );
 }
 
-function Row({ items, itemId }) {
+function Row({ items, itemId, tr, lang }) {
   return (
     <>
       <div className="row" role="list">
         {items.map((p) => {
           const internalHref = itemId ? `/item/${itemId}/${p.slug}` : "#";
+
+          // 表示名と言語
+          const displayName = lang === "en" ? (EN_NAME_BY_SLUG[p.slug] || p.name) : p.name;
+
+          // 価格（ENならUSD換算、JAは円）
+          const price = formatPrice(p.price, lang);
+          const original = p.originalprice ? formatPrice(p.originalprice, lang) : null;
+
           return (
             <article key={p.slug} className="card" role="listitem">
               <div className="thumb">
                 <Image
                   src={p.ItemPic || "/noimage.png"}
-                  alt={p.name}
+                  alt={displayName}
                   fill
                   sizes="(max-width: 1100px) 240px, 280px"   /* 画像ヒントを拡大 */
                   style={{ objectFit: "contain" }}
                   priority
                 />
               </div>
-              <h3 className="name">{p.name}</h3>
+              <h3 className="name">{displayName}</h3>
               <div className="pricewrap">
-                価格(税込)
-                <span className="price">{p.price}</span>
+                <span className="priceLabel">
+                  {tr("lineup.priceLabel", lang === "en" ? "Price (tax incl.)" : "価格(税込)")}
+                </span>
+                {original && <span className="original">{original}</span>}
+                <span className="price">{price}</span>
               </div>
-              <Link href={internalHref} aria-label={`${p.name} を購入`}>
-                <button type="button" className="btn">ご購入はこちら</button>
+              <Link href={internalHref} aria-label={`${displayName} ${tr("lineup.ctaAria","を購入")}`}>
+                <button type="button" className="btn">
+                  {tr("lineup.cta", lang === "en" ? "Buy now" : "ご購入はこちら")}
+                </button>
               </Link>
             </article>
           );
@@ -218,22 +256,17 @@ function Row({ items, itemId }) {
           font-weight: 400;
           color: #333;
           line-height: 1.7;
-          font-size: 15px;             /* 商品名拡大 */
+          font-size: 15px;               /* 商品名拡大 */
           letter-spacing: 0.02em;
-          white-space: pre-line; /* ← \n を実際の改行として表示 */
+          white-space: pre-line;         /* ← \n を実際の改行として表示 */
         }
         .pricewrap {
           margin-top: 10px;
           font-size: 16px;               /* ラベル拡大 */
           color: #666;
         }
-        .price {
-          display: block;
-          font-size: 18px;               /* 価格拡大 */
-          color: #111;
-          margin-top: 2px;
-          font-weight:700;
-        }
+        .original { display: block; text-decoration: line-through; color: #9ca3af; margin-top: 2px; }
+        .price { display: block; font-size: 18px; color: #111; margin-top: 2px; font-weight:700; }
         .btn {
           display: inline-block;
           margin-top: 14px;
