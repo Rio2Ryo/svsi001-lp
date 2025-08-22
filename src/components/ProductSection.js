@@ -237,10 +237,9 @@ function Row({ items }) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
   min-height: 44px;
   margin-top: 12px;
-  padding: 6px 12px;
+  padding: 8px 16px;
   border-radius: 30px;
   background: #ffe926;      /* 黒ボタン */
   color: #000;           /* 白文字 */
@@ -249,7 +248,7 @@ function Row({ items }) {
   letter-spacing: 0.06em;
   border: none;
   cursor: pointer;
-  font-size:14px;
+  font-size:13px;
 }
 :global(.cta:hover) { opacity: .92; }
 :global(.cta:active) { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
