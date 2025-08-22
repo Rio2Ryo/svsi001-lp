@@ -5,7 +5,7 @@ import Link from "next/link";
 // ▼データはそのまま
 const PRODUCTS = [
   {
-    name: "【ミックスパック】マザベジコンフィデンスパウダー 1,500mg",
+    name: "【ミックスパック】\nマザベジコンフィデンスパウダー\n1,500mg",
     slug: "double-mvsi",
     description: "ミックスパックです。",
     originalprice: "3,300円",
@@ -15,7 +15,7 @@ const PRODUCTS = [
     url: "https://www.dotpb.jp/product-page/double-mvsi",
   },
   {
-    name: "【薬用スライドケース】マザベジコンフィデンスパウダー 1,500mg",
+    name: "【薬用スライドケース】\nマザベジコンフィデンスパウダー\n1,500mg",
     slug: "case-mvsi",
     description: "薬用スライドケ－スです。",
     originalprice: "3,300円",
@@ -25,7 +25,7 @@ const PRODUCTS = [
     url: "https://www.dotpb.jp/product-page/case-mvsi",
   },
   {
-    name: "【30本セット】マザベジコンフィデンスパウダー 22,500mg",
+    name: "【30本セット】\nマザベジコンフィデンスパウダー\n22,500mg",
     slug: "big-refill-mvsi",
     description: "30本セットです。",
     originalprice: "20,000円",
@@ -35,7 +35,7 @@ const PRODUCTS = [
     url: "https://www.dotpb.jp/product-page/big-refill-mvsi",
   },
   {
-    name: "【ミックスパック】 マザベジコンフィデンスパウダー 2,000mg（エクトイン入り）",
+    name: "【ミックスパック】\nマザベジコンフィデンスパウダー\n2,000mg（エクトイン入り）",
     slug: "double-e-mvsi",
     description: "ミックスパック（エクトイン入り）です。",
     originalprice: "3,300円",
@@ -45,7 +45,7 @@ const PRODUCTS = [
     url: "https://www.dotpb.jp/product-page/double-e-mvsi",
   },
   {
-    name: "【薬用スライドケース】マザベジコンフィデンスパウダー 2,000mg（エクトイン入り）",
+    name: "【薬用スライドケース】\nマザベジコンフィデンスパウダー\n2,000mg（エクトイン入り）",
     slug: "case-e-mvsi",
     description: "薬用スライドケ－ス（エクトイン入り）です。",
     originalprice: "3,300円",
@@ -55,7 +55,7 @@ const PRODUCTS = [
     url: "https://www.dotpb.jp/product-page/case-e-mvsi",
   },
   {
-    name: "【10本セット】マザベジコンフィデンスパウダー 10,000mg（エクトイン入り）",
+    name: "【10本セット】\nマザベジコンフィデンスパウダー\n10,000mg（エクトイン入り）",
     slug: "refill-e-mvsi",
     description: "10本セット（エクトイン入り）です。",
     originalprice: "12,000円",
@@ -65,7 +65,7 @@ const PRODUCTS = [
     url: "https://www.dotpb.jp/product-page/refill-e-mvsi",
   },
   {
-    name: "【30本セット】マザベジコンフィデンスパウダー 30,000mg（エクトイン入り）",
+    name: "【30本セット】\nマザベジコンフィデンスパウダー\n30,000mg（エクトイン入り）",
     slug: "big-refill-e-mvsi",
     description: "30本セット（エクトイン入り）です。",
     originalprice: "30,000円",
@@ -109,8 +109,10 @@ export default function ProductLineupSection() {
       <p className="note">
         成分 オーガニックシリカ純度97.1%以上
         <br />
+        ＋
+        <br />
         <span className="subnote">
-          保湿効果や炎症を抑える効果が期待できる／天然アミノ酸のエクトイン配合
+          保湿効果や炎症を抑える効果が期待できる<br />天然アミノ酸のエクトイン配合
         </span>
       </p>
       <Row items={ectoItems} />

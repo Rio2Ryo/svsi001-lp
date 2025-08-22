@@ -145,7 +145,7 @@ export default function EffectsSection() {
         @keyframes fadeInUp { from { opacity: 0; transform: translate3d(0,8px,0); } to { opacity: 1; transform: translateZ(0); } }
 
         /* ★ 横幅を拡張して右列を伸ばす */
-        .container { max-width: 1320px; margin: 0 auto; }
+        .container { max-width: 1100px; margin: 0 auto; }
 
         .ja-serif { font-family: "Yu Mincho","Hiragino Mincho ProN","Noto Serif JP","Hiragino Kaku Gothic ProN",serif; }
 
