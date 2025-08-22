@@ -153,7 +153,7 @@ export default function FeatureSection() {
           to   { opacity: 1; transform: translateZ(0); }
         }
 
-        .container { max-width: 1024px; margin: 0 auto; }
+        .container { max-width: 1124px; margin: 0 auto; }
 
         /* ===== Banner ===== */
         .mv-banner {
@@ -262,7 +262,7 @@ export default function FeatureSection() {
         .mv-callout-box p {
           margin: 0;
           font-weight: bold;
-          font-size: 26px;
+          font-size: 23px;
           line-height: 1.5;
           letter-spacing: 0.04em;
         }
