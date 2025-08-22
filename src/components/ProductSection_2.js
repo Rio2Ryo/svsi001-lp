@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 
-/* ▼ 既存の静的配列は「フォールバック」として残す（slugでマージに使う） */
+/* ▼ フォールバック配列（商品名はここを正とする） */
 const PRODUCTS = [
   {
     name: "【ミックスパック】 マザベジシリカパウダー 1,500mg",
@@ -79,64 +79,51 @@ const PRODUCTS = [
 ];
 
 export default function ProductLineupSection() {
-  /* URLの /item/[itemId]/... から itemId を取得 */
   const router = useRouter();
   const rawId = router.query?.itemId;
   const itemId = Array.isArray(rawId) ? rawId[0] : rawId;
 
-  /* itemIdごとの JSON を保持 */
   const [jsonItems, setJsonItems] = useState(null); // null=未読, []=読了(空)
 
-  /* itemIdに応じて /public/<itemId>_products.json を取得 */
+  // /public/<itemId>_products.json を取得（ID別）
   useEffect(() => {
     if (!itemId) return;
     let ignore = false;
-
     (async () => {
       try {
         const path = `/${itemId}_products.json`;
         const res = await fetch(path, { cache: "no-store" });
         if (!res.ok) throw new Error(`Failed to load ${path}`);
-        const data = await res.json(); // 期待：[{ slug, name, price, originalprice, ItemPic, ... }]
+        const data = await res.json();
         if (!ignore) setJsonItems(Array.isArray(data) ? data : []);
       } catch (e) {
         console.error(e);
         if (!ignore) setJsonItems([]);
       }
     })();
-
     return () => { ignore = true; };
   }, [itemId]);
 
-  /* JSON優先で表示データを構築（不足はフォールバックで補完） */
+  // JSONを優先してマージ。ただし「name」は必ずPRODUCTSの値を採用
   const itemsForDisplay = useMemo(() => {
-    if (!jsonItems || !Array.isArray(jsonItems)) {
-      // 未読時はフォールバックだけを表示
+    if (!jsonItems || !Array.isArray(jsonItems) || jsonItems.length === 0) {
       return PRODUCTS;
     }
-
-    // slug基準でフォールバックをMap化
     const fbBySlug = new Map(PRODUCTS.map(p => [p.slug, p]));
-
-    if (jsonItems.length === 0) {
-      // 取得失敗 or 該当なし → フォールバック表示
-      return PRODUCTS;
-    }
-
-    // JSONを優先し、不足フィールドはフォールバックで補完
     return jsonItems.map(j => {
       const fb = fbBySlug.get(j.slug) || {};
+      // name はフォールバックを優先固定。それ以外はJSONを優先し不足を補完
       return {
         ...fb,
-        ...j, // name/slug/description/price/originalprice/ItemPic 等はJSONを採用
+        ...j,
+        name: fb.name || j.name || "",   // ← ここで「商品名は固定」
       };
     });
   }, [jsonItems]);
 
-  /* 上段/下段の分類（元実装を踏襲） */
   const isEcto = (p) => (p?.name || "").includes("エクトイン");
-  const baseItems = itemsForDisplay.filter((p) => !isEcto(p)); // 上段3
-  const ectoItems = itemsForDisplay.filter(isEcto);            // 下段4
+  const baseItems = itemsForDisplay.filter((p) => !isEcto(p));
+  const ectoItems = itemsForDisplay.filter(isEcto);
 
   return (
     <section className="lineup">
@@ -210,9 +197,7 @@ function Row({ items, itemId }) {
     <>
       <div className="row" role="list">
         {items.map((p) => {
-          // ★ jsonのslugをそのまま使い、itemIdはURLのものを用いる（mvsi固定しない）
           const internalHref = itemId ? `/item/${itemId}/${p.slug}` : "#";
-
           return (
             <article key={p.slug} className="card" role="listitem">
               <div className="thumb">
@@ -226,6 +211,7 @@ function Row({ items, itemId }) {
                 />
               </div>
 
+              {/* 商品名はフォールバック（PRODUCTS）をそのまま表示 */}
               <h3 className="name">{p.name}</h3>
               <div className="amount">{extractAmount(p.name)}</div>
 
@@ -234,8 +220,9 @@ function Row({ items, itemId }) {
                 <span className="price">{p.price}</span>
               </div>
 
-              <Link href={internalHref} className="cta" aria-label={`${p.name} を購入`}>
-                ご購入はこちら
+              {/* ボタン形状のCTA */}
+              <Link href={internalHref} aria-label={`${p.name} を購入`}>
+                <button type="button" className="btn">ご購入はこちら</button>
               </Link>
             </article>
           );
@@ -284,44 +271,37 @@ function Row({ items, itemId }) {
           color: #111;
           margin-top: 2px;
         }
-        .cta {
+
+        /* ここが「ボタンの形」 */
+        .btn {
           display: inline-block;
           margin-top: 12px;
           padding: 10px 18px;
-          border-radius: 9999px;
-          background: #ffd400;
-          text-decoration: none;
-          color: #111;
+          border-radius: 8px;
+          background: #111;
+          color: #fff;
           font-weight: 700;
-          letter-spacing: 0.08em;
+          letter-spacing: 0.06em;
+          border: none;
+          cursor: pointer;
+          transition: transform .02s ease, opacity .2s ease;
         }
+        .btn:hover { opacity: .9; }
+        .btn:active { transform: translateY(1px); }
+
         @media (max-width: 560px) {
-          .row {
-            width: 100%;
-            gap: 16px;
-          }
-          .card {
-            width: 100%;
-            max-width: 360px;
-          }
-          .thumb {
-            width: 100%;
-            max-width: 360px;
-            height: 180px;
-          }
-          .name {
-            font-size: 14px;
-          }
-          .price {
-            font-size: 17px;
-          }
+          .row { width: 100%; gap: 16px; }
+          .card { width: 100%; max-width: 360px; }
+          .thumb { width: 100%; max-width: 360px; height: 180px; }
+          .name { font-size: 14px; }
+          .price { font-size: 17px; }
         }
       `}</style>
     </>
   );
 }
 
-/* ヘルパー（純JS） */
+/* ヘルパー */
 function extractAmount(name) {
   const m = (name || "").match(/([0-9,]+mg)/);
   return m ? m[1] : "";
