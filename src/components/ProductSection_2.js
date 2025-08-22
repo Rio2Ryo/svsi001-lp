@@ -40,7 +40,6 @@ export default function ProductLineupSection() {
     return () => { ignore = true; };
   }, [itemId]);
 
-  // --- ここが修正ポイント ---
   // slug末尾の1セグメント（ID）を落とした“ベースキー”で対応付ける
   const baseKey = (slug) => (slug || "").replace(/-[^-]+$/, "");
   const itemsForDisplay = useMemo(() => {
@@ -58,7 +57,6 @@ export default function ProductLineupSection() {
       };
     });
   }, [jsonItems]);
-  // --- 修正ここまで ---
 
   const isEcto = (p) => (p?.name || "").includes("エクトイン");
   const baseItems = itemsForDisplay.filter((p) => !isEcto(p));
@@ -66,12 +64,28 @@ export default function ProductLineupSection() {
 
   return (
     <section className="lineup">
-      <h2 className="title">マザベジコンフィデンス【シリカの素版】</h2>
+      {/* ── 上部ヘッダー ── */}
+      <div className="lineup-head">
+        <h2 className="lineup-label">商品ラインナップ</h2>
+        <div className="brand-lockup">
+          <Image
+            src="/MV_LOGO.png"
+            alt="Mother Vegetables Confidence"
+            width={480}
+            height={140}
+            priority
+          />
+        </div>
+      </div>
+
+      {/* ── 素版 ── */}
+      <h3 className="title">マザベジコンフィデンス【シリカの素版】</h3>
       <div className="divider" />
       <p className="note">成分 オーガニックシリカ純度97.1%以上</p>
       <Row items={baseItems} itemId={itemId} />
 
-      <h2 className="title">マザベジコンフィデンス【エクトイン配合版】</h2>
+      {/* ── エクトイン配合版 ── */}
+      <h3 className="title">マザベジコンフィデンス【エクトイン配合版】</h3>
       <div className="divider" />
       <p className="note">
         成分 オーガニックシリカ純度97.1%以上
@@ -81,12 +95,68 @@ export default function ProductLineupSection() {
       <Row items={ectoItems} itemId={itemId} />
 
       <style jsx>{`
-        .lineup { max-width: 1200px; margin: 0 auto; padding: 40px 16px 64px; background: #fff; }
-        .title { text-align: center; font-family: "ot-bunyu-mincho-stdn", serif; font-size: 28px; letter-spacing: 0.1em; color: #222; margin: 28px 0 10px; }
-        .divider { height: 1px; background: #d9d9d9; margin: 10px auto 14px; max-width: 100%; }
-        .note { text-align: center; color: #6d6d6d; font-size: 14px; letter-spacing: 0.06em; margin-bottom: 26px; }
+        .lineup {
+          max-width: 1320px;              /* セクションを広く */
+          margin: 0 auto;
+          padding: 40px 16px 72px;
+          background: #fff;
+        }
+        /* 上部ヘッダー */
+        .lineup-head { text-align: center; margin: 6px 0 40px; }
+        .lineup-label {
+          font-family: "ot-bunyu-mincho-stdn", serif;
+          font-size: 40px;
+          letter-spacing: 0.18em;
+          color: #222;
+          margin: 50px 0 18px;
+        }
+        .brand-lockup :global(img) {
+          display: inline-block;
+          filter: grayscale(100%) contrast(95%) opacity(0.9);
+          width: auto; height: auto;
+          max-width: 480px;
+        }
+
+        /* セクション見出し */
+        .title {
+          text-align: center;
+          font-family: "ot-bunyu-mincho-stdn", serif;
+          font-size: 32px;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          color: #2b2b2b;
+          margin: 44px 0 12px;
+        }
+        /* 区切り線 */
+        .divider {
+          height: 1px;
+          background: #dcdcdc;
+          margin: 10px auto 14px;
+          max-width: 1024px;
+        }
+        /* 注記 */
+        .note {
+          text-align: center;
+          color: #6d6d6d;
+          font-size: 15px;
+          letter-spacing: 0.06em;
+          margin-bottom: 28px;
+        }
         .note .subnote { display: inline-block; margin-top: 4px; }
-        @media (max-width: 560px) { .title { font-size: 20px; line-height: 1.6; } .note { font-size: 12px; } }
+
+        /* 縮小ブレークポイント */
+        @media (max-width: 1100px) {
+          .brand-lockup :global(img) { max-width: 360px; }
+          .title { font-size: 28px; }
+          .divider { max-width: 92vw; }
+          .note { font-size: 14px; }
+        }
+        @media (max-width: 560px) {
+          .lineup-label { font-size: 26px; }
+          .brand-lockup :global(img) { max-width: 280px; }
+          .title { font-size: 21px; line-height: 1.6; margin: 32px 0 8px; }
+          .note { font-size: 12px; }
+        }
       `}</style>
     </section>
   );
@@ -101,7 +171,14 @@ function Row({ items, itemId }) {
           return (
             <article key={p.slug} className="card" role="listitem">
               <div className="thumb">
-                <Image src={p.ItemPic || "/noimage.png"} alt={p.name} fill sizes="240px" style={{ objectFit: "contain" }} priority />
+                <Image
+                  src={p.ItemPic || "/noimage.png"}
+                  alt={p.name}
+                  fill
+                  sizes="(max-width: 1100px) 240px, 280px"   /* 画像ヒントを拡大 */
+                  style={{ objectFit: "contain" }}
+                  priority
+                />
               </div>
               <h3 className="name">{p.name}</h3>
               <div className="pricewrap">
@@ -117,16 +194,79 @@ function Row({ items, itemId }) {
       </div>
 
       <style jsx>{`
-        .row { width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-        .card { width: 240px; text-align: center; padding: 8px 10px 18px; }
-        .thumb { position: relative; width: 240px; height: 160px; margin: 0 auto 10px; }
-        .name { font-weight: 600; color: #333; line-height: 1.6; font-size: 15px; }
-        .amount { margin-top: 4px; font-size: 13px; color: #111; }
-        .pricewrap { margin-top: 10px; font-size: 13px; color: #666; }
-        .price { display: block; font-size: 18px; color: #111; margin-top: 2px; }
-        .btn { display: inline-block; margin-top: 12px; padding: 10px 18px; border-radius: 30px; background: #ffe926; color: #000; font-weight: 400; letter-spacing: 0.06em; border: none; cursor: pointer; transition: transform .02s ease, opacity .2s ease; }
-        .btn:hover { opacity: .9; } .btn:active { transform: translateY(1px); }
-        @media (max-width: 560px) { .row { width: 100%; gap: 16px; } .card { width: 100%; max-width: 360px; } .thumb { width: 100%; max-width: 360px; height: 180px; } .name { font-size: 14px; } .price { font-size: 17px; } }
+        .row {
+          width: min(100%, 1280px);      /* 横幅も広げる */
+          margin: 0 auto;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 24px;                     /* 余白も少し広め */
+        }
+        .card {
+          width: 280px;                  /* PCで拡大 */
+          text-align: center;
+          padding: 10px 12px 20px;
+        }
+        .thumb {
+          position: relative;
+          width: 280px;
+          height: 200px;                 /* 画像枠拡大 */
+          margin: 0 auto 12px;
+        }
+        .name {
+          font-weight: 600;
+          color: #333;
+          line-height: 1.7;
+          font-size: 16.5px;             /* 商品名拡大 */
+          letter-spacing: 0.02em;
+        }
+        .pricewrap {
+          margin-top: 10px;
+          font-size: 14px;               /* ラベル拡大 */
+          color: #666;
+        }
+        .price {
+          display: block;
+          font-size: 20px;               /* 価格拡大 */
+          color: #111;
+          margin-top: 2px;
+        }
+        .btn {
+          display: inline-block;
+          margin-top: 14px;
+          padding: 10px 22px;            /* ボタン拡大 */
+          min-height: 48px;
+          border-radius: 30px;
+          background: #ffe926;
+          color: #000;
+          font-weight: 500;
+          letter-spacing: 0.06em;
+          border: none;
+          cursor: pointer;
+          transition: transform .02s ease, opacity .2s ease;
+          font-size: 14px;
+        }
+        .btn:hover { opacity: .92; }
+        .btn:active { transform: translateY(1px); }
+
+        /* ── 1100px以下で従来サイズへ段階的に縮小 ── */
+        @media (max-width: 1100px) {
+          .row { width: 100%; gap: 20px; }
+          .card { width: 240px; padding: 8px 10px 18px; }
+          .thumb { width: 240px; height: 160px; margin-bottom: 10px; }
+          .name { font-size: 15px; line-height: 1.6; }
+          .pricewrap { font-size: 13px; }
+          .price { font-size: 18px; }
+          .btn { min-height: 44px; padding: 8px 18px; font-size: 13px; }
+        }
+        /* ── 560px以下：1カラム想定 ── */
+        @media (max-width: 560px) {
+          .row { width: 100%; gap: 16px; }
+          .card { width: 100%; max-width: 360px; }
+          .thumb { width: 100%; max-width: 360px; height: 180px; }
+          .name { font-size: 14px; }
+          .price { font-size: 17px; }
+        }
       `}</style>
     </>
   );
