@@ -182,7 +182,7 @@ export default function ConceptSection() {
         /* 表風 2カラム（左：項目、右：説明） */
         .cert-table {
           display: flex; align-items: flex-start; justify-content: center;
-          gap: 28px; max-width: 1040px; margin: 0 auto 68px;
+          gap: 28px; max-width: 1100px; margin: 0 auto 68px;
         }
         .cert-left, .cert-right { display: grid; row-gap: 0px; }
         .cert-left {
@@ -213,7 +213,7 @@ export default function ConceptSection() {
         .ms-description p { margin: 22px 0; font-size: 22px; line-height: 1.6; letter-spacing: 0.06em; }
         .ms-list { list-style: none; padding: 0; margin: 28px 0 16px; }
         .ms-list li { margin: 10px 0; font-size: 20px; line-height: 1.4; letter-spacing: 0.04em; }
-        .ms-note { margin-top: 18px; color: #888; font-size: 14px!important; line-height: 1.9; letter-spacing: 0.04em; }
+        .ms-note { margin-top: 18px; color: #888; font-size: 16px!important; line-height: 1.9; letter-spacing: 0.04em; }
 
         /* レスポンシブ */
         @media (max-width: 1024px) {

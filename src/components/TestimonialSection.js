@@ -216,13 +216,16 @@ export default function TestimonialSection() {
 
         .uv-title {
           text-align: center; font-weight: 700; font-size: 26px;
-          letter-spacing: 0.12em; margin: 92px 0 12px; color: #444;
+          letter-spacing: 0.12em; margin: 112px 0 52px 0; color: #444;
         }
         .uv-intro {
           text-align: center; color: #666; font-size: 24px;
           line-height: 1.4; letter-spacing: 0.04em; margin-bottom: 76px;
         }
-        .uv-note { color: #888; font-size: 24px; }
+        .uv-intro span:nth-of-type(2) {
+    font-size: 16px !important;
+  }
+        .uv-note { color: #888; font-size: 24px; margin-top:14px; }
 
         .uv-sep {
           display: flex; align-items: center; gap: 16px; margin: 42px 0 14px;
@@ -241,7 +244,7 @@ export default function TestimonialSection() {
         }
         .uv-cases.two  { grid-template-columns: repeat(2, minmax(220px,1fr)); }
         .uv-cases.four { grid-template-columns: repeat(2, minmax(220px,1fr)); }
-        .uv-case { color: #3a3a3a; font-size: 22px; letter-spacing: 0.08em; }
+        .uv-case { color: #3a3a3a; font-size: 28px; letter-spacing: 0.08em; }
         .uv-case span { font-size: 16px; color: #777; }
 
         .uv-btn-wrap { display: flex; justify-content: center; margin: 14px 0 110px; }
@@ -279,6 +282,7 @@ export default function TestimonialSection() {
         .badge {
           position: absolute; left: 10px; top: 10px;
           background: #565656; color: #fff; font-size: 14px;
+          font-weight:400;
           padding: 6px 10px; border-radius: 2px; letter-spacing: 0.06em;
         }
         .modal-labels {
