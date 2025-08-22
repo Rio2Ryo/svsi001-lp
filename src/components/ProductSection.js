@@ -245,24 +245,25 @@ function Row({ items }) {
         }
 
         .name {
-          font-weight: 600;
+          font-weight: 300;
           color: #333;
           line-height: 1.7;
-          font-size: 16.5px;          /* ← 商品名を拡大 */
+          font-size: 15px;          /* ← 商品名を拡大 */
           letter-spacing: 0.02em;
           white-space: pre-line; /* ← \n を実際の改行として表示 */
         }
 
         .pricewrap {
           margin-top: 10px;
-          font-size: 14px;            /* ← ラベル少し大きく */
+          font-size: 16px;            /* ← ラベル少し大きく */
           color: #666;
         }
         .price {
           display: block;
-          font-size: 20px;            /* ← 価格も拡大 */
+          font-size: 18px;               /* 価格拡大 */
           color: #111;
           margin-top: 2px;
+          font-weight:700;
         }
 
         :global(.cta),

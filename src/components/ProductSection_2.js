@@ -215,23 +215,24 @@ function Row({ items, itemId }) {
           margin: 0 auto 12px;
         }
         .name {
-          font-weight: 600;
+          font-weight: 300;
           color: #333;
           line-height: 1.7;
-          font-size: 16.5px;             /* 商品名拡大 */
+          font-size: 15px;             /* 商品名拡大 */
           letter-spacing: 0.02em;
           white-space: pre-line; /* ← \n を実際の改行として表示 */
         }
         .pricewrap {
           margin-top: 10px;
-          font-size: 14px;               /* ラベル拡大 */
+          font-size: 16px;               /* ラベル拡大 */
           color: #666;
         }
         .price {
           display: block;
-          font-size: 20px;               /* 価格拡大 */
+          font-size: 18px;               /* 価格拡大 */
           color: #111;
           margin-top: 2px;
+          font-weight:700;
         }
         .btn {
           display: inline-block;
