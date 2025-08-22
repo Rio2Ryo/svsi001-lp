@@ -1,8 +1,9 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useI18n } from "../lib/i18n"; // ← 既存の i18n フック
 
-// ▼データはそのまま
+// ▼データはそのまま（nameの \n はCSSで改行表示に対応）
 const PRODUCTS = [
   {
     name: "【ミックスパック】\nマザベジコンフィデンスパウダー\n1,500mg",
@@ -77,19 +78,22 @@ const PRODUCTS = [
 ];
 
 export default function ProductLineupSection() {
+  const { t } = useI18n();
+  const tr = (k, fb = "") => t(k) ?? fb;
+
   const isEcto = (p) => p.name.includes("エクトイン");
   const baseItems = PRODUCTS.filter((p) => !isEcto(p)); // 上段3
-  const ectoItems = PRODUCTS.filter(isEcto); // 下段4
+  const ectoItems = PRODUCTS.filter(isEcto);            // 下段4
 
   return (
     <section className="lineup">
       {/* ーー セクションヘッダー ーー */}
       <div className="lineup-head">
-        <h2 className="lineup-label">商品ラインナップ</h2>
+        <h2 className="lineup-label">{tr("lineup.header", "商品ラインナップ")}</h2>
         <div className="brand-lockup">
           <Image
             src="/MV_LOGO.png"
-            alt="Mother Vegetables Confidence"
+            alt={tr("lineup.alt.brand", "Mother Vegetables Confidence")}
             width={480}
             height={140}
             priority
@@ -98,28 +102,20 @@ export default function ProductLineupSection() {
       </div>
 
       {/* ── 素版 ── */}
-      <h3 className="title">マザベジコンフィデンス【シリカのみ版】</h3>
+      <h3 className="title">{tr("lineup.baseTitle", "マザベジコンフィデンス【シリカのみ版】")}</h3>
       <div className="divider" />
-      <p className="note">成分 オーガニックシリカ純度97.1%以上</p>
-      <Row items={baseItems} />
+      <p className="note">{tr("lineup.note.base", "成分 オーガニックシリカ純度97.1%以上")}</p>
+      <Row items={baseItems} tr={tr} />
 
       {/* ── エクトイン配合版 ── */}
-      <h3 className="title">マザベジコンフィデンス【エクトイン配合版】</h3>
+      <h3 className="title">{tr("lineup.ectoTitle", "マザベジコンフィデンス【エクトイン配合版】")}</h3>
       <div className="divider" />
-      <p className="note">
-        成分 オーガニックシリカ純度97.1%以上
-        <br />
-        ＋
-        <br />
-        <span className="subnote">
-          保湿効果や炎症を抑える効果が期待できる<br />天然アミノ酸のエクトイン配合
-        </span>
-      </p>
-      <Row items={ectoItems} />
+      <p className="note">{tr("lineup.note.ecto", "成分 オーガニックシリカ純度97.1%以上\n＋\n保湿効果や炎症を抑える効果が期待できる\n天然アミノ酸のエクトイン配合")}</p>
+      <Row items={ectoItems} tr={tr} />
 
       <style jsx>{`
         .lineup {
-          max-width: 1320px;         /* ← セクションを少し広く */
+          max-width: 1320px;
           margin: 0 auto;
           padding: 40px 16px 72px;
           background: #fff;
@@ -128,7 +124,7 @@ export default function ProductLineupSection() {
         .lineup-head { text-align: center; margin: 6px 0 40px; }
         .lineup-label {
           font-family: "ot-bunyu-mincho-stdn", serif;
-          f0nt-weight:400;
+          font-weight: 400;
           font-size: 40px;
           letter-spacing: 0.18em;
           color: #222;
@@ -143,8 +139,7 @@ export default function ProductLineupSection() {
 
         .title {
           text-align: center;
-          
-          font-size: 30px;            /* ← 少し大きく */
+          font-size: 30px;
           font-weight: 500;
           letter-spacing: 0.12em;
           color: #2b2b2b;
@@ -155,15 +150,16 @@ export default function ProductLineupSection() {
           height: 1px;
           background: #dcdcdc;
           margin: 10px auto 14px;
-          max-width: 1024px;          /* ← 線も少し長めに */
+          max-width: 1024px;
         }
 
         .note {
           text-align: center;
           color: #6d6d6d;
-          font-size: 15px;            /* ← 注記も少し大きく */
+          font-size: 15px;
           letter-spacing: 0.06em;
           margin-bottom: 28px;
+          white-space: pre-line; /* \n を改行表示 */
         }
         .note .subnote { display: inline-block; margin-top: 4px; }
 
@@ -187,13 +183,12 @@ export default function ProductLineupSection() {
 }
 
 /* 行：中央寄せ。カードをPCで280pxに拡大、1100px以下で240pxへ縮小。 */
-function Row({ items }) {
+function Row({ items, tr }) {
   return (
     <>
       <div className="row" role="list">
         {items.map((p) => {
           const internalHref = `/item/mvsi/${p.slug}`;
-
           return (
             <article key={p.slug} className="card" role="listitem">
               <div className="thumb">
@@ -201,7 +196,7 @@ function Row({ items }) {
                   src={p.ItemPic}
                   alt={p.name}
                   fill
-                  sizes="(max-width: 1100px) 240px, 280px"  /* ← 画像サイズヒントも拡大 */
+                  sizes="(max-width: 1100px) 240px, 280px"
                   style={{ objectFit: "contain" }}
                   priority
                 />
@@ -209,12 +204,12 @@ function Row({ items }) {
 
               <h3 className="name">{p.name}</h3>
               <div className="pricewrap">
-                価格(税込)
+                <span className="priceLabel">{tr("lineup.priceLabel", "価格(税込)")}</span>
                 <span className="price">{p.price}</span>
               </div>
 
               <Link href={internalHref} className="cta" aria-label={`${p.name} を購入`}>
-                ご購入はこちら
+                {tr("lineup.cta", "ご購入はこちら")}
               </Link>
             </article>
           );
@@ -223,24 +218,24 @@ function Row({ items }) {
 
       <style jsx>{`
         .row {
-          width: min(100%, 1280px);   /* ← 横幅を少し広げる */
+          width: min(100%, 1280px);
           margin: 0 auto;
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
-          gap: 24px;                  /* ← 余白も少し広め */
+          gap: 24px;
         }
 
         .card {
-          width: 280px;               /* ← 240 → 280 に拡大（PC） */
+          width: 280px;
           text-align: center;
           padding: 10px 12px 20px;
         }
 
         .thumb {
           position: relative;
-          width: 280px;               /* ← 画像枠も拡大 */
-          height: 200px;              /* ← 160 → 200 */
+          width: 280px;
+          height: 200px;
           margin: 0 auto 12px;
         }
 
@@ -248,22 +243,23 @@ function Row({ items }) {
           font-weight: 400;
           color: #333;
           line-height: 1.7;
-          font-size: 15px;          /* ← 商品名を拡大 */
+          font-size: 15px;
           letter-spacing: 0.02em;
-          white-space: pre-line; /* ← \n を実際の改行として表示 */
+          white-space: pre-line; /* nameの \n を改行表示 */
         }
 
         .pricewrap {
           margin-top: 10px;
-          font-size: 16px;            /* ← ラベル少し大きく */
+          font-size: 16px;
           color: #666;
         }
+        .priceLabel { display: inline-block; }
         .price {
           display: block;
-          font-size: 18px;               /* 価格拡大 */
+          font-size: 18px;
           color: #111;
           margin-top: 2px;
-          font-weight:700;
+          font-weight: 700;
         }
 
         :global(.cta),
@@ -272,7 +268,7 @@ function Row({ items }) {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          min-height: 48px;           /* ← ボタンも少し大きく */
+          min-height: 48px;
           margin-top: 14px;
           padding: 10px 22px;
           border-radius: 30px;
@@ -289,7 +285,6 @@ function Row({ items }) {
         :global(.cta:active) { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
         :global(.cta:focus-visible) { outline: 2px solid #111; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(17,17,17,.2); }
 
-        /* ── 1100px以下で従来サイズへ縮小 ── */
         @media (max-width: 1100px) {
           .row { width: 100%; gap: 20px; }
           .card { width: 240px; padding: 8px 10px 18px; }
@@ -300,7 +295,6 @@ function Row({ items }) {
           :global(.cta) { min-height: 44px; padding: 8px 18px; font-size: 13px; }
         }
 
-        /* ── 560px以下：1カラム想定 ── */
         @media (max-width: 560px) {
           .row { width: 100%; gap: 16px; }
           .card { width: 100%; max-width: 360px; }

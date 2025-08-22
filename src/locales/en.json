@@ -338,5 +338,17 @@
       "subtotalLabel": "Subtotal:",
       "checkout": "Proceed to Checkout"
     }
+  },
+  "lineup": {
+    "header": "Product Lineup",
+    "baseTitle": "Mazavegi Confidence [Silica-Only]",
+    "ectoTitle": "Mazavegi Confidence [Ectoine Formulation]",
+    "note": {
+      "base": "Ingredients: Organic silica purity 97.1% or higher",
+      "ecto": "Ingredients: Organic silica purity 97.1% or higher\n+\nEctoine (a natural amino acid) added for expected moisturizing and anti-inflammatory benefits"
+    },
+    "priceLabel": "Price (tax incl.)",
+    "cta": "Buy now",
+    "alt": { "brand": "Mother Vegetables Confidence" }
   }
 }
