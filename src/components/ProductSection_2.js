@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
-import { useI18n } from "../../../src/lib/i18n"; // ← プロジェクトに合わせて必要ならパス調整
+import { useI18n } from "@/lib/i18n"; // ← ここを統一
 
 /* ▼ フォールバック（商品名は必ずここを表示用に使う） */
 const PRODUCTS = [
@@ -302,7 +302,6 @@ function Row({ items, itemId, tr, lang }) {
           .thumb { width: 100%; max-width: 360px; height: 180px; }
           .name { font-size: 14px; }
           .price { font-size: 17px; }
-        }
       `}</style>
     </>
   );
