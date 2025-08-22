@@ -78,7 +78,7 @@ export default function HeroSection() {
       <section className={`first-view ${isVisible ? "is-visible" : ""}`}>
         {/* 左上ロゴ（重ね） */}
         <div className="brand-dot" aria-hidden="true">
-          <Image src="/logo-dot.png" alt="" width={64} height={24} priority />
+          <Image src="/logo-dot.png" alt="" width={100} height={100} priority />
         </div>
 
         {/* 上のパウダー帯 */}
@@ -196,15 +196,19 @@ export default function HeroSection() {
           to   { opacity: 1; transform: translateZ(0); }
         }
 
-        /* 左上重ねロゴ */
-        .brand-dot{
-          position: absolute;
-          top: 54px;              /* 見本の「やや左上」へ */
-          left: clamp(12px, 6vw, 64px);
-          z-index: 2;
-          filter: grayscale(100%) contrast(.9) opacity(.9);
-          pointer-events: none;
-        }
+        /* 左上ロゴ：画面中央から少し左へ固定（レスポンシブで安定） */
+.brand-dot{
+  /* ずらし量：最小80px〜最大220px、基本は 18vw を採用 */
+  --dot-offset: clamp(80px, 18vw, 220px);
+
+  position: absolute;
+  top: clamp(40px, 7vw, 72px);   /* 縦位置は見た目に合わせて調整 */
+  left: 50%;
+  transform: translateX(calc(-50% - var(--dot-offset)));
+  z-index: 2;
+  filter: grayscale(100%) contrast(.9) opacity(.9);
+  pointer-events: none;
+}
 
         .fv-top {
           position: relative;
