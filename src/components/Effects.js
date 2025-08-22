@@ -213,7 +213,7 @@ export default function EffectsSection() {
         .mv-collab-text p {
           margin: 0 0 10px; color: #555; font-size: 22px; line-height: 1.5; letter-spacing: 0.04em;
         }
-        .mv-footnote { font-size: 20px; color: #888; letter-spacing: 0.04em; max-width: 1100px; margin: 10px auto 0 auto; }
+        .mv-footnote { font-size: 16px; color: #888; letter-spacing: 0.04em; max-width: 1100px; margin: 10px auto 0 auto; }
 
         /* 右のロゴ群 */
         .mv-collab-right { display: grid; grid-template-rows: auto 1fr; gap: 18px; }

@@ -83,14 +83,28 @@ export default function ProductLineupSection() {
 
   return (
     <section className="lineup">
+      {/* ーー セクションヘッダー（見本どおり） ーー */}
+      <div className="lineup-head">
+        <h2 className="lineup-label">商品ラインナップ</h2>
+        <div className="brand-lockup">
+          <Image
+            src="/MV_LOGO.png"        // 別ロゴがあればここを差し替え
+            alt="Mother Vegetables Confidence"
+            width={420}
+            height={120}
+            priority
+          />
+        </div>
+      </div>
+
       {/* ── 素版 ── */}
-      <h2 className="title">マザベジコンフィデンス【シリカの素版】</h2>
+      <h3 className="title">マザベジコンフィデンス【シリカのみ版】</h3>
       <div className="divider" />
       <p className="note">成分 オーガニックシリカ純度97.1%以上</p>
       <Row items={baseItems} />
 
       {/* ── エクトイン配合版 ── */}
-      <h2 className="title">マザベジコンフィデンス【エクトイン配合版】</h2>
+      <h3 className="title">マザベジコンフィデンス【エクトイン配合版】</h3>
       <div className="divider" />
       <p className="note">
         成分 オーガニックシリカ純度97.1%以上
@@ -108,20 +122,42 @@ export default function ProductLineupSection() {
           padding: 40px 16px 64px;
           background: #fff;
         }
+
+        /* 見本の上部構成 */
+        .lineup-head { text-align: center; margin: 10px 0 36px; }
+        .lineup-label {
+          font-family: "ot-bunyu-mincho-stdn", serif;
+          font-size: 32px;
+          letter-spacing: 0.18em;
+          color: #222;
+          margin: 0 0 18px;
+        }
+        .brand-lockup :global(img) {
+          display: inline-block;
+          filter: grayscale(100%) contrast(95%) opacity(0.9);
+          width: auto; height: auto;
+          max-width: 420px;
+        }
+
+        /* セクション見出し（太め・やや大きく） */
         .title {
           text-align: center;
           font-family: "ot-bunyu-mincho-stdn", serif;
-          font-size: 28px;
-          letter-spacing: 0.1em;
-          color: #222;
-          margin: 28px 0 10px;
+          font-size: 30px;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          color: #2b2b2b;
+          margin: 42px 0 10px;
         }
+
+        /* 下線は細く長め（見本の雰囲気） */
         .divider {
           height: 1px;
-          background: #d9d9d9;
-          margin: 10px auto 14px;
-          max-width: 100%;
+          background: #dcdcdc;
+          margin: 8px auto 12px;
+          max-width: 960px; /* ライン幅を少し絞る */
         }
+
         .note {
           text-align: center;
           color: #6d6d6d;
@@ -133,14 +169,17 @@ export default function ProductLineupSection() {
           display: inline-block;
           margin-top: 4px;
         }
+
         @media (max-width: 560px) {
+          .lineup-label { font-size: 24px; }
+          .brand-lockup :global(img) { max-width: 280px; }
           .title {
-            font-size: 20px;
+            font-size: 21px;
             line-height: 1.6;
+            margin: 32px 0 8px;
           }
-          .note {
-            font-size: 12px;
-          }
+          .divider { max-width: 88vw; }
+          .note { font-size: 12px; }
         }
       `}</style>
     </section>
@@ -212,11 +251,6 @@ function Row({ items }) {
           line-height: 1.6;
           font-size: 15px;
         }
-        .amount {
-          margin-top: 4px;
-          font-size: 13px;
-          color: #111;
-        }
         .pricewrap {
           margin-top: 10px;
           font-size: 13px;
@@ -228,58 +262,43 @@ function Row({ items }) {
           color: #111;
           margin-top: 2px;
         }
-       /* ← 既存の .cta 定義を 丸ごと このブロックに置換（他は触らない） */
-:global(.cta),
-:global(.cta:link),
-:global(.cta:visited) {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  margin-top: 12px;
-  padding: 7px 17px;
-  border-radius: 30px;
-  background: #ffe926;      /* 黒ボタン */
-  color: #000;           /* 白文字 */
-  text-decoration: none !important;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  border: none;
-  cursor: pointer;
-  font-size:13px;
-}
-:global(.cta:hover) { opacity: .92; }
-:global(.cta:active) { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
-:global(.cta:focus-visible) { outline: 2px solid #111; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(17,17,17,.2); }
 
+        :global(.cta),
+        :global(.cta:link),
+        :global(.cta:visited) {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 44px;
+          margin-top: 12px;
+          padding: 7px 17px;
+          border-radius: 30px;
+          background: #ffe926;
+          color: #000;
+          text-decoration: none !important;
+          font-weight: 400;
+          letter-spacing: 0.06em;
+          border: none;
+          cursor: pointer;
+          font-size: 13px;
+        }
+        :global(.cta:hover) { opacity: .92; }
+        :global(.cta:active) { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
+        :global(.cta:focus-visible) { outline: 2px solid #111; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(17,17,17,.2); }
 
         @media (max-width: 560px) {
-          .row {
-            width: 100%;
-            gap: 16px;
-          }
-          .card {
-            width: 100%;
-            max-width: 360px;
-          }
-          .thumb {
-            width: 100%;
-            max-width: 360px;
-            height: 180px;
-          }
-          .name {
-            font-size: 14px;
-          }
-          .price {
-            font-size: 17px;
-          }
+          .row { width: 100%; gap: 16px; }
+          .card { width: 100%; max-width: 360px; }
+          .thumb { width: 100%; max-width: 360px; height: 180px; }
+          .name { font-size: 14px; }
+          .price { font-size: 17px; }
         }
       `}</style>
     </>
   );
 }
 
-/* ヘルパー（純JS） */
+/* ヘルパー（未使用なら削除可） */
 function extractAmount(name) {
   const m = name.match(/([0-9,]+mg)/);
   return m ? m[1] : "";
