@@ -5,7 +5,7 @@ import Link from "next/link";
 // ▼データはそのまま
 const PRODUCTS = [
   {
-    name: "【ミックスパック】 マザベジシリカパウダー 1,500mg",
+    name: "【ミックスパック】 マザベジコンフィデンスパウダー 1,500mg",
     slug: "double-mvsi",
     description: "ミックスパックです。",
     originalprice: "3,300円",
@@ -15,7 +15,7 @@ const PRODUCTS = [
     url: "https://www.dotpb.jp/product-page/double-mvsi",
   },
   {
-    name: "【薬用スライドケース】マザベジシリカパウダー 1,500mg",
+    name: "【薬用スライドケース】マザベジコンフィデンスパウダー 1,500mg",
     slug: "case-mvsi",
     description: "薬用スライドケ－スです。",
     originalprice: "3,300円",
@@ -25,7 +25,7 @@ const PRODUCTS = [
     url: "https://www.dotpb.jp/product-page/case-mvsi",
   },
   {
-    name: "【30本セット】マザベジシリカパウダー 22,500mg",
+    name: "【30本セット】マザベジコンフィデンスパウダー 22,500mg",
     slug: "big-refill-mvsi",
     description: "30本セットです。",
     originalprice: "20,000円",
@@ -35,7 +35,7 @@ const PRODUCTS = [
     url: "https://www.dotpb.jp/product-page/big-refill-mvsi",
   },
   {
-    name: "【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り）",
+    name: "【ミックスパック】 マザベジコンフィデンスパウダー 2,000mg（エクトイン入り）",
     slug: "double-e-mvsi",
     description: "ミックスパック（エクトイン入り）です。",
     originalprice: "3,300円",
@@ -45,7 +45,7 @@ const PRODUCTS = [
     url: "https://www.dotpb.jp/product-page/double-e-mvsi",
   },
   {
-    name: "【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り）",
+    name: "【薬用スライドケース】マザベジコンフィデンスパウダー 2,000mg（エクトイン入り）",
     slug: "case-e-mvsi",
     description: "薬用スライドケ－ス（エクトイン入り）です。",
     originalprice: "3,300円",
@@ -55,7 +55,7 @@ const PRODUCTS = [
     url: "https://www.dotpb.jp/product-page/case-e-mvsi",
   },
   {
-    name: "【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り）",
+    name: "【10本セット】マザベジコンフィデンスパウダー 10,000mg（エクトイン入り）",
     slug: "refill-e-mvsi",
     description: "10本セット（エクトイン入り）です。",
     originalprice: "12,000円",
@@ -65,7 +65,7 @@ const PRODUCTS = [
     url: "https://www.dotpb.jp/product-page/refill-e-mvsi",
   },
   {
-    name: "【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り）",
+    name: "【30本セット】マザベジコンフィデンスパウダー 30,000mg（エクトイン入り）",
     slug: "big-refill-e-mvsi",
     description: "30本セット（エクトイン入り）です。",
     originalprice: "30,000円",
@@ -231,16 +231,27 @@ function Row({ items }) {
           margin-top: 2px;
         }
         .cta {
-          display: inline-block;
-          margin-top: 12px;
-          padding: 10px 18px;
-          border-radius: 9999px;
-          background: #ffd400;
-          text-decoration: none;
-          color: #111;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-        }
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;              /* 横いっぱいで“ボタン感”を強化 */
+  min-height: 44px;         /* タップしやすい高さ */
+  margin-top: 12px;
+  padding: 10px 16px;
+  border-radius: 30px;
+  background: #ffe926;         /* 黒ボタン */
+  color: #000;              /* 白文字 */
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(0,0,0,.25);
+  transition: transform .02s ease, opacity .2s ease, box-shadow .2s ease;
+}
+.cta:hover { opacity: .92; }
+.cta:active { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
+.cta:focus-visible { outline: 2px solid #111; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(17,17,17,.2); }
 
         @media (max-width: 560px) {
           .row {

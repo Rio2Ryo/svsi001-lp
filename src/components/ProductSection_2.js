@@ -6,13 +6,13 @@ import { useRouter } from "next/router";
 
 /* ▼ フォールバック（商品名は必ずここを表示用に使う） */
 const PRODUCTS = [
-  { name: "【ミックスパック】 マザベジシリカパウダー 1,500mg", slug: "double-mvsi", description: "ミックスパックです。", originalprice: "3,300円", price: "3,300円", ItemPic: "/mix1500.png", wixProductId: "dcb1eb79-e65a-02df-a8f2-a80385c56e00", url: "https://www.dotpb.jp/product-page/double-mvsi" },
-  { name: "【薬用スライドケース】マザベジシリカパウダー 1,500mg", slug: "case-mvsi", description: "薬用スライドケ－スです。", originalprice: "3,300円", price: "3,300円", ItemPic: "/case1500.png", wixProductId: "7be06482-8fca-e20d-6a73-48bd3e914460", url: "https://www.dotpb.jp/product-page/case-mvsi" },
-  { name: "【30本セット】マザベジシリカパウダー 22,500mg", slug: "big-refill-mvsi", description: "30本セットです。", originalprice: "20,000円", price: "20,000円", ItemPic: "/30p22500.png", wixProductId: "fb6bbce6-a63f-b4d1-b817-da05d987e163", url: "https://www.dotpb.jp/product-page/big-refill-mvsi" },
-  { name: "【ミックスパック】 マザベジシリカパウダー 2,000mg（エクトイン入り）", slug: "double-e-mvsi", description: "ミックスパック（エクトイン入り）です。", originalprice: "3,300円", price: "3,300円", ItemPic: "/mix2000.png", wixProductId: "7ba04481-0674-5262-9325-8d62f2d25095", url: "https://www.dotpb.jp/product-page/double-e-mvsi" },
-  { name: "【薬用スライドケース】マザベジシリカパウダー 2,000mg（エクトイン入り）", slug: "case-e-mvsi", description: "薬用スライドケ－ス（エクトイン入り）です。", originalprice: "3,300円", price: "3,300円", ItemPic: "/case2000.png", wixProductId: "48c2a407-4738-2f3f-e317-d118a4046e5c", url: "https://www.dotpb.jp/product-page/case-e-mvsi" },
-  { name: "【10本セット】マザベジシリカパウダー 10,000mg（エクトイン入り）", slug: "refill-e-mvsi", description: "10本セット（エクトイン入り）です。", originalprice: "12,000円", price: "12,000円", ItemPic: "/10p10000.png", wixProductId: "cc620bb2-fd77-8db3-4bf1-cff751f9e55d", url: "https://www.dotpb.jp/product-page/refill-e-mvsi" },
-  { name: "【30本セット】マザベジシリカパウダー 30,000mg（エクトイン入り）", slug: "big-refill-e-mvsi", description: "30本セット（エクトイン入り）です。", originalprice: "30,000円", price: "30,000円", ItemPic: "/30p30000.png", wixProductId: "c15bad90-8fff-b003-7792-2282202b6ccb", url: "https://www.dotpb.jp/product-page/big-refill-e-mvsi" },
+  { name: "【ミックスパック】 マザベジコンフィデンスパウダー 1,500mg", slug: "double-mvsi", description: "ミックスパックです。", originalprice: "3,300円", price: "3,300円", ItemPic: "/mix1500.png", wixProductId: "dcb1eb79-e65a-02df-a8f2-a80385c56e00", url: "https://www.dotpb.jp/product-page/double-mvsi" },
+  { name: "【薬用スライドケース】マザベジコンフィデンスパウダー 1,500mg", slug: "case-mvsi", description: "薬用スライドケ－スです。", originalprice: "3,300円", price: "3,300円", ItemPic: "/case1500.png", wixProductId: "7be06482-8fca-e20d-6a73-48bd3e914460", url: "https://www.dotpb.jp/product-page/case-mvsi" },
+  { name: "【30本セット】マザベジコンフィデンスパウダー 22,500mg", slug: "big-refill-mvsi", description: "30本セットです。", originalprice: "20,000円", price: "20,000円", ItemPic: "/30p22500.png", wixProductId: "fb6bbce6-a63f-b4d1-b817-da05d987e163", url: "https://www.dotpb.jp/product-page/big-refill-mvsi" },
+  { name: "【ミックスパック】 マザベジコンフィデンスパウダー 2,000mg（エクトイン入り）", slug: "double-e-mvsi", description: "ミックスパック（エクトイン入り）です。", originalprice: "3,300円", price: "3,300円", ItemPic: "/mix2000.png", wixProductId: "7ba04481-0674-5262-9325-8d62f2d25095", url: "https://www.dotpb.jp/product-page/double-e-mvsi" },
+  { name: "【薬用スライドケース】マザベジコンフィデンスパウダー 2,000mg（エクトイン入り）", slug: "case-e-mvsi", description: "薬用スライドケ－ス（エクトイン入り）です。", originalprice: "3,300円", price: "3,300円", ItemPic: "/case2000.png", wixProductId: "48c2a407-4738-2f3f-e317-d118a4046e5c", url: "https://www.dotpb.jp/product-page/case-e-mvsi" },
+  { name: "【10本セット】マザベジコンフィデンスパウダー 10,000mg（エクトイン入り）", slug: "refill-e-mvsi", description: "10本セット（エクトイン入り）です。", originalprice: "12,000円", price: "12,000円", ItemPic: "/10p10000.png", wixProductId: "cc620bb2-fd77-8db3-4bf1-cff751f9e55d", url: "https://www.dotpb.jp/product-page/refill-e-mvsi" },
+  { name: "【30本セット】マザベジコンフィデンスパウダー 30,000mg（エクトイン入り）", slug: "big-refill-e-mvsi", description: "30本セット（エクトイン入り）です。", originalprice: "30,000円", price: "30,000円", ItemPic: "/30p30000.png", wixProductId: "c15bad90-8fff-b003-7792-2282202b6ccb", url: "https://www.dotpb.jp/product-page/big-refill-e-mvsi" },
 ];
 
 export default function ProductLineupSection() {
@@ -125,7 +125,7 @@ function Row({ items, itemId }) {
         .amount { margin-top: 4px; font-size: 13px; color: #111; }
         .pricewrap { margin-top: 10px; font-size: 13px; color: #666; }
         .price { display: block; font-size: 18px; color: #111; margin-top: 2px; }
-        .btn { display: inline-block; margin-top: 12px; padding: 10px 18px; border-radius: 8px; background: #ffe926; color: #fff; font-weight: 700; letter-spacing: 0.06em; border: none; cursor: pointer; transition: transform .02s ease, opacity .2s ease; }
+        .btn { display: inline-block; margin-top: 12px; padding: 10px 18px; border-radius: 30px; background: #ffe926; color: #000; font-weight: 400; letter-spacing: 0.06em; border: none; cursor: pointer; transition: transform .02s ease, opacity .2s ease; }
         .btn:hover { opacity: .9; } .btn:active { transform: translateY(1px); }
         @media (max-width: 560px) { .row { width: 100%; gap: 16px; } .card { width: 100%; max-width: 360px; } .thumb { width: 100%; max-width: 360px; height: 180px; } .name { font-size: 14px; } .price { font-size: 17px; } }
       `}</style>
