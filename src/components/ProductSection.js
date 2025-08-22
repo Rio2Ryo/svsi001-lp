@@ -230,18 +230,21 @@ function Row({ items }) {
           color: #111;
           margin-top: 2px;
         }
-        .cta {
+       /* ← 既存の .cta 定義を 丸ごと このブロックに置換（他は触らない） */
+:global(.cta),
+:global(.cta:link),
+:global(.cta:visited) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 100%;              /* 横いっぱいで“ボタン感”を強化 */
-  min-height: 44px;         /* タップしやすい高さ */
+  width: 100%;
+  min-height: 44px;
   margin-top: 12px;
-  padding: 10px 16px;
-  border-radius: 30px;
-  background: #ffe926;         /* 黒ボタン */
-  color: #000;              /* 白文字 */
-  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: #ffe926;      /* 黒ボタン */
+  color: #000;           /* 白文字 */
+  text-decoration: none !important;
   font-weight: 700;
   letter-spacing: 0.06em;
   border: none;
@@ -249,9 +252,10 @@ function Row({ items }) {
   box-shadow: 0 2px 0 rgba(0,0,0,.25);
   transition: transform .02s ease, opacity .2s ease, box-shadow .2s ease;
 }
-.cta:hover { opacity: .92; }
-.cta:active { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
-.cta:focus-visible { outline: 2px solid #111; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(17,17,17,.2); }
+:global(.cta:hover) { opacity: .92; }
+:global(.cta:active) { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
+:global(.cta:focus-visible) { outline: 2px solid #111; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(17,17,17,.2); }
+
 
         @media (max-width: 560px) {
           .row {
