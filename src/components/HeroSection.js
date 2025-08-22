@@ -41,7 +41,7 @@ export default function HeroSection() {
       {/* ===== ヘッダー（右上 言語切替） ===== */}
       <header className="site-header" aria-label="Top navigation">
         <div className="header-inner">
-          <div className="lang-switcher" ref={menuRef}>
+          <div className={`lang-switcher ${open ? "open" : ""}`} ref={menuRef}>
             <button
               className="lang-btn"
               onClick={() => setOpen((v) => !v)}
@@ -50,18 +50,22 @@ export default function HeroSection() {
               aria-label="Language selector"
               title={labelLang || "Language"}
             >
-              {(lang || "ja").toUpperCase()} <span className="caret">▾</span>
+              {(lang || "ja").toUpperCase()}
+              <span className="caret">▾</span>
             </button>
+
             {open && (
               <ul className="lang-menu" role="menu" aria-label={labelLang || "Language"}>
+                {/* 上に細いライン */}
+                <li className="sep" aria-hidden="true" />
                 <li role="menuitem">
                   <button className="lang-item" onClick={() => setLang("ja")}>
-                    {labelJA || "日本語"} <span className="code">JA</span>
+                    JA
                   </button>
                 </li>
                 <li role="menuitem">
                   <button className="lang-item" onClick={() => setLang("en")}>
-                    {labelEN || "English"} <span className="code">EN</span>
+                    EN
                   </button>
                 </li>
               </ul>
@@ -72,6 +76,11 @@ export default function HeroSection() {
 
       {/* ===== ファーストビュー ===== */}
       <section className={`first-view ${isVisible ? "is-visible" : ""}`}>
+        {/* 左上ロゴ（重ね） */}
+        <div className="brand-dot" aria-hidden="true">
+          <Image src="/logo-dot.png" alt="" width={64} height={24} priority />
+        </div>
+
         {/* 上のパウダー帯 */}
         <div className="fv-top">
           <Image
@@ -79,8 +88,8 @@ export default function HeroSection() {
             alt={altPowder}
             fill
             priority
-            sizes="(max-width: 1200px) 100vw, 1200px"
-            style={{ objectFit: "cover" }}
+            sizes="(max-width: 1400px) 100vw, 1400px"
+            style={{ objectFit: "cover", objectPosition: "center" }}
           />
           <div className="fv-top-inner">
             <div className="fv-logo">
@@ -97,14 +106,14 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* キャッチコピー */}
+        {/* キャッチコピー（使っていればそのまま） */}
         <h1 className="fv-catch">
           {catch1}
           <br />
           {catch2}
         </h1>
 
-        {/* 地球のビジュアル＋本文（背景に画像指定） */}
+        {/* （以下はそのまま。必要なければ削除可） */}
         <div className="fv-earth-bg">
           <p className="fv-earth-copy">
             {(body || "").split("\n").map((line, i) => (
@@ -120,68 +129,124 @@ export default function HeroSection() {
       {/* styled-jsx */}
       <style jsx>{`
         /* ========== Header ========== */
-        .site-header { top: 0; z-index: 100; background: transparent; }
+        .site-header { position: relative; z-index: 100; background: transparent; }
         .header-inner {
-          max-width: 1000px;
+          max-width: 1200px;   /* 見本の余白感に合わせて広め */
           margin: 0 auto;
-          padding: 10px 16px 0;
+          padding: 12px 16px 0;
           display: flex; justify-content: flex-end; align-items: center;
         }
+
+        /* テキスト型トグル */
         .lang-switcher { position: relative; }
         .lang-btn {
-          appearance: none; background: rgba(255,255,255,.86); backdrop-filter: blur(6px);
-          border: 1px solid #e3e3e3; border-radius: 9999px; padding: 6px 12px;
-          font-size: 12px; letter-spacing: .12em; color: #333; display: inline-flex; gap: 6px;
-          cursor: pointer; transition: background .15s ease, border-color .15s ease;
+          appearance: none;
+          background: transparent;
+          border: none;
+          padding: 4px 0;
+          font-size: 14px;
+          letter-spacing: 0.08em;
+          color: #111;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
         }
-        .lang-btn:hover { background: #fff; border-color: #d6d6d6; }
-        .caret { font-size: 11px; line-height: 1; }
+        .caret { display: inline-block; transition: transform .2s ease; }
+        .lang-switcher.open .caret { transform: rotate(180deg); } /* ↑ に反転 */
+
+        /* ドロップダウンを右端に、枠なし・細ラインのみで */
         .lang-menu {
-          position: absolute; right: 0; top: calc(100% + 8px);
-          min-width: 180px; background: #fff; border: 1px solid #e5e5e5;
-          border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.12); padding: 6px;
+          position: absolute;
+          right: 0;
+          top: calc(100% + 6px);
+          min-width: 72px;
+          background: transparent;
+          border: none;
+          box-shadow: none;
+          padding: 0;
+          text-align: right;
+        }
+        .lang-menu .sep {
+          list-style: none;
+          height: 1px;
+          background: #111;
+          opacity: .8;
+          width: 80px;
+          margin: 0 0 8px auto; /* 右寄せの横線 */
         }
         .lang-item {
-          width: 100%; text-align: left; background: transparent; border: none;
-          padding: 10px; border-radius: 6px; font-size: 13px; color: #333;
-          display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+          width: 100%;
+          text-align: right;
+          background: transparent;
+          border: none;
+          padding: 6px 0;
+          font-size: 13px;
+          color: #111;
+          cursor: pointer;
         }
-        .lang-item:hover { background: #f5f5f5; }
-        .code { color: #888; font-size: 12px; }
+        .lang-item:hover { text-decoration: underline; }
 
         /* ========== First View ========== */
         h2, p, span { font-family: Arial, Helvetica, sans-serif !important; }
-        .first-view { background: #fff; padding: 8px 16px 60px; }
-        .is-visible { animation: fadeInUp .9s ease-out both; }
+        .first-view { position: relative; background: #fff; padding: 8px 16px 60px; }
+        .is-visible { animation: fadeInUp .8s ease-out both; }
         @keyframes fadeInUp {
           from { opacity: 0; transform: translate3d(0,10px,0); }
           to   { opacity: 1; transform: translateZ(0); }
         }
 
+        /* 左上重ねロゴ */
+        .brand-dot{
+          position: absolute;
+          top: 54px;              /* 見本の「やや左上」へ */
+          left: clamp(12px, 6vw, 64px);
+          z-index: 2;
+          filter: grayscale(100%) contrast(.9) opacity(.9);
+          pointer-events: none;
+        }
+
         .fv-top {
-          position: relative; height: 220px; max-width: 1000px;
-          margin: 0 auto; overflow: hidden; background: #fff;
+          position: relative;
+          height: 260px;          /* 見本寄せで少し高め */
+          max-width: 1100px;      /* 画像の横幅感を再現 */
+          margin: 0 auto;
+          overflow: hidden;
+          background: #fff;
         }
         .fv-top-inner {
-          position: absolute; inset: 0; display: flex; flex-direction: column;
-          align-items: center; justify-content: center; text-align: center; color: #2a2a2a; padding: 12px;
+          position: absolute; inset: 0;
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center;
+          text-align: center; color: #2a2a2a; padding: 12px;
         }
-        .fv-logo-img { width: clamp(260px, 60vw, 540px); height: auto; display: block; }
-        .fv-tagline { margin: 8px 0 0; font-size: 16px; font-weight: 400; letter-spacing: .12em; color: #777; font-family: ot-bunyu-mincho-stdn, serif !important; }
+        .fv-logo-img { width: clamp(280px, 56vw, 520px); height: auto; display: block; }
+        .fv-tagline {
+          margin: 10px 0 0;
+          font-size: 14px;
+          letter-spacing: .12em;
+          color: #6a6a6a;
+          font-family: ot-bunyu-mincho-stdn, serif !important;
+        }
 
         .fv-catch {
-          margin: 64px auto 39px; text-align: center; color: #3a3a3a;
+          margin: 42px auto 36px;
+          text-align: center;
+          color: #3a3a3a;
           font-family: ot-bunyu-mincho-stdn, serif;
-          font-size: 43px; line-height: 1.5; letter-spacing: .1em; font-weight: 600;
+          font-size: 34px;
+          line-height: 1.5;
+          letter-spacing: .1em;
+          font-weight: 600;
         }
 
-        /* ===== 地球ブロック ===== */
+        /* ===== 地球ブロック（そのまま運用する想定） ===== */
         .fv-earth-bg {
           position: relative;
           height: 500px;
           max-width: 1200px;
           margin: 0 auto;
-          border-radius: 0px;
+          border-radius: 0;
           overflow: hidden;
           background-image:
             linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.72) 38%, rgba(0,0,0,.3) 68%, rgba(0,0,0,0) 80%),
@@ -203,22 +268,21 @@ export default function HeroSection() {
           letter-spacing: .08em;
         }
 
-        @media (max-width:1200px){
-          .fv-earth-bg{ height: 460px; max-width: 1080px; padding-left: 80px; }
-          .fv-earth-copy{ max-width: 640px; }
-        }
-        @media (max-width:1024px){
-          .fv-top { height: 200px; }
-          .fv-catch { font-size: 34px; margin: 56px auto 28px; }
+        @media (max-width: 1100px){
+          .fv-top { height: 240px; max-width: 92vw; }
+          .brand-dot { top: 46px; left: 24px; }
+          .fv-catch { font-size: 30px; margin: 36px auto 30px; }
           .fv-earth-bg{ height: 420px; max-width: 95vw; padding-left: 40px; }
-          .fv-earth-copy{ max-width: 560px; }
+          .fv-earth-copy{ max-width: 560px; font-size: 20px; }
         }
-        @media (max-width:600px){
+        @media (max-width: 600px){
           .header-inner { padding: 8px 12px 0; }
           .first-view { padding: 8px 12px 44px; }
-          .fv-top { height: 180px; }
+          .brand-dot { top: 38px; left: 14px; }
+          .fv-top { height: 200px; }
+          .fv-logo-img { width: clamp(220px, 70vw, 360px); }
           .fv-tagline { font-size: 11px; letter-spacing: .1em; }
-          .fv-catch { font-size: 26px; line-height: 1.7; margin: 40px auto 22px; }
+          .fv-catch { font-size: 24px; line-height: 1.7; margin: 28px auto 18px; }
           .fv-earth-bg{ height: 360px; padding: 0 16px; }
           .fv-earth-copy{ max-width: none; font-size: 15px; line-height: 1.9; }
         }
