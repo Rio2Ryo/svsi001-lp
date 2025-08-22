@@ -53,7 +53,7 @@ export default function EffectsSection() {
         <div className="container">
           {/* ===== タイトル ===== */}
           <h2 className="mv-certs-title ja-serif">{title}</h2>
-          <p className="mv-certs-sub">{sub}</p>
+          <p className="mv-certs-sub ja-serif">{sub}</p>
 
           {/* ===== グレード ===== */}
           <div className="mv-grade-block">
@@ -114,7 +114,7 @@ export default function EffectsSection() {
                 ) : null
               )}
 
-              <p className="mv-footnote">{footnote}</p>
+              
             </div>
 
             <div className="mv-collab-right">
@@ -142,6 +142,7 @@ export default function EffectsSection() {
             </div>
           </div>
         </div>
+        <p className="mv-footnote">{footnote}</p>
       </section>
 
       {/* ===== styled-jsx ===== */}
@@ -174,8 +175,8 @@ export default function EffectsSection() {
 
         /* サブ見出し */
         .mv-subtitle {
-          font-size: 24px; font-weight: 700; letter-spacing: 0.14em;
-          color: #444; margin: 36px 0 10px;
+          font-size: 30px; font-weight: 700; letter-spacing: 0.14em;
+          color: #444; margin: 56px 0 10px;
         }
 
         /* グレード・認証テーブル風 */
