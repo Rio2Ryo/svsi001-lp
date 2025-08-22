@@ -243,7 +243,7 @@ export default function FeatureSection() {
         }
         .mv-paragraph {
           margin: 8px 0 10px;
-          font-size: 20px;
+          font-size: 22px;
           line-height: 1.5;
           letter-spacing: 0.04em;
           color: #555;
