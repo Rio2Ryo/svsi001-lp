@@ -245,7 +245,7 @@ function Row({ items, tr, lang }) {
                 <span className="priceLabel">
                   {tr("lineup.priceLabel", lang === "en" ? "Price (tax incl.)" : "価格(税込)")}
                 </span>
-                {original && <span className="original">{original}</span>}
+               
                 <span className="price">{price}</span>
               </div>
 
