@@ -203,7 +203,7 @@ export default function HeroSection() {
 
   position: absolute;
   top: clamp(40px, 7vw, 72px);   /* 縦位置は見た目に合わせて調整 */
-  left: 40%;
+  left: 38%;
   transform: translateX(calc(-50% - var(--dot-offset)));
   z-index: 2;
   filter: grayscale(100%) contrast(.9) opacity(.9);
@@ -227,7 +227,7 @@ export default function HeroSection() {
         .fv-logo-img { width: clamp(280px, 56vw, 520px); height: auto; display: block; }
         .fv-tagline {
           margin: 10px 0 0;
-          font-size: 20px;
+          font-size: 17px;
           letter-spacing: .12em;
           color: #6a6a6a;
           font-family: ot-bunyu-mincho-stdn, serif !important;
@@ -238,7 +238,7 @@ export default function HeroSection() {
           text-align: center;
           color: #3a3a3a;
           font-family: ot-bunyu-mincho-stdn, serif;
-          font-size: 40px;
+          font-size: 42px;
           line-height: 1.5;
           letter-spacing: .1em;
           font-weight: 600;

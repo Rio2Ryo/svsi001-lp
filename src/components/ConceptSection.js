@@ -8,28 +8,23 @@ export default function ConceptSection() {
   useEffect(() => setIsVisible(true), []);
 
   const { t } = useI18n();
-  const tr = (key) => t(key) ?? ""; // 未登録キーは空文字扱い
+  const tr = (key) => t(key) ?? "";
 
-  // 見出し
   const certTitle = tr("concept.title");
 
-  // 画像の代替テキスト
-  const altCosmos = tr("concept.alt.cosmos"); // 例: "COSMOS ORGANIC"
-  const altHalal  = tr("concept.alt.halal");  // 例: "HALAL"
-  const altVegan  = tr("concept.alt.vegan");  // 例: "VEGAN"
-  const altBanner = tr("concept.alt.banner"); // 例: "makeup and skincare banner"
+  const altCosmos = tr("concept.alt.cosmos");
+  const altHalal  = tr("concept.alt.halal");
+  const altVegan  = tr("concept.alt.vegan");
+  const altBanner = tr("concept.alt.banner");
 
-  // 表の左列／右列（国と規格・認証名と説明）
-  const countryIdx = [0, 1, 2];
-  const leftCertIdx = [0, 1, 2];
+  const countryIdx   = [0, 1, 2];
+  const leftCertIdx  = [0, 1, 2];
 
-  // バナーの行、本文パラグラフ、箇条書き、注意書き
   const bannerIdx = [0, 1, 2];
-  const descIdx = [1, 2];
+  const descIdx   = [1, 2];
   const bulletIdx = [0, 1, 2, 3, 4, 5, 6];
-  const noteIdx = [0, 1, 2];
+  const noteIdx   = [0, 1, 2];
 
-  // inline 用（バナーの白グラデ／スマホ横罫線）
   const styles = {
     bannerOverlay: {
       background:
@@ -40,11 +35,7 @@ export default function ConceptSection() {
 
   return (
     <>
-      <section
-        id="ConceptSection"
-        className={`concept-section ${isVisible ? "is-visible" : ""}`}
-      >
-        {/* ===== 認証エリア ===== */}
+      <section id="ConceptSection" className={`concept-section ${isVisible ? "is-visible" : ""}`}>
         <div className="container">
           <h2 className="cert-title">{certTitle}</h2>
 
@@ -54,35 +45,33 @@ export default function ConceptSection() {
             <Image src="/VEGAN.png"    alt={altVegan}  width={109} height={98} />
           </div>
 
+          {/* ====== 上段：国ごとの規格（縦ラインはこのブロック内だけ） ====== */}
           <div className="cert-table">
             <div className="cert-left">
-              {/* 左列：国名 */}
               {countryIdx.map((i) => {
                 const c = tr(`concept.countries.${i}`);
                 return c ? <p key={`c-${i}`}>{c}</p> : null;
               })}
+            </div>
+            <div className="cert-divider" />
+            <div className="cert-right">
+              {countryIdx.map((i) => {
+                const g = tr(`concept.countryGrades.${i}`);
+                return g ? <p key={`g-${i}`}>{g}</p> : null;
+              })}
+            </div>
+          </div>
 
-              <div className="cert-divider-mobile" style={styles.hrLight} />
-
-              {/* 左列：認証名 */}
+          {/* ====== 下段：認証（縦ラインはこのブロック内だけ） ====== */}
+          <div className="cert-table">
+            <div className="cert-left">
               {leftCertIdx.map((i) => {
                 const text = tr(`concept.leftCerts.${i}`);
                 return text ? <p key={`lc-${i}`}>{text}</p> : null;
               })}
             </div>
-
             <div className="cert-divider" />
-
             <div className="cert-right">
-              {/* 右列：国ごとの規格説明 */}
-              {countryIdx.map((i) => {
-                const g = tr(`concept.countryGrades.${i}`);
-                return g ? <p key={`g-${i}`}>{g}</p> : null;
-              })}
-
-              <div className="cert-divider-mobile" style={styles.hrLight} />
-
-              {/* 右列：認証の説明 */}
               {leftCertIdx.map((i) => {
                 const d = tr(`concept.rightCertDescs.${i}`);
                 return d ? <p key={`rc-${i}`}>{d}</p> : null;
@@ -91,7 +80,7 @@ export default function ConceptSection() {
           </div>
         </div>
 
-        {/* ===== バナー（テキスト左上） ===== */}
+        {/* ===== バナー ===== */}
         <div className="container">
           <div className="ms-banner">
             <Image
@@ -99,7 +88,7 @@ export default function ConceptSection() {
               alt={altBanner}
               fill
               priority
-              sizes="(max-width: 1024px) 100vw, 1024px"
+              sizes="(max-width: 1200px) 100vw, 1200px"
               style={{ objectFit: "cover" }}
             />
             <div className="ms-banner-overlay" style={styles.bannerOverlay} />
@@ -155,45 +144,50 @@ export default function ConceptSection() {
         </div>
       </section>
 
-      {/* ===== styled-jsx ===== */}
       <style jsx>{`
         :global(html) { scroll-behavior: smooth; }
         .concept-section { background: #ffffff; color: #3a3a3a; padding: 32px 16px 10px; }
         .is-visible { animation: fadeInUp 0.8s ease-out both; }
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translate3d(0, 10px, 0); }
-          to   { opacity: 1; transform: translateZ(0); }
-        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translate3d(0,10px,0); } to { opacity: 1; transform: translateZ(0); } }
 
-        .container { max-width: 1100px; margin: 0 auto; }
+        /* ★ ラッパーを拡張 */
+        .container { max-width: 1320px; margin: 0 auto; }
 
-        /* 見出し */
         .cert-title {
           text-align: center; font-weight: 600; font-size: 26px;
           letter-spacing: 0.12em; margin: 8px 0 24px; color: #444;
         }
 
-        /* ロゴ列 */
         .cert-logos {
           display: flex; justify-content: center; align-items: center;
           gap: 1px; margin: 8px 0 36px;
         }
 
-        /* 表風 2カラム（左：項目、右：説明） */
+        /* ===== 表風2カラム（上下2ブロック） ===== */
         .cert-table {
-          display: flex; align-items: flex-start; justify-content: center;
-          gap: 28px; max-width: 1100px; margin: 0 auto 68px;
+          display: flex; align-items: stretch; justify-content: center;
+          gap: 32px; max-width: 1320px; margin: 0 auto 36px;
         }
-        .cert-left, .cert-right { display: grid; row-gap: 0px; }
-        .cert-left {
-          width: 240px; justify-items: end; color: #4b4b4b; letter-spacing: 0.12em;
-        }
-        .cert-right { flex: 1; min-width: 0; color: #555; letter-spacing: 0.02em; }
-        .cert-left p, .cert-right p { margin: 0; line-height: 1.5; font-size: 24px; }
-        .cert-divider { width: 1px; background: #d9d9d9; align-self: stretch; }
-        .cert-divider-mobile { display: none; margin: 8px 0; }
+        .cert-left, .cert-right { display: grid; row-gap: 10px; }
 
-        /* バナー */
+        /* ★ 左列を広げ、長文が1行に収まるように。フォントも少し小さく */
+        .cert-left {
+          width: 420px;                      /* 240 → 420 */
+          justify-items: end;
+          color: #4b4b4b;
+          letter-spacing: 0.06em;            /* 詰めて幅節約 */
+        }
+        .cert-right { flex: 1; min-width: 0; color: #555; letter-spacing: 0.01em; }
+
+        /* ★ フォント少しだけ小さく（24 → 22） */
+        .cert-left p, .cert-right p { margin: 0; line-height: 1.6; font-size: 22px; }
+        /* 長文を1行で（PC時） */
+        .cert-left p { white-space: nowrap; }
+
+        .cert-divider { width: 1px; background: #d9d9d9; align-self: stretch; }
+        .cert-divider-mobile { display: none; }
+
+        /* ===== バナー ===== */
         .ms-banner {
           position: relative; height: 420px; max-width: 1024px;
           margin: 56px auto 40px; overflow: hidden;
@@ -208,27 +202,25 @@ export default function ConceptSection() {
           font-weight: 600;
         }
 
-        /* 説明テキスト */
         .ms-description { max-width: 880px; margin: 0 auto; color: #4a4a4a; }
         .ms-description p { margin: 22px 0; font-size: 22px; line-height: 1.6; letter-spacing: 0.06em; }
         .ms-list { list-style: none; padding: 0; margin: 28px 0 16px; }
         .ms-list li { margin: 10px 0; font-size: 20px; line-height: 1.4; letter-spacing: 0.04em; }
         .ms-note { margin-top: 18px; color: #888; font-size: 16px!important; line-height: 1.9; letter-spacing: 0.04em; }
 
-        /* レスポンシブ */
+        /* ===== レスポンシブ ===== */
+        @media (max-width: 1200px) {
+          .cert-left { width: 360px; }
+        }
         @media (max-width: 1024px) {
-          .cert-table { margin-bottom: 56px; }
+          .cert-table { margin-bottom: 28px; gap: 24px; }
           .ms-banner { height: 360px; }
         }
-        @media (max-width: 640px) {
-          .cert-logos { gap: 32px; }
+        @media (max-width: 760px) {
           .cert-table { display: grid; grid-template-columns: 1fr; gap: 0; }
           .cert-divider { display: none; }
           .cert-left, .cert-right { width: 100%; justify-items: start; }
-          .cert-left { margin-bottom: 8px; }
-          .cert-left p { text-align: left; }
-          .cert-divider-mobile { display: block; }
-
+          .cert-left p { white-space: normal; }   /* SPでは改行OK */
           .ms-banner { height: 260px; margin: 44px auto 32px; }
           .ms-banner-text { top: 28px; left: 20px; font-size: 22px; letter-spacing: 0.12em; line-height: 1.8; }
           .ms-description p, .ms-list li { font-size: 15px; line-height: 1.9; }
