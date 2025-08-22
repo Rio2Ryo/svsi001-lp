@@ -5,7 +5,7 @@ import Link from "next/link";
 // ▼データはそのまま
 const PRODUCTS = [
   {
-    name: "【ミックスパック】 マザベジコンフィデンスパウダー 1,500mg",
+    name: "【ミックスパック】マザベジコンフィデンスパウダー 1,500mg",
     slug: "double-mvsi",
     description: "ミックスパックです。",
     originalprice: "3,300円",
@@ -169,8 +169,6 @@ function Row({ items }) {
               </div>
 
               <h3 className="name">{p.name}</h3>
-              <div className="amount">{extractAmount(p.name)}</div>
-
               <div className="pricewrap">
                 価格(税込)
                 <span className="price">{p.price}</span>
@@ -239,7 +237,7 @@ function Row({ items }) {
   justify-content: center;
   min-height: 44px;
   margin-top: 12px;
-  padding: 8px 16px;
+  padding: 7px 17px;
   border-radius: 30px;
   background: #ffe926;      /* 黒ボタン */
   color: #000;           /* 白文字 */

@@ -104,7 +104,6 @@ function Row({ items, itemId }) {
                 <Image src={p.ItemPic || "/noimage.png"} alt={p.name} fill sizes="240px" style={{ objectFit: "contain" }} priority />
               </div>
               <h3 className="name">{p.name}</h3>
-              <div className="amount">{extractAmount(p.name)}</div>
               <div className="pricewrap">
                 価格(税込)
                 <span className="price">{p.price}</span>

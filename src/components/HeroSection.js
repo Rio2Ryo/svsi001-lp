@@ -92,7 +92,7 @@ export default function HeroSection() {
             alt={altPowder}
             fill
             priority
-            sizes="(max-width: 900px) 100vw, 900px"
+            sizes="(max-width: 1000px) 100vw, 1000px"
             style={{ objectFit: "cover" }}
           />
           <div className="fv-top-inner">
@@ -145,7 +145,6 @@ export default function HeroSection() {
       <style jsx>{`
         /* ========== Header ========== */
         .site-header {
-          position: sticky;
           top: 0;
           z-index: 100;
           background: transparent;
@@ -216,7 +215,7 @@ export default function HeroSection() {
         }
 
         .fv-tagline {
-          margin: 8px 0 0; font-size: 12px; letter-spacing: 0.12em; color: #777;
+          margin: 8px 0 0; font-size: 18px; letter-spacing: 0.12em; color: #777;
         }
 
         .fv-catch {
@@ -226,7 +225,7 @@ export default function HeroSection() {
         }
 
         .fv-earth {
-          position: relative; height: 380px; max-width: 990px;
+          position: relative; max-height: 431px; max-width: 949px;
           margin: 0 auto; overflow: hidden; background: #000;
         }
         .fv-earth-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
