@@ -158,7 +158,7 @@ export default function FeatureSection() {
         /* ===== Banner ===== */
         .mv-banner {
           position: relative;
-          height: 300px;
+          height: 400px;
           margin: 10px auto 28px;
           overflow: hidden;
           background: #e9efe8;
@@ -170,10 +170,10 @@ export default function FeatureSection() {
             "Hiragino Kaku Gothic ProN", serif;
         }
         .mv-title {
-          margin: 26px 0 14px;
+          margin: 36px 0 14px;
           text-align: center;
-          font-weight: 500;
-          font-size: 36px;
+          font-weight: 400;
+          font-size: 38px;
           letter-spacing: 0.08em;
           color: #444;
         }
@@ -181,7 +181,7 @@ export default function FeatureSection() {
           text-align: center;
           margin: 0 auto 46px;
           max-width: 890px;
-          font-size: 20px;
+          font-size: 22px;
           line-height: 2.1;
           letter-spacing: 0.06em;
           color: #555;
@@ -205,14 +205,14 @@ export default function FeatureSection() {
         }
         .mv-subtitle {
           margin: 0 0 14px;
-          font-size: 20px;
+          font-size: 24px;
           font-weight: 700;
           letter-spacing: 0.08em;
           color: #4a4a4a;
         }
         .mv-list { list-style: none; padding: 0; margin: 0; }
         .mv-list li {
-          font-size: 20px;
+          font-size: 22px;
           line-height: 1.5;
           letter-spacing: 0.04em;
           margin: 6px 0;
@@ -229,7 +229,7 @@ export default function FeatureSection() {
         /* ===== Callout（左グラ + 右 silica.png 拡大） ===== */
         .mv-callout {
           position: relative;
-          min-height: 340px;
+          padding:30px;
           margin: 38px 0 0;
           overflow: visible;
           background: transparent;
@@ -262,7 +262,7 @@ export default function FeatureSection() {
         .mv-callout-box p {
           margin: 0;
           font-weight: bold;
-          font-size: 20px;
+          font-size: 26px;
           line-height: 1.5;
           letter-spacing: 0.04em;
         }

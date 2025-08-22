@@ -101,7 +101,7 @@
   "testimonials": {
     "title": "Voices from Real Users",
     "intro": "With the cooperation of users who love this product\n(people troubled by wounds, atopic dermatitis, rough skin, and spots),\nwe introduce their skin impressions before and after use with photos.",
-    "note": "*Individual experiences vary.*",
+    "note": "\n*Individual experiences vary.*",
 
     "openButton": "Tap here to see Before/After photos",
     "badgeBefore": "Before",
