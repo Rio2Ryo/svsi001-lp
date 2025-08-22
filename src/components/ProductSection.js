@@ -126,11 +126,11 @@ export default function ProductLineupSection() {
         /* 見本の上部構成 */
         .lineup-head { text-align: center; margin: 10px 0 36px; }
         .lineup-label {
-          
-          font-size: 32px;
+          font-family: "ot-bunyu-mincho-stdn", serif;
+          font-size: 40px;
           letter-spacing: 0.18em;
           color: #222;
-          margin: 0 0 18px;
+          margin: 60px 0 18px;
         }
         .brand-lockup :global(img) {
           display: inline-block;
@@ -142,12 +142,12 @@ export default function ProductLineupSection() {
         /* セクション見出し（太め・やや大きく） */
         .title {
           text-align: center;
-          font-family: "ot-bunyu-mincho-stdn", serif;
-          font-size: 36px;
+          
+          font-size: 30px;
           font-weight: 700;
           letter-spacing: 0.12em;
           color: #2b2b2b;
-          margin: 102px 0 10px;
+          margin: 42px 0 10px;
         }
 
         /* 下線は細く長め（見本の雰囲気） */
