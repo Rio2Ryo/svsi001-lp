@@ -83,15 +83,15 @@ export default function ProductLineupSection() {
 
   return (
     <section className="lineup">
-      {/* ーー セクションヘッダー（見本どおり） ーー */}
+      {/* ーー セクションヘッダー ーー */}
       <div className="lineup-head">
         <h2 className="lineup-label">商品ラインナップ</h2>
         <div className="brand-lockup">
           <Image
-            src="/MV_LOGO.png"        // 別ロゴがあればここを差し替え
+            src="/MV_LOGO.png"
             alt="Mother Vegetables Confidence"
-            width={420}
-            height={120}
+            width={480}
+            height={140}
             priority
           />
         </div>
@@ -117,68 +117,65 @@ export default function ProductLineupSection() {
 
       <style jsx>{`
         .lineup {
-          max-width: 1200px;
+          max-width: 1320px;         /* ← セクションを少し広く */
           margin: 0 auto;
-          padding: 40px 16px 64px;
+          padding: 40px 16px 72px;
           background: #fff;
         }
 
-        /* 見本の上部構成 */
-        .lineup-head { text-align: center; margin: 10px 0 36px; }
+        .lineup-head { text-align: center; margin: 6px 0 40px; }
         .lineup-label {
           font-family: "ot-bunyu-mincho-stdn", serif;
           font-size: 40px;
           letter-spacing: 0.18em;
           color: #222;
-          margin: 60px 0 18px;
+          margin: 50px 0 18px;
         }
         .brand-lockup :global(img) {
           display: inline-block;
           filter: grayscale(100%) contrast(95%) opacity(0.9);
           width: auto; height: auto;
-          max-width: 420px;
+          max-width: 480px;
         }
 
-        /* セクション見出し（太め・やや大きく） */
         .title {
           text-align: center;
-          
-          font-size: 30px;
+          font-family: "ot-bunyu-mincho-stdn", serif;
+          font-size: 32px;            /* ← 少し大きく */
           font-weight: 700;
           letter-spacing: 0.12em;
           color: #2b2b2b;
-          margin: 42px 0 10px;
+          margin: 44px 0 12px;
         }
 
-        /* 下線は細く長め（見本の雰囲気） */
         .divider {
           height: 1px;
           background: #dcdcdc;
-          margin: 8px auto 12px;
-          max-width: 960px; /* ライン幅を少し絞る */
+          margin: 10px auto 14px;
+          max-width: 1024px;          /* ← 線も少し長めに */
         }
 
         .note {
           text-align: center;
           color: #6d6d6d;
-          font-size: 14px;
+          font-size: 15px;            /* ← 注記も少し大きく */
           letter-spacing: 0.06em;
-          margin-bottom: 26px;
+          margin-bottom: 28px;
         }
-        .note .subnote {
-          display: inline-block;
-          margin-top: 4px;
+        .note .subnote { display: inline-block; margin-top: 4px; }
+
+        @media (max-width: 1100px) {
+          .lineup { padding-bottom: 64px; }
+          .brand-lockup :global(img) { max-width: 360px; }
+          .title { font-size: 28px; }
+          .divider { max-width: 92vw; }
+          .note { font-size: 14px; }
         }
 
         @media (max-width: 560px) {
-          .lineup-label { font-size: 24px; }
+          .lineup-label { font-size: 26px; }
           .brand-lockup :global(img) { max-width: 280px; }
-          .title {
-            font-size: 21px;
-            line-height: 1.6;
-            margin: 32px 0 8px;
-          }
-          .divider { max-width: 88vw; }
+          .title { font-size: 21px; line-height: 1.6; margin: 32px 0 8px; }
           .note { font-size: 12px; }
         }
       `}</style>
@@ -186,13 +183,13 @@ export default function ProductLineupSection() {
   );
 }
 
-/* 行：中央寄せ。カード幅は固定240px。 */
+/* 行：中央寄せ。カードをPCで280pxに拡大、1100px以下で240pxへ縮小。 */
 function Row({ items }) {
   return (
     <>
       <div className="row" role="list">
         {items.map((p) => {
-          const internalHref = `/item/mvsi/${p.slug}`; // ★ 固定化（itemId = mvsi）
+          const internalHref = `/item/mvsi/${p.slug}`;
 
           return (
             <article key={p.slug} className="card" role="listitem">
@@ -201,7 +198,7 @@ function Row({ items }) {
                   src={p.ItemPic}
                   alt={p.name}
                   fill
-                  sizes="240px"
+                  sizes="(max-width: 1100px) 240px, 280px"  /* ← 画像サイズヒントも拡大 */
                   style={{ objectFit: "contain" }}
                   priority
                 />
@@ -213,7 +210,6 @@ function Row({ items }) {
                 <span className="price">{p.price}</span>
               </div>
 
-              {/* 内部ページへリンク */}
               <Link href={internalHref} className="cta" aria-label={`${p.name} を購入`}>
                 ご購入はこちら
               </Link>
@@ -224,41 +220,43 @@ function Row({ items }) {
 
       <style jsx>{`
         .row {
-          width: 1200px;
+          width: min(100%, 1280px);   /* ← 横幅を少し広げる */
           margin: 0 auto;
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
-          gap: 20px;
+          gap: 24px;                  /* ← 余白も少し広め */
         }
 
         .card {
-          width: 240px;
+          width: 280px;               /* ← 240 → 280 に拡大（PC） */
           text-align: center;
-          padding: 8px 10px 18px;
+          padding: 10px 12px 20px;
         }
 
         .thumb {
           position: relative;
-          width: 240px;
-          height: 160px;
-          margin: 0 auto 10px;
+          width: 280px;               /* ← 画像枠も拡大 */
+          height: 200px;              /* ← 160 → 200 */
+          margin: 0 auto 12px;
         }
 
         .name {
           font-weight: 600;
           color: #333;
-          line-height: 1.6;
-          font-size: 15px;
+          line-height: 1.7;
+          font-size: 16.5px;          /* ← 商品名を拡大 */
+          letter-spacing: 0.02em;
         }
+
         .pricewrap {
           margin-top: 10px;
-          font-size: 13px;
+          font-size: 14px;            /* ← ラベル少し大きく */
           color: #666;
         }
         .price {
           display: block;
-          font-size: 18px;
+          font-size: 20px;            /* ← 価格も拡大 */
           color: #111;
           margin-top: 2px;
         }
@@ -269,23 +267,35 @@ function Row({ items }) {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          min-height: 44px;
-          margin-top: 12px;
-          padding: 7px 17px;
+          min-height: 48px;           /* ← ボタンも少し大きく */
+          margin-top: 14px;
+          padding: 10px 22px;
           border-radius: 30px;
           background: #ffe926;
           color: #000;
           text-decoration: none !important;
-          font-weight: 400;
+          font-weight: 500;
           letter-spacing: 0.06em;
           border: none;
           cursor: pointer;
-          font-size: 13px;
+          font-size: 14px;
         }
         :global(.cta:hover) { opacity: .92; }
         :global(.cta:active) { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
         :global(.cta:focus-visible) { outline: 2px solid #111; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(17,17,17,.2); }
 
+        /* ── 1100px以下で従来サイズへ縮小 ── */
+        @media (max-width: 1100px) {
+          .row { width: 100%; gap: 20px; }
+          .card { width: 240px; padding: 8px 10px 18px; }
+          .thumb { width: 240px; height: 160px; margin-bottom: 10px; }
+          .name { font-size: 15px; line-height: 1.6; }
+          .pricewrap { font-size: 13px; }
+          .price { font-size: 18px; }
+          :global(.cta) { min-height: 44px; padding: 8px 18px; font-size: 13px; }
+        }
+
+        /* ── 560px以下：1カラム想定 ── */
         @media (max-width: 560px) {
           .row { width: 100%; gap: 16px; }
           .card { width: 100%; max-width: 360px; }
@@ -298,7 +308,7 @@ function Row({ items }) {
   );
 }
 
-/* ヘルパー（未使用なら削除可） */
+/* 参考：未使用なら削除可 */
 function extractAmount(name) {
   const m = name.match(/([0-9,]+mg)/);
   return m ? m[1] : "";
