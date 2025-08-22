@@ -126,7 +126,7 @@ export default function ProductLineupSection() {
         /* 見本の上部構成 */
         .lineup-head { text-align: center; margin: 10px 0 36px; }
         .lineup-label {
-          font-family: "ot-bunyu-mincho-stdn", serif;
+          
           font-size: 32px;
           letter-spacing: 0.18em;
           color: #222;
@@ -143,11 +143,11 @@ export default function ProductLineupSection() {
         .title {
           text-align: center;
           font-family: "ot-bunyu-mincho-stdn", serif;
-          font-size: 30px;
+          font-size: 36px;
           font-weight: 700;
           letter-spacing: 0.12em;
           color: #2b2b2b;
-          margin: 42px 0 10px;
+          margin: 102px 0 10px;
         }
 
         /* 下線は細く長め（見本の雰囲気） */
