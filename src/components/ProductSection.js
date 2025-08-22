@@ -240,7 +240,7 @@ function Row({ items }) {
   width: 100%;
   min-height: 44px;
   margin-top: 12px;
-  padding: 10px 18px;
+  padding: 6px 12px;
   border-radius: 30px;
   background: #ffe926;      /* 黒ボタン */
   color: #000;           /* 白文字 */
@@ -249,7 +249,7 @@ function Row({ items }) {
   letter-spacing: 0.06em;
   border: none;
   cursor: pointer;
-  transition: transform .02s ease, opacity .2s ease, box-shadow .2s ease;
+  font-size:14px;
 }
 :global(.cta:hover) { opacity: .92; }
 :global(.cta:active) { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
