@@ -215,17 +215,17 @@ export default function HeroSection() {
         }
 
         .fv-tagline {
-          margin: 8px 0 0; font-size: 18px; letter-spacing: 0.12em; color: #777;
+          margin: 8px 0 0; font-size: 16px; font-weight:400; letter-spacing: 0.12em; color: #777;font-family: Arial, Helvetica, sans-serif !important;
         }
 
         .fv-catch {
-          margin: 64px auto 36px; text-align: center; color: #3a3a3a;
+          margin: 64px auto 39px; text-align: center; color: #3a3a3a;
           font-family: ot-bunyu-mincho-stdn, serif;
-          font-size: 40px; line-height: 1.8; letter-spacing: 0.1em; font-weight: 500;
+          font-size: 40px; line-height: 1.8; letter-spacing: 0.1em; font-weight: 600;
         }
 
         .fv-earth {
-          position: relative; max-height: 431px; max-width: 949px;
+          position: relative; height: 380px; max-width: 990px;
           margin: 0 auto; overflow: hidden; background: #000;
         }
         .fv-earth-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
