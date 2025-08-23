@@ -128,8 +128,8 @@ export default function ProductLineupSection() {
           <Image
             src="/MV_LOGO.png"
             alt={tr("lineup.alt.brand", "Mother Vegetables Confidence")}
-            width={480}
-            height={140}
+            width={270}
+            height={100}
             priority
           />
         </div>
