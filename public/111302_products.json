@@ -1,35 +1,86 @@
 [
   {
-    "name": "MV-Si002 お試しサイズ 500mg - 111302",
-    "slug": "trial-111302",
-    "description": "1g - 約30日分",
+    "name": "【薬用スライドケース】マザベジコンフィデンスパウダー 1,500mg -111302",
+    "name_en": "[Slide Case] Mazavegi Confidence Powder 1,500mg - 111302",
+    "slug": "case-111302",
+    "description": "■天然藻シリカ 1,500mg＋薬用特化型スライドケース付き\n・純度97.1%の非結晶質のシリカをスキンケアやメイクに活用できます。\n・スライドケースに付属のサチェットからシリカを入れます。\n・手のひらに40mg程度（Yシャツのボタンくらい）出しお使いのコスメ製品と手のひらで混ぜてください。\n・コスメ製品と混ぜずにパフなどに付けて直接お肌に塗っても効果的です。\n\n■成分表示\n医薬部外品\n原料規格 / pH 7.6\nシリカ",
+    "description_en": "■ Natural algae silica 1,500 mg + slide case (for medicated use)\n• 97.1% purity amorphous silica for skincare and makeup.\n• Fill the slide case with silica from the sachet.\n• Dispense ~40 mg and mix with your cosmetic in your palm, or apply directly with a puff.\n\n■ Ingredients\nQuasi-drug (Japan)\nRaw material spec / pH 7.6\nSilica",
     "originalprice": "3,300円",
-    "originalprice2": "",
+    "price": "3,100円",
+    "ItemPic": "/case1500.png",
+    "wixProductId": "c01f39ec-728f-4d8c-ac38-3b68b1fd528f",
+    "url": "https://www.dotpb.jp/product-page/case-111302"
+  },
+  {
+    "name": "【30本セット】マザベジコンフィデンスパウダー 22,500mg -111302",
+    "name_en": "[30 Pack] Mazavegi Confidence Powder 22,500mg - 111302",
+    "slug": "big-refill-111302",
+    "description": "■天然藻シリカ 22,500mg（サチェットパッケージ30本）\n・純度97.1%の非結晶質のシリカをスキンケアやメイクに活用できます。\n・容器やケースがついていない詰め替え用。\n・持ち運び便利なサチェットタイプ。\n・大容量22,500mgで1000回分\n・毎日2回を40mg使用しておよそ16ヶ月半の高コスパ。\n\n■成分表示\n医薬部外品\n原料規格 / pH 7.6\nシリカ",
+    "description_en": "■ Natural algae silica 22,500 mg (30 sachets)\n• 97.1% purity amorphous silica for skincare and makeup.\n• Refill type without container/case; portable sachets.\n• 22,500 mg ≈ 1,000 uses (40 mg each) — about 16.5 months if used twice daily.\n\n■ Ingredients\nQuasi-drug (Japan)\nRaw material spec / pH 7.6\nSilica",
+    "originalprice": "19,800円",
+    "price": "1,800円",
+    "ItemPic": "/30p22500.png",
+    "wixProductId": "bb337a3b-e4c8-4914-a9c6-09a169896337",
+    "url": "https://www.dotpb.jp/product-page/big-refill-111302"
+  },
+  {
+    "name": "【ミックスパック】 マザベジコンフィデンスパウダー 2,000mg（エクトイン入り） -111302",
+    "name_en": "[Mix Pack] Mazavegi Confidence Powder 2,000mg (with Ectoine) - 111302",
+    "slug": "double-e-111302",
+    "description": "■天然藻シリカ 2,000mg＋混ぜる容器セット（100～150ml）\n・純度97.1%の非結晶質のシリカをスキンケアやメイクに活用できます。\n・容器にシリカを入れ、そのあとにお好きなコスメ製品を入れます。\n・容器を手で揉みこむようにしてシリカをよく混ぜてください。\n・いつものスキンケアやメイクのルーティーンを変えることなくお使いいただけます。\n・保湿効果や炎症を抑える効果が期待できる天然アミノ酸のエクトイン配合版。\n\n■成分表示\n医薬部外品\n原料規格 / pH 7.6\nシリカ",
+    "description_en": "■ Natural algae silica 2,000 mg + mixing container set (100–150 ml)\n• 97.1% purity amorphous silica for skincare and makeup.\n• Put silica into the container, then add your cosmetic product.\n• Knead by hand to mix thoroughly; use without changing your daily routine.\n• With ectoine (a natural amino acid) for expected moisturizing and anti-inflammatory benefits.\n\n■ Ingredients\nQuasi-drug (Japan)\nRaw material spec / pH 7.6\nSilica",
+    "originalprice": "3,300円",
+    "price": "3,100円",
+    "ItemPic": "/mix2000.png",
+    "wixProductId": "8c65ae5d-bd34-4f48-83c4-495374ef774f",
+    "url": "https://www.dotpb.jp/product-page/double-e-111302"
+  },
+  {
+    "name": "【薬用スライドケース】マザベジコンフィデンスパウダー 2,000mg（エクトイン入り） -111302",
+    "name_en": "[Slide Case] Mazavegi Confidence Powder 2,000mg (with Ectoine) - 111302",
+    "slug": "case-e-111302",
+    "description": "■天然藻シリカ 2,000mg＋薬用特化型スライドケース付き\n・純度97.1%の非結晶質のシリカをスキンケアやメイクに活用できます。\n・スライドケースに付属のサチェットからシリカを入れます。\n・手のひらに40mg程度出しコスメと混ぜるか、パフに直接出して塗布します。\n・保湿効果や炎症を抑える効果が期待できる天然アミノ酸のエクトイン配合版。\n\n■成分表示\n医薬部外品\n原料規格 / pH 7.6\nシリカ",
+    "description_en": "■ Natural algae silica 2,000 mg + slide case (for medicated use)\n• 97.1% purity amorphous silica for skincare and makeup.\n• Fill the slide case from sachets, dispense ~40 mg and mix with cosmetics, or apply directly with a puff.\n• With ectoine for expected moisturizing and anti-inflammatory benefits.\n\n■ Ingredients\nQuasi-drug (Japan)\nRaw material spec / pH 7.6\nSilica",
+    "originalprice": "3,300円",
+    "price": "3,100円",
+    "ItemPic": "/case2000.png",
+    "wixProductId": "a9f477b6-b131-4313-b076-6d0bdc1f7d41",
+    "url": "https://www.dotpb.jp/product-page/case-e-111302"
+  },
+  {
+    "name": "【10本セット】マザベジコンフィデンスパウダー 10,000mg（エクトイン入り） -111302",
+    "name_en": "[10 Pack] Mazavegi Confidence Powder 10,000mg (with Ectoine) - 111302",
+    "slug": "refill-e-111302",
+    "description": "■天然藻シリカ 10,000mg（サチェットパッケージ10本）\n・純度97.1%の非結晶質のシリカをスキンケアやメイクに活用できます。\n・容器やケースがついていない詰め替え用。\n・持ち運び便利なサチェットタイプ。\n・大容量10,000mgで330回分。毎日2回を40mg使用しておよそ5ヶ月使用。\n・保湿効果や炎症を抑える効果が期待できる天然アミノ酸のエクトイン配合版。\n\n■成分表示\n医薬部外品\n原料規格 / pH 7.6\nシリカ",
+    "description_en": "■ Natural algae silica 10,000 mg (10 sachets)\n• 97.1% purity amorphous silica for skincare and makeup.\n• Refill without container/case; portable sachets.\n• 10,000 mg ≈ 330 uses — about 5 months if used twice daily.\n• With ectoine for expected moisturizing and anti-inflammatory benefits.\n\n■ Ingredients\nQuasi-drug (Japan)\nRaw material spec / pH 7.6\nSilica",
+    "originalprice": "12,000円",
+    "price": "1,000円",
+    "ItemPic": "/10p10000.png",
+    "wixProductId": "b02ad671-6b9d-4cab-9384-a53294ae11a4",
+    "url": "https://www.dotpb.jp/product-page/refill-e-111302"
+  },
+  {
+    "name": "【30本セット】マザベジコンフィデンスパウダー 30,000mg（エクトイン入り） -111302",
+    "name_en": "[30 Pack] Mazavegi Confidence Powder 30,000mg (with Ectoine) - 111302",
+    "slug": "big-refill-e-111302",
+    "description": "■天然藻シリカ 30,000mg（サチェットパッケージ30本）\n・純度97.1%の非結晶質のシリカをスキンケアやメイクに活用できます。\n・容器やケースがついていない詰め替え用。\n・持ち運び便利なサチェットタイプ。\n・大容量30,000mgで1000回分。毎日2回を40mg使用しておよそ16ヶ月半の高コスパ。\n・保湿効果や炎症を抑える効果が期待できる天然アミノ酸のエクトイン配合版。\n\n■成分表示\n医薬部外品\n原料規格 / pH 7.6\nシリカ",
+    "description_en": "■ Natural algae silica 30,000 mg (30 sachets)\n• 97.1% purity amorphous silica for skincare and makeup.\n• Refill without container/case; portable sachets.\n• 30,000 mg ≈ 1,000 uses — about 16.5 months if used twice daily.\n• With ectoine for expected moisturizing and anti-inflammatory benefits.\n\n■ Ingredients\nQuasi-drug (Japan)\nRaw material spec / pH 7.6\nSilica",
+    "originalprice": "30,000円",
     "price": "2,000円",
-    "ItemPic": "/trial.png",
-    "wixProductId": "021a78fe-9e4f-4f68-b360-91d2f19e0c7f",
-    "url": "https://www.dotpb.jp/product-page/trial-111302"
+    "ItemPic": "/30p30000.png",
+    "wixProductId": "191f9d28-85a3-40e5-8f45-1f951e1369b4",
+    "url": "https://www.dotpb.jp/product-page/big-refill-e-111302"
   },
   {
-    "name": "MV-Si002 お得な大容量 5,000mg - 111302",
-    "slug": "large-111302",
-    "description": "35g - 約150日分",
+    "name": "PBスキンパウダー：【10本セット】マザベジシリカパウダー 7,500mg -111302",
+    "name_en": "-111302",
+    "slug": "refill-111302",
+    "description": "",
+    "description_en": "",
     "originalprice": "",
-    "originalprice2": "通常価格 11,000円",
-    "price": "6,800円",
-    "ItemPic": "/large.png",
-    "wixProductId": "42f401f1-9ea0-4e7f-8feb-3fe0ceb4f084",
-    "url": "https://www.dotpb.jp/product-page/large-111302"
-  },
-  {
-    "name": "MV-Si002 スタンダードサイズ 2,000mg - 111302",
-    "slug": "standard-111302",
-    "description": "2g - 約60日分",
-    "originalprice": "",
-    "originalprice2": "通常価格 6,600円",
-    "price": "3,200円",
-    "ItemPic": "/standard.png",
-    "wixProductId": "b2e0ca5f-9918-4326-8e94-6cc8e292bd69",
-    "url": "https://www.dotpb.jp/product-page/standard-111302"
+    "price": "9,000円",
+    "ItemPic": "/refill.png",
+    "wixProductId": "58f28426-521e-4d7f-81e8-a7aff7082603",
+    "url": "https://www.dotpb.jp/product-page/refill-111302"
   }
 ]
