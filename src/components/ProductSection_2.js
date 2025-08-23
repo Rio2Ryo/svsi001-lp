@@ -3,34 +3,32 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
-import { useI18n } from "@/lib/i18n"; // ← ここを統一
+import { useI18n } from "@/lib/i18n";
 
-/* ▼ フォールバック（商品名は必ずここを表示用に使う） */
+/* ================= フォールバック（無い時だけ使う最小セット） ================= */
 const PRODUCTS = [
-  { name: "【ミックスパック】\nマザベジコンフィデンスパウダー\n1,500mg", slug: "double-mvsi", description: "ミックスパックです。", originalprice: "3,300円", price: "3,300円", ItemPic: "/mix1500.png", wixProductId: "dcb1eb79-e65a-02df-a8f2-a80385c56e00", url: "https://www.dotpb.jp/product-page/double-mvsi" },
-  { name: "【薬用スライドケース】\nマザベジコンフィデンスパウダー\n1,500mg", slug: "case-mvsi", description: "薬用スライドケ－スです。", originalprice: "3,300円", price: "3,300円", ItemPic: "/case1500.png", wixProductId: "7be06482-8fca-e20d-6a73-48bd3e914460", url: "https://www.dotpb.jp/product-page/case-mvsi" },
-  { name: "【30本セット】\nマザベジコンフィデンスパウダー\n22,500mg", slug: "big-refill-mvsi", description: "30本セットです。", originalprice: "20,000円", price: "20,000円", ItemPic: "/30p22500.png", wixProductId: "fb6bbce6-a63f-b4d1-b817-da05d987e163", url: "https://www.dotpb.jp/product-page/big-refill-mvsi" },
-  { name: "【ミックスパック】\nマザベジコンフィデンスパウダー\n2,000mg（エクトイン入り）", slug: "double-e-mvsi", description: "ミックスパック（エクトイン入り）です。", originalprice: "3,300円", price: "3,300円", ItemPic: "/mix2000.png", wixProductId: "7ba04481-0674-5262-9325-8d62f2d25095", url: "https://www.dotpb.jp/product-page/double-e-mvsi" },
-  { name: "【薬用スライドケース】\nマザベジコンフィデンスパウダー\n2,000mg（エクトイン入り）", slug: "case-e-mvsi", description: "薬用スライドケ－ス（エクトイン入り）です。", originalprice: "3,300円", price: "3,300円", ItemPic: "/case2000.png", wixProductId: "48c2a407-4738-2f3f-e317-d118a4046e5c", url: "https://www.dotpb.jp/product-page/case-e-mvsi" },
-  { name: "【10本セット】\nマザベジコンフィデンスパウダー\n10,000mg（エクトイン入り）", slug: "refill-e-mvsi", description: "10本セット（エクトイン入り）です。", originalprice: "12,000円", price: "12,000円", ItemPic: "/10p10000.png", wixProductId: "cc620bb2-fd77-8db3-4bf1-cff751f9e55d", url: "https://www.dotpb.jp/product-page/refill-e-mvsi" },
-  { name: "【30本セット】\nマザベジコンフィデンスパウダー\n30,000mg（エクトイン入り）", slug: "big-refill-e-mvsi", description: "30本セット（エクトイン入り）です。", originalprice: "30,000円", price: "30,000円", ItemPic: "/30p30000.png", wixProductId: "c15bad90-8fff-b003-7792-2282202b6ccb", url: "https://www.dotpb.jp/product-page/big-refill-e-mvsi" }
+  { name: "【ミックスパック】\nマザベジコンフィデンスパウダー\n1,500mg", slug: "double-mvsi", ItemPic: "/mix1500.png", price: "3,300円" },
+  { name: "【薬用スライドケース】\nマザベジコンフィデンスパウダー\n1,500mg", slug: "case-mvsi", ItemPic: "/case1500.png", price: "3,300円" },
+  { name: "【30本セット】\nマザベジコンフィデンスパウダー\n22,500mg", slug: "big-refill-mvsi", ItemPic: "/30p22500.png", price: "20,000円" },
+  { name: "【ミックスパック】\nマザベジコンフィデンスパウダー\n2,000mg（エクトイン入り）", slug: "double-e-mvsi", ItemPic: "/mix2000.png", price: "3,300円" },
+  { name: "【薬用スライドケース】\nマザベジコンフィデンスパウダー\n2,000mg（エクトイン入り）", slug: "case-e-mvsi", ItemPic: "/case2000.png", price: "3,300円" },
+  { name: "【10本セット】\nマザベジコンフィデンスパウダー\n10,000mg（エクトイン入り）", slug: "refill-e-mvsi", ItemPic: "/10p10000.png", price: "12,000円" },
+  { name: "【30本セット】\nマザベジコンフィデンスパウダー\n30,000mg（エクトイン入り）", slug: "big-refill-e-mvsi", ItemPic: "/30p30000.png", price: "30,000円" }
 ];
 
-/* ▼ ENの表示名（slug → 英語名） */
-const EN_NAME_BY_SLUG = {
-  "double-mvsi": "[Mix Pack]\nMazavegi Confidence Powder\n1,500mg",
-  "case-mvsi": "[Slide Case]\nMazavegi Confidence Powder\n1,500mg",
-  "big-refill-mvsi": "[30 Pack]\nMazavegi Confidence Powder\n22,500mg",
-  "double-e-mvsi": "[Mix Pack]\nMazavegi Confidence Powder\n2,000mg (with Ectoine)",
-  "case-e-mvsi": "[Slide Case]\nMazavegi Confidence Powder\n2,000mg (with Ectoine)",
-  "refill-e-mvsi": "[10 Pack]\nMazavegi Confidence Powder\n10,000mg (with Ectoine)",
-  "big-refill-e-mvsi": "[30 Pack]\nMazavegi Confidence Powder\n30,000mg (with Ectoine)"
+/* ★ baseSlug（末尾IDを除いたキー）→ 英語名の最後のフォールバック */
+const EN_NAME_BY_BASESLUG = {
+  "double":       "[Mix Pack]\nMazavegi Confidence Powder\n1,500mg",
+  "case":         "[Slide Case]\nMazavegi Confidence Powder\n1,500mg",
+  "big-refill":   "[30 Pack]\nMazavegi Confidence Powder\n22,500mg",
+  "double-e":     "[Mix Pack]\nMazavegi Confidence Powder\n2,000mg (with Ectoine)",
+  "case-e":       "[Slide Case]\nMazavegi Confidence Powder\n2,000mg (with Ectoine)",
+  "refill-e":     "[10 Pack]\nMazavegi Confidence Powder\n10,000mg (with Ectoine)",
+  "big-refill-e": "[30 Pack]\nMazavegi Confidence Powder\n30,000mg (with Ectoine)"
 };
 
-/* ▼ 為替レート（3,300円 → $22.19 に合わせて 0.006724） */
-const USD_PER_JPY = Number(process.env.NEXT_PUBLIC_USD_PER_JPY) || 0.006724;
-
-/* ▼ フォーマット/パース */
+/* ============= 価格（円→USD） ============= */
+const USD_PER_JPY = Number(process.env.NEXT_PUBLIC_USD_PER_JPY) || 0.006724; // 3,300 → $22.19
 const fmtJPY = new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 0 });
 const fmtUSD = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const parseJPY = (v) => (typeof v === "number" ? v : Number(String(v ?? "").replace(/[^\d]/g, "")) || 0);
@@ -38,6 +36,9 @@ const formatPrice = (raw, lang) => {
   const jpy = parseJPY(raw);
   return lang === "en" ? fmtUSD.format(jpy * USD_PER_JPY) : fmtJPY.format(jpy);
 };
+
+/* 末尾IDを落とす */
+const baseKey = (slug = "") => slug.replace(/-[^-]+$/, "");
 
 export default function ProductLineupSection() {
   const router = useRouter();
@@ -67,8 +68,11 @@ export default function ProductLineupSection() {
     return () => { ignore = true; };
   }, [itemId]);
 
-  // slug末尾の1セグメント（ID）を落とした“ベースキー”で対応付ける
-  const baseKey = (slug) => (slug || "").replace(/-[^-]+$/, "");
+  /* ====== JSON とフォールバックのマージ ======
+     - JSON > Fallback の優先度
+     - name / name_en は JSON をそのまま保持（上書きしない）
+     - ItemPic / price / originalprice は JSON が無ければフォールバックで補完
+  */
   const itemsForDisplay = useMemo(() => {
     if (!jsonItems || !Array.isArray(jsonItems) || jsonItems.length === 0) {
       return PRODUCTS;
@@ -77,14 +81,18 @@ export default function ProductLineupSection() {
     return jsonItems.map(j => {
       const fb = fbByBase.get(baseKey(j.slug)) || {};
       return {
-        ...fb,
-        ...j,                 // 価格や画像などはJSONを優先
-        name: fb.name || ""   // ★ 商品名は必ずPRODUCTSのnameを使用（多言語は表示時に差し替え）
+        ...fb,            // 先にFB
+        ...j,             // JSONで上書き
+        ItemPic: j.ItemPic || fb.ItemPic,
+        price: j.price || fb.price,
+        originalprice: j.originalprice || fb.originalprice,
+        name: j.name || fb.name,
+        name_en: j.name_en || fb.name_en
       };
     });
   }, [jsonItems]);
 
-  /* ★ 判定は名前ではなく slug 基準（エクトイン = '-e-' を含む） */
+  // エクトイン判定は slug 基準
   const isEcto = (p) => String(p.slug || "").includes("-e-");
   const baseItems = itemsForDisplay.filter((p) => !isEcto(p));
   const ectoItems = itemsForDisplay.filter(isEcto);
@@ -121,56 +129,26 @@ export default function ProductLineupSection() {
 
       <style jsx>{`
         .lineup {
-          max-width: 1320px;              /* セクションを広く */
+          max-width: 1320px;
           margin: 0 auto;
           padding: 40px 16px 72px;
           background: #fff;
         }
-        /* 上部ヘッダー */
         .lineup-head { text-align: center; margin: 6px 0 40px; }
         .lineup-label {
           font-family: "ot-bunyu-mincho-stdn", serif;
           font-size: 40px;
-          font-weight: 400;               /* ← 0(ゼロ)ではなく o(オー) */
+          font-weight: 400;
           letter-spacing: 0.18em;
           color: #222;
           margin: 50px 0 18px;
         }
-        .brand-lockup :global(img) {
-          display: inline-block;
-          filter: grayscale(100%) contrast(95%) opacity(0.9);
-          width: auto; height: auto;
-          max-width: 480px;
-        }
+        .brand-lockup :global(img) { display: inline-block; filter: grayscale(100%) contrast(95%) opacity(0.9); max-width: 480px; }
 
-        /* セクション見出し */
-        .title {
-          text-align: center;
-          font-size: 30px;
-          font-weight: 500;
-          letter-spacing: 0.12em;
-          color: #2b2b2b;
-          margin: 44px 0 12px;
-        }
-        /* 区切り線 */
-        .divider {
-          height: 1px;
-          background: #dcdcdc;
-          margin: 10px auto 14px;
-          max-width: 1024px;
-        }
-        /* 注記 */
-        .note {
-          text-align: center;
-          color: #6d6d6d;
-          font-size: 15px;
-          letter-spacing: 0.06em;
-          margin-bottom: 28px;
-          white-space: pre-line; /* \n 改行対応 */
-        }
-        .note .subnote { display: inline-block; margin-top: 4px; }
+        .title { text-align: center; font-size: 30px; font-weight: 500; letter-spacing: 0.12em; color: #2b2b2b; margin: 44px 0 12px; }
+        .divider { height: 1px; background: #dcdcdc; margin: 10px auto 14px; max-width: 1024px; }
+        .note { text-align: center; color: #6d6d6d; font-size: 15px; letter-spacing: 0.06em; margin-bottom: 28px; white-space: pre-line; }
 
-        /* 縮小ブレークポイント */
         @media (max-width: 1100px) {
           .brand-lockup :global(img) { max-width: 360px; }
           .title { font-size: 28px; }
@@ -193,12 +171,14 @@ function Row({ items, itemId, tr, lang }) {
     <>
       <div className="row" role="list">
         {items.map((p) => {
-          const internalHref = itemId ? `/item/${itemId}/${p.slug}` : "#";
+          const href = itemId ? `/item/${itemId}/${p.slug}` : "#";
+          const base = baseKey(p.slug);
+          // ★ JSONの name_en を最優先 → baseSlug の辞書 → 日本語名
+          const displayName =
+            lang === "en"
+              ? (p.name_en || EN_NAME_BY_BASESLUG[base] || p.name)
+              : (p.name || EN_NAME_BY_BASESLUG[base] || "");
 
-          // 表示名と言語
-          const displayName = lang === "en" ? (EN_NAME_BY_SLUG[p.slug] || p.name) : p.name;
-
-          // 価格（ENならUSD換算、JAは円）
           const price = formatPrice(p.price, lang);
           const original = p.originalprice ? formatPrice(p.originalprice, lang) : null;
 
@@ -209,7 +189,7 @@ function Row({ items, itemId, tr, lang }) {
                   src={p.ItemPic || "/noimage.png"}
                   alt={displayName}
                   fill
-                  sizes="(max-width: 1100px) 240px, 280px"   /* 画像ヒントを拡大 */
+                  sizes="(max-width: 1100px) 240px, 280px"
                   style={{ objectFit: "contain" }}
                   priority
                 />
@@ -222,7 +202,7 @@ function Row({ items, itemId, tr, lang }) {
                 {original && <span className="original">{original}</span>}
                 <span className="price">{price}</span>
               </div>
-              <Link href={internalHref} aria-label={`${displayName} ${tr("lineup.ctaAria","を購入")}`}>
+              <Link href={href} aria-label={`${displayName} ${tr("lineup.ctaAria","を購入")}`}>
                 <button type="button" className="btn">
                   {tr("lineup.cta", lang === "en" ? "Buy now" : "ご購入はこちら")}
                 </button>
@@ -233,56 +213,18 @@ function Row({ items, itemId, tr, lang }) {
       </div>
 
       <style jsx>{`
-        .row {
-          width: min(100%, 1280px);      /* 横幅も広げる */
-          margin: 0 auto;
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 24px;                     /* 余白も少し広め */
-        }
-        .card {
-          width: 280px;                  /* PCで拡大 */
-          text-align: center;
-          padding: 10px 12px 20px;
-        }
-        .thumb {
-          position: relative;
-          width: 280px;
-          height: 200px;                 /* 画像枠拡大 */
-          margin: 0 auto 12px;
-        }
-        .name {
-          font-weight: 400;
-          color: #333;
-          line-height: 1.7;
-          font-size: 15px;               /* 商品名拡大 */
-          letter-spacing: 0.02em;
-          white-space: pre-line;         /* ← \n を実際の改行として表示 */
-        }
-        .pricewrap {
-          margin-top: 10px;
-          font-size: 16px;               /* ラベル拡大 */
-          color: #666;
-        }
+        .row { width: min(100%, 1280px); margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; }
+        .card { width: 280px; text-align: center; padding: 10px 12px 20px; }
+        .thumb { position: relative; width: 280px; height: 200px; margin: 0 auto 12px; }
+        .name { font-weight: 400; color: #333; line-height: 1.7; font-size: 15px; letter-spacing: 0.02em; white-space: pre-line; }
+        .pricewrap { margin-top: 10px; font-size: 16px; color: #666; }
         .original { display: block; text-decoration: line-through; color: #9ca3af; margin-top: 2px; }
-        .price { display: block; font-size: 18px; color: #111; margin-top: 2px; font-weight:700; }
+        .price { display: block; font-size: 18px; color: #111; margin-top: 2px; font-weight: 700; }
         .btn {
-          display: inline-block;
-          margin-top: 14px;
-          padding: 7px 22px;            /* ボタン拡大 */
-          border-radius: 30px;
-          background: #ffe926;
-          color: #000;
-          font-weight: 500;
-          letter-spacing: 0.06em;
-          border: none;
-          cursor: pointer;
-          transition: transform .02s ease, opacity .2s ease;
-          font-size: 14px;
+          display: inline-block; margin-top: 14px; padding: 7px 22px; border-radius: 30px;
+          background: #ffe926; color: #000; font-weight: 500; letter-spacing: 0.06em; border: none; cursor: pointer;
+          transition: transform .02s ease, opacity .2s ease; font-size: 14px;
         }
-       
-        /* ── 1100px以下で従来サイズへ段階的に縮小 ── */
         @media (max-width: 1100px) {
           .row { width: 100%; gap: 20px; }
           .card { width: 240px; padding: 8px 10px 18px; }
@@ -292,19 +234,14 @@ function Row({ items, itemId, tr, lang }) {
           .price { font-size: 18px; }
           .btn { min-height: 44px; padding: 8px 18px; font-size: 13px; }
         }
-        /* ── 560px以下：1カラム想定 ── */
         @media (max-width: 560px) {
           .row { width: 100%; gap: 16px; }
           .card { width: 100%; max-width: 360px; }
           .thumb { width: 100%; max-width: 360px; height: 180px; }
           .name { font-size: 14px; }
           .price { font-size: 17px; }
+        }
       `}</style>
     </>
   );
-}
-
-function extractAmount(name) {
-  const m = (name || "").match(/([0-9,]+mg)/);
-  return m ? m[1] : "";
 }
