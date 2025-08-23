@@ -36,6 +36,18 @@
     "url": "https://www.dotpb.jp/product-page/big-refill-2319"
   },
   {
+    "name": "【ミックスパック】 マザベジコンフィデンスパウダー 2,000mg（エクトイン入り） - 2319",
+    "name_en": "[Mix Pack] Mazavegi Confidence Powder 2,000mg (with Ectoine) - 2319",
+    "slug": "double-e-2319",
+    "description": "■天然藻シリカ 2,000mg＋混ぜる容器セット（100～150ml）\n・純度97.1%の非結晶質のシリカをスキンケアやメイクに活用できます。\n・容器にシリカを入れ、そのあとにお好きなコスメ製品を入れます。\n・容器を手で揉みこむようにしてシリカをよく混ぜてください。\n・いつものスキンケアやメイクのルーティーンを変えることなくお使いいただけます。\n・保湿効果や炎症を抑える効果が期待できる天然アミノ酸のエクトイン配合版。\n\n■成分表示\n医薬部外品\n原料規格 / pH 7.6\nシリカ",
+    "description_en": "■ Natural algae silica 2,000 mg + mixing container set (100–150 ml)\n• 97.1% purity amorphous silica for skincare and makeup.\n• Put silica into the container, then add your cosmetic product.\n• Knead by hand to mix thoroughly; use without changing your daily routine.\n• With ectoine (a natural amino acid) for expected moisturizing and anti-inflammatory benefits.\n\n■ Ingredients\nQuasi-drug (Japan)\nRaw material spec / pH 7.6\nSilica",
+    "originalprice": "3,300円",
+    "price": "3,100円",
+    "ItemPic": "/mix2000.png",
+    "wixProductId": "44fae741-bec1-4b74-a3f0-84191e918c76",
+    "url": "https://www.dotpb.jp/product-page/double-e-2319"
+  },
+  {
     "name": "【薬用スライドケース】マザベジコンフィデンスパウダー 2,000mg（エクトイン入り） - 2319",
     "name_en": "[Slide Case] Mazavegi Confidence Powder 2,000mg (with Ectoine) - 2319",
     "slug": "case-e-2319",
@@ -70,17 +82,5 @@
     "ItemPic": "/30p30000.png",
     "wixProductId": "1c67b022-3728-4c23-acb6-7e3f21ae1bcc",
     "url": "https://www.dotpb.jp/product-page/big-refill-e-2319"
-  },
-  {
-    "name": "PBスキンパウダー：【10本セット】マザベジシリカパウダー 7,500mg - 2319",
-    "name_en": "-2319",
-    "slug": "refill-2319",
-    "description": "",
-    "description_en": "",
-    "originalprice": "",
-    "price": "9,000円",
-    "ItemPic": "/refill.png",
-    "wixProductId": "5857bde3-4293-40e2-a0a0-b71c34908c79",
-    "url": "https://www.dotpb.jp/product-page/refill-2319"
   }
 ]
