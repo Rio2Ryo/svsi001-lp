@@ -270,8 +270,7 @@ function Row({ items, itemId, tr, lang }) {
         .btn {
           display: inline-block;
           margin-top: 14px;
-          padding: 10px 22px;            /* ボタン拡大 */
-          min-height: 48px;
+          padding: 7px 22px;            /* ボタン拡大 */
           border-radius: 30px;
           background: #ffe926;
           color: #000;
@@ -282,9 +281,7 @@ function Row({ items, itemId, tr, lang }) {
           transition: transform .02s ease, opacity .2s ease;
           font-size: 14px;
         }
-        .btn:hover { opacity: .92; }
-        .btn:active { transform: translateY(1px); }
-
+       
         /* ── 1100px以下で従来サイズへ段階的に縮小 ── */
         @media (max-width: 1100px) {
           .row { width: 100%; gap: 20px; }

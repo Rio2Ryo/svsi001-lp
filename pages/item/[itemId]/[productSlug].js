@@ -9,21 +9,27 @@ import Footer from "../../../src/components/Footer";
 import { useI18n } from "@/lib/i18n";
 
 /* ====== 価格表示：円⇄ドル 切替 ====== */
-const USD_PER_JPY = Number(process.env.NEXT_PUBLIC_USD_PER_JPY) || 0.006724; // 3300 -> 22.19
-const fmtJPY = new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 0 });
-const fmtUSD = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 });
-const parseJPY = (v) => (typeof v === "number" ? v : Number(String(v ?? "").replace(/[^\d]/g, "")) || 0);
-const formatPrice = (v, lang) => (lang === "en" ? fmtUSD.format(parseJPY(v) * USD_PER_JPY) : fmtJPY.format(parseJPY(v)));
+const USD_PER_JPY =
+  Number(process.env.NEXT_PUBLIC_USD_PER_JPY) || 0.006724; // 3300 -> $22.19
+const fmtJPY = new Intl.NumberFormat("ja-JP", {
+  style: "currency",
+  currency: "JPY",
+  maximumFractionDigits: 0,
+});
+const fmtUSD = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+const parseJPY = (v) =>
+  typeof v === "number" ? v : Number(String(v ?? "").replace(/[^\d]/g, "")) || 0;
+const formatPrice = (v, lang) =>
+  lang === "en" ? fmtUSD.format(parseJPY(v) * USD_PER_JPY) : fmtJPY.format(parseJPY(v));
 
-/* ====== 動的テキスト（名前・説明）のローカライズ ======
-   優先1: product.name_en / description_en など JSON 内の英語
-   優先2: en.json の pdp.products.{slug}.name / description
-   フォールバック: 日本語JSONの値
-*/
+/* ====== 動的テキスト（名前・説明）のローカライズ ====== */
 function pickLocalizedProductText(product, lang, t) {
   const slug = String(product?.slug || "").toLowerCase();
-
-  // JSON 内の多言語候補
   const name_ja = product?.name_ja || product?.name || "";
   const name_en = product?.name_en || product?.i18n?.en?.name || "";
   const desc_ja = product?.description_ja || product?.description || "";
@@ -76,7 +82,7 @@ export default function ProductDetailPage() {
   // ★ サイドカート表示
   const [isSideCartOpen, setSideCartOpen] = useState(false);
 
-  // ★ 代理店JSONを保持（ItemPic 参照用）
+  // ★ 代理店JSONを保持（ItemPic・英名・JPY価格参照用）
   const [agentProducts, setAgentProducts] = useState([]);
 
   useEffect(() => {
@@ -91,7 +97,7 @@ export default function ProductDetailPage() {
         if (!res.ok) throw new Error("商品JSON取得失敗");
 
         const data = await res.json();
-        setAgentProducts(data); // ← ここで全件保持
+        setAgentProducts(data);
         const found = data.find((item) => item.slug?.toLowerCase() === slug);
         setProduct(found || null);
 
@@ -139,7 +145,7 @@ export default function ProductDetailPage() {
     if (!product || !product.wixProductId) return;
     if (newQty < 0) return;
 
-  try {
+    try {
       if (newQty === 0 && cartItemId) {
         await myWixClient.currentCart.removeLineItemFromCurrentCart(cartItemId);
         setQuantity(0);
@@ -151,7 +157,9 @@ export default function ProductDetailPage() {
 
       if (cartItemId) {
         const { cart: updatedCart } =
-          await myWixClient.currentCart.updateCurrentCartLineItemQuantity([{ _id: cartItemId, quantity: newQty }]);
+          await myWixClient.currentCart.updateCurrentCartLineItemQuantity([
+            { _id: cartItemId, quantity: newQty },
+          ]);
         setQuantity(newQty);
         setCart(updatedCart);
       } else {
@@ -161,14 +169,15 @@ export default function ProductDetailPage() {
               {
                 catalogReference: {
                   appId: "1380b703-ce81-ff05-f115-39571d94dfcd",
-                  catalogItemId: product.wixProductId
+                  catalogItemId: product.wixProductId,
                 },
-                quantity: 1
-              }
-            ]
+                quantity: 1,
+              },
+            ],
           });
         const addedItem = updatedCart.lineItems.find(
-          (item) => item.catalogReference.catalogItemId === product.wixProductId
+          (item) =>
+            item.catalogReference.catalogItemId === product.wixProductId
         );
         setCart(updatedCart);
         setQuantity(1);
@@ -187,11 +196,13 @@ export default function ProductDetailPage() {
   const checkout = async () => {
     try {
       const { checkoutId } =
-        await myWixClient.currentCart.createCheckoutFromCurrentCart({ channelType: "WEB" });
+        await myWixClient.currentCart.createCheckoutFromCurrentCart({
+          channelType: "WEB",
+        });
 
       const redirect = await myWixClient.redirects.createRedirectSession({
         ecomCheckout: { checkoutId },
-        callbacks: { postFlowUrl: window.location.href }
+        callbacks: { postFlowUrl: window.location.href },
       });
 
       window.location = redirect.redirectSession.fullUrl;
@@ -215,7 +226,9 @@ export default function ProductDetailPage() {
   const changeLineItemQty = async (lineItemId, newQty) => {
     try {
       if (newQty <= 0) {
-        await myWixClient.currentCart.removeLineItemFromCurrentCart(lineItemId);
+        await myWixClient.currentCart.removeLineItemFromCurrentCart(
+          lineItemId
+        );
         const updated = await myWixClient.currentCart.getCurrentCart();
         setCart(updated);
         if (lineItemId === cartItemId) {
@@ -224,7 +237,9 @@ export default function ProductDetailPage() {
         }
       } else {
         const { cart: updatedCart } =
-          await myWixClient.currentCart.updateCurrentCartLineItemQuantity([{ _id: lineItemId, quantity: newQty }]);
+          await myWixClient.currentCart.updateCurrentCartLineItemQuantity([
+            { _id: lineItemId, quantity: newQty },
+          ]);
         setCart(updatedCart);
         if (lineItemId === cartItemId) setQuantity(newQty);
       }
@@ -233,11 +248,9 @@ export default function ProductDetailPage() {
     }
   };
 
-  const getThumbSrc = (li) => {
-    const wixId = li?.catalogReference?.catalogItemId;
-    const match = (agentProducts || []).find((p) => p.wixProductId === wixId);
-    return match?.ItemPic || li?.image?.url || null;
-  };
+  // ★ agentProducts から wixProductId で一致する商品を取得
+  const findAgentProductByWixId = (wixId) =>
+    (agentProducts || []).find((p) => p.wixProductId === wixId);
 
   const mainImg = product?.ItemPic || "/item_pic3.jpg";
 
@@ -245,7 +258,9 @@ export default function ProductDetailPage() {
     return (
       <>
         <Head>
-          <title>{tr("pdp.head.titleSuffix", "Mother Vegetables Confidence MV-Si002")}</title>
+          <title>
+            {tr("pdp.head.titleSuffix", "Mother Vegetables Confidence MV-Si002")}
+          </title>
         </Head>
         <p className="pageLoading">{tr("pdp.loading", "読み込み中...")}</p>
       </>
@@ -255,23 +270,51 @@ export default function ProductDetailPage() {
     return (
       <>
         <Head>
-          <title>{tr("pdp.head.titleSuffix", "Mother Vegetables Confidence MV-Si002")}</title>
+          <title>
+            {tr("pdp.head.titleSuffix", "Mother Vegetables Confidence MV-Si002")}
+          </title>
         </Head>
         <p className="notFound">{tr("pdp.notFound", "商品が見つかりません")}</p>
       </>
     );
 
   // ★ ここで名前・説明をローカライズ（JSON英語 → en.json → 日本語）
-  const { name: displayName, description: displayDescription } = pickLocalizedProductText(product, lang, t);
+  const { name: displayName, description: displayDescription } =
+    pickLocalizedProductText(product, lang, t);
 
   // ★ 価格を言語に応じてフォーマット
-  const displayOriginal = product.originalprice ? formatPrice(product.originalprice, lang) : null;
+  const displayOriginal = product.originalprice
+    ? formatPrice(product.originalprice, lang)
+    : null;
   const displayPrice = formatPrice(product.price, lang);
+
+  // ★ サイドカート表示用：行アイテムのローカライズ（名前・金額・小計）
+  const localizedLine = (li) => {
+    const wixId = li?.catalogReference?.catalogItemId;
+    const ap = findAgentProductByWixId(wixId);
+    const nameJA = ap?.name || li?.productName?.original || "";
+    const nameEN = ap?.name_en || nameJA;
+    const unitJPY =
+      ap?.price ? parseJPY(ap.price) : parseJPY(li?.price?.formattedAmount);
+    const unitDisp = formatPrice(unitJPY, lang);
+    const nameDisp = lang === "en" ? nameEN : nameJA;
+    return { nameDisp, unitDisp, unitJPY };
+  };
+
+  const subtotalJPY = (cart?.lineItems || []).reduce((s, li) => {
+    const { unitJPY } = localizedLine(li);
+    return s + unitJPY * (li?.quantity || 1);
+  }, 0);
+  const displaySubtotal =
+    lang === "en" ? fmtUSD.format(subtotalJPY * USD_PER_JPY) : fmtJPY.format(subtotalJPY);
 
   return (
     <>
       <Head>
-        <title>{`${displayName} | ${tr("pdp.head.titleSuffix", "Mother Vegetables Confidence MV-Si002")}`}</title>
+        <title>{`${displayName} | ${tr(
+          "pdp.head.titleSuffix",
+          "Mother Vegetables Confidence MV-Si002"
+        )}`}</title>
       </Head>
 
       {/* ===== 言語切替（HeroSectionと同じ） ===== */}
@@ -307,7 +350,7 @@ export default function ProductDetailPage() {
 
       <div className="page">
         <div className="grid">
-          {/* 左：大きい商品画像（next/imageに変更） */}
+          {/* 左：大きい商品画像（next/image） */}
           <div className="media">
             <div className="mediaImg">
               <Image
@@ -434,24 +477,36 @@ export default function ProductDetailPage() {
           )}
 
           {(cart?.lineItems || []).map((li) => {
-            const thumb = getThumbSrc(li); // ← ItemPic 優先
+            const wixId = li?.catalogReference?.catalogItemId;
+            const ap = findAgentProductByWixId(wixId);
+            const lineName = lang === "en"
+              ? (ap?.name_en || li?.productName?.original || "")
+              : (ap?.name || li?.productName?.original || "");
+            const unitJPY = ap?.price
+              ? parseJPY(ap.price)
+              : parseJPY(li?.price?.formattedAmount);
+            const unitDisp = formatPrice(unitJPY, lang);
+
             return (
               <div className="lineItem" key={li._id}>
                 <div className="thumb">
-                  {/* ここは外部URLの可能性があるため <img> のままにします */}
-                  {thumb ? (
-                    <img src={thumb} alt={li.productName?.original || "item"} />
+                  {ap?.ItemPic ? (
+                    <img src={ap.ItemPic} alt={lineName} />
                   ) : (
-                    <div className="ph" />
+                    <img src={li?.image?.url || "/noimage.png"} alt={lineName} />
                   )}
                 </div>
                 <div className="liInfo">
-                  <div className="liName">{li.productName?.original}</div>
-                  <div className="liPrice">{li.price?.formattedAmount || ""}</div>
+                  <div className="liName">{lineName}</div>
+                  <div className="liPrice">{unitDisp}</div>
 
                   {/* ▼ 数量UI */}
                   <div className="liQty">
-                    <div className="liQtyBox" role="group" aria-label={tr("pdp.quantity.ariaChange", "数量を変更")}>
+                    <div
+                      className="liQtyBox"
+                      role="group"
+                      aria-label={tr("pdp.quantity.ariaChange", "数量を変更")}
+                    >
                       <button
                         className="liBtn"
                         aria-label={tr("pdp.quantity.ariaDecrease", "減らす")}
@@ -460,7 +515,9 @@ export default function ProductDetailPage() {
                       >
                         −
                       </button>
-                      <div className="liQtyNum" aria-live="polite">{li.quantity}</div>
+                      <div className="liQtyNum" aria-live="polite">
+                        {li.quantity}
+                      </div>
                       <button
                         className="liBtn"
                         aria-label={tr("pdp.quantity.ariaIncrease", "増やす")}
@@ -478,8 +535,9 @@ export default function ProductDetailPage() {
 
         <footer className="sideCartFooter">
           <div className="subtotal">
-            {tr("pdp.sidecart.subtotalLabel", "小計：")}
-            {cart?.subtotal?.formattedAmount || ""}
+            {tr("pdp.sidecart.subtotalLabel", lang === "en" ? "Subtotal: " : "小計：")}
+            {/* Wixのsubtotal（JPY文字列）ではなく、agentProductsベースで再計算して言語別表示 */}
+            {displaySubtotal}
           </div>
           <button className="btn checkoutBtn" onClick={checkout}>
             {tr("pdp.sidecart.checkout", "ご購入手続きへ")}
@@ -525,12 +583,8 @@ export default function ProductDetailPage() {
 
         .media { width: 100%; }
         .mediaImg {
-          position: relative;
-          width: 100%;
-          height: 520px;
-          border-radius: 12px;
-          overflow: hidden;
-          background: #f6f6f6;
+          position: relative; width: 100%; height: 520px;
+          border-radius: 12px; overflow: hidden; background: #f6f6f6;
         }
 
         .info { display: flex; flex-direction: column; gap: 14px; }
@@ -567,7 +621,7 @@ export default function ProductDetailPage() {
         .sideCartBackdrop { position: fixed; inset: 0; background: rgba(0,0,0,.45); opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 1000; }
         .sideCartBackdrop.open { opacity: 1; pointer-events: auto; }
         .sideCart { position: fixed; top: 0; right: 0; width: 380px; max-width: 90vw; height: 100vh; background: #fff;
-          box-shadow: -8px 0 24px rgba(0,0,0,0.1); transform: translateX(100%); transition: transform .25s ease;
+          box-shadow: -8px 0 24px rgba(0,0,0,.1); transform: translateX(100%); transition: transform .25s ease;
           z-index: 1001; display: flex; flex-direction: column; }
         .sideCart.open { transform: translateX(0); }
         .sideCartHeader { display: flex; justify-content: space-between; align-items: center; padding: 16px; font-weight: 700; border-bottom: 1px solid #eee; }

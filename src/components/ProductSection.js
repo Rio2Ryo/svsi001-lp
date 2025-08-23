@@ -290,9 +290,8 @@ function Row({ items, tr, lang }) {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          min-height: 48px;
           margin-top: 14px;
-          padding: 10px 22px;
+          padding: 7px 22px;
           border-radius: 30px;
           background: #ffe926;
           color: #000;
@@ -303,9 +302,7 @@ function Row({ items, tr, lang }) {
           cursor: pointer;
           font-size: 14px;
         }
-        :global(.cta:hover) { opacity: .92; }
-        :global(.cta:active) { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
-        :global(.cta:focus-visible) { outline: 2px solid #111; outline-offset: 2px; box-shadow: 0 0 0 3px rgba(17,17,17,.2); }
+        
 
         @media (max-width: 1100px) {
           .row { width: 100%; gap: 20px; }
