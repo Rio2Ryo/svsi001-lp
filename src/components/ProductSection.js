@@ -171,7 +171,7 @@ export default function ProductLineupSection() {
         .brand-lockup :global(img) {
           display: inline-block;
           filter: grayscale(100%) contrast(95%) opacity(0.9);
-          width: auto; height: auto; max-width: 480px;
+          width: 240px; height: 100px;
         }
         .title {
           text-align: center;
