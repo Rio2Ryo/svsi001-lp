@@ -16,7 +16,7 @@ const PRODUCTS = [
   { name: "【30本セット】\nマザベジコンフィデンスパウダー\n30,000mg（エクトイン入り）", slug: "big-refill-e-mvsi", ItemPic: "/30p30000.png", price: "30,000円" }
 ];
 
-/* ★ baseSlug（末尾IDを除いたキー）→ 英語名の最後のフォールバック */
+/* ★ baseSlug（末尾IDを除いたキー）→ 英語名フォールバック */
 const EN_NAME_BY_BASESLUG = {
   "double":       "[Mix Pack]\nMazavegi Confidence Powder\n1,500mg",
   "case":         "[Slide Case]\nMazavegi Confidence Powder\n1,500mg",
@@ -37,7 +37,10 @@ const formatPrice = (raw, lang) => {
   return lang === "en" ? fmtUSD.format(jpy * USD_PER_JPY) : fmtJPY.format(jpy);
 };
 
-/* 末尾IDを落とす */
+/* 末尾IDを落とす（" - 1111" などを非表示に） */
+const stripId = (s = "") => s.replace(/\s*-\s*\d+\s*$/, "");
+
+/* 末尾IDを除いた baseSlug を得る */
 const baseKey = (slug = "") => slug.replace(/-[^-]+$/, "");
 
 export default function ProductLineupSection() {
@@ -70,7 +73,7 @@ export default function ProductLineupSection() {
 
   /* ====== JSON とフォールバックのマージ ======
      - JSON > Fallback の優先度
-     - name / name_en は JSON をそのまま保持（上書きしない）
+     - name / name_en は JSON をそのまま保持（後で表示時にIDを除去）
      - ItemPic / price / originalprice は JSON が無ければフォールバックで補完
   */
   const itemsForDisplay = useMemo(() => {
@@ -81,8 +84,8 @@ export default function ProductLineupSection() {
     return jsonItems.map(j => {
       const fb = fbByBase.get(baseKey(j.slug)) || {};
       return {
-        ...fb,            // 先にFB
-        ...j,             // JSONで上書き
+        ...fb,
+        ...j,
         ItemPic: j.ItemPic || fb.ItemPic,
         price: j.price || fb.price,
         originalprice: j.originalprice || fb.originalprice,
@@ -173,11 +176,15 @@ function Row({ items, itemId, tr, lang }) {
         {items.map((p) => {
           const href = itemId ? `/item/${itemId}/${p.slug}` : "#";
           const base = baseKey(p.slug);
+
           // ★ JSONの name_en を最優先 → baseSlug の辞書 → 日本語名
-          const displayName =
+          const rawName =
             lang === "en"
               ? (p.name_en || EN_NAME_BY_BASESLUG[base] || p.name)
               : (p.name || EN_NAME_BY_BASESLUG[base] || "");
+
+          // ★ 動的ページは商品名に ID を付けない（末尾 " - 1111" を除去）
+          const displayName = stripId(rawName);
 
           const price = formatPrice(p.price, lang);
           const original = p.originalprice ? formatPrice(p.originalprice, lang) : null;
