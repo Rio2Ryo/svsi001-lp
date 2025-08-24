@@ -331,7 +331,7 @@ export default function HeroSection() {
   }
   .fv-earth-copy{
     max-width: none;
-    font-size: 14px;    /* ←本文を小さく */
+    font-size: 0.8rem;    /* ←本文を小さく */
     line-height: 1.9;
     letter-spacing: .08em;
   }
@@ -343,7 +343,7 @@ export default function HeroSection() {
   .fv-logo-img{ width: clamp(170px, 64vw, 250px); }
   .fv-catch{ font-size: 20px; margin: 20px auto 14px; }
   .fv-earth-bg{ height: 300px; padding: 12px 14px; }
-  .fv-earth-copy{ font-size: 13px; }
+  .fv-earth-copy{ font-size: 0.7rem; }
 }
 
         
