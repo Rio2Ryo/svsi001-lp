@@ -225,7 +225,7 @@ export default function EffectsSection() {
   .mv-certs-title{ font-size:17px; letter-spacing:.08em; margin:0 0 6px; }
   .mv-certs-sub{   font-size:13px; letter-spacing:.06em; margin:0 0 18px; }
 
-  .mv-subtitle{ font-size:15px; letter-spacing:.08em; margin:22px 0 10px; }
+  .mv-subtitle{ font-size:15px; letter-spacing:.08em; margin:5px 0 10px; }
 
   /* ←肝：スマホでも“国名｜説明”の2カラムを維持して1行風に見せる */
   .mv-grade-list--grades li,
@@ -254,7 +254,7 @@ export default function EffectsSection() {
   /* “その他の認証”ロゴは小さめ中央寄せ */
   .mv-other-cert{ grid-template-columns:1fr; gap:8px; }
   .mv-cert-logos{ justify-content:center; gap:12px; padding-top:4px; }
-  .mv-cert-logos :global(img){ width:92px; height:auto; }
+  .mv-cert-logos :global(img){ width:90%; height:auto; }
 
   /* 連携テキスト：自然折返し（強制改行を無効化） */
   .mv-collab-text h4{ font-size:16px; margin:14px 0 4px; }
