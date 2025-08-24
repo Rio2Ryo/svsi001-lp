@@ -202,7 +202,7 @@ export default function GuaranteeSection() {
 
   /* アイコン小さく、テキストは上揃え。左右の余白をタイトに */
   .usage-item {
-    grid-template-columns: 48px 1fr !important;
+    grid-template-columns: 30% 1fr !important;
     gap: 12px !important;
     align-items: flex-start !important;
     padding: 12px 0 !important;
