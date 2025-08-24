@@ -5,15 +5,13 @@ import { useI18n } from "../lib/i18n";
 
 export default function TestimonialSection() {
   const [isVisible, setIsVisible] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [activeModal, setActiveModal] = useState(null); // null | 0 | 1 | 2
   useEffect(() => setIsVisible(true), []);
   useEffect(() => {
-    const onKey = (e) => e.key === "Escape" && setShowModal(false);
+    const onKey = (e) => e.key === "Escape" && setActiveModal(null);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
-
-  const toggleModal = () => setShowModal((v) => !v);
 
   // i18n
   const { t } = useI18n();
@@ -48,19 +46,40 @@ export default function TestimonialSection() {
   const badgeBefore = tr("testimonials.badgeBefore");
   const badgeAfter = tr("testimonials.badgeAfter");
 
-  // モーダル用データ（文言は辞書、画像パスのみ固定。必要なら辞書化も可）
-  const modalCases = [0, 1, 2, 3].map((i) => ({
-    title: tr(`testimonials.modal.${i}.title`),
-    age: tr(`testimonials.modal.${i}.age`),
-    beforeLabel: tr(`testimonials.modal.${i}.beforeLabel`),
-    afterLabel: tr(`testimonials.modal.${i}.afterLabel`),
-    beforeImg: tr(`testimonials.modal.${i}.beforeImg`) || `/case${i + 1}-before.jpg`,
-    afterImg: tr(`testimonials.modal.${i}.afterImg`) || `/case${i + 1}-after.jpg`,
-  }));
-
   // アクセシビリティ用 alt
   const altBefore = tr("testimonials.alt.before"); // 例: "before"
   const altAfter = tr("testimonials.alt.after");   // 例: "after"
+
+  // セクションごとのモーダルデータ取得
+  const getModalCases = (sectionIndex) => {
+    // セクション専用キー（推奨）: testimonials.sections.{idx}.modal.{i}.*
+    // 既存互換フォールバック:     testimonials.modal.{i}.*
+    const indicesBySection = [ [0,1,2,3], [0,1,2,3], [0,1] ]; // 必要なら各セクションで件数を調整
+    const items = indicesBySection[sectionIndex] || [];
+    return items.map((i) => {
+      const title =
+        tr(`testimonials.sections.${sectionIndex}.modal.${i}.title`) ||
+        tr(`testimonials.modal.${i}.title`);
+      const age =
+        tr(`testimonials.sections.${sectionIndex}.modal.${i}.age`) ||
+        tr(`testimonials.modal.${i}.age`);
+      const beforeLabel =
+        tr(`testimonials.sections.${sectionIndex}.modal.${i}.beforeLabel`) ||
+        tr(`testimonials.modal.${i}.beforeLabel`);
+      const afterLabel =
+        tr(`testimonials.sections.${sectionIndex}.modal.${i}.afterLabel`) ||
+        tr(`testimonials.modal.${i}.afterLabel`);
+      const beforeImg =
+        tr(`testimonials.sections.${sectionIndex}.modal.${i}.beforeImg`) ||
+        tr(`testimonials.modal.${i}.beforeImg`) ||
+        `/case${i + 1}-before.jpg`;
+      const afterImg =
+        tr(`testimonials.sections.${sectionIndex}.modal.${i}.afterImg`) ||
+        tr(`testimonials.modal.${i}.afterImg`) ||
+        `/case${i + 1}-after.jpg`;
+      return { title, age, beforeLabel, afterLabel, beforeImg, afterImg };
+    }).filter((m) => m.title || m.age || m.beforeImg || m.afterImg);
+  };
 
   // 罫線やボタンなど軽微なインライン用
   const styles = {
@@ -76,6 +95,47 @@ export default function TestimonialSection() {
       cursor: "pointer",
       letterSpacing: ".06em",
     },
+  };
+
+  // モーダル描画（共通見た目で中身だけ切替）
+  const renderModal = (sectionIndex) => {
+    const modalCases = getModalCases(sectionIndex);
+    if (!modalCases.length) return null;
+    return (
+      <div className="modal-overlay" onClick={() => setActiveModal(null)} role="dialog" aria-modal="true">
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <button className="modal-close" onClick={() => setActiveModal(null)} aria-label="close">
+            ×
+          </button>
+          <div className="modal-cases">
+            {modalCases.map((m, i) => (
+              <div className="modal-case" key={`mc-${sectionIndex}-${i}`}>
+                <h4 className="modal-case-title">
+                  {m.title}
+                  <br />
+                  <span>{m.age}</span>
+                </h4>
+                <div className="modal-images">
+                  <div className="ba">
+                    <span className="badge">{badgeBefore}</span>
+                    <Image src={m.beforeImg} alt={altBefore || "before"} width={260} height={170} />
+                  </div>
+                  <span className="arrow">▶</span>
+                  <div className="ba">
+                    <span className="badge">{badgeAfter}</span>
+                    <Image src={m.afterImg} alt={altAfter || "after"} width={260} height={170} />
+                  </div>
+                </div>
+                <div className="modal-labels">
+                  <span>{m.beforeLabel}</span>
+                  <span>{m.afterLabel}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -111,7 +171,7 @@ export default function TestimonialSection() {
             )}
           </div>
           <div className="uv-btn-wrap">
-            <button className="btn-modal" style={styles.btn} onClick={toggleModal}>
+            <button className="btn-modal" style={styles.btn} onClick={() => setActiveModal(0)}>
               {openBtn}
             </button>
           </div>
@@ -132,7 +192,7 @@ export default function TestimonialSection() {
             )}
           </div>
           <div className="uv-btn-wrap">
-            <button className="btn-modal" style={styles.btn} onClick={toggleModal}>
+            <button className="btn-modal" style={styles.btn} onClick={() => setActiveModal(1)}>
               {openBtn}
             </button>
           </div>
@@ -153,50 +213,15 @@ export default function TestimonialSection() {
             )}
           </div>
           <div className="uv-btn-wrap">
-            <button className="btn-modal" style={styles.btn} onClick={toggleModal}>
+            <button className="btn-modal" style={styles.btn} onClick={() => setActiveModal(2)}>
               {openBtn}
             </button>
           </div>
         </div>
       </section>
 
-      {/* ====== Modal ====== */}
-      {showModal && (
-        <div className="modal-overlay" onClick={toggleModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={toggleModal} aria-label="close">
-              ×
-            </button>
-
-            <div className="modal-cases">
-              {modalCases.map((m, i) => (
-                <div className="modal-case" key={`mc-${i}`}>
-                  <h4 className="modal-case-title">
-                    {m.title}
-                    <br />
-                    <span>{m.age}</span>
-                  </h4>
-                  <div className="modal-images">
-                    <div className="ba">
-                      <span className="badge">{badgeBefore}</span>
-                      <Image src={m.beforeImg} alt={altBefore || "before"} width={260} height={170} />
-                    </div>
-                    <span className="arrow">▶</span>
-                    <div className="ba">
-                      <span className="badge">{badgeAfter}</span>
-                      <Image src={m.afterImg} alt={altAfter || "after"} width={260} height={170} />
-                    </div>
-                  </div>
-                  <div className="modal-labels">
-                    <span>{m.beforeLabel}</span>
-                    <span>{m.afterLabel}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* ====== Section別に中身が変わるモーダル ====== */}
+      {activeModal !== null && renderModal(activeModal)}
 
       {/* ===== styled-jsx ===== */}
       <style jsx>{`
@@ -205,9 +230,7 @@ export default function TestimonialSection() {
           color: #3a3a3a;
           padding: 48px 0px 28px 0px;
         }
-        .is-visible {
-          animation: fadeInUp 0.8s ease-out both;
-        }
+        .is-visible { animation: fadeInUp 0.8s ease-out both; }
         @keyframes fadeInUp {
           from { opacity: 0; transform: translate3d(0,10px,0); }
           to   { opacity: 1; transform: translateZ(0); }
@@ -222,10 +245,8 @@ export default function TestimonialSection() {
           text-align: center; color: #666; font-size: 24px;
           line-height: 1.4; letter-spacing: 0.04em; margin-bottom: 76px;
         }
-        .uv-intro span:nth-of-type(2) {
-    font-size: 16px !important;
-  }
-        .uv-note { color: #888; font-size: 24px; margin-top:14px; }
+        .uv-intro span:nth-of-type(2) { font-size: 16px !important; }
+        .uv-note { color: #888; font-size: 24px; margin-top: 14px; }
 
         .uv-sep {
           display: flex; align-items: center; gap: 16px; margin: 42px 0 14px;
@@ -282,7 +303,7 @@ export default function TestimonialSection() {
         .badge {
           position: absolute; left: 10px; top: 10px;
           background: #565656; color: #fff; font-size: 14px;
-          font-weight:400;
+          font-weight: 400;
           padding: 6px 10px; border-radius: 2px; letter-spacing: 0.06em;
         }
         .modal-labels {

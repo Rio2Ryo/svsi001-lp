@@ -128,7 +128,7 @@ export default function ProductLineupSection() {
           <Image
             src="/MV_LOGO.png"
             alt={tr("lineup.alt.brand", "Mother Vegetables Confidence")}
-            width={270}
+            width={240}
             height={90}
             priority
           />
@@ -171,7 +171,7 @@ export default function ProductLineupSection() {
         .brand-lockup :global(img) {
           display: inline-block;
           filter: grayscale(100%) contrast(95%) opacity(0.9);
-          width: 270px; height: 90px;
+          width: 240px; height: 90px;
         }
         .title {
           text-align: center;
