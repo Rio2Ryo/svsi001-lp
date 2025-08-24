@@ -181,6 +181,7 @@ export default function TestimonialSection() {
           display:grid; grid-template-columns:1fr 1fr;
           gap:10px; margin:8px auto 0; max-width:580px;
           color:#444; font-size:22px; letter-spacing:.06em;
+          text-align:center;white-space: pre-wrap;
         }
         @media (max-width:860px){
           .modal-cases{ grid-template-columns:1fr; }

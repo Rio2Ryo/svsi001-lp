@@ -119,16 +119,16 @@
             "age": "Woman in her 50s",
             "beforeImg": "/case1-1-before.jpg",
             "afterImg": "/case1-1-after.jpg",
-            "beforeLabel": "Before use",
-            "afterLabel": "After 20 days"
+            "beforeLabel": "Before\nuse",
+            "afterLabel": "After\n20 days"
           },
           "1": {
             "title": "Arm spots & bruise",
             "age": "Woman in her 80s",
             "beforeImg": "/case1-2-before.jpg",
             "afterImg": "/case1-2-after.jpg",
-            "beforeLabel": "Before use",
-            "afterLabel": "After 24 days"
+            "beforeLabel": "Before\nuse",
+            "afterLabel": "After\n24 days"
           }
         }
       },
@@ -146,32 +146,32 @@
             "age": "Man in his 30s",
             "beforeImg": "/case2-1-before.jpg",
             "afterImg": "/case2-1-after.jpg",
-            "beforeLabel": "Before use",
-            "afterLabel": "After 3 days"
+            "beforeLabel": "Before\nuse",
+            "afterLabel": "After\n3 days"
           },
           "1": {
             "title": "Rough skin",
             "age": "Boy aged 5",
             "beforeImg": "/case2-2-before.jpg",
             "afterImg": "/case2-2-after.jpg",
-            "beforeLabel": "Before use",
-            "afterLabel": "After 3 days"
+            "beforeLabel": "Before\nuse",
+            "afterLabel": "After\n3 days"
           },
           "2": {
             "title": "Dry dermatitis",
             "age": "Woman in her 40s",
             "beforeImg": "/case2-3-before.jpg",
             "afterImg": "/case2-3-after.jpg",
-            "beforeLabel": "Before use",
-            "afterLabel": "After 3 days"
+            "beforeLabel": "Before\nuse",
+            "afterLabel": "After\n3 days"
           },
           "3": {
             "title": "Atopic dermatitis",
             "age": "Boy aged 10",
             "beforeImg": "/case2-4-before.jpg",
             "afterImg": "/case2-4-after.jpg",
-            "beforeLabel": "Before use",
-            "afterLabel": "After 10 days"
+            "beforeLabel": "Before\nuse",
+            "afterLabel": "After\n10 days"
           }
         }
       },
@@ -187,16 +187,16 @@
             "age": "Woman in her 50s",
             "beforeImg": "/case3-1-before.jpg",
             "afterImg": "/case3-1-after.jpg",
-            "beforeLabel": "Before use",
-            "afterLabel": "After 24 hours"
+            "beforeLabel": "Before\nuse",
+            "afterLabel": "After\n24 hours"
           },
           "1": {
             "title": "Scrape after a fall",
             "age": "Woman in her 50s",
             "beforeImg": "/case3-2-before.jpg",
             "afterImg": "/case3-2-after.jpg",
-            "beforeLabel": "Before application",
-            "afterLabel": "After 10 hours"
+            "beforeLabel": "Before\napplication",
+            "afterLabel": "After\n10 hours"
           }
         }
       }
