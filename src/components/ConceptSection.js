@@ -249,9 +249,9 @@ export default function ConceptSection() {
   /* 左ラベル（PC同様に右寄せ＆1行固定） */
   .cert-left{ justify-items: end; }
   .cert-left p{
-    margin: 4px 0;
+    margin: 5px 0;
     font-weight: 700;
-    font-size: 13.5px;
+    font-size: 10px;
     letter-spacing: .04em;
     white-space: nowrap !important;
     text-align: right;
@@ -262,7 +262,7 @@ export default function ConceptSection() {
   .cert-right{ justify-items: start; }
   .cert-right p{
     margin: 4px 0;
-    font-size: 13.5px;
+    font-size: 10px;
     line-height: 1.85;
     letter-spacing: .02em;
     word-break: keep-all;
