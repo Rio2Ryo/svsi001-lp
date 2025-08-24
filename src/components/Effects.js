@@ -218,6 +218,75 @@ export default function EffectsSection() {
           .mv-grade-list .country { text-align: left; white-space: normal; }
           .mv-certs-sub { font-size: 14px; }
         }
+        /* ▼スマホ専用：⑤のレイアウトに揃える */
+@media (max-width: 560px) {
+  .mv-certs{ padding:26px 12px 60px; }
+
+  .mv-certs-title{ font-size:20px; letter-spacing:.08em; margin:0 0 6px; }
+  .mv-certs-sub{   font-size:13px; letter-spacing:.06em; margin:0 0 18px; }
+
+  .mv-subtitle{ font-size:18px; letter-spacing:.08em; margin:22px 0 10px; }
+
+  /* ←肝：スマホでも“国名｜説明”の2カラムを維持して1行風に見せる */
+  .mv-grade-list--grades li,
+  .mv-grade-list--other  li{
+    display:grid;
+    grid-template-columns: minmax(5.5em, 7.5em) 1fr; /* ラベル列は固定幅 */
+    column-gap:10px;
+    row-gap:0;
+    align-items:start;
+    font-size:14.5px;
+    line-height:1.85;
+    margin:4px 0;
+  }
+  .mv-grade-list .country{
+    font-weight:700;
+    text-align:left;
+    white-space:nowrap;               /* 国名は改行させない */
+    letter-spacing:.04em;
+    color:#333;
+  }
+  .mv-grade-list .desc{
+    letter-spacing:.02em;
+    word-break:keep-all;              /* 語を途中で折らない */
+  }
+
+  /* “その他の認証”ロゴは小さめ中央寄せ */
+  .mv-other-cert{ grid-template-columns:1fr; gap:8px; }
+  .mv-cert-logos{ justify-content:center; gap:12px; padding-top:4px; }
+  .mv-cert-logos :global(img){ width:92px; height:auto; }
+
+  /* 連携テキスト：自然折返し（強制改行を無効化） */
+  .mv-collab-text h4{ font-size:16px; margin:14px 0 4px; }
+  .mv-collab-text p{ font-size:14px; line-height:1.9; letter-spacing:.02em; }
+  .mv-collab-text p br{ display:none; }
+  .mv-collab-text p span{ display:inline; }
+
+  /* 連携ロゴ：2列均等 */
+  .mv-collab-logos{ gap:10px; }
+  .logo-row{ gap:10px; justify-content:center; }
+  .logo-row :global(img){ width:44%; height:auto; }
+
+  /* 温室写真を小さめカード風に */
+  .mv-collab-right{ grid-template-rows:auto 180px; }
+  .mv-collab-img{ height:180px; border-radius:4px; }
+
+  .mv-footnote{ font-size:12px; line-height:1.7; max-width:92%; margin:10px auto 0; }
+}
+
+/* さらに狭い端末の微調整 */
+@media (max-width: 380px){
+  .mv-grade-list--grades li,
+  .mv-grade-list--other li{
+    grid-template-columns: minmax(5em, 7em) 1fr;
+    font-size:14px;
+  }
+  .mv-cert-logos :global(img){ width:84px; }
+  .logo-row :global(img){ width:46%; }
+  .mv-collab-right{ grid-template-rows:auto 160px; }
+  .mv-collab-img{ height:160px; }
+}
+
       `}</style>
     </>
   );
