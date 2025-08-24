@@ -167,6 +167,14 @@ export default function HeroSection() {
           padding: 0;
           text-align: right;
         }
+        /* ▼ ドロップダウンのリストマーカーを完全無効化 */
+.lang-menu,
+.lang-menu li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.lang-menu li::marker { content: ""; } /* 念のため */
         .lang-menu .sep {
           list-style: none;
           height: 1px;
