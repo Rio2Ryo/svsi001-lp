@@ -287,17 +287,66 @@ export default function HeroSection() {
           .fv-earth-bg{ height: 420px; max-width: 95vw; padding-left: 40px; }
           .fv-earth-copy{ max-width: 560px; font-size: 20px; }
         }
-        @media (max-width: 600px){
-          .header-inner { padding: 8px 12px 0; }
-          .first-view { padding: 8px 12px 44px; }
-          .brand-dot { top: 38px; left: 14px; }
-          .fv-top { height: 200px; }
-          .fv-logo-img { width: clamp(220px, 70vw, 360px); }
-          .fv-tagline { font-size: 11px; letter-spacing: .1em; }
-          .fv-catch { font-size: 24px; line-height: 1.7; margin: 28px auto 18px; }
-          .fv-earth-bg{ height: 360px; padding: 0 16px; }
-          .fv-earth-copy{ max-width: none; font-size: 15px; line-height: 1.9; }
-        }
+        /* ▼スマホ専用（PCは一切変更しない） */
+@media (max-width: 600px){
+  .header-inner { padding: 8px 12px 0; }
+  .first-view   { padding: 8px 12px 42px; }
+
+  /* 左上のドットロゴの位置と存在感を少し抑える */
+  .brand-dot{
+    top: 34px; left: 12px;
+    filter: grayscale(100%) contrast(.9) opacity(.75);
+  }
+
+  /* ①のバランスに合わせて、上部帯・ロゴ・タグラインをやや小さく */
+  .fv-top{ height: 184px; max-width: 94vw; }
+  .fv-logo-img{ width: clamp(190px, 58vw, 280px); } /* ←ロゴ小さめ */
+  .fv-tagline{
+    font-size: 10px;           /* ←行間詰め＆小さく */
+    letter-spacing: .12em;
+    margin-top: 6px;
+  }
+
+  /* キャッチコピーは少し小さく・詰める */
+  .fv-catch{
+    font-size: 22px;
+    line-height: 1.65;
+    letter-spacing: .09em;
+    margin: 22px auto 18px;
+  }
+
+  /* 地球ブロック：①のようにテキストを詰め、濃さ＆余白を調整 */
+  .fv-earth-bg{
+    height: 330px;
+    max-width: 94vw;
+    padding: 14px 18px; /* ←内側の余白を確保 */
+    background-image:
+      linear-gradient(90deg,
+        rgba(0,0,0,.88) 0%,
+        rgba(0,0,0,.62) 40%,
+        rgba(0,0,0,.22) 68%,
+        rgba(0,0,0,0) 84%),
+      url('/fv-earth.jpg');
+    background-position: 70% center, 70% center; /* ←少し中央寄せ */
+  }
+  .fv-earth-copy{
+    max-width: none;
+    font-size: 14px;    /* ←本文を小さく */
+    line-height: 1.9;
+    letter-spacing: .08em;
+  }
+}
+
+/* さらに狭い端末の微調整（任意） */
+@media (max-width: 390px){
+  .fv-top{ height: 170px; }
+  .fv-logo-img{ width: clamp(170px, 64vw, 250px); }
+  .fv-catch{ font-size: 20px; margin: 20px auto 14px; }
+  .fv-earth-bg{ height: 300px; padding: 12px 14px; }
+  .fv-earth-copy{ font-size: 13px; }
+}
+
+        
       `}</style>
     </>
   );
