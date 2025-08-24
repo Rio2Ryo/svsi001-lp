@@ -379,6 +379,41 @@ export default function FeatureSection() {
   .mv-callout-box { padding-right: 96px; }
   .mv-callout-box p { font-size: 15px; line-height: 1.85; }
 }
+/* ===== スマホ専用：タイトル＆本文の整列を①に合わせる ===== */
+@media (max-width: 720px) {
+  /* バナーの直下の余白は少しだけ */
+  .mv-banner { height: 200px; margin: 8px 0 18px; }
+
+  /* 見出し：左揃え・1行で収まるサイズ感に */
+  .mv-title {
+    text-align: left;
+    font-size: 20px;
+    line-height: 1.45;
+    letter-spacing: .02em;
+    margin: 16px 16px 10px;   /* 左右16pxで本文と揃える */
+    white-space: nowrap;      /* 可能なら1行に保持 */
+  }
+
+  /* 本文：左揃え＆行送りを統一。各行をblock化して“揃って見える”ように */
+  .mv-text {
+    text-align: left;
+    font-size: 14.5px;
+    line-height: 1.9;
+    letter-spacing: .02em;
+    margin: 0 16px 26px;      /* タイトルと同じ左位置で揃える */
+  }
+  .mv-text span { display: block; } /* 1行＝1ブロックにして左端をピタッと揃える */
+
+  /* セクション全体の左右パディングも本文と一致させる */
+  .mother-veg { padding: 28px 14px 64px; }
+}
+
+/* さらに狭い端末の微調整（超過回避） */
+@media (max-width: 380px) {
+  .mv-title { font-size: 18px; white-space: normal; } /* 溢れそうなら2行許可 */
+  .mv-text  { font-size: 14px; line-height: 1.85; }
+}
+
 
       `}</style>
     </>
