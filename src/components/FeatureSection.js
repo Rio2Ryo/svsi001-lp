@@ -355,7 +355,7 @@ export default function FeatureSection() {
   .mv-callout-box {
     margin: 0;
     max-width: none;
-    padding-right: 110px;          /* 右下の粉と重ならない余白 */
+    padding-right: 0px!important;          /* 右下の粉と重ならない余白 */
     z-index: 2;
   }
   .mv-callout-box p {
@@ -367,7 +367,7 @@ export default function FeatureSection() {
   .mv-note { display: block; margin-top: 6px; font-size: 12px; }
 
   /* 画像＋テキストの2カラムはスマホで縦並び（既存踏襲） */
-  .mv-info { grid-template-columns: 1fr; margin: 60px 0; }
+  .mv-info { grid-template-columns: 1fr; margin: 30px 0; }
   .mv-info-img { order: -1; height: 200px; }
 }
 
@@ -386,10 +386,10 @@ export default function FeatureSection() {
 
   /* 見出し：左揃え・1行で収まるサイズ感に */
   .mv-title {
-    text-align: left;
+    text-align: center;
     font-size: 20px;
     line-height: 1.45;
-    max-width: 70%;
+    max-width: 90%;
     letter-spacing: .02em;
     margin: 16px auto 10px;   /* 左右16pxで本文と揃える */
     white-space: nowrap;      /* 可能なら1行に保持 */
@@ -401,7 +401,7 @@ export default function FeatureSection() {
     font-size: 15px;
     line-height: 1.9;
     letter-spacing: .02em;
-    max-width: 70%;
+    max-width: 90%;
     margin: 0 auto 26px;      /* タイトルと同じ左位置で揃える */
   }
   .mv-text span { display: block; } /* 1行＝1ブロックにして左端をピタッと揃える */
