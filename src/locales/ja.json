@@ -101,74 +101,70 @@
   "testimonials": {
     "title": "実際に利用された方の声",
     "intro": "本製品をご愛用いただいている方々のご協力のもと\n（傷、アトピー、肌荒れ、シミでお困りの方々）\n使用前後の肌印象をお写真でご紹介しています。",
-    "note": "\n※個人の感想であり、使用感には個人差があります。",
-
+    "note": "※個人の感想であり、使用感には個人差があります。",
     "openButton": "Before After 画像はこちらをタップ",
     "badgeBefore": "Before",
     "badgeAfter": "After",
+    "alt": { "before": "使用前の写真", "after": "使用後の写真" },
 
-    "alt": { "before": "使用前", "after": "使用後" },
-
-    "sections": {
-      "0": {
+    "sections": [
+      {
         "title": "シミ・あざ",
-        "cases": {
-          "0": { "title": "頬のシミ・クマ", "age": "（50代の女性）" },
-          "1": { "title": "腕のシミ・あざ", "age": "（80代の女性）" }
+        "cases": [
+          { "title": "頬のシミ・クマ", "age": "（50代の女性）" },
+          { "title": "腕のシミ・あざ", "age": "（80代の女性）" }
+        ],
+        "modalIndex": "[0,1]",
+        "modal": {
+          "0": {
+            "title": "頬のシミ・クマ",
+            "age": "50代の女性",
+            "beforeImg": "/case1-1-before.jpg",
+            "afterImg":  "/case1-1-after.jpg",
+            "beforeLabel": "使用前",
+            "afterLabel":  "20日後"
+          },
+          "1": {
+            "title": "腕のシミ・あざ",
+            "age": "80代の女性",
+            "beforeImg": "/case1-2-before.jpg",
+            "afterImg":  "/case1-2-after.jpg",
+            "beforeLabel": "使用前",
+            "afterLabel":  "24日後"
+          }
         }
       },
-      "1": {
-        "title": "アトピー・肌荒れ",
-        "cases": {
-          "0": { "title": "両手の親指", "age": "（30代の男性）" },
-          "1": { "title": "乾癬の皮膚炎", "age": "（40代の女性）" },
-          "2": { "title": "アトピー性皮膚炎", "age": "（10歳の男の子）" },
-          "3": { "title": "肌荒れ", "age": "（5歳の男の子）" }
-        }
-      },
-      "2": {
-        "title": "傷口",
-        "cases": {
-          "0": { "title": "腕のやけど", "age": "（50代の女性）" },
-          "1": { "title": "転んだ傷", "age": "（50代の女性）" }
-        }
-      }
-    },
 
-    "modal": {
-      "0": {
-        "title": "頬のシミ・クマ",
-        "age": "（50代の女性）",
-        "beforeLabel": "使用前",
-        "afterLabel": "20日後",
-        "beforeImg": "/case1-before.jpg",
-        "afterImg": "/case1-after.jpg"
+      {
+        "title": "アトピー・肌荒れ",
+        "cases": [
+          { "title": "両手の親指", "age": "（30代の男性）" },
+          { "title": "乾燥の皮膚炎", "age": "（40代の女性）" },
+          { "title": "アトピー性皮膚炎", "age": "（10才の男の子）" },
+          { "title": "肌荒れ", "age": "（5才の男の子）" }
+        ],
+        "modalIndex": "[0,1,2,3]",
+        "modal": {
+          "0": { "title":"両手の親指","age":"30代の男性","beforeImg":"/case2-1-before.jpg","afterImg":"/case2-1-after.jpg","beforeLabel":"使用前","afterLabel":"3日後" },
+          "1": { "title":"肌荒れ","age":"5才の男の子","beforeImg":"/case2-2-before.jpg","afterImg":"/case2-2-after.jpg","beforeLabel":"使用前","afterLabel":"3日後" },
+          "2": { "title":"乾燥の皮膚炎","age":"40代の女性","beforeImg":"/case2-3-before.jpg","afterImg":"/case2-3-after.jpg","beforeLabel":"使用前","afterLabel":"3日後" },
+          "3": { "title":"アトピー性皮膚炎","age":"10才の男の子","beforeImg":"/case2-4-before.jpg","afterImg":"/case2-4-after.jpg","beforeLabel":"使用前","afterLabel":"10日後" }
+        }
       },
-      "1": {
-        "title": "腕のシミ・あざ",
-        "age": "（80代の女性）",
-        "beforeLabel": "使用前",
-        "afterLabel": "24日後",
-        "beforeImg": "/case2-before.jpg",
-        "afterImg": "/case2-after.jpg"
-      },
-      "2": {
-        "title": "両手の親指（やけど）",
-        "age": "（50代の女性）",
-        "beforeLabel": "使用前",
-        "afterLabel": "15日後",
-        "beforeImg": "/case3-before.jpg",
-        "afterImg": "/case3-after.jpg"
-      },
-      "3": {
-        "title": "転んだ傷",
-        "age": "（50代の女性）",
-        "beforeLabel": "使用前",
-        "afterLabel": "18日後",
-        "beforeImg": "/case4-before.jpg",
-        "afterImg": "/case4-after.jpg"
+
+      {
+        "title": "傷口",
+        "cases": [
+          { "title": "腕のやけど", "age": "（50代の女性）" },
+          { "title": "転んだ傷", "age": "（50代の女性）" }
+        ],
+        "modalIndex": "[0,1]",
+        "modal": {
+          "0": { "title":"腕のやけど","age":"50代の女性","beforeImg":"/case3-1-before.jpg","afterImg":"/case3-1-after.jpg","beforeLabel":"使用前","afterLabel":"24時間後" },
+          "1": { "title":"転んだ傷","age":"50代の女性","beforeImg":"/case3-2-before.jpg","afterImg":"/case3-2-after.jpg","beforeLabel":"塗布前","afterLabel":"10時間後" }
+        }
       }
-    }
+    ]
   },
   "feature": {
     "alt": {
