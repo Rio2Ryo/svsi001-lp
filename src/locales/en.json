@@ -65,9 +65,9 @@
       "2": "Clears FDA-aligned Premium Food Grade (safe even if ingested)"
     },
     "leftCerts": {
-      "0": "International Organic Certification",
-      "1": "Vegan Certification",
-      "2": "Halal Certification"
+      "0": "International Organic\nCertification",
+      "1": "Vegan\nCertification",
+      "2": "Halal\nCertification"
     },
     "rightCertDescs": {
       "0": "COSMOS certified (global standard for organic cosmetics)",

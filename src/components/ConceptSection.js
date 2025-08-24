@@ -253,7 +253,7 @@ export default function ConceptSection() {
     font-weight: 700;
     font-size: 10px;
     letter-spacing: .04em;
-    white-space: nowrap !important;
+    white-space: pre-wrap !important;
     text-align: right;
     color: #333;
   }
