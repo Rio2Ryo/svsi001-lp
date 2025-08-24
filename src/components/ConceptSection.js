@@ -225,55 +225,57 @@ export default function ConceptSection() {
           .ms-banner-text { top: 28px; left: 20px; font-size: 22px; letter-spacing: 0.12em; line-height: 1.8; }
           .ms-description p, .ms-list li { font-size: 15px; line-height: 1.9; }
         }
-        /* ▼SP専用：タイトル下のロゴ～表記を①のレイアウトに合わせる */
-@media (max-width: 760px) {
-  /* タイトル・ロゴの密度を調整 */
+        @media (max-width: 760px) {
+  /* タイトルとロゴを縮小 */
   .cert-title { font-size: 18px; letter-spacing: .08em; margin: 0 0 10px; }
-  .cert-logos { gap: 12px; margin: 6px 0 16px; }
-  .cert-logos :global(img) { width: 68px; height: auto; }
+  .cert-logos { gap: 10px; margin: 6px 0 16px; }
+  .cert-logos :global(img) { width: 62px; height: auto; }
 
-  /* 重要：SPでも “左ラベル｜右説明” の2カラムを維持 */
+  /* ←最重要：SPでも 〔左｜縦線｜右〕の3カラムを維持 */
   .cert-table{
     display: grid !important;
-    grid-template-columns: minmax(5.6em, 7.4em) 1fr; /* 左列は固定幅 */
-    column-gap: 12px;
-    row-gap: 0;
-    align-items: start;
-    margin: 8px 0 18px;
+    grid-template-columns: minmax(5.6em, 7.2em) 1px 1fr !important; /* 左列は狭め固定 */
+    column-gap: 12px !important;
+    row-gap: 0 !important;
+    align-items: start !important;
+    margin: 8px 0 18px !important;
   }
-  /* 中の2カラムラッパをフラット化して、各<p>をグリッドの直下に流す */
-  .cert-left, .cert-right { display: contents; }
+  .cert-divider{ display: block !important; background:#d9d9d9; }
 
-  /* 左列（国名・ラベル） */
+  /* 左右の列は“グリッドのまま”保持（行対応を崩さない） */
+  .cert-left,
+  .cert-right{ display: grid !important; row-gap: 8px !important; width: auto !important; }
+
+  /* 左ラベル（PC同様に右寄せ＆1行固定） */
+  .cert-left{ justify-items: end; }
   .cert-left p{
     margin: 4px 0;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13.5px;
     letter-spacing: .04em;
-    white-space: nowrap;      /* 1行死守で横幅を揃える */
+    white-space: nowrap !important;
+    text-align: right;
     color: #333;
   }
 
-  /* 右列（説明） */
+  /* 右説明（自然折返し） */
+  .cert-right{ justify-items: start; }
   .cert-right p{
     margin: 4px 0;
-    font-size: 14px;
-    line-height: 1.9;
+    font-size: 13.5px;
+    line-height: 1.85;
     letter-spacing: .02em;
-    word-break: keep-all;     /* 途中折返しを避ける */
+    word-break: keep-all;
+    color: #444;
   }
-
-  /* 縦ラインはSPでは非表示でOK（①の見た目に合わせる） */
-  .cert-divider{ display: none !important; }
 }
 
-/* さらに狭い端末の微調整 */
+/* さらに狭い端末 */
 @media (max-width: 390px){
-  .cert-logos :global(img){ width: 62px; }
-  .cert-table{ grid-template-columns: minmax(5.2em, 7em) 1fr; column-gap: 10px; }
-  .cert-left p, .cert-right p{ font-size: 13.5px; line-height: 1.85; }
+  .cert-logos :global(img){ width: 56px; }
+  .cert-table{ grid-template-columns: minmax(5.1em, 6.6em) 1px 1fr !important; column-gap: 10px !important; }
+  .cert-left p, .cert-right p{ font-size: 12.8px; line-height: 1.8; }
 }
-
       `}</style>
     </>
   );
