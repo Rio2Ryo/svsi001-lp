@@ -190,6 +190,63 @@ export default function GuaranteeSection() {
   .usage-text h3 { font-size: 15px; }
   .usage-text p  { font-size: 12.5px; }
 }
+/* ===== SP専用（～820px）：画像小さく・行間整え・改行無効化 ===== */
+@media (max-width: 820px) {
+  .usage { padding: 24px 12px 52px; }
+
+  /* 細いルールを中央寄せで短めに */
+  .usage-rule { width: 72%; margin: 0 auto 12px; }
+
+  /* 行長を整えるためリスト幅を少し絞る */
+  .usage-list { max-width: 92%; margin: 0 auto; }
+
+  /* アイコン小さく、テキストは上揃え。左右の余白をタイトに */
+  .usage-item {
+    grid-template-columns: 48px 1fr !important;
+    gap: 12px !important;
+    align-items: flex-start !important;
+    padding: 12px 0 !important;
+  }
+
+  /* next/imageのwidth/height属性より強く上書きする */
+  .usage-img {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  }
+
+  /* 見出しと本文のタイポ調整（②の密度） */
+  .usage-text h3 {
+    margin: 0 0 4px !important;
+    font-size: 16px !important;
+    line-height: 1.35 !important;
+    letter-spacing: .02em !important;
+    font-weight: 700;
+    color: #3f3f3f;
+  }
+  .usage-text p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+    letter-spacing: .02em !important;
+    color: #666;
+  }
+
+  /* i18nの強制改行を無効化（styled-jsx対策で :global を使用） */
+  .usage-text :global(br) { display: none !important; }
+  .usage-text :global(span) { display: inline !important; }
+}
+
+/* さらに狭い端末の微調整 */
+@media (max-width: 390px) {
+  .usage-item { grid-template-columns: 44px 1fr !important; gap: 10px !important; }
+  .usage-img   { width: 44px !important; height: 44px !important; }
+  .usage-text h3 { font-size: 15px !important; }
+  .usage-text p  { font-size: 12.5px !important; }
+}
+
 
       `}</style>
     </>
