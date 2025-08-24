@@ -273,51 +273,6 @@ export default function ConceptSection() {
   .cert-table{ grid-template-columns: minmax(5.2em, 7em) 1fr; column-gap: 10px; }
   .cert-left p, .cert-right p{ font-size: 13.5px; line-height: 1.85; }
 }
-/* ▼SP専用：左ラベル｜右説明を“行ごとに対応”させる */
-@media (max-width: 760px) {
-  /* 自動配置が横→次列の順で並ぶように（列優先） */
-  .cert-table{
-    display: grid !important;
-    grid-template-columns: minmax(5.6em, 7.4em) 1fr; /* 左列は固定幅 */
-    column-gap: 12px;
-    row-gap: 0;
-    align-items: start;
-    grid-auto-flow: column; /* ←これがポイント：col優先で left1/right1 が同じ行へ */
-    margin: 8px 0 18px;
-  }
-
-  /* 中のラッパーを“箱なし”にして p を直にグリッドへ流す */
-  .cert-left, .cert-right { display: contents; }
-
-  /* 左ラベル */
-  .cert-left p{
-    margin: 4px 0;
-    font-weight: 700;
-    font-size: 14px;
-    white-space: nowrap;   /* 1行固定で揃える */
-    letter-spacing: .04em;
-    color: #333;
-  }
-
-  /* 右説明 */
-  .cert-right p{
-    margin: 4px 0;
-    font-size: 14px;
-    line-height: 1.9;
-    letter-spacing: .02em;
-    word-break: keep-all;  /* 途中で単語を割らない */
-  }
-
-  /* 縦ラインはSPでは非表示 */
-  .cert-divider{ display: none !important; }
-}
-
-/* さらに狭い端末微調整 */
-@media (max-width: 390px){
-  .cert-table{ grid-template-columns: minmax(5.2em, 7em) 1fr; column-gap: 10px; }
-  .cert-left p, .cert-right p{ font-size: 13.5px; line-height: 1.85; }
-}
-
 
       `}</style>
     </>
