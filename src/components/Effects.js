@@ -220,12 +220,12 @@ export default function EffectsSection() {
         }
         /* ▼スマホ専用：⑤のレイアウトに揃える */
 @media (max-width: 560px) {
-  .mv-certs{ padding:26px 12px 60px; }
+  .mv-certs{ max-width:90%; margin:0 auto; padding:26px 12px 60px; }
 
-  .mv-certs-title{ font-size:20px; letter-spacing:.08em; margin:0 0 6px; }
+  .mv-certs-title{ font-size:17px; letter-spacing:.08em; margin:0 0 6px; }
   .mv-certs-sub{   font-size:13px; letter-spacing:.06em; margin:0 0 18px; }
 
-  .mv-subtitle{ font-size:18px; letter-spacing:.08em; margin:22px 0 10px; }
+  .mv-subtitle{ font-size:15px; letter-spacing:.08em; margin:22px 0 10px; }
 
   /* ←肝：スマホでも“国名｜説明”の2カラムを維持して1行風に見せる */
   .mv-grade-list--grades li,
