@@ -313,6 +313,73 @@ export default function FeatureSection() {
           .mv-title { font-size: 24px; letter-spacing: 0.06em; }
           .mv-callout { min-height: 240px; }
         }
+        /* ===== ▼スマホ専用の見た目調整（PCは一切変更しない） ===== */
+@media (max-width: 720px) {
+  /* セクション全体の余白を少し詰める */
+  .mother-veg { padding: 28px 14px 64px; }
+
+  /* 見出し・リードは現状どおりでOK。本文サイズだけ少し下げる */
+  .mv-text { font-size: 15px; line-height: 1.9; }
+
+  /* ---- Calloutを「左テキスト＋右下に小さめ粉」のカード風に ---- */
+  .mv-callout {
+    position: relative;
+    margin: 22px 0 0;
+    padding: 18px 16px 18px;       /* 文字のための余白を確保 */
+    background: #f3f3f3;           /* 1枚目のような薄グレー帯 */
+    border-radius: 6px;
+    min-height: auto;              /* 自動にして高さ暴れを防止 */
+    overflow: hidden;
+  }
+  /* グラデ背景はスマホでは非表示（1枚目に合わせてフラット） */
+  .mv-gradient { display: none; }
+
+  /* パウダー画像は右下の小ぶりなサムネ風に固定配置 */
+  .mv-powder {
+    inset: auto;                   /* いったんリセット */
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    width: 84px;                   /* 小さく見せる：端末幅に依存しない固定値 */
+    height: 84px;
+    transform: none;               /* スケール解除 */
+    z-index: 1;
+    opacity: 0.9;                  /* うっすら */
+  }
+  .mv-powder :global(img) {
+    object-fit: contain;
+    object-position: right bottom; /* 右下寄せで粉がはみ出さない */
+  }
+
+  /* テキストボックスは幅いっぱい・読みやすいサイズに */
+  .mv-callout-box {
+    margin: 0;
+    max-width: none;
+    padding-right: 110px;          /* 右下の粉と重ならない余白 */
+    z-index: 2;
+  }
+  .mv-callout-box p {
+    font-size: 16px;
+    line-height: 1.9;
+    letter-spacing: 0.03em;
+    font-weight: 600;              /* 1枚目の“太め”ニュアンス */
+  }
+  .mv-note { display: block; margin-top: 6px; font-size: 12px; }
+
+  /* 画像＋テキストの2カラムはスマホで縦並び（既存踏襲） */
+  .mv-info { grid-template-columns: 1fr; margin: 60px 0; }
+  .mv-info-img { order: -1; height: 200px; }
+}
+
+/* さらに小さい端末で微調整 */
+@media (max-width: 420px) {
+  .mv-title { font-size: 24px; letter-spacing: 0.06em; }
+  .mv-callout { padding: 16px 14px; }
+  .mv-powder { right: 8px; bottom: 6px; width: 74px; height: 74px; }
+  .mv-callout-box { padding-right: 96px; }
+  .mv-callout-box p { font-size: 15px; line-height: 1.85; }
+}
+
       `}</style>
     </>
   );
