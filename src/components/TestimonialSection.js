@@ -315,7 +315,9 @@ export default function TestimonialSection() {
   .uv-note { display: block; margin-top: 8px; font-size: 12.5px; color:#888; }
 
   /* セクション見出しの線と余白を②に寄せる */
-  .uv-sep { gap: 12px; margin: 28px 0 10px; }
+  .uv-sep { gap: 12px;
+        margin: 28px auto 10px auto;
+        max-width: 95%; }
   .uv-sep::before, .uv-sep::after { background: #cfcfcf; height: 1px; }
   .uv-sep > span {
     font-size: 18px;
