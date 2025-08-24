@@ -136,12 +136,61 @@ export default function GuaranteeSection() {
         .usage-text p { margin: 0; font-size: 24px; line-height: 1.4; letter-spacing: 0.04em; color: #555; }
 
         /* レスポンシブ */
-        @media (max-width: 640px) {
-          .usage-list { max-width: 100%; }
-          .usage-item { grid-template-columns: 72px 1fr; gap: 14px; padding: 12px 0; }
-          .usage-text h3 { font-size: 15.5px; }
-          .usage-text p { font-size: 14.5px; line-height: 1.9; }
-        }
+       /* ▼SP専用：②の見た目にあわせてタイポとレイアウトを最適化 */
+@media (max-width: 640px) {
+  .usage { padding: 28px 12px 56px; }
+
+  /* 見出し下の細いルールは中央寄せで短めに */
+  .usage-rule { width: 72%; margin: 0 auto 14px; }
+
+  /* 横幅はやや狭くして行長を整える */
+  .usage-list { max-width: 92%; margin: 0 auto; }
+
+  /* 画像は小さめ・上揃え、本文との間隔は控えめに */
+  .usage-item {
+    grid-template-columns: 56px 1fr;
+    gap: 16px;
+    align-items: start;
+    padding: 14px 0;
+  }
+  .usage-img {
+    width: 56px;            /* ←サイズをCSSで固定 */
+    height: 56px;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    object-fit: cover;
+  }
+
+  /* タイトルは少し大きめ、本文は小さめで読みやすく */
+  .usage-text h3 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    line-height: 1.35;
+    letter-spacing: .02em;
+    font-weight: 700;
+    color: #3f3f3f;
+  }
+  .usage-text p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+    letter-spacing: .02em;
+    color: #666;
+  }
+
+  /* i18nの強制改行を無効化して自然な折返しに */
+  .usage-text p br { display: none; }
+  .usage-text p span { display: inline; }
+}
+
+/* さらに狭い端末の微調整 */
+@media (max-width: 390px) {
+  .usage-item { grid-template-columns: 52px 1fr; gap: 14px; }
+  .usage-img   { width: 52px; height: 52px; }
+  .usage-text h3 { font-size: 15px; }
+  .usage-text p  { font-size: 12.5px; }
+}
+
       `}</style>
     </>
   );
