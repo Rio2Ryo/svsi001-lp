@@ -293,6 +293,62 @@ export default function TestimonialSection() {
         .uv-case span { font-size:16px; color:#777; }
 
         .uv-btn-wrap { display:flex; justify-content:center; margin:40px 0 110px; }
+        /* ===== ▼スマホ専用オーバーライド（PCは触らない） ===== */
+@media (max-width: 720px) {
+  .user-voice { padding: 32px 0 18px; }
+
+  /* タイトル・導入文をスマホサイズに最適化 */
+  .uv-title {
+    font-size: 20px;
+    letter-spacing: .10em;
+    margin: 60px 0 26px;
+    color: #444;
+  }
+  .uv-intro {
+    font-size: 14px;
+    line-height: 1.9;
+    letter-spacing: .03em;
+    margin-bottom: 30px;
+    color: #666;
+  }
+  .uv-intro span:nth-of-type(2) { font-size: 12px !important; } /* 2行目の小さめテキスト */
+  .uv-note { display: block; margin-top: 8px; font-size: 12.5px; color:#888; }
+
+  /* セクション見出しの線と余白を②に寄せる */
+  .uv-sep { gap: 12px; margin: 28px 0 10px; }
+  .uv-sep::before, .uv-sep::after { background: #cfcfcf; height: 1px; }
+  .uv-sep > span {
+    font-size: 18px;
+    letter-spacing: .14em;
+    color: #444;
+    font-weight: 600;
+  }
+
+  /* 症例ラベルを2カラムで確実に並べる（幅を小さめに） */
+  .uv-cases { gap: 14px 24px; margin-bottom: 14px; justify-items: center; }
+  .uv-cases.two,
+  .uv-cases.four { grid-template-columns: repeat(2, minmax(130px, 1fr)); }
+
+  .uv-case { font-size: 16px; letter-spacing: .06em; line-height: 1.35; color:#3a3a3a; }
+  .uv-case span { font-size: 12px; color: #777; }
+
+  /* ボタンは小さめ・短めに */
+  .uv-btn-wrap { margin: 16px 0 36px; }
+  .btn-modal {
+    font-size: 13px !important;
+    padding: 10px 16px !important;
+    min-width: 260px !important;
+    border-radius: 4px;
+    letter-spacing: .04em !important;
+  }
+}
+
+/* さらに狭い端末で微調整 */
+@media (max-width: 390px) {
+  .uv-cases.two,
+  .uv-cases.four { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+  .btn-modal { min-width: 220px !important; }
+}
       `}</style>
     </>
   );
