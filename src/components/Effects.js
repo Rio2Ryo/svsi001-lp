@@ -220,7 +220,7 @@ export default function EffectsSection() {
         }
         /* ▼スマホ専用：⑤のレイアウトに揃える */
 @media (max-width: 560px) {
-  .mv-certs{ max-width:90%; margin:0 auto; padding:26px 12px 60px; }
+  .mv-certs{ max-width:90%; margin:0 auto; padding:26px 12px 5px; }
 
   .mv-certs-title{ font-size:17px; letter-spacing:.08em; margin:0 0 6px; }
   .mv-certs-sub{   font-size:13px; letter-spacing:.06em; margin:0 0 18px; }
@@ -254,7 +254,7 @@ export default function EffectsSection() {
   /* “その他の認証”ロゴは小さめ中央寄せ */
   .mv-other-cert{ grid-template-columns:1fr; gap:8px; }
   .mv-cert-logos{ justify-content:center; gap:12px; padding-top:4px; }
-  .mv-cert-logos :global(img){ width:90%; height:auto; }
+  .mv-cert-logos :global(img){ width:90%!important; height:auto; }
 
   /* 連携テキスト：自然折返し（強制改行を無効化） */
   .mv-collab-text h4{ font-size:16px; margin:14px 0 4px; }
