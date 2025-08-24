@@ -389,18 +389,20 @@ export default function FeatureSection() {
     text-align: left;
     font-size: 20px;
     line-height: 1.45;
+    max-width: 70%;
     letter-spacing: .02em;
-    margin: 16px 16px 10px;   /* 左右16pxで本文と揃える */
+    margin: 16px auto 10px;   /* 左右16pxで本文と揃える */
     white-space: nowrap;      /* 可能なら1行に保持 */
   }
 
   /* 本文：左揃え＆行送りを統一。各行をblock化して“揃って見える”ように */
   .mv-text {
     text-align: left;
-    font-size: 14.5px;
+    font-size: 15px;
     line-height: 1.9;
     letter-spacing: .02em;
-    margin: 0 16px 26px;      /* タイトルと同じ左位置で揃える */
+    max-width: 70%;
+    margin: 0 auto 26px;      /* タイトルと同じ左位置で揃える */
   }
   .mv-text span { display: block; } /* 1行＝1ブロックにして左端をピタッと揃える */
 
@@ -413,6 +415,51 @@ export default function FeatureSection() {
   .mv-title { font-size: 18px; white-space: normal; } /* 溢れそうなら2行許可 */
   .mv-text  { font-size: 14px; line-height: 1.85; }
 }
+/* ===== スマホ専用：メリット箇条書き＆通常製法の整列 ===== */
+@media (max-width: 720px) {
+  /* 見出しは少し小さめ＆左寄せで詰める */
+  .mv-subtitle {
+    font-size: 18px;
+    letter-spacing: .06em;
+    margin: 0 16px 10px;
+    text-align: left;
+  }
+
+  /* 箇条書き：ぶら下げインデント＋改行の強制をオフにして整列 */
+  .mv-list { margin: 0 16px 8px; padding: 0; }
+  .mv-list li {
+    font-size: 15px;
+    line-height: 1.9;
+    letter-spacing: .02em;
+    margin: 6px 0 10px;
+    padding-left: 1.3em;   /* 2行目以降の字下げ量 */
+    text-indent: -1.3em;   /* 1行目だけ左に出す（○や・が先頭に来る） */
+    word-break: normal;
+    line-break: strict;
+  }
+  .mv-list li br { display: none; }       /* i18nの改行を無効化して自然折返しに */
+  .mv-list li span { display: inline; }   /* 1行を連結して扱う */
+
+  /* 通常製法の本文も同様に“段落として自然折返し”に揃える */
+  .mv-paragraph {
+    font-size: 15px;
+    line-height: 1.9;
+    letter-spacing: .02em;
+    text-align: left;
+    margin: 6px 16px 10px;
+  }
+  .mv-paragraph br { display: none; }     /* 不要な強制改行を抑止 */
+
+  /* セクション全体の左右の余白を合わせる（揃って見える効果） */
+  .mother-veg { padding: 28px 14px 64px; }
+}
+
+/* さらに狭い端末微調整 */
+@media (max-width: 390px) {
+  .mv-subtitle { font-size: 17px; }
+  .mv-list li, .mv-paragraph { font-size: 14.5px; line-height: 1.85; }
+}
+
 
 
       `}</style>
