@@ -246,6 +246,20 @@ export default function GuaranteeSection() {
   .usage-text h3 { font-size: 15px !important; }
   .usage-text p  { font-size: 12.5px !important; }
 }
+/* ★ 指定どおり強制適用 */
+@media (max-width: 390px) {
+  :global(.usage-item.jsx-28e1d467f86b2c93) {
+    grid-template-columns: 30% 1fr !important;
+    gap: 10px !important;
+  }
+}
+
+/* ★ 画像は常に要素サイズ一杯に */
+:global(img.usage-img) {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 
 
       `}</style>
