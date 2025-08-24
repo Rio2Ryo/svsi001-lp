@@ -22,64 +22,70 @@ export default function TestimonialSection() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // i18n
+  // ===== i18n =====
   const { t } = useI18n();
-  const tr = (k) => t(k) ?? "";
+  // ▼ 安全版トランスレーター：未定義なら "" を返す（t がキー名を返す実装に対応）
+  const trv = (key) => {
+    const v = t(key);
+    return v && v !== key ? v : "";
+  };
 
-  // 外枠：見出し等（そのまま）
-  const title = tr("testimonials.title");
-  const intro = tr("testimonials.intro");
-  const note  = tr("testimonials.note");
+  // 外枠
+  const title = trv("testimonials.title");
+  const intro = trv("testimonials.intro");
+  const note  = trv("testimonials.note");
 
-  // ブロック見出し
-  const sec1Title = tr("testimonials.sections.0.title");
-  const sec2Title = tr("testimonials.sections.1.title");
-  const sec3Title = tr("testimonials.sections.2.title");
+  // セクション見出し
+  const sec1Title = trv("testimonials.sections.0.title");
+  const sec2Title = trv("testimonials.sections.1.title");
+  const sec3Title = trv("testimonials.sections.2.title");
 
-  // ブロック内のラベル（本文に出る小見出し）
+  // セクション本文ラベル
   const sec1Cases = [0,1].map(i => ({
-    title: tr(`testimonials.sections.0.cases.${i}.title`),
-    age:   tr(`testimonials.sections.0.cases.${i}.age`),
+    title: trv(`testimonials.sections.0.cases.${i}.title`),
+    age:   trv(`testimonials.sections.0.cases.${i}.age`),
   }));
   const sec2Cases = [0,1,2,3].map(i => ({
-    title: tr(`testimonials.sections.1.cases.${i}.title`),
-    age:   tr(`testimonials.sections.1.cases.${i}.age`),
+    title: trv(`testimonials.sections.1.cases.${i}.title`),
+    age:   trv(`testimonials.sections.1.cases.${i}.age`),
   }));
   const sec3Cases = [0,1].map(i => ({
-    title: tr(`testimonials.sections.2.cases.${i}.title`),
-    age:   tr(`testimonials.sections.2.cases.${i}.age`),
+    title: trv(`testimonials.sections.2.cases.${i}.title`),
+    age:   trv(`testimonials.sections.2.cases.${i}.age`),
   }));
 
   // ボタン・バッジ
-  const openBtn     = tr("testimonials.openButton");
-  const badgeBefore = tr("testimonials.badgeBefore") || "Before";
-  const badgeAfter  = tr("testimonials.badgeAfter")  || "After";
-  const altBefore   = tr("testimonials.alt.before")  || "before";
-  const altAfter    = tr("testimonials.alt.after")   || "after";
+  const openBtn     = trv("testimonials.openButton") || "Before After 画像はこちらをタップ";
+  const badgeBefore = trv("testimonials.badgeBefore") || "Before";
+  const badgeAfter  = trv("testimonials.badgeAfter")  || "After";
+  const altBefore   = trv("testimonials.alt.before")  || "before";
+  const altAfter    = trv("testimonials.alt.after")   || "after";
 
-  // ==== モーダル中身を辞書から連番で取得（JSON.parse不使用・SSR安全） ====
+  // ===== モーダル中身（連番で存在チェック。JSON.parseは使わない） =====
   const getModalCases = (sectionIdx) => {
     const out = [];
-    for (let i = 0; i < 20; i++) {
-      const beforeImg = tr(`testimonials.sections.${sectionIdx}.modal.${i}.beforeImg`);
-      const afterImg  = tr(`testimonials.sections.${sectionIdx}.modal.${i}.afterImg`);
-      if (!beforeImg || !afterImg) break; // 途切れたら終了
+    for (let i = 0; i < 50; i++) { // 上限は十分大きく
+      const beforeImg = trv(`testimonials.sections.${sectionIdx}.modal.${i}.beforeImg`);
+      const afterImg  = trv(`testimonials.sections.${sectionIdx}.modal.${i}.afterImg`);
+      // キー未定義（=空文字）なら終了
+      if (!beforeImg || !afterImg) break;
       out.push({
-        title: tr(`testimonials.sections.${sectionIdx}.modal.${i}.title`),
-        age: tr(`testimonials.sections.${sectionIdx}.modal.${i}.age`),
+        title: trv(`testimonials.sections.${sectionIdx}.modal.${i}.title`),
+        age: trv(`testimonials.sections.${sectionIdx}.modal.${i}.age`),
         beforeImg,
         afterImg,
-        beforeLabel: tr(`testimonials.sections.${sectionIdx}.modal.${i}.beforeLabel`) || "",
-        afterLabel: tr(`testimonials.sections.${sectionIdx}.modal.${i}.afterLabel`) || "",
+        beforeLabel: trv(`testimonials.sections.${sectionIdx}.modal.${i}.beforeLabel`) || "",
+        afterLabel:  trv(`testimonials.sections.${sectionIdx}.modal.${i}.afterLabel`)  || "",
       });
     }
     return out;
   };
+
   const modal1Cases = getModalCases(0);
   const modal2Cases = getModalCases(1);
   const modal3Cases = getModalCases(2);
 
-  // スタイル（外枠ボタン等）
+  // 罫線やボタン
   const styles = {
     hr: { background: "#bfbfbf", height: 1, width: "100%" },
     btn: {
@@ -95,17 +101,19 @@ export default function TestimonialSection() {
     },
   };
 
-  // 共通モーダル（画像は<img>で拡大禁止）
+  // 共通モーダル
   const Modal = ({ cases, onClose }) => (
     <div className="modal-overlay" onClick={onClose} role="dialog" aria-modal="true">
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose} aria-label="close">×</button>
+
         <div className="modal-cases">
           {cases.map((m, i) => (
             <div className="modal-case" key={i}>
               <h4 className="modal-case-title">
                 {m.title}<br /><span>{m.age}</span>
               </h4>
+
               <div className="modal-images">
                 <div className="ba">
                   <span className="badge">{badgeBefore}</span>
@@ -117,6 +125,7 @@ export default function TestimonialSection() {
                   <img src={m.afterImg} alt={altAfter} className="ba-img" />
                 </div>
               </div>
+
               <div className="modal-labels">
                 <span>{m.beforeLabel}</span>
                 <span>{m.afterLabel}</span>
@@ -126,7 +135,7 @@ export default function TestimonialSection() {
         </div>
       </div>
 
-      {/* ===== モーダル内スタイル ===== */}
+      {/* モーダル内スタイル */}
       <style jsx>{`
         .modal-overlay{
           position:fixed; inset:0; background:rgba(0,0,0,.55);
@@ -155,10 +164,13 @@ export default function TestimonialSection() {
         }
         .arrow{ color:#777; font-size:20px; text-align:center; }
         .ba{ position:relative; display:inline-block; }
-        /* 画像を絶対に拡大しない（比率維持） */
+        /* 画像拡大禁止＆比率維持。原寸超えて広げない */
         .ba-img{
-          display:block; width:auto; height:auto; max-width:100%;
-          image-rendering:auto; /* ブラウザ標準補間 */
+          display:block;
+          width:auto;
+          height:auto;
+          max-width:100%;
+          image-rendering:auto;
         }
         .badge{
           position:absolute; left:10px; top:10px;
@@ -180,7 +192,7 @@ export default function TestimonialSection() {
 
   return (
     <>
-      {/* ===== 外枠（元UI維持） ===== */}
+      {/* 外枠（元UI） */}
       <section className={`user-voice ${isVisible ? "is-visible" : ""}`}>
         <div className="container">
           <div className="uv-hr" style={styles.hr} />
@@ -193,7 +205,7 @@ export default function TestimonialSection() {
             <span className="uv-note">{note}</span>
           </p>
 
-          {/* ===== Block 1 ===== */}
+          {/* Block 1 */}
           <div className="uv-sep"><span>{sec1Title}</span></div>
           <div className="uv-cases two">
             {sec1Cases.map((c, i) =>
@@ -210,7 +222,7 @@ export default function TestimonialSection() {
             </button>
           </div>
 
-          {/* ===== Block 2 ===== */}
+          {/* Block 2 */}
           <div className="uv-sep"><span>{sec2Title}</span></div>
           <div className="uv-cases four">
             {sec2Cases.map((c, i) =>
@@ -227,7 +239,7 @@ export default function TestimonialSection() {
             </button>
           </div>
 
-          {/* ===== Block 3 ===== */}
+          {/* Block 3 */}
           <div className="uv-sep"><span>{sec3Title}</span></div>
           <div className="uv-cases two">
             {sec3Cases.map((c, i) =>
@@ -246,12 +258,12 @@ export default function TestimonialSection() {
         </div>
       </section>
 
-      {/* ===== ブロック別モーダル（3つ独立） ===== */}
+      {/* ブロック別モーダル */}
       {showModal1 && <Modal cases={modal1Cases} onClose={() => setShowModal1(false)} />}
       {showModal2 && <Modal cases={modal2Cases} onClose={() => setShowModal2(false)} />}
       {showModal3 && <Modal cases={modal3Cases} onClose={() => setShowModal3(false)} />}
 
-      {/* ===== 外枠スタイル（元のまま） ===== */}
+      {/* 外枠スタイル（元のまま） */}
       <style jsx>{`
         .user-voice { background:#fff; color:#3a3a3a; padding:48px 0 28px; }
         .is-visible { animation: fadeInUp .8s ease-out both; }
