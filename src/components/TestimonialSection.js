@@ -86,7 +86,7 @@ export default function TestimonialSection() {
       beforeLabel: "使用前", afterLabel: "24時間後" },
     { title: "転んだ傷", age: "50代の女性",
       beforeImg: "/case3-2-before.jpg", afterImg: "/case3-2-after.jpg",
-      beforeLabel: "塗布前", afterLabel: "10時間後" },
+      beforeLabel: "塗布前", afterLabel: "散布10時間後" },
   ];
 
   // 罫線やボタン（元CSS）
