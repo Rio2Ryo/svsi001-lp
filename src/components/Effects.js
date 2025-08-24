@@ -238,11 +238,12 @@ export default function EffectsSection() {
     font-size:14.5px;
     line-height:1.85;
     margin:4px 0;
+    
   }
   .mv-grade-list .country{
     font-weight:700;
     text-align:left;
-    white-space:nowrap;               /* 国名は改行させない */
+    white-space:pre-wrap;               /* 国名は改行させない */
     letter-spacing:.04em;
     color:#333;
   }

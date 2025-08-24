@@ -274,7 +274,7 @@ export default function ConceptSection() {
 @media (max-width: 390px){
   .cert-logos :global(img){ width: 56px; }
   .cert-table{ grid-template-columns: minmax(5.1em, 6.6em) 1px 1fr !important; column-gap: 10px !important; }
-  .cert-left p, .cert-right p{ font-size: 9px; line-height: 1.8; }
+  .cert-left p, .cert-right p{ font-size: 9px; line-height: 1.6; }
 }
       `}</style>
     </>
