@@ -28,7 +28,6 @@ const myWixClient = createClient({
   siteId: process.env.WIX_SITE_ID,
   auth: OAuthStrategy({
     clientId: CLIENT_ID,
-    // JS でも安全に: JSON.parse("null") は null を返す
     tokens: JSON.parse(Cookies.get("session") || "null"),
   }),
 });
@@ -121,7 +120,6 @@ export default function Home() {
           ecomCheckout: { checkoutId },
           callbacks: { postFlowUrl: window.location.href },
         });
-        // ← JS ではそのまま window.location を使う
         window.location = redirect.redirectSession.fullUrl;
       });
     } catch (error) {
@@ -147,24 +145,37 @@ export default function Home() {
   useEffect(() => {
     fetchProducts();
     fetchCart();
-  }, []); // ※ 依存警告はビルド失敗の原因ではないので現状維持
+  }, []);
+
+  const SITE_URL = "https://mv-si001.dotpb.jp";
+  const OGP = `${SITE_URL}/ogp.jpg`;
 
   return (
     <>
       <Head>
         <title>Mother Vegetables Confidence MV-Si001 | dotpb Co., Ltd</title>
 
-        {/* Open Graph（description を入れない） */}
+        {/* description 系はすべて空にする */}
+        <meta name="description" content="" />
+
+        {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://mv-si001.dotpb.jp/" />
+        <meta property="og:url" content={SITE_URL + "/"} />
         <meta property="og:site_name" content="Mother Vegetables" />
         <meta property="og:title" content="Mother Vegetables Confidence MV-Si001" />
-        <meta property="og:image" content="/ogp.jpg" />
+        <meta property="og:description" content="" />
+        <meta property="og:image" content={OGP} />
+        <meta property="og:image:secure_url" content={OGP} />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Mother Vegetables Confidence MV-Si001" />
 
-        {/* Twitter（description を入れない） */}
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Mother Vegetables Confidence MV-Si001" />
-        <meta name="twitter:image" content="/ogp.jpg" />
+        <meta name="twitter:description" content="" />
+        <meta name="twitter:image" content={OGP} />
       </Head>
 
       <main
