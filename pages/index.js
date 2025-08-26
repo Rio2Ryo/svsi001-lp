@@ -147,35 +147,12 @@ export default function Home() {
     fetchCart();
   }, []);
 
-  const SITE_URL = "https://mv-si001.dotpb.jp";
-  const OGP = `${SITE_URL}/ogp.jpg`;
-
   return (
     <>
       <Head>
         <title>Mother Vegetables Confidence MV-Si001 | dotpb Co., Ltd</title>
-
-        {/* description 系はすべて空にする */}
-        <meta name="description" content="" />
-
-        {/* Open Graph */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={SITE_URL + "/"} />
-        <meta property="og:site_name" content="Mother Vegetables" />
-        <meta property="og:title" content="Mother Vegetables Confidence MV-Si001" />
-        <meta property="og:description" content="" />
-        <meta property="og:image" content={OGP} />
-        <meta property="og:image:secure_url" content={OGP} />
-        <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Mother Vegetables Confidence MV-Si001" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Mother Vegetables Confidence MV-Si001" />
-        <meta name="twitter:description" content="" />
-        <meta name="twitter:image" content={OGP} />
+        {/* og:title だけこのページで上書き。その他OGPは _document.js 側が単一管理 */}
+        <meta key="og:title" property="og:title" content="Mother Vegetables Confidence MV-Si001" />
       </Head>
 
       <main
