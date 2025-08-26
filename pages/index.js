@@ -23,7 +23,6 @@ import GuaranteeSection from "../src/components/GuaranteeSection";
 import FAQSection from "../src/components/FAQSection";
 import Footer from "../src/components/Footer";
 
-
 const myWixClient = createClient({
   modules: { products, currentCart, redirects },
   siteId: process.env.WIX_SITE_ID,
@@ -151,87 +150,52 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Mother Vegetables Confidence MV-Si002 | 24時間崩れない陶器肌へ</title>
+        <title>Mother Vegetables Confidence MV-Si001 | dotpb Co., Ltd</title>
+        <meta
+          name="description"
+          content="Organic-derived, high-purity amorphous silica powder. Gentle on skin and better for the planet."
+        />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://mv-si001.dotpb.jp/" />
+        <meta property="og:site_name" content="Mother Vegetables" />
+        <meta
+          property="og:title"
+          content="Mother Vegetables Confidence MV-Si001"
+        />
+        <meta
+          property="og:description"
+          content="Organic-derived, high-purity amorphous silica powder. Gentle on skin and better for the planet."
+        />
+        <meta property="og:image" content="/ogp.jpg" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Mother Vegetables Confidence MV-Si001"
+        />
+        <meta
+          name="twitter:description"
+          content="Organic-derived, high-purity amorphous silica powder. Gentle on skin and better for the planet."
+        />
+        <meta name="twitter:image" content="/ogp.jpg" />
       </Head>
 
-      <main data-testid={testIds.COMMERCE_PAGE.CONTAINER}
-      className="relative min-h-screen"
+      <main
+        data-testid={testIds.COMMERCE_PAGE.CONTAINER}
+        className="relative min-h-screen"
       >
-         {/*<div>
-          <h2>Choose Products:</h2>
-          {isLoading ? (
-            <p>Loading products...</p>
-          ) : productList.length > 0 ? (
-            productList.map((product) => (
-              <section
-                data-testid={testIds.COMMERCE_PAGE.PRODUCT}
-                key={product._id}
-                onClick={() => addToCart(product)}
-                className={styles.selectable}
-              >
-                <span className={styles.fullWidth}>{product.name}</span>
-                <span style={{ width: "100px", textAlign: "right" }}>
-                  {product.convertedPriceData.formatted.discountedPrice}
-                </span>
-              </section>
-            ))
-          ) : (
-            <div>
-              <p>No products available</p>
-              <Link
-                href={`https://manage.wix.com/dashboard/${msid}/products`}
-                rel="noopener noreferrer"
-                target="_blank"
-                style={{ textDecoration: "underline", color: "#0070f3" }}
-              >
-                Add a product
-              </Link>
-            </div>
-          )}
-        </div>*/}
-         {/*<div>
-          <h2>My Cart:</h2>
-          {cart.lineItems?.length > 0 && (
-            <div className={styles.column}>
-              <section
-                className={`${styles.column} ${styles.start} ${styles.active}`}
-                style={{ gap: "24px", borderColor: "rgba(var(--card-border-rgb), 0.15)" }}
-              >
-                <li>
-                  {cart.lineItems.map((item, index) => (
-                    <ul key={index}>
-                      <div style={{ display: "flex", gap: "16px" }}>
-                        <div style={{ fontWeight: "bold" }}>{item.quantity}</div>
-                        <div className={styles.fullWidth}>{item.productName.original}</div>
-                      </div>
-                    </ul>
-                  ))}
-                </li>
-                <h3>Total {cart.subtotal.formattedAmount}</h3>
-              </section>
-              <button
-                className={styles.primary}
-                onClick={() => createRedirect()}
-                style={{ fontWeight: "bold" }}
-                data-testid={testIds.COMMERCE_PAGE.CHECKOUT}
-              >
-                <div>Checkout</div>
-              </button>
-              <button onClick={() => clearCart()} className={styles.secondary}>
-                <span>Clear cart</span>
-              </button>
-            </div>
-          )}
-        </div>*/}
-         <HeroSection />
-         <ConceptSection />
-         <TestimonialSection />
-         <FeatureSection />
-         <Effects />
-         <ProductSection />
-         <GuaranteeSection />
-         <FAQSection />
-         <Footer />
+        <HeroSection />
+        <ConceptSection />
+        <TestimonialSection />
+        <FeatureSection />
+        <Effects />
+        <ProductSection />
+        <GuaranteeSection />
+        <FAQSection />
+        <Footer />
       </main>
     </>
   );
