@@ -157,7 +157,8 @@ export default function FAQSection() {
         /* ===== Responsive ===== */
         @media (max-width: 640px) {
           .faq-rule {
-            max-width: 100%;
+            max-width: 90%;
+            margin:0 auto;
             margin-bottom: 10px;
           }
           .faq-title {
