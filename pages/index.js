@@ -151,8 +151,22 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Mother Vegetables Confidence MV-Si001 | dotpb Co,. Ltd</title>
-      </Head>
+  <title>Mother Vegetables Confidence MV-Si002 | 24時間崩れない陶器肌へ</title>
+  <meta
+    name="description"
+    content="Mother Vegetables から生まれた「マザベジコンフィデンス」それはあなたの肌をやさしく育てながら地球環境を整えていく世界で唯一の存在です。"
+  />
+
+  {/* OGP */}
+  <meta property="og:title" content="Mother Vegetables Confidence MV-Si001 | dotpb Co,. Ltd." />
+  <meta
+    property="og:description"
+    content="Mother Vegetables から生まれた「マザベジコンフィデンス」それはあなたの肌をやさしく育てながら地球環境を整えていく世界で唯一の存在です。"
+  />
+  <meta property="og:image" content="/ogp.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mv-si001.dotpb.jp/" />
+</Head>
 
       <main data-testid={testIds.COMMERCE_PAGE.CONTAINER}
       className="relative min-h-screen"
