@@ -398,7 +398,7 @@ export default function FeatureSection() {
   /* 本文：左揃え＆行送りを統一。各行をblock化して“揃って見える”ように */
   .mv-text {
     text-align: left;
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     line-height: 1.9;
     letter-spacing: .02em;
     max-width: 90%;
@@ -428,7 +428,7 @@ export default function FeatureSection() {
   /* 箇条書き：ぶら下げインデント＋改行の強制をオフにして整列 */
   .mv-list { margin: 0 16px 8px; padding: 0; }
   .mv-list li {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     line-height: 1.9;
     letter-spacing: .02em;
     margin: 6px 0 10px;
@@ -457,7 +457,7 @@ export default function FeatureSection() {
 /* さらに狭い端末微調整 */
 @media (max-width: 390px) {
   .mv-subtitle { font-size: 0.9rem; }
-  .mv-list li, .mv-paragraph { font-size: 0.7rem; line-height: 1.85; }
+  .mv-list li, .mv-paragraph { font-size: 0.9rem; line-height: 1.85; }
 }
 
 

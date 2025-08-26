@@ -235,7 +235,7 @@ export default function EffectsSection() {
     column-gap:10px;
     row-gap:0;
     align-items:start;
-    font-size:0.75rem;
+    font-size:0.9rem;
     line-height:1.85;
     margin:4px 0;
     
@@ -280,7 +280,7 @@ export default function EffectsSection() {
   .mv-grade-list--grades li,
   .mv-grade-list--other li{
     
-    font-size:0.7rem;
+    font-size:0.9rem;
   }
   .mv-cert-logos :global(img){ width:84px; }
   .logo-row :global(img){ width:46%; }

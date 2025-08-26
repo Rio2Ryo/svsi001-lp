@@ -224,7 +224,7 @@ export default function ConceptSection() {
           .ms-banner { height: 260px; margin: 44px auto 32px; }
           .ms-banner-text { top: 28px; left: 20px; font-size: 1rem; letter-spacing: 0.12em; line-height: 1.8; }
           .ms-description { width:90%; margin: 0 auto; color: #4a4a4a; }
-          .ms-description p, .ms-list li { font-size: 0.8rem; line-height: 1.7; }
+          .ms-description p, .ms-list li { font-size: 0.9rem; line-height: 1.7; }
           .ms-note { margin-top: 14px; color: #888; font-size: 0.8rem; line-height: 1.5; letter-spacing: 0.04em; }
         }
         @media (max-width: 760px) {
