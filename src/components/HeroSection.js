@@ -56,17 +56,12 @@ export default function HeroSection() {
 
             {open && (
               <ul className="lang-menu" role="menu" aria-label={labelLang || "Language"}>
-                {/* 上に細いライン */}
                 <li className="sep" aria-hidden="true" />
                 <li role="menuitem">
-                  <button className="lang-item" onClick={() => setLang("ja")}>
-                    JA
-                  </button>
+                  <button className="lang-item" onClick={() => setLang("ja")}>JA</button>
                 </li>
                 <li role="menuitem">
-                  <button className="lang-item" onClick={() => setLang("en")}>
-                    EN
-                  </button>
+                  <button className="lang-item" onClick={() => setLang("en")}>EN</button>
                 </li>
               </ul>
             )}
@@ -76,7 +71,7 @@ export default function HeroSection() {
 
       {/* ===== ファーストビュー ===== */}
       <section className={`first-view ${isVisible ? "is-visible" : ""}`}>
-        {/* 左上ロゴ（重ね） */}
+        {/* 左上ロゴ */}
         <div className="brand-dot" aria-hidden="true">
           <Image src="/logo-dot.png" alt="" width={140} height={100} priority />
         </div>
@@ -106,23 +101,25 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* キャッチコピー（使っていればそのまま） */}
+        {/* キャッチコピー */}
         <h1 className="fv-catch">
           {catch1}
           <br />
           {catch2}
         </h1>
 
-        {/* （以下はそのまま。必要なければ削除可） */}
+        {/* 地球ブロック */}
         <div className="fv-earth-bg">
-          <p className="fv-earth-copy">
-            {(body || "").split("\n").map((line, i) => (
-              <span key={i}>
-                {line}
-                <br />
-              </span>
-            ))}
-          </p>
+          <div className="fv-earth-box">
+            <p className="fv-earth-copy">
+              {(body || "").split("\n").map((line, i) => (
+                <span key={i}>
+                  {line}
+                  <br />
+                </span>
+              ))}
+            </p>
+          </div>
         </div>
       </section>
 
@@ -131,13 +128,12 @@ export default function HeroSection() {
         /* ========== Header ========== */
         .site-header { position: relative; z-index: 100; background: transparent; }
         .header-inner {
-          max-width: 1200px;   /* 見本の余白感に合わせて広め */
+          max-width: 1200px;
           margin: 0 auto;
           padding: 12px 16px 0;
           display: flex; justify-content: flex-end; align-items: center;
         }
 
-        /* テキスト型トグル */
         .lang-switcher { position: relative; }
         .lang-btn {
           appearance: none;
@@ -153,9 +149,15 @@ export default function HeroSection() {
           cursor: pointer;
         }
         .caret { display: inline-block; transition: transform .2s ease; }
-        .lang-switcher.open .caret { transform: rotate(180deg); } /* ↑ に反転 */
+        .lang-switcher.open .caret { transform: rotate(180deg); }
 
-        /* ドロップダウンを右端に、枠なし・細ラインのみで */
+        .lang-menu,
+        .lang-menu li {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+        .lang-menu li::marker { content: ""; }
         .lang-menu {
           position: absolute;
           right: 0;
@@ -167,21 +169,12 @@ export default function HeroSection() {
           padding: 0;
           text-align: right;
         }
-        /* ▼ ドロップダウンのリストマーカーを完全無効化 */
-.lang-menu,
-.lang-menu li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.lang-menu li::marker { content: ""; } /* 念のため */
         .lang-menu .sep {
-          list-style: none;
           height: 1px;
           background: #111;
           opacity: .8;
           width: 80px;
-          margin: 0 0 8px auto; /* 右寄せの横線 */
+          margin: 0 0 8px auto;
         }
         .lang-item {
           width: 100%;
@@ -204,24 +197,21 @@ export default function HeroSection() {
           to   { opacity: 1; transform: translateZ(0); }
         }
 
-        /* 左上ロゴ：画面中央から少し左へ固定（レスポンシブで安定） */
-.brand-dot{
-  /* ずらし量：最小80px〜最大220px、基本は 18vw を採用 */
-  --dot-offset: clamp(80px, 18vw, 220px);
-
-  position: absolute;
-  top: clamp(40px, 7vw, 72px);   /* 縦位置は見た目に合わせて調整 */
-  left: 38%;
-  transform: translateX(calc(-50% - var(--dot-offset)));
-  z-index: 2;
-  filter: grayscale(100%) contrast(.9) opacity(.9);
-  pointer-events: none;
-}
+        .brand-dot{
+          --dot-offset: clamp(80px, 18vw, 220px);
+          position: absolute;
+          top: clamp(40px, 7vw, 72px);
+          left: 38%;
+          transform: translateX(calc(-50% - var(--dot-offset)));
+          z-index: 2;
+          filter: grayscale(100%) contrast(.9) opacity(.9);
+          pointer-events: none;
+        }
 
         .fv-top {
           position: relative;
-          height: 260px;          /* 見本寄せで少し高め */
-          max-width: 1100px;      /* 画像の横幅感を再現 */
+          height: 260px;
+          max-width: 1100px;
           margin: 0 auto;
           overflow: hidden;
           background: #fff;
@@ -252,101 +242,63 @@ export default function HeroSection() {
           font-weight: 600;
         }
 
-        /* ===== 地球ブロック（そのまま運用する想定） ===== */
+        /* ===== 地球ブロック ===== */
         .fv-earth-bg {
           position: relative;
-          height: 500px;
+          background-image: url('/fv-earth.jpg');
+          background-size: cover;
+          background-position: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 60px 20px;
           max-width: 1200px;
           margin: 0 auto;
-          border-radius: 0;
-          overflow: hidden;
-          background-image:
-            linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.72) 38%, rgba(0,0,0,.3) 68%, rgba(0,0,0,0) 80%),
-            url('/fv-earth.jpg');
-          background-size: cover, cover;
-          background-position: 75% center, 75% center;
-          background-repeat: no-repeat;
-          display: flex;
-          align-items: center;
-          padding: 0 24px 0 120px;
-          color: #fff;
-          text-shadow: 0 1px 2px rgba(0,0,0,.45);
+        }
+        .fv-earth-box {
+          background: rgba(0,0,0,0.72); /* 透過黒 or グレーに調整可 */
+          border-radius: 10px;
+          padding: 28px 26px;
+          max-width: 760px;
+          width: 100%;
+          box-sizing: border-box;
         }
         .fv-earth-copy {
           margin: 0;
-          max-width: 720px;
-          font-size: 22px;
-          line-height: 2;
-          letter-spacing: .08em;
+          font-size: 20px;
+          line-height: 1.85;
+          letter-spacing: .04em;
+          color: #fff;
+          text-align: left;
         }
 
+        /* ===== レスポンシブ ===== */
         @media (max-width: 1100px){
           .fv-top { height: 240px; max-width: 92vw; }
           .brand-dot { top: 46px; left: 24px; }
           .fv-catch { font-size: 30px; margin: 36px auto 30px; }
-          .fv-earth-bg{ height: 420px; max-width: 95vw; padding-left: 40px; }
-          .fv-earth-copy{ max-width: 560px; font-size: 20px; }
+          .fv-earth-bg { padding: 40px 18px; }
+          .fv-earth-copy { font-size: 18px; }
         }
-        /* ▼スマホ専用（PCは一切変更しない） */
-@media (max-width: 600px){
-  .header-inner { padding: 8px 12px 0; }
-  .first-view   { padding: 8px 12px 42px; }
-
-  /* 左上のドットロゴの位置と存在感を少し抑える */
-  .brand-dot{
-    top: 34px; left: 12px;
-    filter: grayscale(100%) contrast(.9) opacity(.75);
-  }
-
-  /* ①のバランスに合わせて、上部帯・ロゴ・タグラインをやや小さく */
-  .fv-top{ height: 184px; max-width: 94vw; }
-  .fv-logo-img{ width: clamp(190px, 58vw, 280px); } /* ←ロゴ小さめ */
-  .fv-tagline{
-    font-size: 10px;           /* ←行間詰め＆小さく */
-    letter-spacing: .12em;
-    margin-top: 6px;
-  }
-
-  /* キャッチコピーは少し小さく・詰める */
-  .fv-catch{
-    font-size: 1rem;
-    line-height: 1.65;
-    letter-spacing: .09em;
-    margin: 22px auto 18px;
-  }
-
-  /* 地球ブロック：①のようにテキストを詰め、濃さ＆余白を調整 */
-  .fv-earth-bg{
-    height: 330px;
-    max-width: 94vw;
-    padding: 14px 18px; /* ←内側の余白を確保 */
-    background-image:
-      linear-gradient(90deg,
-        rgba(0,0,0,.88) 0%,
-        rgba(0,0,0,.62) 40%,
-        rgba(0,0,0,.22) 68%,
-        rgba(0,0,0,0) 84%),
-      url('/fv-earth.jpg');
-    background-position: 70% center, 70% center; /* ←少し中央寄せ */
-  }
-  .fv-earth-copy{
-    max-width: none;
-    font-size: 0.8rem;    /* ←本文を小さく */
-    line-height: 1.9;
-    letter-spacing: .08em;
-  }
-}
-
-/* さらに狭い端末の微調整（任意） */
-@media (max-width: 390px){
-  .fv-top{ height: 170px; }
-  .fv-logo-img{ width: clamp(170px, 64vw, 250px); }
-  .fv-catch{ font-size: 1rem; margin: 20px auto 14px; }
-  .fv-earth-bg{ height: 300px; padding: 12px 14px; }
-  .fv-earth-copy{ font-size: 0.8rem; }
-}
-
-        
+        @media (max-width: 600px){
+          .header-inner { padding: 8px 12px 0; }
+          .first-view { padding: 8px 12px 42px; }
+          .brand-dot { top: 34px; left: 12px; filter: opacity(.75); }
+          .fv-top{ height: 184px; max-width: 94vw; }
+          .fv-logo-img{ width: clamp(190px, 58vw, 280px); }
+          .fv-tagline{ font-size: 10px; margin-top: 6px; }
+          .fv-catch{ font-size: 1rem; line-height: 1.65; margin: 22px auto 18px; }
+          .fv-earth-bg{ padding: 28px 14px; }
+          .fv-earth-box{ padding: 18px 16px; max-width: none; }
+          .fv-earth-copy{ font-size: 15px; line-height: 1.9; }
+        }
+        @media (max-width: 390px){
+          .fv-top{ height: 170px; }
+          .fv-logo-img{ width: clamp(170px, 64vw, 250px); }
+          .fv-catch{ font-size: 1rem; margin: 20px auto 14px; }
+          .fv-earth-bg{ padding: 20px 12px; }
+          .fv-earth-copy{ font-size: 14px; }
+        }
       `}</style>
     </>
   );
