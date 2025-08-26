@@ -216,14 +216,14 @@ export default function EffectsSection() {
             grid-template-columns: 1fr; gap: 6px; line-height: 1.9;
           }
           .mv-grade-list .country { text-align: left; white-space: normal; }
-          .mv-certs-sub { font-size: 14px; }
+          .mv-certs-sub { font-size: 14px; white-space:pre-wrap; }
         }
         /* ▼スマホ専用：⑤のレイアウトに揃える */
 @media (max-width: 560px) {
   .mv-certs{ max-width:90%; margin:0 auto; padding:26px 12px 5px; }
 
   .mv-certs-title{ font-size:17px; letter-spacing:.08em; margin:0 0 6px; }
-  .mv-certs-sub{   font-size:13px; letter-spacing:.06em; margin:0 0 18px; }
+  .mv-certs-sub{   font-size:13px; letter-spacing:.06em; margin:0 0 18px; white-space:pre-wrap; }
 
   .mv-subtitle{ font-size:15px; letter-spacing:.08em; margin:5px 0 10px; }
 

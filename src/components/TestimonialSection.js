@@ -305,7 +305,7 @@ export default function TestimonialSection() {
     color: #444;
   }
   .uv-intro {
-    font-size: 0.8px;
+    font-size: 0.9rem;
     line-height: 1.9;
     letter-spacing: .03em;
     margin-bottom: 30px;
