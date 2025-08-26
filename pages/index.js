@@ -120,7 +120,7 @@ export default function Home() {
           ecomCheckout: { checkoutId },
           callbacks: { postFlowUrl: window.location.href },
         });
-        window.location = redirect.redirectSession.fullUrl;
+        (window as any).location = redirect.redirectSession.fullUrl;
       });
     } catch (error) {
       openModal("premium", {
@@ -134,7 +134,7 @@ export default function Home() {
     }
   }
 
-  async function addExistingProduct(lineItemId, quantity) {
+  async function addExistingProduct(lineItemId: string, quantity: number) {
     const { cart } =
       await myWixClient.currentCart.updateCurrentCartLineItemQuantity([
         { _id: lineItemId, quantity },
@@ -151,35 +151,17 @@ export default function Home() {
     <>
       <Head>
         <title>Mother Vegetables Confidence MV-Si001 | dotpb Co., Ltd</title>
-        <meta
-          name="description"
-          content="Organic-derived, high-purity amorphous silica powder. Gentle on skin and better for the planet."
-        />
 
-        {/* Open Graph */}
+        {/* Open Graph（説明は入れない） */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mv-si001.dotpb.jp/" />
         <meta property="og:site_name" content="Mother Vegetables" />
-        <meta
-          property="og:title"
-          content="Mother Vegetables Confidence MV-Si001"
-        />
-        <meta
-          property="og:description"
-          content="Organic-derived, high-purity amorphous silica powder. Gentle on skin and better for the planet."
-        />
+        <meta property="og:title" content="Mother Vegetables Confidence MV-Si001" />
         <meta property="og:image" content="/ogp.jpg" />
 
-        {/* Twitter */}
+        {/* Twitter（説明は入れない） */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content="Mother Vegetables Confidence MV-Si001"
-        />
-        <meta
-          name="twitter:description"
-          content="Organic-derived, high-purity amorphous silica powder. Gentle on skin and better for the planet."
-        />
+        <meta name="twitter:title" content="Mother Vegetables Confidence MV-Si001" />
         <meta name="twitter:image" content="/ogp.jpg" />
       </Head>
 
