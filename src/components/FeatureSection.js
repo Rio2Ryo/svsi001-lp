@@ -419,7 +419,7 @@ export default function FeatureSection() {
 @media (max-width: 720px) {
   /* 見出しは少し小さめ＆左寄せで詰める */
   .mv-subtitle {
-    font-size: 1.4rem;
+    font-size: 0.9rem;
     letter-spacing: .06em;
     margin: 0 16px 10px;
     text-align: left;
@@ -456,7 +456,7 @@ export default function FeatureSection() {
 
 /* さらに狭い端末微調整 */
 @media (max-width: 390px) {
-  .mv-subtitle { font-size: 1.4rem; }
+  .mv-subtitle { font-size: 0.9rem; }
   .mv-list li, .mv-paragraph { font-size: 0.7rem; line-height: 1.85; }
 }
 
