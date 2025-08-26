@@ -188,7 +188,7 @@ export default function HeroSection() {
           text-align: right;
           background: transparent;
           border: none;
-          padding: 6px 0;
+          padding: 6px 30% 6px 0;
           font-size: 13px;
           color: #111;
           cursor: pointer;
@@ -309,7 +309,7 @@ export default function HeroSection() {
 
   /* キャッチコピーは少し小さく・詰める */
   .fv-catch{
-    font-size: 22px;
+    font-size: 1rem;
     line-height: 1.65;
     letter-spacing: .09em;
     margin: 22px auto 18px;
@@ -341,9 +341,9 @@ export default function HeroSection() {
 @media (max-width: 390px){
   .fv-top{ height: 170px; }
   .fv-logo-img{ width: clamp(170px, 64vw, 250px); }
-  .fv-catch{ font-size: 20px; margin: 20px auto 14px; }
+  .fv-catch{ font-size: 1rem; margin: 20px auto 14px; }
   .fv-earth-bg{ height: 300px; padding: 12px 14px; }
-  .fv-earth-copy{ font-size: 0.7rem; }
+  .fv-earth-copy{ font-size: 0.8rem; }
 }
 
         

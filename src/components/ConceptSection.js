@@ -222,7 +222,7 @@ export default function ConceptSection() {
           .cert-left, .cert-right { width: 100%; justify-items: start; }
           .cert-left p { white-space: normal; }   /* SPでは改行OK */
           .ms-banner { height: 260px; margin: 44px auto 32px; }
-          .ms-banner-text { top: 28px; left: 20px; font-size: 22px; letter-spacing: 0.12em; line-height: 1.8; }
+          .ms-banner-text { top: 28px; left: 20px; font-size: 1rem; letter-spacing: 0.12em; line-height: 1.8; }
           .ms-description p, .ms-list li { font-size: 15px; line-height: 1.9; }
         }
         @media (max-width: 760px) {

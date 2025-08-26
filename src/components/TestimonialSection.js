@@ -295,7 +295,7 @@ export default function TestimonialSection() {
         .uv-btn-wrap { display:flex; justify-content:center; margin:40px 0 110px; }
         /* ===== ▼スマホ専用オーバーライド（PCは触らない） ===== */
 @media (max-width: 720px) {
-  .user-voice { padding: 32px 0 18px; }
+  .user-voice { padding: 32px 0 18px; max-width:90%; margin:0 auto; }
 
   /* タイトル・導入文をスマホサイズに最適化 */
   .uv-title {

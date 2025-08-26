@@ -340,8 +340,8 @@ export default function FeatureSection() {
     position: absolute;
     right: 10px;
     bottom: 8px;
-    width: 84px;                   /* 小さく見せる：端末幅に依存しない固定値 */
-    height: 84px;
+    width: 184px;                   /* 小さく見せる：端末幅に依存しない固定値 */
+    height: 184px;
     transform: none;               /* スケール解除 */
     z-index: 1;
     opacity: 0.9;                  /* うっすら */
@@ -375,7 +375,7 @@ export default function FeatureSection() {
 @media (max-width: 420px) {
   .mv-title { font-size: 24px; letter-spacing: 0.06em; }
   .mv-callout { padding: 16px 14px; }
-  .mv-powder { right: 8px; bottom: 6px; width: 74px; height: 74px; }
+  .mv-powder { right: 8px; bottom: 6px; width: 174px; height: 174px; }
   .mv-callout-box { padding-right: 96px; }
   .mv-callout-box p { font-size: 15px; line-height: 1.85; }
 }
