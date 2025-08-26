@@ -413,13 +413,13 @@ export default function FeatureSection() {
 /* さらに狭い端末の微調整（超過回避） */
 @media (max-width: 380px) {
   .mv-title { font-size: 18px; white-space: normal; } /* 溢れそうなら2行許可 */
-  .mv-text  { font-size: 14px; line-height: 1.85; }
+  .mv-text  { font-size: 0.7rem; line-height: 2; }
 }
 /* ===== スマホ専用：メリット箇条書き＆通常製法の整列 ===== */
 @media (max-width: 720px) {
   /* 見出しは少し小さめ＆左寄せで詰める */
   .mv-subtitle {
-    font-size: 18px;
+    font-size: 1.4rem;
     letter-spacing: .06em;
     margin: 0 16px 10px;
     text-align: left;
@@ -428,7 +428,7 @@ export default function FeatureSection() {
   /* 箇条書き：ぶら下げインデント＋改行の強制をオフにして整列 */
   .mv-list { margin: 0 16px 8px; padding: 0; }
   .mv-list li {
-    font-size: 15px;
+    font-size: 0.7rem;
     line-height: 1.9;
     letter-spacing: .02em;
     margin: 6px 0 10px;
@@ -442,7 +442,7 @@ export default function FeatureSection() {
 
   /* 通常製法の本文も同様に“段落として自然折返し”に揃える */
   .mv-paragraph {
-    font-size: 15px;
+    font-size: 0.7rem;
     line-height: 1.9;
     letter-spacing: .02em;
     text-align: left;
@@ -456,8 +456,8 @@ export default function FeatureSection() {
 
 /* さらに狭い端末微調整 */
 @media (max-width: 390px) {
-  .mv-subtitle { font-size: 17px; }
-  .mv-list li, .mv-paragraph { font-size: 14.5px; line-height: 1.85; }
+  .mv-subtitle { font-size: 1.4rem; }
+  .mv-list li, .mv-paragraph { font-size: 0.7rem; line-height: 1.85; }
 }
 
 
