@@ -359,10 +359,10 @@ export default function FeatureSection() {
     z-index: 2;
   }
   .mv-callout-box p {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.9;
     letter-spacing: 0.03em;
-    font-weight: 600;              /* 1枚目の“太め”ニュアンス */
+    font-weight: 500;              /* 1枚目の“太め”ニュアンス */
   }
   .mv-note { display: block; margin-top: 6px; font-size: 12px; }
 
@@ -413,7 +413,7 @@ export default function FeatureSection() {
 /* さらに狭い端末の微調整（超過回避） */
 @media (max-width: 380px) {
   .mv-title { font-size: 18px; white-space: normal; } /* 溢れそうなら2行許可 */
-  .mv-text  { font-size: 0.7rem; line-height: 2; }
+  .mv-text  { font-size: 0.9rem; line-height: 2; }
 }
 /* ===== スマホ専用：メリット箇条書き＆通常製法の整列 ===== */
 @media (max-width: 720px) {
@@ -442,7 +442,7 @@ export default function FeatureSection() {
 
   /* 通常製法の本文も同様に“段落として自然折返し”に揃える */
   .mv-paragraph {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     line-height: 1.9;
     letter-spacing: .02em;
     text-align: left;

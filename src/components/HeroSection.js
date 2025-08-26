@@ -290,14 +290,14 @@ export default function HeroSection() {
           .fv-catch{ font-size: 1rem; line-height: 1.65; margin: 22px auto 18px; }
           .fv-earth-bg{ padding: 28px 14px; }
           .fv-earth-box{ padding: 18px 16px; max-width: none; }
-          .fv-earth-copy{ font-size: 0.7rem; line-height: 1.9; }
+          .fv-earth-copy{ font-size: 0.9rem; line-height: 1.9; }
         }
         @media (max-width: 390px){
           .fv-top{ height: 170px; }
           .fv-logo-img{ width: clamp(170px, 64vw, 250px); }
           .fv-catch{ font-size: 1rem; margin: 20px auto 14px; }
           .fv-earth-bg{ padding: 20px 12px; }
-          .fv-earth-copy{ font-size: 0.6rem; }
+          .fv-earth-copy{ font-size: 0.8rem; }
         }
       `}</style>
     </>
