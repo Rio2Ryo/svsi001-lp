@@ -28,7 +28,8 @@ const myWixClient = createClient({
   siteId: process.env.WIX_SITE_ID,
   auth: OAuthStrategy({
     clientId: CLIENT_ID,
-    tokens: JSON.parse(Cookies.get("session") || null),
+    // JS でも安全に: JSON.parse("null") は null を返す
+    tokens: JSON.parse(Cookies.get("session") || "null"),
   }),
 });
 
@@ -120,7 +121,8 @@ export default function Home() {
           ecomCheckout: { checkoutId },
           callbacks: { postFlowUrl: window.location.href },
         });
-        (window as any).location = redirect.redirectSession.fullUrl;
+        // ← JS ではそのまま window.location を使う
+        window.location = redirect.redirectSession.fullUrl;
       });
     } catch (error) {
       openModal("premium", {
@@ -134,7 +136,7 @@ export default function Home() {
     }
   }
 
-  async function addExistingProduct(lineItemId: string, quantity: number) {
+  async function addExistingProduct(lineItemId, quantity) {
     const { cart } =
       await myWixClient.currentCart.updateCurrentCartLineItemQuantity([
         { _id: lineItemId, quantity },
@@ -145,21 +147,21 @@ export default function Home() {
   useEffect(() => {
     fetchProducts();
     fetchCart();
-  }, []);
+  }, []); // ※ 依存警告はビルド失敗の原因ではないので現状維持
 
   return (
     <>
       <Head>
         <title>Mother Vegetables Confidence MV-Si001 | dotpb Co., Ltd</title>
 
-        {/* Open Graph（説明は入れない） */}
+        {/* Open Graph（description を入れない） */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://mv-si001.dotpb.jp/" />
         <meta property="og:site_name" content="Mother Vegetables" />
         <meta property="og:title" content="Mother Vegetables Confidence MV-Si001" />
         <meta property="og:image" content="/ogp.jpg" />
 
-        {/* Twitter（説明は入れない） */}
+        {/* Twitter（description を入れない） */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Mother Vegetables Confidence MV-Si001" />
         <meta name="twitter:image" content="/ogp.jpg" />
