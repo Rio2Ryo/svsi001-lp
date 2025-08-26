@@ -299,13 +299,13 @@ export default function TestimonialSection() {
 
   /* タイトル・導入文をスマホサイズに最適化 */
   .uv-title {
-    font-size: 20px;
+    font-size: 1.3rem;
     letter-spacing: .10em;
     margin: 60px 0 26px;
     color: #444;
   }
   .uv-intro {
-    font-size: 14px;
+    font-size: 0.8px;
     line-height: 1.9;
     letter-spacing: .03em;
     margin-bottom: 30px;

@@ -387,18 +387,18 @@ export default function FeatureSection() {
   /* 見出し：左揃え・1行で収まるサイズ感に */
   .mv-title {
     text-align: center;
-    font-size: 20px;
+    font-size: 1.4rem;
     line-height: 1.45;
     max-width: 90%;
     letter-spacing: .02em;
-    margin: 16px auto 10px;   /* 左右16pxで本文と揃える */
+    margin: 36px auto 10px;   /* 左右16pxで本文と揃える */
     white-space: nowrap;      /* 可能なら1行に保持 */
   }
 
   /* 本文：左揃え＆行送りを統一。各行をblock化して“揃って見える”ように */
   .mv-text {
     text-align: left;
-    font-size: 15px;
+    font-size: 0.8rem;
     line-height: 1.9;
     letter-spacing: .02em;
     max-width: 90%;
