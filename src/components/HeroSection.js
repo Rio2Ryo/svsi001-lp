@@ -91,8 +91,8 @@ export default function HeroSection() {
               <Image
                 src="/MV_LOGO.png"
                 alt={altLogo}
-                width={205}
-                height={80}
+                width={250}
+                height={110}
                 priority
                 className="fv-logo-img"
               />

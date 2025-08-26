@@ -100,7 +100,7 @@ const styles = {
     textAlign: "center",
   },
   logo: {
-    maxWidth: "150px",
+    maxWidth: "200px",
     margin: "0 auto 1rem",
     display: "block",
   },
