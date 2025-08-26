@@ -5,26 +5,33 @@ export default function Footer() {
   const { t } = useI18n();
   const tr = (key) => t(key) ?? "";
 
-  const brand     = tr("footer.brand");        // Mother Vegetables Confidence
-  const model     = tr("footer.model");        // MV-Si001
-  const company   = tr("footer.company");      // dotpb株式会社 / dotpb Co.,Ltd.
-  const zip       = tr("footer.zip");          // 〒103-0026 / 103-0026, etc.
-  const address   = tr("footer.address");      // 住所（1行でOK。2行に分けたい場合は \n で）
-  const emailText = tr("footer.emailText");    // info@dotpb.jp（表示用）
-  const legalText = tr("footer.legalText");    // 特定商取引に基づく表記 / Legal Notice ...
+  const brand     = tr("footer.brand");        
+  const model     = tr("footer.model");        
+  const company   = tr("footer.company");      
+  const zip       = tr("footer.zip");          
+  const address   = tr("footer.address");      
+  const emailText = tr("footer.emailText");    
+  const legalText = tr("footer.legalText");    
 
   return (
     <>
       <footer style={styles.footer}>
         <div style={styles.container}>
           <div style={styles.textCenter}>
+
+            {/* ← ここにロゴを追加 */}
+            <img 
+              src="/MV_LOGO.png" 
+              alt="Mother Vegetables Logo" 
+              style={styles.logo}
+            />
+
             <h3 style={styles.title} className="title">{brand}</h3>
             <p style={styles.subtitle} className="subtitle">{model}</p>
 
             <div style={styles.section}>
               <p style={styles.company}>{company}</p>
               <p style={styles.text}>{zip}</p>
-              {/* 改行したいときは JSON 側で \n を入れてください */}
               <p style={styles.text}>
                 {address.split("\n").map((line, i) => (
                   <span key={i}>
@@ -91,6 +98,11 @@ const styles = {
   },
   textCenter: {
     textAlign: "center",
+  },
+  logo: {
+    maxWidth: "150px",
+    margin: "0 auto 1rem",
+    display: "block",
   },
   title: {
     fontSize: "1.25rem",
