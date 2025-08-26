@@ -40,7 +40,7 @@ export default function ConceptSection() {
           <h2 className="cert-title">{certTitle}</h2>
 
           <div className="cert-logos">
-            <Image src="/ORGANIC_1.png" alt={altCosmos} width={98} height={98} />
+            <Image src="/ORGANIC_1.png" alt={altCosmos} width={90} height={90} />
             <Image src="/JHCPO_1.png" alt={altHalal}  width={111} height={98} />
             <Image src="/VEGAN.png"    alt={altVegan}  width={109} height={98} />
           </div>
@@ -227,7 +227,7 @@ export default function ConceptSection() {
         }
         @media (max-width: 760px) {
   /* タイトルとロゴを縮小 */
-  .cert-title { font-size: 18px; letter-spacing: .08em; margin: 0 0 10px; }
+  .cert-title { font-size: 0.9rem; letter-spacing: .08em; margin: 0 0 10px; }
   .cert-logos { gap: 10px; margin: 6px 0 16px; }
   .cert-logos :global(img) { width: 62px; height: auto; }
 

@@ -252,20 +252,20 @@ export default function HeroSection() {
           justify-content: center;
           align-items: center;
           padding: 60px 20px;
-          max-width: 1200px;
+          max-width: 1100px;
           margin: 0 auto;
         }
         .fv-earth-box {
-          background: rgba(0,0,0,0.72); /* 透過黒 or グレーに調整可 */
+          
           border-radius: 10px;
           padding: 28px 26px;
-          max-width: 760px;
+          max-width: 900px;
           width: 100%;
           box-sizing: border-box;
         }
         .fv-earth-copy {
           margin: 0;
-          font-size: 20px;
+          font-size: 22px;
           line-height: 1.85;
           letter-spacing: .04em;
           color: #fff;
@@ -290,14 +290,14 @@ export default function HeroSection() {
           .fv-catch{ font-size: 1rem; line-height: 1.65; margin: 22px auto 18px; }
           .fv-earth-bg{ padding: 28px 14px; }
           .fv-earth-box{ padding: 18px 16px; max-width: none; }
-          .fv-earth-copy{ font-size: 15px; line-height: 1.9; }
+          .fv-earth-copy{ font-size: 0.7rem; line-height: 1.9; }
         }
         @media (max-width: 390px){
           .fv-top{ height: 170px; }
           .fv-logo-img{ width: clamp(170px, 64vw, 250px); }
           .fv-catch{ font-size: 1rem; margin: 20px auto 14px; }
           .fv-earth-bg{ padding: 20px 12px; }
-          .fv-earth-copy{ font-size: 14px; }
+          .fv-earth-copy{ font-size: 0.59rem; }
         }
       `}</style>
     </>
