@@ -26,9 +26,7 @@ export default function Footer() {
               style={styles.logo}
             />
 
-            <h3 style={styles.title} className="title">{brand}</h3>
-            <p style={styles.subtitle} className="subtitle">{model}</p>
-
+           
             <div style={styles.section}>
               <p style={styles.company}>{company}</p>
               <p style={styles.text}>{zip}</p>
