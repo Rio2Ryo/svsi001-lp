@@ -286,7 +286,7 @@ export default function HeroSection() {
           .brand-dot { top: 34px; left: 12px; filter: opacity(.75); }
           .fv-top{ height: 184px; max-width: 94vw; }
           .fv-logo-img{ width: clamp(190px, 58vw, 280px); }
-          .fv-tagline{ font-size: 10px; margin-top: 6px; }
+          .fv-tagline{ font-size: 14px; margin-top: 6px; white-space:pre-wrap; }
           .fv-catch{ font-size: 1rem; line-height: 1.65; margin: 22px auto 18px; }
           .fv-earth-bg{ padding: 28px 14px; }
           .fv-earth-box{ padding: 18px 16px; max-width: none; }
@@ -297,7 +297,7 @@ export default function HeroSection() {
           .fv-logo-img{ width: clamp(170px, 64vw, 250px); }
           .fv-catch{ font-size: 1rem; margin: 20px auto 14px; }
           .fv-earth-bg{ padding: 20px 12px; }
-          .fv-earth-copy{ font-size: 0.59rem; }
+          .fv-earth-copy{ font-size: 0.6rem; }
         }
       `}</style>
     </>

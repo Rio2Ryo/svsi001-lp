@@ -398,7 +398,7 @@ export default function FeatureSection() {
   /* 本文：左揃え＆行送りを統一。各行をblock化して“揃って見える”ように */
   .mv-text {
     text-align: left;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     line-height: 1.9;
     letter-spacing: .02em;
     max-width: 90%;
