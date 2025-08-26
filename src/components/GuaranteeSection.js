@@ -177,6 +177,10 @@ export default function GuaranteeSection() {
     letter-spacing: .02em;
     color: #666;
   }
+  .usage-title {
+          text-align: center; font-weight: 600; font-size: 22px;
+          color: #444; letter-spacing: 0.12em; margin: 0 0 18px;
+        }
 
   /* i18nの強制改行を無効化して自然な折返しに */
   .usage-text p br { display: none; }

@@ -156,6 +156,10 @@ export default function FAQSection() {
 
         /* ===== Responsive ===== */
         @media (max-width: 640px) {
+        .faq-body {
+          width: 90%;
+          margin: 0 auto;
+        }
           .faq-rule {
             max-width: 90%;
             margin:0 auto;

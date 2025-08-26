@@ -204,7 +204,7 @@ export default function ProductLineupSection() {
         @media (max-width: 560px) {
           .lineup-label { font-size: 26px; }
           .brand-lockup :global(img) { max-width: 280px; }
-          .title { font-size: 21px; line-height: 1.6; margin: 32px 0 8px; }
+          .title { font-size: 21px; line-height: 1.6; margin: 32px 0 8px; white-space:pre-wrap;}
           .note { font-size: 12px; }
         }
       `}</style>
