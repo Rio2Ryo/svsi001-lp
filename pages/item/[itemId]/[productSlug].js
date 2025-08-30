@@ -193,6 +193,7 @@ export default function ProductDetailPage() {
     setSideCartOpen(true);
   };
 
+  /* ====== ここがポイント：/en 強制＋Cookie付与＋ログ ====== */
   const checkout = async () => {
     try {
       const { checkoutId } =
@@ -205,36 +206,45 @@ export default function ProductDetailPage() {
         callbacks: { postFlowUrl: window.location.href },
       });
 
-      let finalUrl = redirect.redirectSession.fullUrl;
+      const originalUrl = redirect.redirectSession.fullUrl;
+      console.log("[checkout] original redirect URL:", originalUrl);
 
-      // ---------- EN強制判定（フォールバック込み） ----------
+      // 言語判定（フォールバック含む）
       const langHint =
         (typeof lang === "string" && lang) ||
         (typeof document !== "undefined" && document.documentElement?.lang) ||
         (typeof window !== "undefined" && window.localStorage?.getItem("lang")) ||
         "ja";
       const isEnglish = String(langHint).toLowerCase().startsWith("en");
+      console.log("[checkout] langHint:", langHint, "=> isEnglish:", isEnglish);
+
+      // 既定はオリジナルURL
+      let finalUrl = originalUrl;
 
       if (isEnglish) {
-        // /en/ を origin 直下に確実に差し込む（現在のパス構造に依存しない）
-        const u = new URL(finalUrl);
+        const u = new URL(originalUrl);
+
+        // origin直下に /en を確実に差し込む
         if (!u.pathname.startsWith("/en/")) {
-          u.pathname = "/en" + (u.pathname.startsWith("/") ? "" : "/") + u.pathname;
+          // /__ecom/checkout → /en/__ecom/checkout に置換（最優先）
+          u.pathname = u.pathname.replace(/^\/__ecom\//, "/en/__ecom/");
+          // それでも /en/ 先頭でない場合は先頭に /en を追加（他構造も網羅）
+          if (!u.pathname.startsWith("/en/")) {
+            u.pathname = "/en" + (u.pathname.startsWith("/") ? "" : "/") + u.pathname;
+          }
         }
 
-        // Wix が参照する可能性がある言語Cookieを checkout ドメインへ付与（1年保持）
+        // Wixが参照し得る言語Cookieを checkout のドメインに付与（1年）
         const cookieDomain = "." + u.hostname.replace(/^www\./, "");
-        const cookieAttrs = `domain=${cookieDomain}; path=/; max-age=31536000; samesite=lax`;
-        document.cookie = `wixLanguage=en; ${cookieAttrs}`;
-        document.cookie = `wixLng=en; ${cookieAttrs}`;
-        document.cookie = `locale=en; ${cookieAttrs}`;
+        const attrs = `domain=${cookieDomain}; path=/; max-age=31536000; samesite=lax`;
+        document.cookie = `wixLanguage=en; ${attrs}`;
+        document.cookie = `wixLng=en; ${attrs}`;
+        document.cookie = `locale=en; ${attrs}`;
 
         finalUrl = u.toString();
       }
 
-      // デバッグしたい場合は有効化
-      // console.log("Redirecting to:", finalUrl);
-
+      console.log("[checkout] final redirect URL:", finalUrl);
       window.location.assign(finalUrl);
     } catch (err) {
       console.error("チェックアウト失敗:", err);
@@ -680,7 +690,7 @@ export default function ProductDetailPage() {
         .liName { font-size: 14px; font-weight: 600; }
         .liPrice { font-size: 13px; color: #374151; }
 
-        .liQty { margin-top: 2px; }
+        .liQty { marginトップ: 2px; }
         .liQtyBox { display: grid; grid-template-columns: 40px 56px 40px; align-items: center; height: 36px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; overflow: hidden; width: 136px; }
         .liBtn { all: unset; height: 100%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; color: #111827; }
         .liBtn:disabled { color: #cbd5e1; cursor: not-allowed; }
