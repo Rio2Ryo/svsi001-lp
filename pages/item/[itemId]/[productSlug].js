@@ -199,19 +199,21 @@ export default function ProductDetailPage() {
         await myWixClient.currentCart.createCheckoutFromCurrentCart({
           channelType: "WEB",
         });
-
+  
       const redirect = await myWixClient.redirects.createRedirectSession({
         ecomCheckout: { checkoutId },
         callbacks: { postFlowUrl: window.location.href },
       });
-
+  
       const url = new URL(redirect.redirectSession.fullUrl);
-
-      // ★ 強制的に /en を付与（すでに /en/ が付いていれば何もしない）
+  
+      // ★ 強制的に /en を付与（すでに /en/ があれば何もしない）
       if (!url.pathname.startsWith("/en/")) {
         url.pathname = `/en${url.pathname}`;
       }
-
+  
+      console.log("Redirect checkout URL:", url.toString());
+  
       window.location.assign(url.toString());
     } catch (err) {
       console.error("チェックアウト失敗:", err);
