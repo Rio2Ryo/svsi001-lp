@@ -54,11 +54,12 @@ function pickLocalizedProductText(product, lang, t) {
 
 export default function ProductDetailPage() {
   const router = useRouter();
-  const { isReady, query } = router;
+  const { isReady, query, asPath } = router;
 
-  // ★ 言語切替（HeroSectionと同じUI）
+  // i18n
   const { t, lang, setLang } = useI18n();
   const tr = (key, fallback = "") => t(key) ?? fallback;
+
   const [openLang, setOpenLang] = useState(false);
   const menuRef = useRef(null);
   const labelLang = tr("ui.lang.label", "Language");
@@ -79,11 +80,22 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // ★ サイドカート表示
+  // サイドカート表示
   const [isSideCartOpen, setSideCartOpen] = useState(false);
 
-  // ★ 代理店JSONを保持（ItemPic・英名・JPY価格参照用）
+  // 代理店JSONを保持（ItemPic・英名・JPY価格参照用）
   const [agentProducts, setAgentProducts] = useState([]);
+
+  /* =========================
+     1) URLの言語を i18n に同期
+     ========================= */
+  useEffect(() => {
+    if (!isReady) return;
+    const qsLang = typeof query.lang === "string" ? query.lang.toLowerCase() : "";
+    const pathIsEn = router.pathname?.startsWith?.("/en/") || asPath?.startsWith?.("/en/");
+    if (qsLang === "en" || pathIsEn) setLang("en");
+    else if (qsLang === "ja") setLang("ja");
+  }, [isReady, query.lang, asPath, router.pathname, setLang]);
 
   useEffect(() => {
     if (!isReady || !query.itemId || !query.productSlug) return;
@@ -193,46 +205,41 @@ export default function ProductDetailPage() {
     setSideCartOpen(true);
   };
 
-  // ProductDetailPage 内の checkout() をこれで置き換え
-const checkout = async () => {
-  try {
-    const { checkoutId } =
-      await myWixClient.currentCart.createCheckoutFromCurrentCart({
-        channelType: "WEB",
+  /* =========================
+     2) 英語なら /en を強制付与してチェックアウトへ
+     ========================= */
+  const checkout = async () => {
+    try {
+      const { checkoutId } =
+        await myWixClient.currentCart.createCheckoutFromCurrentCart({
+          channelType: "WEB",
+        });
+
+      const redirect = await myWixClient.redirects.createRedirectSession({
+        ecomCheckout: { checkoutId },
+        // 事後遷移先（完了後に戻るURL）は現状維持
+        callbacks: { postFlowUrl: window.location.href },
       });
 
-    // Wix が返すリダイレクト情報
-    const redirect = await myWixClient.redirects.createRedirectSession({
-      ecomCheckout: { checkoutId },
-      // 事後遷移先（完了後に戻るURL）は現状維持。英語時は ?lang=en が残ります
-      callbacks: { postFlowUrl: window.location.href },
-    });
+      const raw = redirect.redirectSession.fullUrl;
+      const url = new URL(raw);
 
-    // --- ここがポイント：フルURLを書き換えてから遷移 ---
-    const target = new URL(redirect.redirectSession.fullUrl);
+      // 最終判定は3段階：?lang=en / 現在パスが /en/ / i18n の lang
+      const qsLang = new URLSearchParams(window.location.search).get("lang");
+      const wantEn =
+        (qsLang && qsLang.toLowerCase() === "en") ||
+        window.location.pathname.startsWith("/en/") ||
+        (typeof lang === "string" && lang.toLowerCase() === "en");
 
-    // lang が en なら /en を先頭に付与（重複付与しない＝冪等）
-    const wantEn =
-      typeof lang === "string" && lang.toLowerCase() === "en";
-
-    if (wantEn) {
-      // すでに /en/ で始まっていなければ差し込み
-      if (!target.pathname.startsWith("/en/")) {
-        target.pathname = `/en${target.pathname}`;
+      if (wantEn && !url.pathname.startsWith("/en/")) {
+        url.pathname = `/en${url.pathname}`;
       }
+
+      window.location.assign(url.toString());
+    } catch (err) {
+      console.error("チェックアウト失敗:", err);
     }
-    // 逆に日本語の場合は /en を外したいなら↓のコメントアウトを外す
-    // else if (target.pathname.startsWith("/en/")) {
-    //   target.pathname = target.pathname.replace(/^\/en/, "");
-    // }
-
-    // 最終遷移（replace でも OK。assign だと履歴に残る）
-    window.location.assign(target.toString());
-  } catch (err) {
-    console.error("チェックアウト失敗:", err);
-  }
-};
-
+  };
 
   const clearCart = async () => {
     try {
@@ -249,9 +256,7 @@ const checkout = async () => {
   const changeLineItemQty = async (lineItemId, newQty) => {
     try {
       if (newQty <= 0) {
-        await myWixClient.currentCart.removeLineItemFromCurrentCart(
-          lineItemId
-        );
+        await myWixClient.currentCart.removeLineItemFromCurrentCart(lineItemId);
         const updated = await myWixClient.currentCart.getCurrentCart();
         setCart(updated);
         if (lineItemId === cartItemId) {
@@ -271,7 +276,7 @@ const checkout = async () => {
     }
   };
 
-  // ★ agentProducts から wixProductId で一致する商品を取得
+  // agentProducts から wixProductId で一致する商品を取得
   const findAgentProductByWixId = (wixId) =>
     (agentProducts || []).find((p) => p.wixProductId === wixId);
 
@@ -301,17 +306,14 @@ const checkout = async () => {
       </>
     );
 
-  // ★ ここで名前・説明をローカライズ（JSON英語 → en.json → 日本語）
   const { name: displayName, description: displayDescription } =
     pickLocalizedProductText(product, lang, t);
 
-  // ★ 価格を言語に応じてフォーマット
   const displayOriginal = product.originalprice
     ? formatPrice(product.originalprice, lang)
     : null;
   const displayPrice = formatPrice(product.price, lang);
 
-  // ★ サイドカート表示用：行アイテムのローカライズ（名前・金額・小計）
   const localizedLine = (li) => {
     const wixId = li?.catalogReference?.catalogItemId;
     const ap = findAgentProductByWixId(wixId);
@@ -330,6 +332,12 @@ const checkout = async () => {
   }, 0);
   const displaySubtotal =
     lang === "en" ? fmtUSD.format(subtotalJPY * USD_PER_JPY) : fmtJPY.format(subtotalJPY);
+
+  // 戻るリンク：lang を維持
+  const backHref =
+    typeof query.lang === "string"
+      ? { pathname: `/item/${query.itemId}`, query: { lang: query.lang } }
+      : { pathname: `/item/${query.itemId}` };
 
   return (
     <>
@@ -432,7 +440,7 @@ const checkout = async () => {
                 {tr("pdp.buttons.buyNow", "今すぐ購入")}
               </button>
 
-              <Link href={`/item/${query.itemId}`} legacyBehavior>
+              <Link href={backHref} legacyBehavior>
                 <a className="btn back">
                   {tr("pdp.buttons.backToList", "カートの状態を維持して商品一覧に戻る")}
                 </a>
@@ -659,7 +667,7 @@ const checkout = async () => {
         .liName { font-size: 14px; font-weight: 600; }
         .liPrice { font-size: 13px; color: #374151; }
 
-        .liQty { margin-top: 2px; }
+        .liQty { marginトップ: 2px; }
         .liQtyBox { display: grid; grid-template-columns: 40px 56px 40px; align-items: center; height: 36px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; overflow: hidden; width: 136px; }
         .liBtn { all: unset; height: 100%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; color: #111827; }
         .liBtn:disabled { color: #cbd5e1; cursor: not-allowed; }
