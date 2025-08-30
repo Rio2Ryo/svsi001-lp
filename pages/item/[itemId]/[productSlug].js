@@ -8,6 +8,34 @@ import Cookies from "js-cookie";
 import Footer from "../../../src/components/Footer";
 import { useI18n } from "@/lib/i18n";
 
+// ✅ checkout URL を必ず /en/ に直す（JS版・型注釈なし）
+function forceLangPrefix(rawUrl, lang = 'en') {
+  try {
+    const u = new URL(rawUrl);
+
+    // 対象ドメインだけ言語付与（必要なら endsWith の条件を増やす）
+    if (u.hostname.endsWith('dotpb.jp')) {
+      const want = `/${lang}/`;
+
+      // 既に /en/ などが付いていれば何もしない
+      if (!u.pathname.startsWith(want)) {
+        // 二重スラッシュを避けつつ先頭に /en を差し込む
+        const cleanPath = u.pathname.replace(/^\/+/, ''); // 先頭の / を剥がす
+        u.pathname = `/${lang}/${cleanPath}`;             // /en/xxx にする
+      }
+    }
+
+    return u.toString();
+  } catch (e) {
+    // 万一相対URL等で new URL できない場合のフォールバック（素直に挿入）
+    if (typeof rawUrl === 'string') {
+      return rawUrl.replace(/^(https?:\/\/[^/]+)\//i, `$1/${lang}/`);
+    }
+    return rawUrl;
+  }
+}
+
+
 /* ====== 価格表示：円⇄ドル 切替 ====== */
 const USD_PER_JPY =
   Number(process.env.NEXT_PUBLIC_USD_PER_JPY) || 0.006724; // 3300 -> $22.19
@@ -199,13 +227,21 @@ export default function ProductDetailPage() {
         await myWixClient.currentCart.createCheckoutFromCurrentCart({
           channelType: "WEB",
         });
-
+  
       const redirect = await myWixClient.redirects.createRedirectSession({
         ecomCheckout: { checkoutId },
         callbacks: { postFlowUrl: window.location.href },
       });
-
-      window.location = redirect.redirectSession.fullUrl;
+  
+      const rawUrl = redirect.redirectSession.fullUrl;
+  
+      // ⭐ ここで強制的に /en/ を前置
+      const enUrl = forceLangPrefix(rawUrl, 'en');
+  
+      // デバッグしたい場合は一度確認
+      // console.log('raw:', rawUrl, ' → en:', enUrl);
+  
+      window.location.assign(enUrl);
     } catch (err) {
       console.error("チェックアウト失敗:", err);
     }
