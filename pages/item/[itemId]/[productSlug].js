@@ -193,18 +193,34 @@ export default function ProductDetailPage() {
     setSideCartOpen(true);
   };
 
-  // 英語カートに”追加だけ”して、そのままカートにとどまる
-const checkout = () => {
-  if (!product?.wixProductId) return;
-  const qty = Math.max(1, Number(quantity || 1));
+  // ★ Wixの英語カートへ「現在のカート全体」を一発同期（置き換え）
+const checkout = async () => {
+  const BASE = 'https://dotpb.jp';     // ← apexに統一（www混在NG）
+  const CART = '/en/cart-page';
 
-  const BASE = 'https://dotpb.jp';      // ドメインは統一（www混在NG）
-  const CART_PATH = '/en/cart-page';    // 英語カートの実URL
+  // 1) いまのカート行を取得（stateがあればそれ、無ければAPIで再取得）
+  let lineItems = Array.isArray(cart?.lineItems) ? cart.lineItems : null;
+  if (!lineItems) {
+    try {
+      const cur = await myWixClient.currentCart.getCurrentCart();
+      lineItems = cur?.lineItems || [];
+    } catch (_) {
+      lineItems = [];
+    }
+  }
 
-  const u = new URL(CART_PATH, BASE);
-  u.searchParams.set('add', `${product.wixProductId}:${qty}`);
-  // ← auto=1 を付けない（ここがポイント）
+  // 2) "productId:qty" をカンマ連結 → sync=PID1:2,PID2:1...
+  const pairs = lineItems
+    .map(li => `${li?.catalogReference?.catalogItemId}:${li?.quantity || 1}`)
+    .filter(Boolean)
+    .join(',');
 
+  // 3) replace=1 で“置き換え同期”し、Wixカートへ遷移
+  const u = new URL(CART, BASE);
+  if (pairs) {
+    u.searchParams.set('sync', pairs);
+    u.searchParams.set('replace', '1');
+  }
   window.location.assign(u.toString());
 };
 
