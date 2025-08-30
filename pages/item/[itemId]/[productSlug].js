@@ -205,15 +205,37 @@ export default function ProductDetailPage() {
         callbacks: { postFlowUrl: window.location.href },
       });
 
-      let url = redirect.redirectSession.fullUrl;
+      let finalUrl = redirect.redirectSession.fullUrl;
 
-      // ★ 言語が英語の場合のみ /en を強制挿入（多重挿入は防止）
-      // 例) https://dotpb.jp/__ecom/checkout?... → https://dotpb.jp/en/__ecom/checkout?...
-      if (lang === "en" && !url.includes("/en/")) {
-        url = url.replace("/__ecom/", "/en/__ecom/");
+      // ---------- EN強制判定（フォールバック込み） ----------
+      const langHint =
+        (typeof lang === "string" && lang) ||
+        (typeof document !== "undefined" && document.documentElement?.lang) ||
+        (typeof window !== "undefined" && window.localStorage?.getItem("lang")) ||
+        "ja";
+      const isEnglish = String(langHint).toLowerCase().startsWith("en");
+
+      if (isEnglish) {
+        // /en/ を origin 直下に確実に差し込む（現在のパス構造に依存しない）
+        const u = new URL(finalUrl);
+        if (!u.pathname.startsWith("/en/")) {
+          u.pathname = "/en" + (u.pathname.startsWith("/") ? "" : "/") + u.pathname;
+        }
+
+        // Wix が参照する可能性がある言語Cookieを checkout ドメインへ付与（1年保持）
+        const cookieDomain = "." + u.hostname.replace(/^www\./, "");
+        const cookieAttrs = `domain=${cookieDomain}; path=/; max-age=31536000; samesite=lax`;
+        document.cookie = `wixLanguage=en; ${cookieAttrs}`;
+        document.cookie = `wixLng=en; ${cookieAttrs}`;
+        document.cookie = `locale=en; ${cookieAttrs}`;
+
+        finalUrl = u.toString();
       }
 
-      window.location.assign(url);
+      // デバッグしたい場合は有効化
+      // console.log("Redirecting to:", finalUrl);
+
+      window.location.assign(finalUrl);
     } catch (err) {
       console.error("チェックアウト失敗:", err);
     }
@@ -234,9 +256,7 @@ export default function ProductDetailPage() {
   const changeLineItemQty = async (lineItemId, newQty) => {
     try {
       if (newQty <= 0) {
-        await myWixClient.currentCart.removeLineItemFromCurrentCart(
-          lineItemId
-        );
+        await myWixClient.currentCart.removeLineItemFromCurrentCart(lineItemId);
         const updated = await myWixClient.currentCart.getCurrentCart();
         setCart(updated);
         if (lineItemId === cartItemId) {
