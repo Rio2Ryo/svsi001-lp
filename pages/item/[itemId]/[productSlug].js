@@ -205,7 +205,15 @@ export default function ProductDetailPage() {
         callbacks: { postFlowUrl: window.location.href },
       });
 
-      window.location = redirect.redirectSession.fullUrl;
+      let url = redirect.redirectSession.fullUrl;
+
+      // ★ 言語が英語の場合のみ /en を強制挿入（多重挿入は防止）
+      // 例) https://dotpb.jp/__ecom/checkout?... → https://dotpb.jp/en/__ecom/checkout?...
+      if (lang === "en" && !url.includes("/en/")) {
+        url = url.replace("/__ecom/", "/en/__ecom/");
+      }
+
+      window.location.assign(url);
     } catch (err) {
       console.error("チェックアウト失敗:", err);
     }
@@ -337,10 +345,26 @@ export default function ProductDetailPage() {
               <ul className="lang-menu" role="menu" aria-label={labelLang || "Language"}>
                 <li className="sep" aria-hidden="true" />
                 <li role="menuitem">
-                  <button className="lang-item" onClick={() => setLang("ja")}>JA</button>
+                  <button
+                    className="lang-item"
+                    onClick={() => {
+                      setLang("ja");
+                      setOpenLang(false);
+                    }}
+                  >
+                    JA
+                  </button>
                 </li>
                 <li role="menuitem">
-                  <button className="lang-item" onClick={() => setLang("en")}>EN</button>
+                  <button
+                    className="lang-item"
+                    onClick={() => {
+                      setLang("en");
+                      setOpenLang(false);
+                    }}
+                  >
+                    EN
+                  </button>
                 </li>
               </ul>
             )}
