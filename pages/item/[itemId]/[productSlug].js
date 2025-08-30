@@ -193,24 +193,20 @@ export default function ProductDetailPage() {
     setSideCartOpen(true);
   };
 
-  // HeadlessのcreateCheckoutFromCurrentCartは使わない
-// ★ ここだけ置き換え（www を使わない／ドメイン統一）
-const checkout = () => {
-  if (!product?.wixProductId) return;
-
-  const qty = Math.max(1, Number(quantity || 1));
-
-  // Wix公開サイトの正規ドメインに統一（今回は apex: dotpb.jp）
-  const BASE = 'https://dotpb.jp';       // ← ここをサイトに合わせて固定
-
-  // 英語ブリッジへ商品IDと数量を渡す
-  const u = new URL('/en/bridge', BASE);
-  u.searchParams.set('productId', product.wixProductId);
-  u.searchParams.set('qty', String(qty));
-
-  window.location.assign(u.toString());
-};
-
+  const checkout = () => {
+    if (!product?.wixProductId) return;
+    const qty = Math.max(1, Number(quantity || 1));
+  
+    const BASE = 'https://dotpb.jp';               // ★ www なしに統一（重要）
+    const u = new URL('/en/cart', BASE);
+    // 1件なら: add=PRODUCTID:QTY
+    u.searchParams.set('add', `${product.wixProductId}:${qty}`);
+    // すぐに決済へ進めたいなら auto=1 を付ける（不要なら付けない）
+    u.searchParams.set('auto', '1');
+  
+    window.location.assign(u.toString());
+  };
+  
 
   const clearCart = async () => {
     try {
