@@ -193,18 +193,50 @@ export default function ProductDetailPage() {
     setSideCartOpen(true);
   };
 
- // ★ 言語に応じて /cart-page か /en/cart-page へ
-// ★ クエリは add=PRODUCTID:QTY だけを渡す
+ // ★ 単品→ add=PID:QTY / 複数→ sync=PID1:Q1,PID2:Q2...&replace=1
 const checkout = async () => {
-  if (!product?.wixProductId) return;
+  if (!product?.wixProductId && !Array.isArray(cart?.lineItems)) return;
 
-  const BASE = 'https://dotpb.jp';                  // www混在NG
-  const prefix = (lang === 'en') ? '/en' : '';      // 言語で出し分け
+  const BASE = 'https://dotpb.jp';                 // www 混在は禁止
+  const prefix = (lang === 'en') ? '/en' : '';     // 言語で出し分け
   const CART_PATH = `${prefix}/cart-page`;
 
-  const qty = Math.max(1, Number(quantity || 1));   // 0防止
+  // 最新カートを取得（stateが無ければAPI）
+  let lineItems = Array.isArray(cart?.lineItems) ? cart.lineItems : null;
+  if (!lineItems) {
+    try {
+      const cur = await myWixClient.currentCart.getCurrentCart();
+      lineItems = cur?.lineItems || [];
+    } catch {
+      lineItems = [];
+    }
+  }
+
+  // id と数量を抽出
+  let pairs = lineItems
+    .map(li => ({
+      pid: li?.catalogReference?.catalogItemId,
+      qty: Number(li?.quantity || 1)
+    }))
+    .filter(x => x.pid);
+
+  // もしカートが空なら、画面上の選択数だけ単品で渡す
+  if (pairs.length === 0 && product?.wixProductId) {
+    pairs = [{ pid: product.wixProductId, qty: Math.max(1, Number(quantity || 1)) }];
+  }
+
   const u = new URL(CART_PATH, BASE);
-  u.searchParams.set('add', `${product.wixProductId}:${qty}`);
+
+  if (pairs.length <= 1) {
+    // 単品：add 方式（Velo側は“置き換え”処理にしてあるので倍増しない）
+    const { pid, qty } = pairs[0];
+    u.searchParams.set('add', `${pid}:${qty}`);
+  } else {
+    // 複数：正確に同期（置き換え）
+    const syncStr = pairs.map(p => `${p.pid}:${p.qty}`).join(',');
+    u.searchParams.set('sync', syncStr);
+    u.searchParams.set('replace', '1');
+  }
 
   window.location.assign(u.toString());
 };
