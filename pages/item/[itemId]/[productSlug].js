@@ -194,25 +194,21 @@ export default function ProductDetailPage() {
   };
 
   // HeadlessのcreateCheckoutFromCurrentCartは使わない
-const checkout = async () => {
-  try {
-    if (!product || !product.wixProductId) return;
+// ★ ここだけ置き換え（www を使わない／ドメイン統一）
+const checkout = () => {
+  if (!product?.wixProductId) return;
 
-    // 数量は1以上に正規化
-    const qty = Math.max(1, Number(quantity || 1));
+  const qty = Math.max(1, Number(quantity || 1));
 
-    // 英語固定ブリッジへ商品IDと数量を渡す
-    const u = new URL('https://www.dotpb.jp/en/bridge');
-    u.searchParams.set('productId', product.wixProductId);
-    u.searchParams.set('qty', String(qty));
+  // Wix公開サイトの正規ドメインに統一（今回は apex: dotpb.jp）
+  const BASE = 'https://dotpb.jp';       // ← ここをサイトに合わせて固定
 
-    // 遷移
-    window.location.assign(u.toString());
-  } catch (e) {
-    console.error('ブリッジ遷移失敗:', e);
-    // 予備：英語カートへ
-    window.location.assign('https://www.dotpb.jp/en/cart');
-  }
+  // 英語ブリッジへ商品IDと数量を渡す
+  const u = new URL('/en/bridge', BASE);
+  u.searchParams.set('productId', product.wixProductId);
+  u.searchParams.set('qty', String(qty));
+
+  window.location.assign(u.toString());
 };
 
 
