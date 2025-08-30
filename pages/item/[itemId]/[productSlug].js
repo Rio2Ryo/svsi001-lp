@@ -193,19 +193,17 @@ export default function ProductDetailPage() {
     setSideCartOpen(true);
   };
 
-  // 英語カートに直送して追加 → 自動でチェックアウト
+  // 英語カートに”追加だけ”して、そのままカートにとどまる
 const checkout = () => {
   if (!product?.wixProductId) return;
   const qty = Math.max(1, Number(quantity || 1));
 
-  const BASE = 'https://dotpb.jp';        // ★ドメイン統一（www混在NG）
-  const CART_PATH = '/en/cart-page';      // ★左下に出た英語カートURL
+  const BASE = 'https://dotpb.jp';      // ドメインは統一（www混在NG）
+  const CART_PATH = '/en/cart-page';    // 英語カートの実URL
 
   const u = new URL(CART_PATH, BASE);
-  // 1件: add=PRODUCTID:QTY（複数は PID1:2,PID2:1 みたいにカンマ区切り）
   u.searchParams.set('add', `${product.wixProductId}:${qty}`);
-  // すぐ決済へ進めるフラグ（カートに留めたい時は付けない）
-  u.searchParams.set('auto', '1');
+  // ← auto=1 を付けない（ここがポイント）
 
   window.location.assign(u.toString());
 };
