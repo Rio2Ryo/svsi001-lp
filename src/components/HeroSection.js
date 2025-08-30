@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useI18n } from "../lib/i18n";
+import { useRouter } from "next/navigation"; // この行を追加
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -9,21 +10,22 @@ export default function HeroSection() {
   const menuRef = useRef(null);
 
   const { t, lang, setLang } = useI18n();
+  const router = useRouter(); // この行を追加
   const tr = (key) => t(key) ?? "";
 
-  const brand   = tr("hero.brand");
-  const title   = tr("hero.title");
+  const brand = tr("hero.brand");
+  const title = tr("hero.title");
   const tagline = tr("hero.tagline");
-  const catch1  = tr("hero.catch1");
-  const catch2  = tr("hero.catch2");
-  const body    = tr("hero.body");
+  const catch1 = tr("hero.catch1");
+  const catch2 = tr("hero.catch2");
+  const body = tr("hero.body");
 
   const altPowder = tr("hero.alt.powder");
-  const altLogo   = tr("hero.alt.logo");
+  const altLogo = tr("hero.alt.logo");
 
   const labelLang = tr("ui.lang.label");
-  const labelJA   = tr("ui.lang.ja");
-  const labelEN   = tr("ui.lang.en");
+  const labelJA = tr("ui.lang.ja");
+  const labelEN = tr("ui.lang.en");
 
   useEffect(() => setIsVisible(true), []);
   useEffect(() => {
@@ -58,10 +60,25 @@ export default function HeroSection() {
               <ul className="lang-menu" role="menu" aria-label={labelLang || "Language"}>
                 <li className="sep" aria-hidden="true" />
                 <li role="menuitem">
-                  <button className="lang-item" onClick={() => setLang("ja")}>JA</button>
+                  <button
+                    className="lang-item"
+                    onClick={() => {
+                      setLang("ja");
+                      // 既存のURLから/enを削除し、日本語ページに遷移
+                      const newPathname = window.location.pathname.replace(/^\/en/, "");
+                      router.push(newPathname || "/");
+                    }}
+                  >JA</button>
                 </li>
                 <li role="menuitem">
-                  <button className="lang-item" onClick={() => setLang("en")}>EN</button>
+                  <button
+                    className="lang-item"
+                    onClick={() => {
+                      setLang("en");
+                      // 既存のURLに/enを付与し、英語ページに遷移
+                      router.push(`/en${window.location.pathname}`);
+                    }}
+                  >EN</button>
                 </li>
               </ul>
             )}
@@ -194,7 +211,7 @@ export default function HeroSection() {
         .is-visible { animation: fadeInUp .8s ease-out both; }
         @keyframes fadeInUp {
           from { opacity: 0; transform: translate3d(0,10px,0); }
-          to   { opacity: 1; transform: translateZ(0); }
+          to  { opacity: 1; transform: translateZ(0); }
         }
 
         .brand-dot{
