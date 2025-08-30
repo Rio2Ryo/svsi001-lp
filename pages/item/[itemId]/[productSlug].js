@@ -205,9 +205,11 @@ export default function ProductDetailPage() {
         callbacks: { postFlowUrl: window.location.href },
       });
   
+      // Wixが返すURLをパース
       const url = new URL(redirect.redirectSession.fullUrl);
   
-      // ★ 強制的に /en を差し込む
+      // --- ここで必ず /en を付ける ---
+      // 例: /__ecom/checkout → /en/__ecom/checkout
       if (!url.pathname.startsWith("/en/")) {
         url.pathname = `/en${url.pathname}`;
       }
