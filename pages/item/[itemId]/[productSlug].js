@@ -80,22 +80,20 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // サイドカート表示
-  const [isSideCartOpen, setSideCartOpen] = useState(false);
+  const [isSideCartOpen, setSideCartOpen] = useState(false); // サイドカート表示
 
-  // 代理店JSONを保持（ItemPic・英名・JPY価格参照用）
-  const [agentProducts, setAgentProducts] = useState([]);
+  const [agentProducts, setAgentProducts] = useState([]); // 代理店JSON
 
-  /* =========================
-     1) URLの言語を i18n に同期
-     ========================= */
+  /* ========== URLの言語 → i18n 同期（必須） ========== */
   useEffect(() => {
     if (!isReady) return;
     const qsLang = typeof query.lang === "string" ? query.lang.toLowerCase() : "";
-    const pathIsEn = router.pathname?.startsWith?.("/en/") || asPath?.startsWith?.("/en/");
+    const pathIsEn =
+      (typeof window !== "undefined" && window.location.pathname.startsWith("/en/")) ||
+      (asPath || "").startsWith("/en/");
     if (qsLang === "en" || pathIsEn) setLang("en");
     else if (qsLang === "ja") setLang("ja");
-  }, [isReady, query.lang, asPath, router.pathname, setLang]);
+  }, [isReady, query.lang, asPath, setLang]);
 
   useEffect(() => {
     if (!isReady || !query.itemId || !query.productSlug) return;
@@ -145,12 +143,10 @@ export default function ProductDetailPage() {
     fetchData();
   }, [isReady, query.itemId, query.productSlug]);
 
-  // サイドカート中は背景スクロールを止める
+  // サイドカート中は背景スクロール停止
   useEffect(() => {
     document.body.style.overflow = isSideCartOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [isSideCartOpen]);
 
   const updateQuantity = async (newQty) => {
@@ -205,9 +201,7 @@ export default function ProductDetailPage() {
     setSideCartOpen(true);
   };
 
-  /* =========================
-     2) 英語なら /en を強制付与してチェックアウトへ
-     ========================= */
+  /* ========== 英語なら /en を強制付与してチェックアウトへ ========== */
   const checkout = async () => {
     try {
       const { checkoutId } =
@@ -217,20 +211,18 @@ export default function ProductDetailPage() {
 
       const redirect = await myWixClient.redirects.createRedirectSession({
         ecomCheckout: { checkoutId },
-        // 事後遷移先（完了後に戻るURL）は現状維持
         callbacks: { postFlowUrl: window.location.href },
       });
 
-      const raw = redirect.redirectSession.fullUrl;
-      const url = new URL(raw);
+      const url = new URL(redirect.redirectSession.fullUrl);
 
-      // 最終判定は3段階：?lang=en / 現在パスが /en/ / i18n の lang
-      const qsLang = new URLSearchParams(window.location.search).get("lang");
-      const wantEn =
-        (qsLang && qsLang.toLowerCase() === "en") ||
-        window.location.pathname.startsWith("/en/") ||
-        (typeof lang === "string" && lang.toLowerCase() === "en");
+      // 判定：?lang=en / 現在パス / i18n のいずれかで英語なら true
+      const qsLang = new URLSearchParams(window.location.search).get("lang") || "";
+      const pathIsEn = window.location.pathname.startsWith("/en/");
+      const i18nIsEn = typeof lang === "string" && lang.toLowerCase() === "en";
+      const wantEn = qsLang.toLowerCase() === "en" || pathIsEn || i18nIsEn;
 
+      // 英語が必要で /en が無ければ差し込む（冪等）
       if (wantEn && !url.pathname.startsWith("/en/")) {
         url.pathname = `/en${url.pathname}`;
       }
@@ -276,7 +268,6 @@ export default function ProductDetailPage() {
     }
   };
 
-  // agentProducts から wixProductId で一致する商品を取得
   const findAgentProductByWixId = (wixId) =>
     (agentProducts || []).find((p) => p.wixProductId === wixId);
 
@@ -333,7 +324,7 @@ export default function ProductDetailPage() {
   const displaySubtotal =
     lang === "en" ? fmtUSD.format(subtotalJPY * USD_PER_JPY) : fmtJPY.format(subtotalJPY);
 
-  // 戻るリンク：lang を維持
+  // 戻るリンク：?lang を維持
   const backHref =
     typeof query.lang === "string"
       ? { pathname: `/item/${query.itemId}`, query: { lang: query.lang } }
@@ -481,7 +472,7 @@ export default function ProductDetailPage() {
         </div>
       </div>
 
-      {/* ★ サイドカート（右ドロワー） */}
+      {/* サイドカート（右ドロワー） */}
       <div
         className={`sideCartBackdrop ${isSideCartOpen ? "open" : ""}`}
         onClick={() => setSideCartOpen(false)}
@@ -531,7 +522,6 @@ export default function ProductDetailPage() {
                   <div className="liName">{lineName}</div>
                   <div className="liPrice">{unitDisp}</div>
 
-                  {/* ▼ 数量UI */}
                   <div className="liQty">
                     <div
                       className="liQtyBox"
@@ -546,9 +536,7 @@ export default function ProductDetailPage() {
                       >
                         −
                       </button>
-                      <div className="liQtyNum" aria-live="polite">
-                        {li.quantity}
-                      </div>
+                      <div className="liQtyNum" aria-live="polite">{li.quantity}</div>
                       <button
                         className="liBtn"
                         aria-label={tr("pdp.quantity.ariaIncrease", "増やす")}
@@ -567,7 +555,6 @@ export default function ProductDetailPage() {
         <footer className="sideCartFooter">
           <div className="subtotal">
             {tr("pdp.sidecart.subtotalLabel", lang === "en" ? "Subtotal: " : "小計：")}
-            {/* Wixのsubtotal（JPY文字列）ではなく、agentProductsベースで再計算して言語別表示 */}
             {displaySubtotal}
           </div>
           <button className="btn checkoutBtn" onClick={checkout}>
@@ -579,7 +566,6 @@ export default function ProductDetailPage() {
       <Footer />
 
       <style jsx>{`
-        /* ===== 言語切替ヘッダー（HeroSectionと同じ見た目） ===== */
         .site-header { position: relative; z-index: 100; background: transparent; }
         .header-inner {
           max-width: 1200px; margin: 0 auto; padding: 12px 16px 0;
@@ -607,7 +593,6 @@ export default function ProductDetailPage() {
         }
         .lang-item:hover { text-decoration: underline; }
 
-        /* ===== 本文 ===== */
         .page { max-width: 1200px; margin: 2.7rem auto 10px auto; padding: 24px 16px 64px; }
         .grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 32px; }
         @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
@@ -648,7 +633,6 @@ export default function ProductDetailPage() {
         .acc { border-top: 1px solid #e5e7eb; padding-top: 12px; }
         .accBody { padding: 8px 0 2px; color: #374151; font-size: 14px; line-height: 1.9; white-space: pre-line; }
 
-        /* ===== サイドカート ===== */
         .sideCartBackdrop { position: fixed; inset: 0; background: rgba(0,0,0,.45); opacity: 0; pointer-events: none; transition: opacity .25s ease; z-index: 1000; }
         .sideCartBackdrop.open { opacity: 1; pointer-events: auto; }
         .sideCart { position: fixed; top: 0; right: 0; width: 380px; max-width: 90vw; height: 100vh; background: #fff;
@@ -667,7 +651,7 @@ export default function ProductDetailPage() {
         .liName { font-size: 14px; font-weight: 600; }
         .liPrice { font-size: 13px; color: #374151; }
 
-        .liQty { marginトップ: 2px; }
+        .liQty { margin-top: 2px; }
         .liQtyBox { display: grid; grid-template-columns: 40px 56px 40px; align-items: center; height: 36px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; overflow: hidden; width: 136px; }
         .liBtn { all: unset; height: 100%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; color: #111827; }
         .liBtn:disabled { color: #cbd5e1; cursor: not-allowed; }
