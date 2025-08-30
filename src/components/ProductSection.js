@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";   // ★追加
 import { useI18n } from "../lib/i18n";
 
 /* ========= 元データ（日本語のままでOK） ========= */
@@ -112,6 +113,8 @@ const formatPrice = (raw, lang) => {
 export default function ProductLineupSection() {
   const { t, lang } = useI18n();
   const tr = (k, fb = "") => t(k) ?? fb;
+  const searchParams = useSearchParams();            // ★追加
+  const langQ = searchParams.get("lang");            // ★追加
 
   /* ★ バグの原因修正：エクトイン判定は slug 基準に */
   const isEcto = (p) => String(p.slug || "").includes("-e-");
@@ -139,7 +142,7 @@ export default function ProductLineupSection() {
       <h3 className="title">{tr("lineup.baseTitle", "マザベジコンフィデンス【シリカのみ版】")}</h3>
       <div className="divider" />
       <p className="note">{tr("lineup.note.base", "成分 オーガニックシリカ純度97.1%以上")}</p>
-      <Row items={baseItems} tr={tr} lang={lang} />
+      <Row items={baseItems} tr={tr} lang={lang} langQ={langQ} />
 
       {/* ── エクトイン配合版 ── */}
       <h3 className="title">{tr("lineup.ectoTitle", "マザベジコンフィデンス【エクトイン配合版】")}</h3>
@@ -150,7 +153,7 @@ export default function ProductLineupSection() {
           "成分 オーガニックシリカ純度97.1%以上\n保湿効果や炎症を抑える効果が期待できる／天然アミノ酸のエクトイン配合"
         )}
       </p>
-      <Row items={ectoItems} tr={tr} lang={lang} />
+      <Row items={ectoItems} tr={tr} lang={lang} langQ={langQ} />
 
       <style jsx>{`
         .lineup {
@@ -193,7 +196,7 @@ export default function ProductLineupSection() {
           font-size: 15px;
           letter-spacing: 0.06em;
           margin-bottom: 28px;
-          white-space: pre-line; /* 改行表示 */
+          white-space: pre-line;
         }
         @media (max-width: 1100px) {
           .brand-lockup :global(img) { max-width: 360px; }
@@ -213,7 +216,7 @@ export default function ProductLineupSection() {
 }
 
 /* ===== 商品行 ===== */
-function Row({ items, tr, lang }) {
+function Row({ items, tr, lang, langQ }) {
   return (
     <>
       <div className="row" role="list">
@@ -224,7 +227,8 @@ function Row({ items, tr, lang }) {
           const price = formatPrice(p.price, lang);
           const original = p.originalprice ? formatPrice(p.originalprice, lang) : null;
 
-          const internalHref = `/item/mvsi/${p.slug}`;
+          const internalHref =
+            langQ ? `/item/mvsi/${p.slug}?lang=${langQ}` : `/item/mvsi/${p.slug}`;
 
           return (
             <article key={p.slug} className="card" role="listitem">
@@ -245,7 +249,7 @@ function Row({ items, tr, lang }) {
                 <span className="priceLabel">
                   {tr("lineup.priceLabel", lang === "en" ? "Price (tax incl.)" : "価格(税込)")}
                 </span>
-               
+                {original && <span className="original">{original}</span>}
                 <span className="price">{price}</span>
               </div>
 
@@ -278,7 +282,7 @@ function Row({ items, tr, lang }) {
           line-height: 1.7;
           font-size: 15px;
           letter-spacing: 0.02em;
-          white-space: pre-line; /* \n 改行 */
+          white-space: pre-line;
         }
         .pricewrap { margin-top: 10px; font-size: 16px; color: #666; }
         .original { display: block; text-decoration: line-through; color: #9ca3af; margin-top: 2px; }
@@ -302,7 +306,6 @@ function Row({ items, tr, lang }) {
           cursor: pointer;
           font-size: 14px;
         }
-        
 
         @media (max-width: 1100px) {
           .row { width: 100%; gap: 20px; }
