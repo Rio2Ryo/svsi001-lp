@@ -193,7 +193,6 @@ export default function ProductDetailPage() {
     setSideCartOpen(true);
   };
 
-  /* ====== ここがポイント：/en 強制＋Cookie付与＋ログ ====== */
   const checkout = async () => {
     try {
       const { checkoutId } =
@@ -206,46 +205,7 @@ export default function ProductDetailPage() {
         callbacks: { postFlowUrl: window.location.href },
       });
 
-      const originalUrl = redirect.redirectSession.fullUrl;
-      console.log("[checkout] original redirect URL:", originalUrl);
-
-      // 言語判定（フォールバック含む）
-      const langHint =
-        (typeof lang === "string" && lang) ||
-        (typeof document !== "undefined" && document.documentElement?.lang) ||
-        (typeof window !== "undefined" && window.localStorage?.getItem("lang")) ||
-        "ja";
-      const isEnglish = String(langHint).toLowerCase().startsWith("en");
-      console.log("[checkout] langHint:", langHint, "=> isEnglish:", isEnglish);
-
-      // 既定はオリジナルURL
-      let finalUrl = originalUrl;
-
-      if (isEnglish) {
-        const u = new URL(originalUrl);
-
-        // origin直下に /en を確実に差し込む
-        if (!u.pathname.startsWith("/en/")) {
-          // /__ecom/checkout → /en/__ecom/checkout に置換（最優先）
-          u.pathname = u.pathname.replace(/^\/__ecom\//, "/en/__ecom/");
-          // それでも /en/ 先頭でない場合は先頭に /en を追加（他構造も網羅）
-          if (!u.pathname.startsWith("/en/")) {
-            u.pathname = "/en" + (u.pathname.startsWith("/") ? "" : "/") + u.pathname;
-          }
-        }
-
-        // Wixが参照し得る言語Cookieを checkout のドメインに付与（1年）
-        const cookieDomain = "." + u.hostname.replace(/^www\./, "");
-        const attrs = `domain=${cookieDomain}; path=/; max-age=31536000; samesite=lax`;
-        document.cookie = `wixLanguage=en; ${attrs}`;
-        document.cookie = `wixLng=en; ${attrs}`;
-        document.cookie = `locale=en; ${attrs}`;
-
-        finalUrl = u.toString();
-      }
-
-      console.log("[checkout] final redirect URL:", finalUrl);
-      window.location.assign(finalUrl);
+      window.location = redirect.redirectSession.fullUrl;
     } catch (err) {
       console.error("チェックアウト失敗:", err);
     }
@@ -266,7 +226,9 @@ export default function ProductDetailPage() {
   const changeLineItemQty = async (lineItemId, newQty) => {
     try {
       if (newQty <= 0) {
-        await myWixClient.currentCart.removeLineItemFromCurrentCart(lineItemId);
+        await myWixClient.currentCart.removeLineItemFromCurrentCart(
+          lineItemId
+        );
         const updated = await myWixClient.currentCart.getCurrentCart();
         setCart(updated);
         if (lineItemId === cartItemId) {
@@ -375,26 +337,10 @@ export default function ProductDetailPage() {
               <ul className="lang-menu" role="menu" aria-label={labelLang || "Language"}>
                 <li className="sep" aria-hidden="true" />
                 <li role="menuitem">
-                  <button
-                    className="lang-item"
-                    onClick={() => {
-                      setLang("ja");
-                      setOpenLang(false);
-                    }}
-                  >
-                    JA
-                  </button>
+                  <button className="lang-item" onClick={() => setLang("ja")}>JA</button>
                 </li>
                 <li role="menuitem">
-                  <button
-                    className="lang-item"
-                    onClick={() => {
-                      setLang("en");
-                      setOpenLang(false);
-                    }}
-                  >
-                    EN
-                  </button>
+                  <button className="lang-item" onClick={() => setLang("en")}>EN</button>
                 </li>
               </ul>
             )}
@@ -690,7 +636,7 @@ export default function ProductDetailPage() {
         .liName { font-size: 14px; font-weight: 600; }
         .liPrice { font-size: 13px; color: #374151; }
 
-        .liQty { marginトップ: 2px; }
+        .liQty { margin-top: 2px; }
         .liQtyBox { display: grid; grid-template-columns: 40px 56px 40px; align-items: center; height: 36px; border: 1px solid #d1d5db; border-radius: 6px; background: #fff; overflow: hidden; width: 136px; }
         .liBtn { all: unset; height: 100%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; color: #111827; }
         .liBtn:disabled { color: #cbd5e1; cursor: not-allowed; }
