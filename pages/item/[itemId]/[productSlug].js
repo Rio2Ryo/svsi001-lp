@@ -205,17 +205,7 @@ export default function ProductDetailPage() {
         callbacks: { postFlowUrl: window.location.href },
       });
 
-      // ★★★★★ 修正箇所：ここから ★★★★★
-      let checkoutUrl = redirect.redirectSession.fullUrl;
-      // lang変数が'en'の場合のみ、URLに言語クエリパラメータを追加
-      if (lang === 'en') {
-        // WixのURLに既にクエリパラメータがあれば'&'、なければ'?'を付与
-        checkoutUrl += (checkoutUrl.includes('?') ? '&' : '?') + 'lang=en';
-      }
-      
-      window.location = checkoutUrl;
-      // ★★★★★ 修正箇所：ここまで ★★★★★
-      
+      window.location = redirect.redirectSession.fullUrl;
     } catch (err) {
       console.error("チェックアウト失敗:", err);
     }
@@ -327,7 +317,7 @@ export default function ProductDetailPage() {
         )}`}</title>
       </Head>
 
-      {/* ===== 言語切替（HeroSectionと同じ見た目） ===== */}
+      {/* ===== 言語切替（HeroSectionと同じ） ===== */}
       <header className="site-header" aria-label="Top navigation">
         <div className="header-inner">
           <div className={`lang-switcher ${openLang ? "open" : ""}`} ref={menuRef}>
@@ -619,7 +609,7 @@ export default function ProductDetailPage() {
 
         .actions { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
         .btn { width: 100%; height: 48px; border-radius: 9999px; border: none; font-size: 14px; cursor: pointer;
-                 display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+               display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
         .btn.add { background: #e5e7eb; color: #111827; }
         .btn.buy { background: #000; color: #fff; }
         .btn.back { background: #e8f3ff; color: #0f172a; border: 1px solid #cfe0ff; }
