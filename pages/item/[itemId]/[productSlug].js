@@ -8,20 +8,6 @@ import Cookies from "js-cookie";
 import Footer from "../../../src/components/Footer";
 import { useI18n } from "@/lib/i18n";
 
-/* ====== /en サブパス制御ヘルパー ====== */
-const addEnPrefix = (path) => (path.startsWith("/en") ? path : `/en${path}`);
-const removeEnPrefix = (path) =>
-  path === "/en"
-    ? "/"
-    : path.startsWith("/en/")
-    ? path.slice(3)
-    : path;
-const withLangPath = (lang, asPath) =>
-  lang === "en" ? addEnPrefix(asPath) : removeEnPrefix(asPath);
-
-// public配下などのローカル静的ファイルは /en を付けない（404回避）
-const assetPath = (p) => removeEnPrefix(p.startsWith("/") ? p : `/${p}`);
-
 /* ====== 価格表示：円⇄ドル 切替 ====== */
 const USD_PER_JPY =
   Number(process.env.NEXT_PUBLIC_USD_PER_JPY) || 0.006724; // 3300 -> $22.19
@@ -77,15 +63,6 @@ export default function ProductDetailPage() {
   const menuRef = useRef(null);
   const labelLang = tr("ui.lang.label", "Language");
 
-  // URLの/en有無とi18nのlangを初期同期（直リンク対策）
-  useEffect(() => {
-    if (!router.isReady) return;
-    const hasEn = router.asPath.startsWith("/en/");
-    if (hasEn && lang !== "en") setLang("en");
-    if (!hasEn && lang !== "ja") setLang("ja");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.isReady]);
-
   useEffect(() => {
     if (!openLang) return;
     const onDown = (e) => {
@@ -116,9 +93,7 @@ export default function ProductDetailPage() {
         const agentId = String(query.itemId).toLowerCase();
         const slug = String(query.productSlug).toLowerCase();
 
-        // /en 直下でフェッチすると404になるので /en を除去
-        const jsonUrl = assetPath(`/${agentId}_products.json`);
-        const res = await fetch(jsonUrl);
+        const res = await fetch(`/${agentId}_products.json`);
         if (!res.ok) throw new Error("商品JSON取得失敗");
 
         const data = await res.json();
@@ -277,7 +252,7 @@ export default function ProductDetailPage() {
   const findAgentProductByWixId = (wixId) =>
     (agentProducts || []).find((p) => p.wixProductId === wixId);
 
-  const mainImg = product?.ItemPic || assetPath("/item_pic3.jpg");
+  const mainImg = product?.ItemPic || "/item_pic3.jpg";
 
   if (loading)
     return (
@@ -342,7 +317,7 @@ export default function ProductDetailPage() {
         )}`}</title>
       </Head>
 
-      {/* ===== 言語切替（/en 同期） ===== */}
+      {/* ===== 言語切替（HeroSectionと同じ） ===== */}
       <header className="site-header" aria-label="Top navigation">
         <div className="header-inner">
           <div className={`lang-switcher ${openLang ? "open" : ""}`} ref={menuRef}>
@@ -362,30 +337,10 @@ export default function ProductDetailPage() {
               <ul className="lang-menu" role="menu" aria-label={labelLang || "Language"}>
                 <li className="sep" aria-hidden="true" />
                 <li role="menuitem">
-                  <button
-                    className="lang-item"
-                    onClick={() => {
-                      const next = "ja";
-                      setLang(next);
-                      const nextPath = withLangPath(next, router.asPath);
-                      router.replace(nextPath);
-                    }}
-                  >
-                    JA
-                  </button>
+                  <button className="lang-item" onClick={() => setLang("ja")}>JA</button>
                 </li>
                 <li role="menuitem">
-                  <button
-                    className="lang-item"
-                    onClick={() => {
-                      const next = "en";
-                      setLang(next);
-                      const nextPath = withLangPath(next, router.asPath);
-                      router.replace(nextPath);
-                    }}
-                  >
-                    EN
-                  </button>
+                  <button className="lang-item" onClick={() => setLang("en")}>EN</button>
                 </li>
               </ul>
             )}
@@ -399,7 +354,7 @@ export default function ProductDetailPage() {
           <div className="media">
             <div className="mediaImg">
               <Image
-                src={typeof mainImg === "string" ? assetPath(mainImg) : mainImg}
+                src={mainImg}
                 alt={displayName}
                 fill
                 sizes="(max-width: 1200px) 60vw, 720px"
@@ -454,10 +409,7 @@ export default function ProductDetailPage() {
                 {tr("pdp.buttons.buyNow", "今すぐ購入")}
               </button>
 
-              <Link
-                href={lang === "en" ? addEnPrefix(`/item/${query.itemId}`) : `/item/${query.itemId}`}
-                legacyBehavior
-              >
+              <Link href={`/item/${query.itemId}`} legacyBehavior>
                 <a className="btn back">
                   {tr("pdp.buttons.backToList", "カートの状態を維持して商品一覧に戻る")}
                 </a>
@@ -511,7 +463,7 @@ export default function ProductDetailPage() {
       >
         <header className="sideCartHeader">
           <div>
-            {tr("pdp.sidecart.header", lang === "en" ? "Cart ({count} items)" : "カート（{count}点のアイテム）").replace(
+            {tr("pdp.sidecart.header", "カート（{count}点のアイテム）").replace(
               "{count}",
               String(cart?.lineItems?.length || 0)
             )}
@@ -541,7 +493,7 @@ export default function ProductDetailPage() {
                   {ap?.ItemPic ? (
                     <img src={ap.ItemPic} alt={lineName} />
                   ) : (
-                    <img src={assetPath(li?.image?.url || "/noimage.png")} alt={lineName} />
+                    <img src={li?.image?.url || "/noimage.png"} alt={lineName} />
                   )}
                 </div>
                 <div className="liInfo">
@@ -584,6 +536,7 @@ export default function ProductDetailPage() {
         <footer className="sideCartFooter">
           <div className="subtotal">
             {tr("pdp.sidecart.subtotalLabel", lang === "en" ? "Subtotal: " : "小計：")}
+            {/* Wixのsubtotal（JPY文字列）ではなく、agentProductsベースで再計算して言語別表示 */}
             {displaySubtotal}
           </div>
           <button className="btn checkoutBtn" onClick={checkout}>
