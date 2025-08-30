@@ -2,11 +2,16 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useI18n } from "../lib/i18n";
+import { useRouter, usePathname, useSearchParams } from "next/navigation"; // ★追加
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+
+  const router = useRouter();                    // ★追加
+  const pathname = usePathname();                // ★追加
+  const searchParams = useSearchParams();        // ★追加
 
   const { t, lang, setLang } = useI18n();
   const tr = (key) => t(key) ?? "";
@@ -36,6 +41,26 @@ export default function HeroSection() {
     return () => window.removeEventListener("mousedown", onDown);
   }, [open]);
 
+  // ★ 初回：URLの ?lang= を状態へ反映
+  useEffect(() => {
+    const q = searchParams.get("lang");
+    if (q === "en" || q === "ja") setLang(q);
+  }, [searchParams, setLang]);
+
+  // ★ 切替時：状態とURLクエリを同期
+  const switchLang = (nextLang) => {
+    setLang(nextLang);
+    const params = new URLSearchParams(searchParams.toString());
+    if (nextLang === "ja") {
+      params.delete("lang"); // 日本語はクエリ無しにする方針
+    } else {
+      params.set("lang", nextLang); // 例: ?lang=en
+    }
+    const qs = params.toString();
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    setOpen(false);
+  };
+
   return (
     <>
       {/* ===== ヘッダー（右上 言語切替） ===== */}
@@ -58,16 +83,18 @@ export default function HeroSection() {
               <ul className="lang-menu" role="menu" aria-label={labelLang || "Language"}>
                 <li className="sep" aria-hidden="true" />
                 <li role="menuitem">
-                  <button className="lang-item" onClick={() => setLang("ja")}>JA</button>
+                  <button className="lang-item" onClick={() => switchLang("ja")}>JA</button>
                 </li>
                 <li role="menuitem">
-                  <button className="lang-item" onClick={() => setLang("en")}>EN</button>
+                  <button className="lang-item" onClick={() => switchLang("en")}>EN</button>
                 </li>
               </ul>
             )}
           </div>
         </div>
       </header>
+
+      {/* ===== ファーストビュー ===== */}
 
       {/* ===== ファーストビュー ===== */}
       <section className={`first-view ${isVisible ? "is-visible" : ""}`}>
