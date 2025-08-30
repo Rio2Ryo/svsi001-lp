@@ -207,13 +207,12 @@ export default function ProductDetailPage() {
   
       const url = new URL(redirect.redirectSession.fullUrl);
   
-      // ★ 強制的に /en を付与（すでに /en/ があれば何もしない）
+      // ★ 強制的に /en を差し込む
       if (!url.pathname.startsWith("/en/")) {
         url.pathname = `/en${url.pathname}`;
       }
   
       console.log("Redirect checkout URL:", url.toString());
-  
       window.location.assign(url.toString());
     } catch (err) {
       console.error("チェックアウト失敗:", err);
