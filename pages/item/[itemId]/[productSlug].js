@@ -193,23 +193,46 @@ export default function ProductDetailPage() {
     setSideCartOpen(true);
   };
 
-  const checkout = async () => {
-    try {
-      const { checkoutId } =
-        await myWixClient.currentCart.createCheckoutFromCurrentCart({
-          channelType: "WEB",
-        });
-
-      const redirect = await myWixClient.redirects.createRedirectSession({
-        ecomCheckout: { checkoutId },
-        callbacks: { postFlowUrl: window.location.href },
+  // ProductDetailPage 内の checkout() をこれで置き換え
+const checkout = async () => {
+  try {
+    const { checkoutId } =
+      await myWixClient.currentCart.createCheckoutFromCurrentCart({
+        channelType: "WEB",
       });
 
-      window.location = redirect.redirectSession.fullUrl;
-    } catch (err) {
-      console.error("チェックアウト失敗:", err);
+    // Wix が返すリダイレクト情報
+    const redirect = await myWixClient.redirects.createRedirectSession({
+      ecomCheckout: { checkoutId },
+      // 事後遷移先（完了後に戻るURL）は現状維持。英語時は ?lang=en が残ります
+      callbacks: { postFlowUrl: window.location.href },
+    });
+
+    // --- ここがポイント：フルURLを書き換えてから遷移 ---
+    const target = new URL(redirect.redirectSession.fullUrl);
+
+    // lang が en なら /en を先頭に付与（重複付与しない＝冪等）
+    const wantEn =
+      typeof lang === "string" && lang.toLowerCase() === "en";
+
+    if (wantEn) {
+      // すでに /en/ で始まっていなければ差し込み
+      if (!target.pathname.startsWith("/en/")) {
+        target.pathname = `/en${target.pathname}`;
+      }
     }
-  };
+    // 逆に日本語の場合は /en を外したいなら↓のコメントアウトを外す
+    // else if (target.pathname.startsWith("/en/")) {
+    //   target.pathname = target.pathname.replace(/^\/en/, "");
+    // }
+
+    // 最終遷移（replace でも OK。assign だと履歴に残る）
+    window.location.assign(target.toString());
+  } catch (err) {
+    console.error("チェックアウト失敗:", err);
+  }
+};
+
 
   const clearCart = async () => {
     try {
