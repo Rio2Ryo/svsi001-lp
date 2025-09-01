@@ -133,8 +133,6 @@ export default function GuaranteeSection() {
         }
         img.usage-img {
         max-width:120px!important;max-height:120px!important;
-    width: 100% !important;
-    height: 100% !important;
     -o-object-fit: cover;
     object-fit: cover;
 }
