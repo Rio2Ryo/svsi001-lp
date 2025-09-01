@@ -9,8 +9,7 @@ import Footer from "../../../src/components/Footer";
 import { useI18n } from "@/lib/i18n";
 
 /* ====== 価格表示：円⇄ドル 切替 ====== */
-const USD_PER_JPY =
-  Number(process.env.NEXT_PUBLIC_USD_PER_JPY) || 0.006724; // 3300 -> $22.19
+const USD_PER_JPY = Number(process.env.NEXT_PUBLIC_USD_PER_JPY) || 0.006724; // 3300 -> $22.19
 const fmtJPY = new Intl.NumberFormat("ja-JP", {
   style: "currency",
   currency: "JPY",
@@ -193,54 +192,55 @@ export default function ProductDetailPage() {
     setSideCartOpen(true);
   };
 
- // ★ 単品→ add=PID:QTY / 複数→ sync=PID1:Q1,PID2:Q2...&replace=1
-const checkout = async () => {
-  if (!product?.wixProductId && !Array.isArray(cart?.lineItems)) return;
+  // ★ 単品→ add=PID:QTY / 複数→ sync=PID1:Q1,PID2:Q2...&replace=1
+  const checkout = async () => {
+    if (!product?.wixProductId && !Array.isArray(cart?.lineItems)) return;
 
-  const BASE = 'https://dotpb.jp';                 // www 混在は禁止
-  const prefix = (lang === 'en') ? '/en' : '';     // 言語で出し分け
-  const CART_PATH = `${prefix}/cart-page`;
+    const BASE = "https://dotpb.jp"; // www 混在は禁止
+    const prefix = lang === "en" ? "/en" : ""; // 言語で出し分け
+    const CART_PATH = `${prefix}/cart-page`;
 
-  // 最新カートを取得（stateが無ければAPI）
-  let lineItems = Array.isArray(cart?.lineItems) ? cart.lineItems : null;
-  if (!lineItems) {
-    try {
-      const cur = await myWixClient.currentCart.getCurrentCart();
-      lineItems = cur?.lineItems || [];
-    } catch {
-      lineItems = [];
+    // 最新カートを取得（stateが無ければAPI）
+    let lineItems = Array.isArray(cart?.lineItems) ? cart.lineItems : null;
+    if (!lineItems) {
+      try {
+        const cur = await myWixClient.currentCart.getCurrentCart();
+        lineItems = cur?.lineItems || [];
+      } catch {
+        lineItems = [];
+      }
     }
-  }
 
-  // id と数量を抽出
-  let pairs = lineItems
-    .map(li => ({
-      pid: li?.catalogReference?.catalogItemId,
-      qty: Number(li?.quantity || 1)
-    }))
-    .filter(x => x.pid);
+    // id と数量を抽出
+    let pairs = lineItems
+      .map((li) => ({
+        pid: li?.catalogReference?.catalogItemId,
+        qty: Number(li?.quantity || 1),
+      }))
+      .filter((x) => x.pid);
 
-  // もしカートが空なら、画面上の選択数だけ単品で渡す
-  if (pairs.length === 0 && product?.wixProductId) {
-    pairs = [{ pid: product.wixProductId, qty: Math.max(1, Number(quantity || 1)) }];
-  }
+    // もしカートが空なら、画面上の選択数だけ単品で渡す
+    if (pairs.length === 0 && product?.wixProductId) {
+      pairs = [
+        { pid: product.wixProductId, qty: Math.max(1, Number(quantity || 1)) },
+      ];
+    }
 
-  const u = new URL(CART_PATH, BASE);
+    const u = new URL(CART_PATH, BASE);
 
-  if (pairs.length <= 1) {
-    // 単品：add 方式（Velo側は“置き換え”処理にしてあるので倍増しない）
-    const { pid, qty } = pairs[0];
-    u.searchParams.set('add', `${pid}:${qty}`);
-  } else {
-    // 複数：正確に同期（置き換え）
-    const syncStr = pairs.map(p => `${p.pid}:${p.qty}`).join(',');
-    u.searchParams.set('sync', syncStr);
-    u.searchParams.set('replace', '1');
-  }
+    if (pairs.length <= 1) {
+      // 単品：add 方式（Velo側は“置き換え”処理にしてあるので倍増しない）
+      const { pid, qty } = pairs[0];
+      u.searchParams.set("add", `${pid}:${qty}`);
+    } else {
+      // 複数：正確に同期（置き換え）
+      const syncStr = pairs.map((p) => `${p.pid}:${p.qty}`).join(",");
+      u.searchParams.set("sync", syncStr);
+      u.searchParams.set("replace", "1");
+    }
 
-  window.location.assign(u.toString());
-};
-
+    window.location.assign(u.toString());
+  };
 
   const clearCart = async () => {
     try {
@@ -257,9 +257,7 @@ const checkout = async () => {
   const changeLineItemQty = async (lineItemId, newQty) => {
     try {
       if (newQty <= 0) {
-        await myWixClient.currentCart.removeLineItemFromCurrentCart(
-          lineItemId
-        );
+        await myWixClient.currentCart.removeLineItemFromCurrentCart(lineItemId);
         const updated = await myWixClient.currentCart.getCurrentCart();
         setCart(updated);
         if (lineItemId === cartItemId) {
@@ -337,7 +335,9 @@ const checkout = async () => {
     return s + unitJPY * (li?.quantity || 1);
   }, 0);
   const displaySubtotal =
-    lang === "en" ? fmtUSD.format(subtotalJPY * USD_PER_JPY) : fmtJPY.format(subtotalJPY);
+    lang === "en"
+      ? fmtUSD.format(subtotalJPY * USD_PER_JPY)
+      : fmtJPY.format(subtotalJPY);
 
   return (
     <>
@@ -389,7 +389,8 @@ const checkout = async () => {
                 alt={displayName}
                 fill
                 sizes="(max-width: 1200px) 60vw, 720px"
-                style={{ objectFit: "cover" }}
+                /* ★ 全体が必ず入るように（はみ出し無し） */
+                style={{ objectFit: "contain", objectPosition: "center center" }}
                 priority
               />
             </div>
@@ -510,9 +511,10 @@ const checkout = async () => {
           {(cart?.lineItems || []).map((li) => {
             const wixId = li?.catalogReference?.catalogItemId;
             const ap = findAgentProductByWixId(wixId);
-            const lineName = lang === "en"
-              ? (ap?.name_en || li?.productName?.original || "")
-              : (ap?.name || li?.productName?.original || "");
+            const lineName =
+              lang === "en"
+                ? ap?.name_en || li?.productName?.original || ""
+                : ap?.name || li?.productName?.original || "";
             const unitJPY = ap?.price
               ? parseJPY(ap.price)
               : parseJPY(li?.price?.formattedAmount);
@@ -567,7 +569,6 @@ const checkout = async () => {
         <footer className="sideCartFooter">
           <div className="subtotal">
             {tr("pdp.sidecart.subtotalLabel", lang === "en" ? "Subtotal: " : "小計：")}
-            {/* Wixのsubtotal（JPY文字列）ではなく、agentProductsベースで再計算して言語別表示 */}
             {displaySubtotal}
           </div>
           <button className="btn checkoutBtn" onClick={checkout}>
@@ -614,8 +615,13 @@ const checkout = async () => {
 
         .media { width: 100%; }
         .mediaImg {
-          position: relative; width: 100%; height: 520px;
-          border-radius: 12px; overflow: hidden; background: #f6f6f6;
+          position: relative; width: 100%;
+          height: 520px;                     /* デスクトップの固定高さ */
+          border-radius: 12px; overflow: hidden;
+          background: #f6f6f6;               /* containの余白の背景 */
+        }
+        @media (max-width: 640px){
+          .mediaImg{ height: clamp(320px, 65vw, 460px); } /* スマホで可変。切れない */
         }
 
         .info { display: flex; flex-direction: column; gap: 14px; }
