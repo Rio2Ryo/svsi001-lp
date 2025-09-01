@@ -120,7 +120,7 @@ export default function GuaranteeSection() {
         }
 
         /* リスト */
-        .usage-list { list-style: none; padding: 0; margin: 0 auto; max-width: 760px; }
+        .usage-list { list-style: none; padding: 0; margin: 0 auto; max-width: 860px; }
         .usage-item {
           display: grid; grid-template-columns: 86px 1fr;
           gap: 70px; align-items: center; padding: 14px 0;
@@ -128,6 +128,7 @@ export default function GuaranteeSection() {
         .usage-img {
           display: block; border-radius: 50%; object-fit: cover; background: #fff;
           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+          max-width:120px;max-height:120px;
         }
         .usage-text h3 {
           margin: 0 0 6px; font-size: 24px; font-weight: 700;
