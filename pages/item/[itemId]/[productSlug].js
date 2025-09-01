@@ -618,7 +618,7 @@ export default function ProductDetailPage() {
           position: relative; width: 100%;
           height: 520px;                     /* デスクトップの固定高さ */
           border-radius: 12px; overflow: hidden;
-          background: #f6f6f6;               /* containの余白の背景 */
+          background: #fff;               /* containの余白の背景 */
         }
         @media (max-width: 640px){
           .mediaImg{ height: clamp(320px, 65vw, 460px); } /* スマホで可変。切れない */
