@@ -128,6 +128,7 @@ export default function GuaranteeSection() {
         .usage-img {
           display: block; border-radius: 50%; object-fit: cover; background: #fff;
           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+           max-width:120px!important;max-height:120px!important;
           
         }
         img.usage-img {
