@@ -74,8 +74,8 @@ export default function GuaranteeSection() {
                   <Image
                     src={it.img}
                     alt={it.alt || "usage"}
-                    width={130}
-                    height={130}
+                    width={86}
+                    height={82}
                     className="usage-img"
                     priority={i === 0}
                   />
