@@ -29,8 +29,8 @@ const PRODUCTS = [
     name: "【30本セット】\nマザベジコンフィデンスパウダー\n22,500mg",
     slug: "big-refill-mvsi",
     description: "30本セットです。",
-    originalprice: "20,000円",
-    price: "20,000円",
+    originalprice: "19,800円",
+    price: "19,800円",
     ItemPic: "/30p22500.png",
     wixProductId: "fb6bbce6-a63f-b4d1-b817-da05d987e163",
     url: "https://www.dotpb.jp/product-page/big-refill-mvsi"
