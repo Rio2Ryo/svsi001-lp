@@ -128,8 +128,15 @@ export default function GuaranteeSection() {
         .usage-img {
           display: block; border-radius: 50%; object-fit: cover; background: #fff;
           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-          max-width:120px;max-height:120px;
+          
         }
+        img.usage-img {
+        max-width:120px!important;max-height:120px!important;
+    width: 100% !important;
+    height: 100% !important;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
         .usage-text h3 {
           margin: 0 0 6px; font-size: 24px; font-weight: 700;
           letter-spacing: 0.06em; color: #3f3f3f;
